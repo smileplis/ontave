@@ -1,0 +1,182 @@
+[
+  {
+    "title": "Start",
+    "pages": [
+      {
+        "slug": "introduction",
+        "title": "Introduction",
+        "description": "An evidence layer for the information your application has not modeled yet."
+      },
+      {
+        "slug": "installation",
+        "title": "Installation",
+        "description": "Run the TypeScript server package with your own PostgreSQL database and model."
+      },
+      {
+        "slug": "quickstart",
+        "title": "Your first accepted record",
+        "description": "Preserve a source, inspect an interpretation and read accepted data. No model key required."
+      },
+      {
+        "slug": "architecture",
+        "title": "Architecture",
+        "description": "How evidence, interpretation, review and application contracts fit together."
+      }
+    ]
+  },
+  {
+    "title": "Understand",
+    "pages": [
+      {
+        "slug": "evidence",
+        "title": "Evidence & provenance",
+        "description": "Keep the original source and an inspectable path back from every assertion."
+      },
+      {
+        "slug": "review",
+        "title": "Review bundles",
+        "description": "Approve the exact interpretation you inspected, with atomic effects and a decision trail."
+      },
+      {
+        "slug": "identity",
+        "title": "Identity",
+        "description": "Link records through scoped authority. Leave ambiguous names open for review."
+      },
+      {
+        "slug": "verification",
+        "title": "Verification",
+        "description": "Keep reviewer acceptance separate from independent confirmation."
+      },
+      {
+        "slug": "uncertainty",
+        "title": "Field states",
+        "description": "Represent values, unknowns, missing fields and conflicts explicitly."
+      }
+    ]
+  },
+  {
+    "title": "Evolve",
+    "pages": [
+      {
+        "slug": "definitions",
+        "title": "Definitions",
+        "description": "Describe concepts, fields and relationships with stable IDs."
+      },
+      {
+        "slug": "evolution",
+        "title": "Model evolution",
+        "description": "Propose an additive change, evaluate it, then decide what becomes active."
+      },
+      {
+        "slug": "evaluation",
+        "title": "Candidate evaluation",
+        "description": "Compare a parent and candidate against the same registered evidence and checks."
+      }
+    ]
+  },
+  {
+    "title": "Read",
+    "pages": [
+      {
+        "slug": "contracts",
+        "title": "Application contracts",
+        "description": "Pin your application interface while reading current accepted data."
+      },
+      {
+        "slug": "queries",
+        "title": "Structured queries",
+        "description": "Filter, order and paginate accepted records without a model call."
+      },
+      {
+        "slug": "type-generation",
+        "title": "Generated types",
+        "description": "Generate declarations and executable validators from a registered contract."
+      }
+    ]
+  },
+  {
+    "title": "Integrate",
+    "pages": [
+      {
+        "slug": "node",
+        "title": "Node.js",
+        "description": "Use the framework in a trusted Node.js server or worker."
+      },
+      {
+        "slug": "nextjs",
+        "title": "Next.js",
+        "description": "Keep credentials and capabilities in server routes, with an authenticated host boundary."
+      },
+      {
+        "slug": "models",
+        "title": "Model adapters",
+        "description": "Select Gemini, experimental Groq or your own explicit adapter."
+      }
+    ]
+  },
+  {
+    "title": "Operate",
+    "pages": [
+      {
+        "slug": "database",
+        "title": "Database setup",
+        "description": "Use explicit migrations and a separate, restricted runtime role."
+      },
+      {
+        "slug": "workers",
+        "title": "Workers & recovery",
+        "description": "Drain durable jobs within a workspace, using leases and fenced commits."
+      },
+      {
+        "slug": "security",
+        "title": "Authorization & isolation",
+        "description": "Resolve privileges in your host. Treat source material as untrusted data."
+      },
+      {
+        "slug": "errors",
+        "title": "Errors & limits",
+        "description": "Handle typed errors and bounded work without silent truncation."
+      },
+      {
+        "slug": "backup",
+        "title": "Backup & restore",
+        "description": "A PostgreSQL operator procedure for preserving evidence, decisions and lineage."
+      }
+    ]
+  },
+  {
+    "title": "Verify",
+    "pages": [
+      {
+        "slug": "testing",
+        "title": "Testing",
+        "description": "Separate database integrity, consumer installation and model quality."
+      },
+      {
+        "slug": "benchmarks",
+        "title": "Benchmarks",
+        "description": "Inspect local synthetic workloads and the limits of what they measure."
+      },
+      {
+        "slug": "status",
+        "title": "Release status",
+        "description": "The supported alpha surface and the checks still needed for a completed MVP."
+      },
+      {
+        "slug": "api",
+        "title": "API reference",
+        "description": "The implemented server SDK, configuration, operations and query dialect."
+      },
+      {
+        "slug": "contributing",
+        "title": "Contributing",
+        "description": "Make focused changes with reproducible evidence."
+      },
+      {
+        "slug": "license",
+        "title": "License",
+        "description": "Ontave is licensed under Apache License 2.0."
+      }
+    ]
+  }
+]

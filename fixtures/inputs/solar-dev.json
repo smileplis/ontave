@@ -1,0 +1,352 @@
+[
+  {
+    "id": "SOLAR-001",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul Sharma from ABC Solar requests 11 solar panels."
+  },
+  {
+    "id": "SOLAR-002",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Asha Patil from ABC Solar requests 12 solar panels."
+  },
+  {
+    "id": "SOLAR-003",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Riya Shah from ABC Solar requests 13 solar panels."
+  },
+  {
+    "id": "SOLAR-004",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Imran Khan from ABC Solar requests 14 solar panels."
+  },
+  {
+    "id": "SOLAR-005",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Neha Joshi from ABC Solar requests 15 solar panels."
+  },
+  {
+    "id": "SOLAR-006",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Vikram Rao from ABC Solar requests 16 solar panels."
+  },
+  {
+    "id": "SOLAR-007",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Pooja Desai from ABC Solar requests 17 solar panels."
+  },
+  {
+    "id": "SOLAR-008",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Sameer Shah from ABC Solar requests 18 solar panels."
+  },
+  {
+    "id": "SOLAR-009",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Anil Kumar from ABC Solar requests 19 solar panels."
+  },
+  {
+    "id": "SOLAR-010",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Anil Kumar from ABC Solar requests 20 solar panels."
+  },
+  {
+    "id": "SOLAR-011",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul S. from ABC Solar requests 21 solar panels."
+  },
+  {
+    "id": "SOLAR-012",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Meera Naik from ABC Solar requests 22 solar panels."
+  },
+  {
+    "id": "SOLAR-013",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-101 for ABC Solar totals INR 450000."
+  },
+  {
+    "id": "SOLAR-014",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-102 for ABC Solar totals INR 451000."
+  },
+  {
+    "id": "SOLAR-015",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-103 for ABC Solar totals INR 452000."
+  },
+  {
+    "id": "SOLAR-016",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-104 for ABC Solar totals INR 453000."
+  },
+  {
+    "id": "SOLAR-017",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-105 for ABC Solar totals INR 454000."
+  },
+  {
+    "id": "SOLAR-018",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-106 for ABC Solar totals INR 455000."
+  },
+  {
+    "id": "SOLAR-019",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-107 for ABC Solar totals INR 456000."
+  },
+  {
+    "id": "SOLAR-020",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-108 for ABC Solar totals INR 457000."
+  },
+  {
+    "id": "SOLAR-021",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-109 for ABC Solar totals INR 458000."
+  },
+  {
+    "id": "SOLAR-022",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-110 for ABC Solar totals INR 459000."
+  },
+  {
+    "id": "SOLAR-023",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 50000 for Q-101."
+  },
+  {
+    "id": "SOLAR-024",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-2 confirms INR 51000 received for Q-101."
+  },
+  {
+    "id": "SOLAR-025",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 52000 for Q-101."
+  },
+  {
+    "id": "SOLAR-026",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-4 confirms INR 53000 received for Q-101."
+  },
+  {
+    "id": "SOLAR-027",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 54000 for Q-101."
+  },
+  {
+    "id": "SOLAR-028",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-6 confirms INR 55000 received for Q-101."
+  },
+  {
+    "id": "SOLAR-029",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 56000 for Q-101."
+  },
+  {
+    "id": "SOLAR-030",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-8 confirms INR 57000 received for Q-101."
+  },
+  {
+    "id": "SOLAR-031",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-101 for Q-101 is assigned to Ramesh on 2026-11-01."
+  },
+  {
+    "id": "SOLAR-032",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-102 for Q-101 is assigned to Ramesh on 2026-11-02."
+  },
+  {
+    "id": "SOLAR-033",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-103 for Q-101 is assigned to Ramesh on 2026-11-03."
+  },
+  {
+    "id": "SOLAR-034",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-104 for Q-101 is assigned to Ramesh on Friday."
+  },
+  {
+    "id": "SOLAR-035",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-105 for Q-101 is assigned to Ramesh on 2026-11-05."
+  },
+  {
+    "id": "SOLAR-036",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-106 for Q-101 is assigned to Ramesh on 2026-11-06."
+  },
+  {
+    "id": "SOLAR-037",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-107 for Q-101 is assigned to Ramesh on 2026-11-07."
+  },
+  {
+    "id": "SOLAR-038",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-108 for Q-101 is assigned to Ramesh on 2026-11-08."
+  },
+  {
+    "id": "SOLAR-039",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-109 for Q-101 is assigned to Ramesh on Friday."
+  },
+  {
+    "id": "SOLAR-040",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-110 for Q-101 is assigned to Ramesh on 2026-11-10."
+  },
+  {
+    "id": "SOLAR-041",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-111 for Q-101 is assigned to Ramesh on 2026-11-11."
+  },
+  {
+    "id": "SOLAR-042",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-112 for Q-101 is assigned to Ramesh on 2026-11-12."
+  },
+  {
+    "id": "SOLAR-043",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+  },
+  {
+    "id": "SOLAR-044",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Withdraw the previous email rahul.old@example.test."
+  },
+  {
+    "id": "SOLAR-045",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul S. may be Rahul Sharma, but this is not confirmed."
+  },
+  {
+    "id": "SOLAR-046",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "The transfer was promised, not received."
+  },
+  {
+    "id": "SOLAR-047",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-101 revised total is INR 455000."
+  },
+  {
+    "id": "SOLAR-048",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-101 is not complete."
+  },
+  {
+    "id": "SOLAR-049",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "A second Anil Kumar joined XYZ Solar."
+  },
+  {
+    "id": "SOLAR-050",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Correction: the installation date is unknown."
+  }
+]

@@ -1,0 +1,222 @@
+[
+  {
+    "inputId": "RENTAL-001",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-001",
+        "quote": "CAM-001",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-002",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-002",
+        "quote": "CAM-002",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-003",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-003",
+        "quote": "CAM-003",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-004",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-004",
+        "quote": "CAM-004",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-005",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-005",
+        "quote": "CAM-005",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-006",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-006",
+        "quote": "CAM-006",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-007",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-007",
+        "quote": "CAM-007",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-008",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-008",
+        "quote": "CAM-008",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-009",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-009",
+        "quote": "CAM-009",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  },
+  {
+    "inputId": "RENTAL-010",
+    "assertions": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-010",
+        "quote": "CAM-010",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      }
+    ],
+    "reviewNotes": [
+      "No financial deposit or available inventory balance implied"
+    ]
+  }
+]

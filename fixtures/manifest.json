@@ -1,0 +1,16 @@
+{
+  "fictional": true,
+  "status": "initial labels; full semantic scorer/independent annotation review still required",
+  "counts": {
+    "solar": 50,
+    "rental": 10,
+    "holdout": 20
+  },
+  "files": {
+    "inputs/solar-dev.json": "3058c24e793515c58a80c9b812c3abd5aa04b592735d0fdcc41b9cc8c9919659",
+    "expected/solar-dev.json": "6d0ad9154befbf987ec05d527cf06160e1974b197023541fdc97752ad7a70094",
+    "inputs/rental-transfer.json": "2e7e90af2e4da087c7324808e52d1dc8f7d63b8e7361bdec48f981981f48ead2",
+    "expected/rental-transfer.json": "ff1cf4c240e73192c909003167caa3001c90d9132c60705f1e065705351a81b2",
+    "expected/holdout-tasks.json": "e0113492e49877212d305c31b803970485ed5980f855dced523184f239cc0020"
+  }
+}

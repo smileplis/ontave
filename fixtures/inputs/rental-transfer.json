@@ -1,0 +1,72 @@
+[
+  {
+    "id": "RENTAL-001",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-001 returned with condition: working. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-002",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-002 returned with condition: scratched lens. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-003",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-003 returned with condition: working. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-004",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-004 returned with condition: scratched lens. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-005",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-005 returned with condition: working. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-006",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-006 returned with condition: scratched lens. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-007",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-007 returned with condition: working. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-008",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-008 returned with condition: scratched lens. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-009",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-009 returned with condition: working. Schedule maintenance review."
+  },
+  {
+    "id": "RENTAL-010",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-010 returned with condition: scratched lens. Schedule maintenance review."
+  }
+]

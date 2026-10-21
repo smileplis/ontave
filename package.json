@@ -1,0 +1,82 @@
+{
+  "name": "ontave",
+  "version": "0.1.0-alpha.1",
+  "private": false,
+  "description": "Evidence-backed operational data and governed ontology evolution for TypeScript applications",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "files": [
+    "dist",
+    "migrations",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "docs/API_REFERENCE.md",
+    "docs/OPERATOR_RUNBOOK.md",
+    "docs/IMPLEMENTATION_STATUS.md",
+    "docs/ANNOTATION_RUBRIC.md",
+    "examples/node",
+    "examples/next-server"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./postgres": {
+      "types": "./dist/postgres.d.ts",
+      "import": "./dist/postgres.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "import": "./dist/testing.js"
+    },
+    "./models/gemini": {
+      "types": "./dist/models/gemini.d.ts",
+      "import": "./dist/models/gemini.js"
+    },
+    "./models/groq": {
+      "types": "./dist/models/groq.d.ts",
+      "import": "./dist/models/groq.js"
+    }
+  },
+  "bin": {
+    "ontave": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "test:integration": "npm run build && node --test tests/integration/*.test.mjs",
+    "verify:package": "npm run build && node scripts/verify-package.mjs",
+    "verify:next": "npm run build && node scripts/verify-next.mjs --offline",
+    "verify:node": "npm run build && node scripts/verify-node-flow.mjs",
+    "measure:load": "npm run build && node scripts/measure-load.mjs",
+    "verify:restore": "npm run build && node scripts/verify-restore.mjs"
+  },
+  "dependencies": {
+    "canonicalize": "5.1.0",
+    "decimal.js": "10.6.0",
+    "pg": "8.23.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "@types/pg": "8.23.1",
+    "embedded-postgres": "18.4.0-beta.17",
+    "node": "24.22.0",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smileplis/ontave.git"
+  },
+  "homepage": "https://app.daltn.tech",
+  "bugs": {
+    "url": "https://github.com/smileplis/ontave/issues"
+  }
+}
