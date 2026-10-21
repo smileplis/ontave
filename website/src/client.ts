@@ -354,14 +354,16 @@ if (headings.length && "IntersectionObserver" in window) {
 
 const motion = gsap.matchMedia();
 motion.add("(prefers-reduced-motion: no-preference)", () => {
-  gsap.from(".hero h1,.hero-copy,.hero-actions", {
-    y: 25,
-    opacity: 0,
-    duration: 1.1,
-    stagger: 0.13,
-    ease: "power3.out",
-    delay: 0.08,
-  });
+  const heroElements = qa<HTMLElement>(".hero h1,.hero-copy,.hero-actions");
+  if (heroElements.length)
+    gsap.from(heroElements, {
+      y: 25,
+      opacity: 0,
+      duration: 1.1,
+      stagger: 0.13,
+      ease: "power3.out",
+      delay: 0.08,
+    });
   qa<HTMLElement>(".section:not(.walkthrough) .section-title").forEach(
     (section) =>
       gsap.from(section, {
