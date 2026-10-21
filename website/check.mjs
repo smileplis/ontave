@@ -1,3 +1,4 @@
+import { searchDocuments } from "./src/search.ts";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import assert from "node:assert/strict";
@@ -62,3 +63,27 @@ console.log(
     privateContentExcluded: true,
   }),
 );
+
+const documents = [
+  {
+    title: "Release status",
+    description: "Alpha release",
+    text: "release notes",
+    path: "/release",
+  },
+  {
+    title: "Workers & recovery",
+    description: "Durable leases and fenced jobs",
+    text: "lease expiry",
+    path: "/workers",
+  },
+  {
+    title: "Source evidence",
+    description: "Inspect quotes",
+    text: "source preservation",
+    path: "/source",
+  },
+];
+assert.equal(searchDocuments(documents, "lease")[0]?.path, "/workers");
+assert.equal(searchDocuments(documents, "lease evidence").length, 0);
+assert.doesNotThrow(() => searchDocuments(documents, "(unsafe["));

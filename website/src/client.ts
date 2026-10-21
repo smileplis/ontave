@@ -1,3 +1,4 @@
+import { searchDocuments } from "./search";
 import React from "react";
 import { hydrateRoot } from "react-dom/client";
 import { Story } from "./Story";
@@ -262,22 +263,7 @@ async function renderSearch() {
     }
   }
   if (sequence !== searchSequence) return;
-  const terms = query.split(/\s+/).filter(Boolean);
-  const matches = index!
-    .map((entry) => ({
-      entry,
-      score: terms.reduce(
-        (n, term) =>
-          n +
-          (entry.title.toLowerCase().includes(term) ? 10 : 0) +
-          (entry.description.toLowerCase().includes(term) ? 4 : 0) +
-          (entry.text.toLowerCase().includes(term) ? 1 : 0),
-        0,
-      ),
-    }))
-    .filter(({ score }) => !terms.length || score >= terms.length)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 8);
+  const matches = searchDocuments(index!, query);
   results.replaceChildren();
   if (!matches.length) {
     const p = document.createElement("p");
@@ -285,7 +271,7 @@ async function renderSearch() {
     p.textContent = `No results for “${input.value}”. Try “evidence”, “review” or “contracts”.`;
     results.append(p);
   }
-  for (const { entry } of matches) {
+  for (const entry of matches) {
     const a = document.createElement("a");
     a.href = entry.path;
     const title = document.createElement("strong");

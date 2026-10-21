@@ -20,7 +20,7 @@ The website builds 31 HTML pages, including 29 documentation pages. Its static v
 
 ## Measurements and open gates
 
-Synthetic runs at 100, 1,000 and 10,000 fictional records processed every record with zero recorded job failures and no provider calls. Local ordered-read p95 was approximately 3 ms, 25 ms and 975 ms in the latest profiled run. Query plans after statistics settled were much faster than the early bulk-load measurements; the alpha does not promise an SLO. The read path batches projection fetching for each page.
+Synthetic runs at 100, 1,000 and 10,000 fictional records processed every record with zero recorded job failures and no provider calls. Local ordered-read p95 was approximately 3 ms, 25 ms and 975 ms in the latest profiled run. Later profiled query executions were much faster than the early bulk-load measurements; the cause of the latency variation remains under investigation, and the alpha does not promise an SLO. The read path batches projection fetching for each page.
 
 The original 95% precision and 90% recall targets in each of three frozen live trials remain unmeasured. Rich read/identity/relationship evaluation tasks, complete independently reviewed labels, process crash/shutdown cases and the remaining acceptance matrix are still open. A successful fictional Groq flow is a smoke check, and Gemini development failures are retained as failures.
 

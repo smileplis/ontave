@@ -17,7 +17,15 @@ The three dataset sizes are 100, 1,000 and 10,000 distinct fictional records in 
 
 ## Results and query work
 
-The recorded 100/1,000/10,000-record runs processed every input with zero recorded job failures. Earlier ordered-read p95 was about 3.5 ms, 15.9 ms and 935 ms respectively. Current query profiling is investigating the larger descending-order cost; final release results will replace this development baseline.
+The latest profiled run processed every input with zero recorded job failures:
+
+| Records | Receipt p95 | Ordered-read p95 |
+| ------- | ----------- | ---------------- |
+| 100     | 1.88 ms     | 2.98 ms          |
+| 1,000   | 0.47 ms     | 24.80 ms         |
+| 10,000  | 1.39 ms     | 974.52 ms        |
+
+Later profiled ascending and descending SQL executions at 10,000 records took about 11–12 ms, while the earlier full-request samples produced a much higher p95. This variability remains an optimization investigation, not a resolved performance claim. The current read path batches projection fetches for a page.
 
 These numbers describe that local synthetic run. They are not a production SLO, a model-inference latency, a distributed-load result or a general extraction-quality claim.
 

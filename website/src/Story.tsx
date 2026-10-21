@@ -183,7 +183,11 @@ export function Story() {
               <h3>
                 {chapters[chapter].title.split("\n").map((line, i) => (
                   <React.Fragment key={line}>
-                    {i > 0 && <br />}
+                    {i > 0 && (
+                      <>
+                        <br />{" "}
+                      </>
+                    )}
                     {line}
                   </React.Fragment>
                 ))}

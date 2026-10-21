@@ -4174,3 +4174,50 @@ html {
     display: none;
   }
 }
+@media (min-width: 761px) and (min-height: 700px) and (max-height: 820px) {
+  .story-sticky {
+    top: 85px;
+    height: calc(100svh - 95px);
+    min-height: 0;
+    padding-top: 7px;
+  }
+  .story-heading {
+    margin-bottom: 22px;
+  }
+  .story-heading h2 {
+    font-size: 43px;
+  }
+  .story-narrative {
+    min-height: 100px;
+  }
+  .story-narrative h3 {
+    font-size: 16px;
+  }
+  .story-narrative p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+  .story-workspace {
+    min-height: 290px;
+    padding-block: 22px;
+  }
+  .story-model {
+    min-height: 245px;
+  }
+  .story-message {
+    font-size: 24px;
+    margin-block: 23px 17px;
+  }
+  .story-bottom {
+    margin-top: 13px;
+  }
+  .story-progress {
+    margin-top: 9px;
+  }
+  .story-disclaimer {
+    margin-top: 9px;
+  }
+  .stage-footnote {
+    margin-top: 14px;
+  }
+}
