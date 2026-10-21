@@ -41,7 +41,13 @@ await writeFile(
 );
 run(
   "npm",
-  ["install", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
+  [
+    "install",
+    ...(process.argv.includes("--offline") ? ["--offline"] : []),
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+  ],
   consumer,
 );
 await writeFile(
