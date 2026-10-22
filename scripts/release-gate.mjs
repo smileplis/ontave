@@ -1,5 +1,5 @@
 // Local guard only. It never authenticates, publishes, provisions or modifies a service.
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
@@ -59,42 +59,27 @@ export function reportBlockers(report, version, digest) {
   return blockers;
 }
 export async function sourceDigest() {
+  const compiled = async (directory) => {
+    const entries = await readdir(directory, { withFileTypes: true });
+    const files = [];
+    for (const entry of entries) {
+      const path = `${directory}/${entry.name}`;
+      files.push(...(entry.isDirectory() ? await compiled(path) : [path]));
+    }
+    return files;
+  };
+  // Bind SQL, documentation, public fixtures and compiled package files as well
+  // as source/tests. Ignored credentials, raw trials and research stay excluded.
   const files = [
     ...new Set([
       ...execFileSync(
-        "rg",
-        [
-          "--files",
-          "--hidden",
-          "src",
-          "migrations",
-          "scripts",
-          "tests",
-          "examples",
-          ".github",
-          "fixtures/release-v1",
-          "-g",
-          "*.ts",
-          "-g",
-          "*.mjs",
-          "-g",
-          "*.yml",
-          "-g",
-          "*.json",
-        ],
+        "git",
+        ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
         { encoding: "utf8" },
       )
-        .trim()
-        .split("\n")
-        .filter(
-          (p) =>
-            !p.endsWith("verify-isolation.mjs") &&
-            !p.endsWith("finalize-report.mjs"),
-        ),
-      "package.json",
-      "package-lock.json",
-      "tsconfig.json",
-      "docs/acceptance-coverage.json",
+        .split("\0")
+        .filter(Boolean),
+      ...(await compiled("dist")),
     ]),
   ].sort();
   const hashes = [];

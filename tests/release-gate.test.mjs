@@ -1,6 +1,31 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { requiredGates, reportBlockers } from "../scripts/release-gate.mjs";
+import {
+  requiredGates,
+  reportBlockers,
+  sourceDigest,
+} from "../scripts/release-gate.mjs";
+test("qualification digest binds SQL, docs and compiled package output", async () => {
+  const result = await sourceDigest(),
+    paths = result.files.map(([path]) => path);
+  for (const required of [
+    "migrations/004_worker_events.sql",
+    "README.md",
+    "docs/QUALITY_REPORT.md",
+    "dist/cli.js",
+    "package.json",
+    "tests/cli.test.mjs",
+  ])
+    assert.ok(paths.includes(required), required);
+  assert.ok(
+    !paths.some(
+      (path) =>
+        path === ".env" ||
+        path.startsWith("research/") ||
+        path.startsWith("artifacts/"),
+    ),
+  );
+});
 test("publication guard requires every gate and content-bound artifact", () => {
   const report = {
     version: "test",
