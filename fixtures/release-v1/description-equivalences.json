@@ -1,0 +1,14 @@
+{
+  "version": "description-equivalence-v1",
+  "status": "Maintainer recommendation applied after the user asked which policy was appropriate; independent full annotation review remains pending.",
+  "rules": [
+    {
+      "conceptId": "maintenance_request",
+      "fieldId": "description",
+      "values": ["maintenance review", "Schedule maintenance review"],
+      "meaning": "Both describe the same requested maintenance action. Neither states that the action has been completed."
+    }
+  ],
+  "strict": ["Identifiers", "Amounts", "Currencies", "Dates", "Verification", "Negation", "Requested versus completed actions"],
+  "independentReview": false
+}

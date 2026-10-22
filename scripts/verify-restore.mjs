@@ -1,5 +1,6 @@
 // Operator recovery exercise using only disposable databases and fictional data.
-import { spawnSync } from "node:child_process";
+import { spawnSync, fork } from "node:child_process";
+import { once } from "node:events";
 import { writeFile, mkdtemp } from "node:fs/promises";
 import { resolve } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
@@ -20,7 +21,7 @@ const access = () => ({
 const app = (db) =>
   createOntave({
     storage: db.storage,
-    model: fixtureAdapter(() => personFixture("Ramesh")),
+    model: fixtureAdapter((task) => personFixture(task.text)),
     authorize: access,
   });
 const original = app(source);
@@ -91,6 +92,29 @@ try {
     payload: { kind: "text", text: "Ramesh" },
   });
   const waiting = await original.worker.runOnce(null);
+  const abandoned = await original.ingest(null, {
+    source: "restore",
+    idempotencyKey: "abandoned",
+    payload: { kind: "text", text: "Recoverable" },
+  });
+  const child = fork(resolve("tests/helpers/worker-child.mjs"), [], {
+    execPath: process.execPath,
+    env: {
+      ...process.env,
+      ONTAVE_TEST_DATABASE: source.connectionString,
+      ONTAVE_TEST_WORKSPACE: workspaceId,
+      ONTAVE_TEST_MODE: "hang",
+    },
+    stdio: ["ignore", "ignore", "pipe", "ipc"],
+  });
+  await once(child, "message", { signal: AbortSignal.timeout(5000) });
+  const dead = once(child, "exit");
+  child.kill("SIGKILL");
+  await dead;
+  assert.equal(
+    (await original.jobs.get(null, abandoned.job_id)).state,
+    "processing",
+  );
   const before = await snapshot(source);
   const dir = await mkdtemp(resolve("artifacts/restore-"));
   const dump = resolve(dir, "ontave.dump");
@@ -136,6 +160,22 @@ try {
       0,
     ),
   );
+  const recovery = await restored.worker.runOnce(null);
+  assert.equal(recovery.jobId, abandoned.job_id);
+  assert.equal(recovery.state, "waiting_review");
+  const events = await restored.jobs.attempts(null, abandoned.job_id);
+  assert.equal(events.filter((e) => e.event === "started").length, 2);
+  assert.equal(events.filter((e) => e.event === "lease_expired").length, 1);
+  assert.equal(
+    events.find((e) => e.event === "lease_expired").details.usage,
+    "unknown",
+  );
+  const pendingPage = await restored.entities.find(null, {
+    contractId: contract.id,
+    contractHash: contract.hash,
+    conceptId: "person",
+  });
+  assert.equal(pendingPage.records.length, 1);
   const report = {
     ok: true,
     createdAt: new Date().toISOString(),
@@ -151,9 +191,12 @@ try {
       restrictedRuntimeRole: true,
       wrongWorkspaceEmpty: true,
       migrationPlanClean: true,
+      abandonedProcessingJobRecovered: true,
+      abandonedUsageExplicitlyUnknown: true,
+      recoveryDidNotPublishFacts: true,
     },
     limitations: [
-      "No in-flight processing lease was restored in this exercise; separate fencing tests cover expired worker leases.",
+      "Restored an abandoned processing job after killing its worker; no live connection was migrated between databases.",
       "No managed backup service or automatic application rollback is supplied.",
     ],
   };

@@ -1,0 +1,502 @@
+{
+  "definitions": {
+    "solar": {
+      "concepts": [
+        {
+          "id": "inquiry",
+          "name": "inquiry",
+          "description": "A request for a quantity; competing reports stay separate",
+          "fields": [
+            {
+              "id": "quantity",
+              "name": "quantity",
+              "description": "Explicit panel quantity",
+              "type": "integer"
+            }
+          ]
+        },
+        {
+          "id": "installation",
+          "name": "installation",
+          "description": "Referenced installation work; explicit dates only, relative/unknown dates stay unresolved",
+          "fields": [
+            {
+              "id": "is_complete",
+              "name": "is_complete",
+              "description": "Explicit completion state; not complete means false",
+              "type": "boolean",
+              "optional": true
+            },
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Installation reference",
+              "type": "text"
+            },
+            {
+              "id": "scheduled_date",
+              "name": "scheduled_date",
+              "description": "Explicit calendar date only",
+              "type": "date",
+              "optional": true
+            }
+          ]
+        },
+        {
+          "id": "organization",
+          "name": "Organization",
+          "description": "An organization",
+          "fields": [
+            {
+              "id": "name",
+              "name": "Name",
+              "description": "Display name",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "payment_claim",
+          "name": "payment_claim",
+          "description": "A source's claim of transferring money; never a confirmed receipt",
+          "fields": [
+            {
+              "id": "amount",
+              "name": "amount",
+              "description": "Claimed transfer amount",
+              "type": "money"
+            }
+          ]
+        },
+        {
+          "id": "payment_confirmation",
+          "name": "payment_confirmation",
+          "description": "A bank receipt; amount verified only with explicit trusted host authorization",
+          "fields": [
+            {
+              "id": "amount",
+              "name": "amount",
+              "description": "Amount confirmed by bank receipt",
+              "type": "money"
+            },
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Bank receipt reference",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "person",
+          "name": "Person",
+          "description": "An individual person",
+          "fields": [
+            {
+              "id": "email",
+              "name": "Email",
+              "description": "Reported email address",
+              "type": "text",
+              "optional": true
+            },
+            {
+              "id": "name",
+              "name": "Name",
+              "description": "Display name",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "quotation",
+          "name": "quotation",
+          "description": "A referenced quotation, including proposed revisions; never automatically supersedes an accepted value",
+          "fields": [
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Quotation reference",
+              "type": "text"
+            },
+            {
+              "id": "total",
+              "name": "total",
+              "description": "Explicit quotation total",
+              "type": "money",
+              "optional": true
+            }
+          ]
+        }
+      ],
+      "relations": [
+        {
+          "id": "affiliated_with",
+          "name": "affiliated_with",
+          "source": "person",
+          "target": "organization"
+        },
+        {
+          "id": "claim_person",
+          "name": "claim_person",
+          "source": "payment_claim",
+          "target": "person"
+        },
+        {
+          "id": "claim_quotation",
+          "name": "claim_quotation",
+          "source": "payment_claim",
+          "target": "quotation"
+        },
+        {
+          "id": "confirmation_quotation",
+          "name": "confirmation_quotation",
+          "source": "payment_confirmation",
+          "target": "quotation"
+        },
+        {
+          "id": "inquiry_organization",
+          "name": "inquiry_organization",
+          "source": "inquiry",
+          "target": "organization"
+        },
+        {
+          "id": "inquiry_person",
+          "name": "inquiry_person",
+          "source": "inquiry",
+          "target": "person"
+        },
+        {
+          "id": "inquiry_quotation",
+          "name": "inquiry_quotation",
+          "source": "inquiry",
+          "target": "quotation"
+        },
+        {
+          "id": "installation_assigned",
+          "name": "installation_assigned",
+          "source": "installation",
+          "target": "person"
+        },
+        {
+          "id": "installation_quotation",
+          "name": "installation_quotation",
+          "source": "installation",
+          "target": "quotation"
+        },
+        {
+          "id": "quotation_organization",
+          "name": "quotation_organization",
+          "source": "quotation",
+          "target": "organization"
+        }
+      ]
+    },
+    "rental": {
+      "concepts": [
+        {
+          "id": "asset",
+          "name": "asset",
+          "description": "A referenced rental asset",
+          "fields": [
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Asset reference",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "condition_observation",
+          "name": "condition_observation",
+          "description": "A reported asset condition, including damage",
+          "fields": [
+            {
+              "id": "description",
+              "name": "description",
+              "description": "Explicit condition",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "maintenance_request",
+          "name": "maintenance_request",
+          "description": "A request to schedule maintenance; not completed maintenance",
+          "fields": [
+            {
+              "id": "description",
+              "name": "description",
+              "description": "Requested maintenance activity",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "organization",
+          "name": "Organization",
+          "description": "An organization",
+          "fields": [
+            {
+              "id": "name",
+              "name": "Name",
+              "description": "Display name",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "person",
+          "name": "Person",
+          "description": "An individual person",
+          "fields": [
+            {
+              "id": "email",
+              "name": "Email",
+              "description": "Reported email address",
+              "type": "text",
+              "optional": true
+            },
+            {
+              "id": "name",
+              "name": "Name",
+              "description": "Display name",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "relations": [
+        {
+          "id": "condition_asset",
+          "name": "condition_asset",
+          "source": "condition_observation",
+          "target": "asset"
+        },
+        {
+          "id": "maintenance_asset",
+          "name": "maintenance_asset",
+          "source": "maintenance_request",
+          "target": "asset"
+        }
+      ]
+    }
+  },
+  "patches": {
+    "solar": {
+      "concepts": [
+        {
+          "id": "inquiry",
+          "name": "inquiry",
+          "description": "A request for a quantity; competing reports stay separate",
+          "fields": [
+            {
+              "id": "quantity",
+              "name": "quantity",
+              "description": "Explicit panel quantity",
+              "type": "integer"
+            }
+          ]
+        },
+        {
+          "id": "quotation",
+          "name": "quotation",
+          "description": "A referenced quotation, including proposed revisions; never automatically supersedes an accepted value",
+          "fields": [
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Quotation reference",
+              "type": "text"
+            },
+            {
+              "id": "total",
+              "name": "total",
+              "description": "Explicit quotation total",
+              "type": "money",
+              "optional": true
+            }
+          ]
+        },
+        {
+          "id": "payment_claim",
+          "name": "payment_claim",
+          "description": "A source's claim of transferring money; never a confirmed receipt",
+          "fields": [
+            {
+              "id": "amount",
+              "name": "amount",
+              "description": "Claimed transfer amount",
+              "type": "money"
+            }
+          ]
+        },
+        {
+          "id": "payment_confirmation",
+          "name": "payment_confirmation",
+          "description": "A bank receipt; amount verified only with explicit trusted host authorization",
+          "fields": [
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Bank receipt reference",
+              "type": "text"
+            },
+            {
+              "id": "amount",
+              "name": "amount",
+              "description": "Amount confirmed by bank receipt",
+              "type": "money"
+            }
+          ]
+        },
+        {
+          "id": "installation",
+          "name": "installation",
+          "description": "Referenced installation work; explicit dates only, relative/unknown dates stay unresolved",
+          "fields": [
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Installation reference",
+              "type": "text"
+            },
+            {
+              "id": "scheduled_date",
+              "name": "scheduled_date",
+              "description": "Explicit calendar date only",
+              "type": "date",
+              "optional": true
+            },
+            {
+              "id": "is_complete",
+              "name": "is_complete",
+              "description": "Explicit completion state; not complete means false",
+              "type": "boolean",
+              "optional": true
+            }
+          ]
+        }
+      ],
+      "relations": [
+        {
+          "id": "affiliated_with",
+          "name": "affiliated_with",
+          "source": "person",
+          "target": "organization"
+        },
+        {
+          "id": "inquiry_person",
+          "name": "inquiry_person",
+          "source": "inquiry",
+          "target": "person"
+        },
+        {
+          "id": "inquiry_organization",
+          "name": "inquiry_organization",
+          "source": "inquiry",
+          "target": "organization"
+        },
+        {
+          "id": "inquiry_quotation",
+          "name": "inquiry_quotation",
+          "source": "inquiry",
+          "target": "quotation"
+        },
+        {
+          "id": "quotation_organization",
+          "name": "quotation_organization",
+          "source": "quotation",
+          "target": "organization"
+        },
+        {
+          "id": "claim_person",
+          "name": "claim_person",
+          "source": "payment_claim",
+          "target": "person"
+        },
+        {
+          "id": "claim_quotation",
+          "name": "claim_quotation",
+          "source": "payment_claim",
+          "target": "quotation"
+        },
+        {
+          "id": "confirmation_quotation",
+          "name": "confirmation_quotation",
+          "source": "payment_confirmation",
+          "target": "quotation"
+        },
+        {
+          "id": "installation_quotation",
+          "name": "installation_quotation",
+          "source": "installation",
+          "target": "quotation"
+        },
+        {
+          "id": "installation_assigned",
+          "name": "installation_assigned",
+          "source": "installation",
+          "target": "person"
+        }
+      ]
+    },
+    "rental": {
+      "concepts": [
+        {
+          "id": "asset",
+          "name": "asset",
+          "description": "A referenced rental asset",
+          "fields": [
+            {
+              "id": "reference",
+              "name": "reference",
+              "description": "Asset reference",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "condition_observation",
+          "name": "condition_observation",
+          "description": "A reported asset condition, including damage",
+          "fields": [
+            {
+              "id": "description",
+              "name": "description",
+              "description": "Explicit condition",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "id": "maintenance_request",
+          "name": "maintenance_request",
+          "description": "A request to schedule maintenance; not completed maintenance",
+          "fields": [
+            {
+              "id": "description",
+              "name": "description",
+              "description": "Requested maintenance activity",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "relations": [
+        {
+          "id": "condition_asset",
+          "name": "condition_asset",
+          "source": "condition_observation",
+          "target": "asset"
+        },
+        {
+          "id": "maintenance_asset",
+          "name": "maintenance_asset",
+          "source": "maintenance_request",
+          "target": "asset"
+        }
+      ]
+    }
+  }
+}

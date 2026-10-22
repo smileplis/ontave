@@ -39,6 +39,10 @@ export async function disposablePostgres() {
   const admin = new Pool({
     connectionString: `postgresql://postgres:${password}@127.0.0.1:${port}/postgres`,
   });
+  let stopping = false;
+  admin.on("error", (error) => {
+    if (!stopping) throw error;
+  });
   await admin.query(
     `CREATE ROLE ontave_runtime LOGIN PASSWORD '${password}' NOSUPERUSER NOBYPASSRLS`,
   );
@@ -50,6 +54,7 @@ export async function disposablePostgres() {
     connectionString,
     port,
     async stop() {
+      stopping = true;
       await admin.end();
       await pg.stop();
     },

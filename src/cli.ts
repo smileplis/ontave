@@ -9,15 +9,17 @@ import { migrationPlan, migrate } from "./postgres.js";
 import { check, OntaveError } from "./core.js";
 import type { Ontave } from "./runtime.js";
 
-const help = `Ontave 0.1.0-alpha.0 (private development build)
+const help = `Ontave development alpha
 Usage: ontave <command> [action] --config ./ontave.config.mjs --input request.json
 
+playground [--install]       Run the key-free local PostgreSQL playground
 init                         Create a local config template without overwriting
 doctor                       Check runtime configuration and workspace access
 migrate plan|apply           Explicit internal migrations (apply requires --yes)
 workspace create             Explicit authorized provisioning
 ingest                       Preserve a text/JSON input and return its receipt
 status                       List scoped jobs and states
+metrics                      Workspace operational counts and machine latency
 worker [once]                Process scoped jobs; continuous mode handles shutdown
 review show|resolve-identity|resolve-conflict|amend|accept|reject
 ontology inspect|propose|diff|validate|evaluate|publish|reject
@@ -30,10 +32,13 @@ Use --id for show/diff/pull, --input for mutations and queries. Publication,
 review acceptance and migration apply require --yes with exact request digests.
 No command publishes to npm or creates hosted infrastructure.
 `;
-const args = parseArgs({
+let parseFailure = false;
+const options = {
   allowPositionals: true,
   options: {
     config: { type: "string" },
+    port: { type: "string" },
+    install: { type: "boolean" },
     input: { type: "string" },
     id: { type: "string" },
     output: { type: "string" },
@@ -41,7 +46,15 @@ const args = parseArgs({
     json: { type: "boolean" },
     help: { type: "boolean" },
   },
-});
+} as const;
+const args = (() => {
+  try {
+    return parseArgs(options);
+  } catch {
+    parseFailure = true;
+    return parseArgs({ ...options, args: [] });
+  }
+})();
 const [command = "help", action] = args.positionals;
 async function readInput() {
   check(
@@ -49,16 +62,40 @@ async function readInput() {
     "INVALID_INPUT",
     "Use --input with an explicit JSON file",
   );
-  return JSON.parse(await readFile(resolve(args.values.input), "utf8"));
+  try {
+    return JSON.parse(await readFile(resolve(args.values.input), "utf8"));
+  } catch {
+    throw new OntaveError(
+      "INVALID_INPUT",
+      "Input file must be readable valid JSON",
+    );
+  }
 }
 async function main(): Promise<unknown> {
+  check(
+    !parseFailure,
+    "INVALID_INPUT",
+    "Invalid command arguments; run ontave help",
+  );
   if (command === "help" || args.values.help) {
     process.stdout.write(help);
     return;
   }
   if (command === "version") {
-    process.stdout.write("0.1.0-alpha.0\n");
+    const pkg = JSON.parse(
+      await readFile(new URL("../package.json", import.meta.url), "utf8"),
+    );
+    process.stdout.write(pkg.version + "\n");
     return;
+  }
+  if (command === "playground") {
+    check(!action, "INVALID_INPUT", "Use playground without an action");
+    const { startPlayground } = await import("./playground.js");
+    return startPlayground({
+      port:
+        args.values.port === undefined ? undefined : Number(args.values.port),
+      install: args.values.install,
+    });
   }
   if (command === "init") {
     const path = resolve(args.values.output ?? "ontave.config.mjs");
@@ -93,7 +130,7 @@ async function main(): Promise<unknown> {
   const app = cfg.runtime as Ontave,
     ctx = cfg.context;
   check(
-    app && ctx,
+    app && Object.hasOwn(cfg, "context"),
     "INVALID_INPUT",
     "Config must provide runtime and authorized context",
   );
@@ -135,7 +172,13 @@ async function main(): Promise<unknown> {
       return await app.workspaces.create(ctx, await readInput());
     if (command === "ingest") return await app.ingest(ctx, await readInput());
     if (command === "status") return await app.jobs.list(ctx);
+    if (command === "metrics") return await app.metrics.summary(ctx);
     if (command === "worker") {
+      check(
+        !action || action === "once",
+        "INVALID_INPUT",
+        "Use worker or worker once",
+      );
       if (action === "once") return await app.worker.runOnce(ctx);
       let stopping = false;
       let drain: NodeJS.Timeout | undefined;

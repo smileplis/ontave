@@ -362,4 +362,94 @@ test("concurrency, stale workers, source verification, corrections and typed unc
       );
     },
   );
+  await t.test(
+    "two workers racing for one queued job reserve one call",
+    async () => {
+      let calls = 0;
+      handler = (task) => {
+        calls++;
+        return personFixture(task.text);
+      };
+      await app.ingest(null, {
+        source: "one-claim",
+        idempotencyKey: "1",
+        payload: { kind: "text", text: "Solo" },
+      });
+      const results = await Promise.all([
+        app.worker.runOnce(null),
+        app.worker.runOnce(null),
+      ]);
+      assert.equal(
+        results.filter((x) => x?.state === "waiting_review").length,
+        1,
+      );
+      assert.equal(results.filter((x) => x === null).length, 1);
+      assert.equal(calls, 1);
+    },
+  );
+  await t.test(
+    "correction and retraction staging retries retain exact prior effects",
+    async () => {
+      const row = (await app.entities.find(null, q)).records.find(
+          (r) => r.id === entityId,
+        ),
+        history = await app.assertions.explain(null, entityId),
+        target = history.find(
+          (a) =>
+            a.field_id === "email" &&
+            a.kind === "set" &&
+            a.value === "a@example.test",
+        );
+      const input = {
+        targetAssertionId: target.id,
+        expectedRevision: row.revision,
+        value: "c@example.test",
+        statement: "The corrected address is c@example.test",
+        requestKey: "direct-correction",
+        reason: "Explicit correction source",
+      };
+      const staged = await app.assertions.correct(null, input);
+      assert.deepEqual(await app.assertions.correct(null, input), staged);
+      assert.equal(
+        (await app.entities.find(null, q)).records.find(
+          (r) => r.id === entityId,
+        ).fields.email.value,
+        "a@example.test",
+      );
+      await app.reviews.accept(null, {
+        bundleId: staged.bundleId,
+        digest: staged.digest,
+        requestKey: "accept-direct-correction",
+        reason: "Checked exact correction",
+      });
+      const after = (await app.entities.find(null, q)).records.find(
+          (r) => r.id === entityId,
+        ),
+        corrected = (await app.assertions.explain(null, entityId)).find(
+          (a) => a.value === "c@example.test",
+        );
+      assert.equal(after.fields.email.value, "c@example.test");
+      const retract = {
+          targetAssertionId: corrected.id,
+          expectedRevision: after.revision,
+          statement: "Withdraw c@example.test",
+          requestKey: "direct-retraction",
+          reason: "Explicit withdrawal source",
+        },
+        withdrawn = await app.assertions.retract(null, retract);
+      assert.deepEqual(await app.assertions.retract(null, retract), withdrawn);
+      await app.reviews.accept(null, {
+        bundleId: withdrawn.bundleId,
+        digest: withdrawn.digest,
+        requestKey: "accept-direct-retraction",
+        reason: "Exact withdrawal reviewed",
+      });
+      assert.equal(
+        (await app.entities.find(null, q)).records.find(
+          (r) => r.id === entityId,
+        ).fields.email.state,
+        "missing",
+      );
+    },
+  );
 });

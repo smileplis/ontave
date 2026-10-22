@@ -17,13 +17,13 @@ A receipt preserves evidence and a job together. `queued` and due `retry_schedul
 
 Workers reserve their call budget before inference, renew leases and check owner/fence/expiry before staging. A process crash can incur an unknown/repeated provider charge; canonical effects remain fenced. Restart a worker after lease expiry to reclaim abandoned work. Explicit reprocessing creates another interpretation and retains accepted identity/correction history.
 
-SIGINT/SIGTERM stop CLI claims and allow up to ten seconds to drain; an unfinished job is recovered through its lease. Supervisor restarts should back off on storage/configuration errors. The remaining real-process crash/shutdown acceptance cases are tracked in implementation status.
+SIGINT/SIGTERM stop CLI claims and allow up to ten seconds to drain; an unfinished job is recovered through its lease. Supervisor restarts should back off on storage/configuration errors. Real SIGKILL/restart, cooperative drain and ten-second hung-call shutdown have dedicated process tests. `jobs.attempts` retains claim, completion/failure and expired-lease events. A late stale response records available usage without replacing current work.
 
 Generated proposal requests reserve one call per key. Inspect `ontology.proposalStatus` before explicitly issuing another key after a failed/abandoned request. Never infer an approved candidate or accepted fact from a provider response alone.
 
 ## Backup and restore procedure
 
-The operator exercise is implemented in `scripts/verify-restore.mjs`. It passed with PostgreSQL 18 client tools and two disposable instances: all 17 table content hashes matched; evidence, accepted contract reads, waiting identity state, restricted-role isolation and the migration ledger were verified. This exercise restores a stopped boundary, not an in-flight lease. Set `ONTAVE_PG_CLIENT_BIN` to your PostgreSQL client-tool directory when needed.
+The operator exercise is implemented in `scripts/verify-restore.mjs`. It passed with PostgreSQL 18 client tools and two disposable instances: all 18 table content hashes matched; evidence, accepted contract reads, waiting identity state, restricted-role isolation and the migration ledger were verified. It also restores an abandoned processing job after killing its original worker, verifies lease-expiry reclaim and confirms that resumed extraction remains unpublished pending review. Set `ONTAVE_PG_CLIENT_BIN` to your PostgreSQL client-tool directory when needed.
 
 1. Stop ingesters and workers at a recorded application boundary. Record counts and hashes for evidence, versions, contracts, assertions, decisions and pending jobs using an authorized operator connection.
 2. With an operator role able to read every scoped table, run `pg_dump --format=custom --file=ontave.dump` using a private libpq service/passfile. Do not put database passwords in command history. The dump is a consistent database snapshot; role definitions require separate operator handling. [PostgreSQL dump documentation](https://www.postgresql.org/docs/18/backup-dump.html).

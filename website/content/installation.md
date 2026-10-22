@@ -1,3 +1,7 @@
+## Try before integrating
+
+The [browser sandbox](/playground/) needs no setup. The [local playground](/docs/quickstart/) prepares a real temporary PostgreSQL database with one explicit command. Use that first to explore the complete model and fact review flow.
+
 ## Supported baseline
 
 | Component  | Tested baseline                         |
@@ -10,13 +14,13 @@
 
 Other Node, database, edge and browser combinations are not yet part of the verified support matrix.
 
-## Install the public alpha archive
+## Install the developer preview
 
 ```sh
-npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.1/ontave-0.1.0-alpha.1.tgz
+npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz
 ```
 
-The GitHub release includes the tested npm-format archive. It can be installed by npm without a registry publication.
+The versioned GitHub developer-preview release includes the tested npm-format archive. It can be installed by npm without a registry publication.
 
 ## Build from source
 
@@ -33,7 +37,7 @@ npm pack --pack-destination artifacts
 Install the resulting tarball in your application:
 
 ```sh
-npm install ../ontave/artifacts/ontave-0.1.0-alpha.1.tgz
+npm install ../ontave/artifacts/ontave-0.1.0-alpha.2.tgz
 npx ontave help
 ```
 
@@ -49,7 +53,7 @@ import { groq } from "ontave/models/groq";
 import { fixtureAdapter } from "ontave/testing";
 ```
 
-Imports do not start a worker, read provider keys, apply migrations or contact a model. Select and configure those operations explicitly.
+Core imports do not start a worker, read provider keys, apply migrations, install playground tooling or contact a model. Select and configure those operations explicitly.
 
 ## Next steps
 

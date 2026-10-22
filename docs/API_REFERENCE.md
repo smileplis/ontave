@@ -4,7 +4,7 @@ The package exposes a server runtime through `createOntave`. Every operation rec
 
 ## Runtime configuration
 
-Supply a `Storage`, `ModelAdapter` and authorization callback. `postgres` is imported separately from `ontave/postgres`; provider factories use `ontave/models/gemini` or `ontave/models/groq`. Deterministic adapters use `ontave/testing`. Construction/import performs no migration, inference or worker startup. Call `close` when the process finishes.
+Supply a `Storage`, `ModelAdapter` and authorization callback. `postgres` is imported separately from `ontave/postgres`; provider factories use separate `ontave/models/gemini`, `groq`, `mistral` or `openrouter` entry points. Deterministic adapters use `ontave/testing`. Construction/import performs no migration, inference or worker startup. Call `close` when the process finishes.
 
 `cursorSecret` should be a stable private secret of at least 32 characters when requests span processes. The development default is random per instance. `identifierRules` explicitly allow authority/kind combinations; names and unconfigured email addresses do not authorize automatic linking. `sourcePolicies` lists fields a specific trusted source may verify. A reviewer statement uses the separate `reviewer-attestation` policy.
 
@@ -26,12 +26,12 @@ The default metadata keys are `sourceEventTime`, `sourceTimezone`, `sourceRefere
 | `reviews.accept/reject`                  | Exact `bundleId`, `digest`, `requestKey`, `reason`; acceptance checks current dependencies and entity revisions atomically                                                                |
 | `reviews.resolveConflict`                | `entityId`, `fieldId`, `expectedRevision`, selected current assertion ID or explicit null, `statement`, key and reason; stages a source selection, or records a still-unresolved conflict |
 | `assertions.explain(context, entityId)`  | Inspect original assertions, evidence references, byte spans/JSON paths and retractions                                                                                                   |
-| `assertions.correct/retract`             | Target assertion ID, expected entity revision, statement, key and reason; correction also supplies typed value; returns a staged bundle                                                   |
+| `assertions.correct/retract`             | Field assertion ID, expected entity revision, statement, key and reason; correction also supplies typed value; returns a staged bundle                                                    |
 | `assertions.attest`                      | Entity/field, expected revision, typed value, statement, key/reason and optional verification; preserves separate authenticated evidence and still requires acceptance                    |
 | `ontology.inspect/diff`                  | Read active definitions or a selected immutable candidate                                                                                                                                 |
 | `ontology.propose`                       | Supporting `evidenceIds`, `requestKey`, `reason`; optional explicit additive `patch`. Omit patch to request model generation from current unresolved observations                         |
 | `ontology.proposalStatus`                | Read state/result/error for a generated-proposal request key                                                                                                                              |
-| `evaluations.registerSuite/evaluate/get` | Register a bounded immutable extract/contract suite, then evaluate a selected candidate and suite; publication needs a passing exact artifact                                             |
+| `evaluations.registerSuite/evaluate/get` | Register a bounded immutable extract/contract/read suite, then evaluate a selected candidate and suite; publication needs a passing exact artifact                                        |
 | `ontology.publish/reject`                | Candidate ID/hash, key/reason; publication also names exact evaluation ID/hash and checks the base head                                                                                   |
 | `contracts.register/pull`                | Explicit selected `Definition` or contract ID; returns a pinned contract and source ontology lineage                                                                                      |
 | `entities.find`                          | Exact contract ID/hash, concept, supported predicates/order, page limit/cursor and optional one-hop relationship IDs                                                                      |
@@ -56,3 +56,31 @@ Model factories request at most 4,096 output tokens and reject refusals/truncati
 `OntaveError` exposes `code`, safe `message` and `retryable`. Common codes include `INVALID_INPUT`, `UNAUTHORIZED`, `FORBIDDEN`, `NOT_FOUND`, `IDEMPOTENCY_CONFLICT`, `STALE_BUNDLE`, `STALE_BASE`, `STALE_ONTOLOGY`, `UNRESOLVED_IDENTITY`, `UNRESOLVED_CONFLICT`, `VALIDATION_FAILED`, `UNSUPPORTED_EVOLUTION`, `CONTRACT_NOT_AVAILABLE`, `EVALUATION_INCOMPLETE`, `BUDGET_EXHAUSTED`, `MODEL_UNAVAILABLE`, `INVALID_MODEL_OUTPUT`, `LEASE_LOST`, `OPERATION_IN_PROGRESS` and `STORAGE_UNAVAILABLE`. CLI success exits 0; failures exit 1 with a safe JSON error on stderr.
 
 Failed evaluations persist a non-passing artifact with available traces and usage. The thrown `OntaveError.details.evaluationId` identifies it for `evaluations.get`; the CLI exposes `evaluation get --id`.
+
+## Alpha.2 evaluation and operations
+
+`jobs.attempts(context, jobId)` requires read capability and returns append-only `started`, `completed`, `failed` and `lease_expired` events with fences and available usage. A killed process can leave an unfinished attempt with unknown usage. Late fenced responses retain accounting without replacing a current bundle.
+
+`metrics.summary(context)` returns workspace-scoped aggregate counts and machine latency. See [measured user benefits](USER_BENEFITS.md); it is not an accuracy estimator or a human time-saving claim. The CLI exposes `ontave metrics --config …`.
+
+Evaluation now supports three closed task kinds:
+
+- `extract`: authorized evidence, expected normalized field claims, optional entity-name/source checks, identities, relationships and observations. Matches are one-to-one; duplicate claims cannot increase precision. Relationship endpoints can use a display name or selected field values. Explicit empty expectations test abstention.
+- `contract`: a registered earlier contract must remain compatible on both sides.
+- `read`: an explicit definition, at most 100 complete fixture records, a closed structured query and expected records/continuation or supported error. Parent and candidate run the same SQL implementation over the same immutable JSON fixture CTEs. No workspace entities, assertions or projections are written.
+
+Suites cap at 40 tasks, 80 inference calls, ten minutes and 1 MiB encoded size. Budgets must cover both sides of every extraction task. Read fixtures require complete declared relationship endpoints and do not accept SQL or JavaScript. Passing evaluation still requires new capability and no candidate task failures. Reports retain per-side output, scores, hashes, usage and failed-attempt details. Expected text fields may declare up to 20 explicit `equivalentValues`; the suite hash binds them. They cannot relax non-text values, verification or evidence matching. Equivalence policy must be frozen before a trial. A changed policy requires a new trial/version, retaining earlier results.
+
+`ontology.diff` now includes structural reuse warnings and earlier rejected candidates with the same parent and definition. Shared field shapes are review hints; they do not establish semantic equivalence or authorize reuse automatically. Explicit new request keys and reasons are required to reconsider a rejected proposal.
+
+`reviews.amend` can revise a waiting-ontology interpretation to dismiss an incorrect discovery observation while retaining the original evidence and interpretation. The new extraction must use approved definitions and existing mention identities. Remaining observations retain the ontology waiting state; dropping an observation never transfers an old acceptance to the changed digest. Relationship withdrawal/replacement uses reviewed amendment retractions bound to current entity revisions. `assertions.correct/retract` is field-only. Distinct sources retain separate relationship support, while one-hop reads deduplicate target IDs; replay cannot resurrect withdrawn support.
+
+The experimental `ontave/models/mistral` and `ontave/models/openrouter` factories accept explicit `{apiKey, model}` and have no environment reads, automatic model fallback or implicit runtime startup. Their complete encoded request is limited to 15,360 bytes and output to 4,096 tokens; this byte guard is not provider-certified token accounting. OpenRouter requires parameter support and disables fallback routes. Actual route/model metadata and available usage are retained. The shared provider schema uses typed per-concept alternatives with closed fields. Date formats, safe integers and enums are constrained before generation; runtime validation remains authoritative. Existing IDs are limited to the authorized candidates of that concept, and identifiers require configured host rules. For text of at most 1,024 bytes, quotations bind the complete immutable source with occurrence zero. Longer text requires exact source quotes; JSON requires valid paths and values. These source anchors prevent invented quotations but do not prove that an interpretation is correct. Gemini retains provider token preflight. The trusted host supplies the list of fields permitted to be marked verified; source text cannot grant that permission.
+
+Provider references: [Mistral custom structured output](https://docs.mistral.ai/studio/conversations/structured-output/custom), [OpenRouter structured output](https://openrouter.ai/docs/guides/features/structured-outputs), [Gemini structured output limits](https://ai.google.dev/gemini-api/docs/structured-output).
+
+## Local developer playground
+
+`ontave playground --install [--port 4320]` explicitly starts a loopback-only interactive example. It prepares a temporary PostgreSQL database and restricted runtime role, runs the public SDK with a fictional fixture adapter, and removes the temporary database on normal shutdown. If the optional `embedded-postgres` tooling is missing, `--install` permits a pinned tooling install in the temporary directory. Core import/install does not load or install that tooling. The playground supports only its two supplied fictional scenarios; use a configured server adapter for arbitrary messages.
+
+The corresponding browser sandbox replays generated SDK reference runs. It is labelled separately from the local PostgreSQL runtime. The example’s authored evaluation expectations and explicit identity-confirmation action are teaching orchestration, not an automatic discovery or identity policy added to the core.

@@ -204,3 +204,49 @@ test("Gemini preflight boundary is inclusive and custom lower limit is enforced"
     gemini({ apiKey: "test", model: "test", maxInputTokens: 16385 }),
   );
 });
+
+test("Gemini schema binds short source anchors, concept fields and authorized ID choices", async () => {
+  const id = "00000000-0000-4000-8000-000000000001";
+  const a = gemini({
+    apiKey: "fake",
+    model: "test",
+    fetch: async (url, init) => {
+      const body = JSON.parse(init.body),
+        schema = (body.generateContentRequest ?? body).generationConfig
+          .responseJsonSchema;
+      const person = schema.properties.entities.items.anyOf.find(
+        (v) => v.properties.conceptId.enum[0] === "person",
+      );
+      assert.deepEqual(person.properties.existingId.enum, [id]);
+      assert.equal(person.properties.fields.properties.amount, undefined);
+      assert.deepEqual(
+        person.properties.fields.properties.name.properties.quote.enum,
+        [task.text],
+      );
+      assert.deepEqual(
+        person.properties.fields.properties.name.properties.occurrence.enum,
+        [0],
+      );
+      if (url.endsWith(":countTokens"))
+        return Response.json({ totalTokens: 100 });
+      return Response.json({
+        candidates: [
+          {
+            finishReason: "STOP",
+            content: {
+              parts: [
+                {
+                  text: '{"entities":[],"relationships":[],"observations":[]}',
+                },
+              ],
+            },
+          },
+        ],
+      });
+    },
+  });
+  await a.extract({
+    ...task,
+    candidates: [{ id, name: "Rahul", conceptId: "person" }],
+  });
+});

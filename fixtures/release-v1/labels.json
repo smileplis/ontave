@@ -1,0 +1,7031 @@
+[
+  {
+    "id": "SOLAR-001",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul Sharma from ABC Solar requests 11 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul Sharma",
+        "quote": "Rahul Sharma",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 11,
+        "quote": "11",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul Sharma"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Rahul Sharma from ABC Solar requests 11 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 11
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul Sharma"
+          }
+        },
+        "quote": "Rahul Sharma from ABC Solar requests 11 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 11
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Rahul Sharma from ABC Solar requests 11 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Rahul Sharma",
+          "fields": {
+            "name": {
+              "value": "Rahul Sharma",
+              "quote": "Rahul Sharma",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "11 panels",
+          "fields": {
+            "quantity": {
+              "value": 11,
+              "quote": "11",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Rahul Sharma from ABC Solar requests 11 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul Sharma from ABC Solar requests 11 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul Sharma from ABC Solar requests 11 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-002",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Asha Patil from ABC Solar requests 12 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Asha Patil",
+        "quote": "Asha Patil",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 12,
+        "quote": "12",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Asha Patil"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Asha Patil from ABC Solar requests 12 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 12
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Asha Patil"
+          }
+        },
+        "quote": "Asha Patil from ABC Solar requests 12 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 12
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Asha Patil from ABC Solar requests 12 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Asha Patil",
+          "fields": {
+            "name": {
+              "value": "Asha Patil",
+              "quote": "Asha Patil",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "12 panels",
+          "fields": {
+            "quantity": {
+              "value": 12,
+              "quote": "12",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Asha Patil from ABC Solar requests 12 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Asha Patil from ABC Solar requests 12 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Asha Patil from ABC Solar requests 12 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-003",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Riya Shah from ABC Solar requests 13 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Riya Shah",
+        "quote": "Riya Shah",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 13,
+        "quote": "13",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Riya Shah"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Riya Shah from ABC Solar requests 13 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 13
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Riya Shah"
+          }
+        },
+        "quote": "Riya Shah from ABC Solar requests 13 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 13
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Riya Shah from ABC Solar requests 13 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Riya Shah",
+          "fields": {
+            "name": {
+              "value": "Riya Shah",
+              "quote": "Riya Shah",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "13 panels",
+          "fields": {
+            "quantity": {
+              "value": 13,
+              "quote": "13",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Riya Shah from ABC Solar requests 13 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Riya Shah from ABC Solar requests 13 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Riya Shah from ABC Solar requests 13 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-004",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Imran Khan from ABC Solar requests 14 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Imran Khan",
+        "quote": "Imran Khan",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 14,
+        "quote": "14",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Imran Khan"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Imran Khan from ABC Solar requests 14 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 14
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Imran Khan"
+          }
+        },
+        "quote": "Imran Khan from ABC Solar requests 14 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 14
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Imran Khan from ABC Solar requests 14 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Imran Khan",
+          "fields": {
+            "name": {
+              "value": "Imran Khan",
+              "quote": "Imran Khan",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "14 panels",
+          "fields": {
+            "quantity": {
+              "value": 14,
+              "quote": "14",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Imran Khan from ABC Solar requests 14 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Imran Khan from ABC Solar requests 14 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Imran Khan from ABC Solar requests 14 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-005",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Neha Joshi from ABC Solar requests 15 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Neha Joshi",
+        "quote": "Neha Joshi",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 15,
+        "quote": "15",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Neha Joshi"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Neha Joshi from ABC Solar requests 15 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 15
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Neha Joshi"
+          }
+        },
+        "quote": "Neha Joshi from ABC Solar requests 15 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 15
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Neha Joshi from ABC Solar requests 15 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Neha Joshi",
+          "fields": {
+            "name": {
+              "value": "Neha Joshi",
+              "quote": "Neha Joshi",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "15 panels",
+          "fields": {
+            "quantity": {
+              "value": 15,
+              "quote": "15",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Neha Joshi from ABC Solar requests 15 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Neha Joshi from ABC Solar requests 15 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Neha Joshi from ABC Solar requests 15 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-006",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Vikram Rao from ABC Solar requests 16 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Vikram Rao",
+        "quote": "Vikram Rao",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 16,
+        "quote": "16",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Vikram Rao"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Vikram Rao from ABC Solar requests 16 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 16
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Vikram Rao"
+          }
+        },
+        "quote": "Vikram Rao from ABC Solar requests 16 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 16
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Vikram Rao from ABC Solar requests 16 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Vikram Rao",
+          "fields": {
+            "name": {
+              "value": "Vikram Rao",
+              "quote": "Vikram Rao",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "16 panels",
+          "fields": {
+            "quantity": {
+              "value": 16,
+              "quote": "16",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Vikram Rao from ABC Solar requests 16 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Vikram Rao from ABC Solar requests 16 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Vikram Rao from ABC Solar requests 16 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-007",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Pooja Desai from ABC Solar requests 17 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Pooja Desai",
+        "quote": "Pooja Desai",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 17,
+        "quote": "17",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Pooja Desai"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Pooja Desai from ABC Solar requests 17 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 17
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Pooja Desai"
+          }
+        },
+        "quote": "Pooja Desai from ABC Solar requests 17 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 17
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Pooja Desai from ABC Solar requests 17 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Pooja Desai",
+          "fields": {
+            "name": {
+              "value": "Pooja Desai",
+              "quote": "Pooja Desai",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "17 panels",
+          "fields": {
+            "quantity": {
+              "value": 17,
+              "quote": "17",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Pooja Desai from ABC Solar requests 17 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Pooja Desai from ABC Solar requests 17 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Pooja Desai from ABC Solar requests 17 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-008",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Sameer Shah from ABC Solar requests 18 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Sameer Shah",
+        "quote": "Sameer Shah",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 18,
+        "quote": "18",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Sameer Shah"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Sameer Shah from ABC Solar requests 18 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 18
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Sameer Shah"
+          }
+        },
+        "quote": "Sameer Shah from ABC Solar requests 18 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 18
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Sameer Shah from ABC Solar requests 18 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Sameer Shah",
+          "fields": {
+            "name": {
+              "value": "Sameer Shah",
+              "quote": "Sameer Shah",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "18 panels",
+          "fields": {
+            "quantity": {
+              "value": 18,
+              "quote": "18",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Sameer Shah from ABC Solar requests 18 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Sameer Shah from ABC Solar requests 18 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Sameer Shah from ABC Solar requests 18 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-009",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Anil Kumar from ABC Solar requests 19 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Anil Kumar",
+        "quote": "Anil Kumar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 19,
+        "quote": "19",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Anil Kumar"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Anil Kumar from ABC Solar requests 19 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 19
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Anil Kumar"
+          }
+        },
+        "quote": "Anil Kumar from ABC Solar requests 19 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 19
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Anil Kumar from ABC Solar requests 19 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Anil Kumar",
+          "fields": {
+            "name": {
+              "value": "Anil Kumar",
+              "quote": "Anil Kumar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "19 panels",
+          "fields": {
+            "quantity": {
+              "value": 19,
+              "quote": "19",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Anil Kumar from ABC Solar requests 19 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Anil Kumar from ABC Solar requests 19 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Anil Kumar from ABC Solar requests 19 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-010",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Anil Kumar from ABC Solar requests 20 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Anil Kumar",
+        "quote": "Anil Kumar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 20,
+        "quote": "20",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Anil Kumar"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Anil Kumar from ABC Solar requests 20 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 20
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Anil Kumar"
+          }
+        },
+        "quote": "Anil Kumar from ABC Solar requests 20 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 20
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Anil Kumar from ABC Solar requests 20 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Anil Kumar",
+          "fields": {
+            "name": {
+              "value": "Anil Kumar",
+              "quote": "Anil Kumar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "20 panels",
+          "fields": {
+            "quantity": {
+              "value": 20,
+              "quote": "20",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Anil Kumar from ABC Solar requests 20 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Anil Kumar from ABC Solar requests 20 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Anil Kumar from ABC Solar requests 20 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-011",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul S. from ABC Solar requests 21 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul S.",
+        "quote": "Rahul S.",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 21,
+        "quote": "21",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul S."
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Rahul S. from ABC Solar requests 21 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 21
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul S."
+          }
+        },
+        "quote": "Rahul S. from ABC Solar requests 21 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 21
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Rahul S. from ABC Solar requests 21 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Rahul S.",
+          "fields": {
+            "name": {
+              "value": "Rahul S.",
+              "quote": "Rahul S.",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "21 panels",
+          "fields": {
+            "quantity": {
+              "value": 21,
+              "quote": "21",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Rahul S. from ABC Solar requests 21 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul S. from ABC Solar requests 21 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul S. from ABC Solar requests 21 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-012",
+    "workspace": "solar-a",
+    "source": "fictional-inquiry",
+    "sourcePolicy": "untrusted",
+    "text": "Meera Naik from ABC Solar requests 22 solar panels.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Meera Naik",
+        "quote": "Meera Naik",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 22,
+        "quote": "22",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Meera Naik"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Meera Naik from ABC Solar requests 22 solar panels."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 22
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Meera Naik"
+          }
+        },
+        "quote": "Meera Naik from ABC Solar requests 22 solar panels."
+      },
+      {
+        "relationId": "inquiry_organization",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 22
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Meera Naik from ABC Solar requests 22 solar panels."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Meera Naik",
+          "fields": {
+            "name": {
+              "value": "Meera Naik",
+              "quote": "Meera Naik",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "22 panels",
+          "fields": {
+            "quantity": {
+              "value": 22,
+              "quote": "22",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Meera Naik from ABC Solar requests 22 solar panels."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Meera Naik from ABC Solar requests 22 solar panels."
+        },
+        {
+          "relationId": "inquiry_organization",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Meera Naik from ABC Solar requests 22 solar panels."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-013",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-101 for ABC Solar totals INR 450000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "450000",
+          "currency": "INR"
+        },
+        "quote": "INR 450000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101",
+            "total": {
+              "amount": "450000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-101 for ABC Solar totals INR 450000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "450000",
+                "currency": "INR"
+              },
+              "quote": "INR 450000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-101 for ABC Solar totals INR 450000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-014",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-102 for ABC Solar totals INR 451000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-102",
+        "quote": "Q-102",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "451000",
+          "currency": "INR"
+        },
+        "quote": "INR 451000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-102",
+            "total": {
+              "amount": "451000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-102 for ABC Solar totals INR 451000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-102",
+          "fields": {
+            "reference": {
+              "value": "Q-102",
+              "quote": "Q-102",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "451000",
+                "currency": "INR"
+              },
+              "quote": "INR 451000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-102 for ABC Solar totals INR 451000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-015",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-103 for ABC Solar totals INR 452000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-103",
+        "quote": "Q-103",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "452000",
+          "currency": "INR"
+        },
+        "quote": "INR 452000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-103",
+            "total": {
+              "amount": "452000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-103 for ABC Solar totals INR 452000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-103",
+          "fields": {
+            "reference": {
+              "value": "Q-103",
+              "quote": "Q-103",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "452000",
+                "currency": "INR"
+              },
+              "quote": "INR 452000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-103 for ABC Solar totals INR 452000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-016",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-104 for ABC Solar totals INR 453000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-104",
+        "quote": "Q-104",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "453000",
+          "currency": "INR"
+        },
+        "quote": "INR 453000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-104",
+            "total": {
+              "amount": "453000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-104 for ABC Solar totals INR 453000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-104",
+          "fields": {
+            "reference": {
+              "value": "Q-104",
+              "quote": "Q-104",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "453000",
+                "currency": "INR"
+              },
+              "quote": "INR 453000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-104 for ABC Solar totals INR 453000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-017",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-105 for ABC Solar totals INR 454000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-105",
+        "quote": "Q-105",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "454000",
+          "currency": "INR"
+        },
+        "quote": "INR 454000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-105",
+            "total": {
+              "amount": "454000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-105 for ABC Solar totals INR 454000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-105",
+          "fields": {
+            "reference": {
+              "value": "Q-105",
+              "quote": "Q-105",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "454000",
+                "currency": "INR"
+              },
+              "quote": "INR 454000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-105 for ABC Solar totals INR 454000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-018",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-106 for ABC Solar totals INR 455000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-106",
+        "quote": "Q-106",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "455000",
+          "currency": "INR"
+        },
+        "quote": "INR 455000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-106",
+            "total": {
+              "amount": "455000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-106 for ABC Solar totals INR 455000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-106",
+          "fields": {
+            "reference": {
+              "value": "Q-106",
+              "quote": "Q-106",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "455000",
+                "currency": "INR"
+              },
+              "quote": "INR 455000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-106 for ABC Solar totals INR 455000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-019",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-107 for ABC Solar totals INR 456000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-107",
+        "quote": "Q-107",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "456000",
+          "currency": "INR"
+        },
+        "quote": "INR 456000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-107",
+            "total": {
+              "amount": "456000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-107 for ABC Solar totals INR 456000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-107",
+          "fields": {
+            "reference": {
+              "value": "Q-107",
+              "quote": "Q-107",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "456000",
+                "currency": "INR"
+              },
+              "quote": "INR 456000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-107 for ABC Solar totals INR 456000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-020",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-108 for ABC Solar totals INR 457000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-108",
+        "quote": "Q-108",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "457000",
+          "currency": "INR"
+        },
+        "quote": "INR 457000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-108",
+            "total": {
+              "amount": "457000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-108 for ABC Solar totals INR 457000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-108",
+          "fields": {
+            "reference": {
+              "value": "Q-108",
+              "quote": "Q-108",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "457000",
+                "currency": "INR"
+              },
+              "quote": "INR 457000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-108 for ABC Solar totals INR 457000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-021",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-109 for ABC Solar totals INR 458000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-109",
+        "quote": "Q-109",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "458000",
+          "currency": "INR"
+        },
+        "quote": "INR 458000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-109",
+            "total": {
+              "amount": "458000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-109 for ABC Solar totals INR 458000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-109",
+          "fields": {
+            "reference": {
+              "value": "Q-109",
+              "quote": "Q-109",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "458000",
+                "currency": "INR"
+              },
+              "quote": "INR 458000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-109 for ABC Solar totals INR 458000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-022",
+    "workspace": "solar-a",
+    "source": "fictional-quotation",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-110 for ABC Solar totals INR 459000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-110",
+        "quote": "Q-110",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "459000",
+          "currency": "INR"
+        },
+        "quote": "INR 459000",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "ABC Solar",
+        "quote": "ABC Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "quotation_organization",
+        "source": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-110",
+            "total": {
+              "amount": "459000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "ABC Solar"
+          }
+        },
+        "quote": "Quotation Q-110 for ABC Solar totals INR 459000."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-110",
+          "fields": {
+            "reference": {
+              "value": "Q-110",
+              "quote": "Q-110",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "459000",
+                "currency": "INR"
+              },
+              "quote": "INR 459000",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "ABC Solar",
+          "fields": {
+            "name": {
+              "value": "ABC Solar",
+              "quote": "ABC Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "quotation_organization",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Quotation Q-110 for ABC Solar totals INR 459000."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-023",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 50000 for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul",
+        "quote": "Rahul",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_claim",
+        "fieldId": "amount",
+        "value": {
+          "amount": "50000",
+          "currency": "INR"
+        },
+        "quote": "INR 50000",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "claim_person",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "50000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul"
+          }
+        },
+        "quote": "Rahul says he transferred INR 50000 for Q-101."
+      },
+      {
+        "relationId": "claim_quotation",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "50000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Rahul says he transferred INR 50000 for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Rahul",
+          "fields": {
+            "name": {
+              "value": "Rahul",
+              "quote": "Rahul",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "payment_claim",
+          "name": "Transfer claim",
+          "fields": {
+            "amount": {
+              "value": {
+                "amount": "50000",
+                "currency": "INR"
+              },
+              "quote": "INR 50000",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "claim_person",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul says he transferred INR 50000 for Q-101."
+        },
+        {
+          "relationId": "claim_quotation",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul says he transferred INR 50000 for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-024",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-2 confirms INR 51000 received for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "reference",
+        "value": "BR-2",
+        "quote": "BR-2",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "amount",
+        "value": {
+          "amount": "51000",
+          "currency": "INR"
+        },
+        "quote": "INR 51000",
+        "verification": "verified"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "confirmation_quotation",
+        "source": {
+          "conceptId": "payment_confirmation",
+          "fields": {
+            "reference": "BR-2",
+            "amount": {
+              "amount": "51000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Bank receipt BR-2 confirms INR 51000 received for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "payment_confirmation",
+          "name": "BR-2",
+          "fields": {
+            "reference": {
+              "value": "BR-2",
+              "quote": "BR-2",
+              "verification": "reported"
+            },
+            "amount": {
+              "value": {
+                "amount": "51000",
+                "currency": "INR"
+              },
+              "quote": "INR 51000",
+              "verification": "verified"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "confirmation_quotation",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Bank receipt BR-2 confirms INR 51000 received for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-025",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 52000 for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul",
+        "quote": "Rahul",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_claim",
+        "fieldId": "amount",
+        "value": {
+          "amount": "52000",
+          "currency": "INR"
+        },
+        "quote": "INR 52000",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "claim_person",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "52000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul"
+          }
+        },
+        "quote": "Rahul says he transferred INR 52000 for Q-101."
+      },
+      {
+        "relationId": "claim_quotation",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "52000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Rahul says he transferred INR 52000 for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Rahul",
+          "fields": {
+            "name": {
+              "value": "Rahul",
+              "quote": "Rahul",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "payment_claim",
+          "name": "Transfer claim",
+          "fields": {
+            "amount": {
+              "value": {
+                "amount": "52000",
+                "currency": "INR"
+              },
+              "quote": "INR 52000",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "claim_person",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul says he transferred INR 52000 for Q-101."
+        },
+        {
+          "relationId": "claim_quotation",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul says he transferred INR 52000 for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-026",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-4 confirms INR 53000 received for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "reference",
+        "value": "BR-4",
+        "quote": "BR-4",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "amount",
+        "value": {
+          "amount": "53000",
+          "currency": "INR"
+        },
+        "quote": "INR 53000",
+        "verification": "verified"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "confirmation_quotation",
+        "source": {
+          "conceptId": "payment_confirmation",
+          "fields": {
+            "reference": "BR-4",
+            "amount": {
+              "amount": "53000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Bank receipt BR-4 confirms INR 53000 received for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "payment_confirmation",
+          "name": "BR-4",
+          "fields": {
+            "reference": {
+              "value": "BR-4",
+              "quote": "BR-4",
+              "verification": "reported"
+            },
+            "amount": {
+              "value": {
+                "amount": "53000",
+                "currency": "INR"
+              },
+              "quote": "INR 53000",
+              "verification": "verified"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "confirmation_quotation",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Bank receipt BR-4 confirms INR 53000 received for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-027",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 54000 for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul",
+        "quote": "Rahul",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_claim",
+        "fieldId": "amount",
+        "value": {
+          "amount": "54000",
+          "currency": "INR"
+        },
+        "quote": "INR 54000",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "claim_person",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "54000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul"
+          }
+        },
+        "quote": "Rahul says he transferred INR 54000 for Q-101."
+      },
+      {
+        "relationId": "claim_quotation",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "54000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Rahul says he transferred INR 54000 for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Rahul",
+          "fields": {
+            "name": {
+              "value": "Rahul",
+              "quote": "Rahul",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "payment_claim",
+          "name": "Transfer claim",
+          "fields": {
+            "amount": {
+              "value": {
+                "amount": "54000",
+                "currency": "INR"
+              },
+              "quote": "INR 54000",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "claim_person",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul says he transferred INR 54000 for Q-101."
+        },
+        {
+          "relationId": "claim_quotation",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul says he transferred INR 54000 for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-028",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-6 confirms INR 55000 received for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "reference",
+        "value": "BR-6",
+        "quote": "BR-6",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "amount",
+        "value": {
+          "amount": "55000",
+          "currency": "INR"
+        },
+        "quote": "INR 55000",
+        "verification": "verified"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "confirmation_quotation",
+        "source": {
+          "conceptId": "payment_confirmation",
+          "fields": {
+            "reference": "BR-6",
+            "amount": {
+              "amount": "55000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Bank receipt BR-6 confirms INR 55000 received for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "payment_confirmation",
+          "name": "BR-6",
+          "fields": {
+            "reference": {
+              "value": "BR-6",
+              "quote": "BR-6",
+              "verification": "reported"
+            },
+            "amount": {
+              "value": {
+                "amount": "55000",
+                "currency": "INR"
+              },
+              "quote": "INR 55000",
+              "verification": "verified"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "confirmation_quotation",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Bank receipt BR-6 confirms INR 55000 received for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-029",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul says he transferred INR 56000 for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul",
+        "quote": "Rahul",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_claim",
+        "fieldId": "amount",
+        "value": {
+          "amount": "56000",
+          "currency": "INR"
+        },
+        "quote": "INR 56000",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "claim_person",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "56000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul"
+          }
+        },
+        "quote": "Rahul says he transferred INR 56000 for Q-101."
+      },
+      {
+        "relationId": "claim_quotation",
+        "source": {
+          "conceptId": "payment_claim",
+          "fields": {
+            "amount": {
+              "amount": "56000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Rahul says he transferred INR 56000 for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Rahul",
+          "fields": {
+            "name": {
+              "value": "Rahul",
+              "quote": "Rahul",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "payment_claim",
+          "name": "Transfer claim",
+          "fields": {
+            "amount": {
+              "value": {
+                "amount": "56000",
+                "currency": "INR"
+              },
+              "quote": "INR 56000",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "claim_person",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul says he transferred INR 56000 for Q-101."
+        },
+        {
+          "relationId": "claim_quotation",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul says he transferred INR 56000 for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-030",
+    "workspace": "solar-a",
+    "source": "fictional-payment",
+    "sourcePolicy": "fictional-bank-receipt",
+    "text": "Bank receipt BR-8 confirms INR 57000 received for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "reference",
+        "value": "BR-8",
+        "quote": "BR-8",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "payment_confirmation",
+        "fieldId": "amount",
+        "value": {
+          "amount": "57000",
+          "currency": "INR"
+        },
+        "quote": "INR 57000",
+        "verification": "verified"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "confirmation_quotation",
+        "source": {
+          "conceptId": "payment_confirmation",
+          "fields": {
+            "reference": "BR-8",
+            "amount": {
+              "amount": "57000",
+              "currency": "INR"
+            }
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Bank receipt BR-8 confirms INR 57000 received for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "payment_confirmation",
+          "name": "BR-8",
+          "fields": {
+            "reference": {
+              "value": "BR-8",
+              "quote": "BR-8",
+              "verification": "reported"
+            },
+            "amount": {
+              "value": {
+                "amount": "57000",
+                "currency": "INR"
+              },
+              "quote": "INR 57000",
+              "verification": "verified"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "confirmation_quotation",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Bank receipt BR-8 confirms INR 57000 received for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-031",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-101 for Q-101 is assigned to Ramesh on 2026-11-01.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-101",
+        "quote": "I-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-01",
+        "quote": "2026-11-01",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-101",
+            "scheduled_date": "2026-11-01"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-101 for Q-101 is assigned to Ramesh on 2026-11-01."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-101",
+            "scheduled_date": "2026-11-01"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-101 for Q-101 is assigned to Ramesh on 2026-11-01."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-101",
+          "fields": {
+            "reference": {
+              "value": "I-101",
+              "quote": "I-101",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-01",
+              "quote": "2026-11-01",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-101 for Q-101 is assigned to Ramesh on 2026-11-01."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-101 for Q-101 is assigned to Ramesh on 2026-11-01."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-032",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-102 for Q-101 is assigned to Ramesh on 2026-11-02.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-102",
+        "quote": "I-102",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-02",
+        "quote": "2026-11-02",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-102",
+            "scheduled_date": "2026-11-02"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-102 for Q-101 is assigned to Ramesh on 2026-11-02."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-102",
+            "scheduled_date": "2026-11-02"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-102 for Q-101 is assigned to Ramesh on 2026-11-02."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-102",
+          "fields": {
+            "reference": {
+              "value": "I-102",
+              "quote": "I-102",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-02",
+              "quote": "2026-11-02",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-102 for Q-101 is assigned to Ramesh on 2026-11-02."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-102 for Q-101 is assigned to Ramesh on 2026-11-02."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-033",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-103 for Q-101 is assigned to Ramesh on 2026-11-03.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-103",
+        "quote": "I-103",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-03",
+        "quote": "2026-11-03",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-103",
+            "scheduled_date": "2026-11-03"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-103 for Q-101 is assigned to Ramesh on 2026-11-03."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-103",
+            "scheduled_date": "2026-11-03"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-103 for Q-101 is assigned to Ramesh on 2026-11-03."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-103",
+          "fields": {
+            "reference": {
+              "value": "I-103",
+              "quote": "I-103",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-03",
+              "quote": "2026-11-03",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-103 for Q-101 is assigned to Ramesh on 2026-11-03."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-103 for Q-101 is assigned to Ramesh on 2026-11-03."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-034",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-104 for Q-101 is assigned to Ramesh on Friday.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-104",
+        "quote": "I-104",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-104"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-104 for Q-101 is assigned to Ramesh on Friday."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-104"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-104 for Q-101 is assigned to Ramesh on Friday."
+      }
+    ],
+    "observations": [
+      {
+        "concept": "unresolved_date",
+        "quote": "Friday"
+      }
+    ],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-104",
+          "fields": {
+            "reference": {
+              "value": "I-104",
+              "quote": "I-104",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-104 for Q-101 is assigned to Ramesh on Friday."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-104 for Q-101 is assigned to Ramesh on Friday."
+        }
+      ],
+      "observations": [
+        {
+          "concept": "unresolved_date",
+          "quote": "Friday"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOLAR-035",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-105 for Q-101 is assigned to Ramesh on 2026-11-05.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-105",
+        "quote": "I-105",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-05",
+        "quote": "2026-11-05",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-105",
+            "scheduled_date": "2026-11-05"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-105 for Q-101 is assigned to Ramesh on 2026-11-05."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-105",
+            "scheduled_date": "2026-11-05"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-105 for Q-101 is assigned to Ramesh on 2026-11-05."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-105",
+          "fields": {
+            "reference": {
+              "value": "I-105",
+              "quote": "I-105",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-05",
+              "quote": "2026-11-05",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-105 for Q-101 is assigned to Ramesh on 2026-11-05."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-105 for Q-101 is assigned to Ramesh on 2026-11-05."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-036",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-106 for Q-101 is assigned to Ramesh on 2026-11-06.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-106",
+        "quote": "I-106",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-06",
+        "quote": "2026-11-06",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-106",
+            "scheduled_date": "2026-11-06"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-106 for Q-101 is assigned to Ramesh on 2026-11-06."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-106",
+            "scheduled_date": "2026-11-06"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-106 for Q-101 is assigned to Ramesh on 2026-11-06."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-106",
+          "fields": {
+            "reference": {
+              "value": "I-106",
+              "quote": "I-106",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-06",
+              "quote": "2026-11-06",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-106 for Q-101 is assigned to Ramesh on 2026-11-06."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-106 for Q-101 is assigned to Ramesh on 2026-11-06."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-037",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-107 for Q-101 is assigned to Ramesh on 2026-11-07.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-107",
+        "quote": "I-107",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-07",
+        "quote": "2026-11-07",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-107",
+            "scheduled_date": "2026-11-07"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-107 for Q-101 is assigned to Ramesh on 2026-11-07."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-107",
+            "scheduled_date": "2026-11-07"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-107 for Q-101 is assigned to Ramesh on 2026-11-07."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-107",
+          "fields": {
+            "reference": {
+              "value": "I-107",
+              "quote": "I-107",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-07",
+              "quote": "2026-11-07",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-107 for Q-101 is assigned to Ramesh on 2026-11-07."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-107 for Q-101 is assigned to Ramesh on 2026-11-07."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-038",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-108 for Q-101 is assigned to Ramesh on 2026-11-08.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-108",
+        "quote": "I-108",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-08",
+        "quote": "2026-11-08",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-108",
+            "scheduled_date": "2026-11-08"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-108 for Q-101 is assigned to Ramesh on 2026-11-08."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-108",
+            "scheduled_date": "2026-11-08"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-108 for Q-101 is assigned to Ramesh on 2026-11-08."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-108",
+          "fields": {
+            "reference": {
+              "value": "I-108",
+              "quote": "I-108",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-08",
+              "quote": "2026-11-08",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-108 for Q-101 is assigned to Ramesh on 2026-11-08."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-108 for Q-101 is assigned to Ramesh on 2026-11-08."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-039",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-109 for Q-101 is assigned to Ramesh on Friday.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-109",
+        "quote": "I-109",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-109"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-109 for Q-101 is assigned to Ramesh on Friday."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-109"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-109 for Q-101 is assigned to Ramesh on Friday."
+      }
+    ],
+    "observations": [
+      {
+        "concept": "unresolved_date",
+        "quote": "Friday"
+      }
+    ],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-109",
+          "fields": {
+            "reference": {
+              "value": "I-109",
+              "quote": "I-109",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-109 for Q-101 is assigned to Ramesh on Friday."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-109 for Q-101 is assigned to Ramesh on Friday."
+        }
+      ],
+      "observations": [
+        {
+          "concept": "unresolved_date",
+          "quote": "Friday"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOLAR-040",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-110 for Q-101 is assigned to Ramesh on 2026-11-10.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-110",
+        "quote": "I-110",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-10",
+        "quote": "2026-11-10",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-110",
+            "scheduled_date": "2026-11-10"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-110 for Q-101 is assigned to Ramesh on 2026-11-10."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-110",
+            "scheduled_date": "2026-11-10"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-110 for Q-101 is assigned to Ramesh on 2026-11-10."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-110",
+          "fields": {
+            "reference": {
+              "value": "I-110",
+              "quote": "I-110",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-10",
+              "quote": "2026-11-10",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-110 for Q-101 is assigned to Ramesh on 2026-11-10."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-110 for Q-101 is assigned to Ramesh on 2026-11-10."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-041",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-111 for Q-101 is assigned to Ramesh on 2026-11-11.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-111",
+        "quote": "I-111",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-11",
+        "quote": "2026-11-11",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-111",
+            "scheduled_date": "2026-11-11"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-111 for Q-101 is assigned to Ramesh on 2026-11-11."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-111",
+            "scheduled_date": "2026-11-11"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-111 for Q-101 is assigned to Ramesh on 2026-11-11."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-111",
+          "fields": {
+            "reference": {
+              "value": "I-111",
+              "quote": "I-111",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-11",
+              "quote": "2026-11-11",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-111 for Q-101 is assigned to Ramesh on 2026-11-11."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-111 for Q-101 is assigned to Ramesh on 2026-11-11."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-042",
+    "workspace": "solar-a",
+    "source": "fictional-installation",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-112 for Q-101 is assigned to Ramesh on 2026-11-12.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-112",
+        "quote": "I-112",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "scheduled_date",
+        "value": "2026-11-12",
+        "quote": "2026-11-12",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Ramesh",
+        "quote": "Ramesh",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "installation_assigned",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-112",
+            "scheduled_date": "2026-11-12"
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Ramesh"
+          }
+        },
+        "quote": "Installation I-112 for Q-101 is assigned to Ramesh on 2026-11-12."
+      },
+      {
+        "relationId": "installation_quotation",
+        "source": {
+          "conceptId": "installation",
+          "fields": {
+            "reference": "I-112",
+            "scheduled_date": "2026-11-12"
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Installation I-112 for Q-101 is assigned to Ramesh on 2026-11-12."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-112",
+          "fields": {
+            "reference": {
+              "value": "I-112",
+              "quote": "I-112",
+              "verification": "reported"
+            },
+            "scheduled_date": {
+              "value": "2026-11-12",
+              "quote": "2026-11-12",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Ramesh",
+          "fields": {
+            "name": {
+              "value": "Ramesh",
+              "quote": "Ramesh",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "installation_assigned",
+          "source": "m0",
+          "target": "m1",
+          "quote": "Installation I-112 for Q-101 is assigned to Ramesh on 2026-11-12."
+        },
+        {
+          "relationId": "installation_quotation",
+          "source": "m0",
+          "target": "m2",
+          "quote": "Installation I-112 for Q-101 is assigned to Ramesh on 2026-11-12."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-043",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul reports 20 panels; Asha reports 25 panels for Q-101.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul",
+        "quote": "Rahul",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 20,
+        "quote": "20",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Asha",
+        "quote": "Asha",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "inquiry",
+        "fieldId": "quantity",
+        "value": 25,
+        "quote": "25",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 20
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Rahul"
+          }
+        },
+        "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+      },
+      {
+        "relationId": "inquiry_quotation",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 20
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+      },
+      {
+        "relationId": "inquiry_person",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 25
+          }
+        },
+        "target": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Asha"
+          }
+        },
+        "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+      },
+      {
+        "relationId": "inquiry_quotation",
+        "source": {
+          "conceptId": "inquiry",
+          "fields": {
+            "quantity": 25
+          }
+        },
+        "target": {
+          "conceptId": "quotation",
+          "fields": {
+            "reference": "Q-101"
+          }
+        },
+        "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Rahul",
+          "fields": {
+            "name": {
+              "value": "Rahul",
+              "quote": "Rahul",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "inquiry",
+          "name": "20 panels",
+          "fields": {
+            "quantity": {
+              "value": 20,
+              "quote": "20",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m3",
+          "conceptId": "person",
+          "name": "Asha",
+          "fields": {
+            "name": {
+              "value": "Asha",
+              "quote": "Asha",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m4",
+          "conceptId": "inquiry",
+          "name": "25 panels",
+          "fields": {
+            "quantity": {
+              "value": 25,
+              "quote": "25",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "inquiry_person",
+          "source": "m2",
+          "target": "m1",
+          "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+        },
+        {
+          "relationId": "inquiry_quotation",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+        },
+        {
+          "relationId": "inquiry_person",
+          "source": "m4",
+          "target": "m3",
+          "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+        },
+        {
+          "relationId": "inquiry_quotation",
+          "source": "m4",
+          "target": "m0",
+          "quote": "Rahul reports 20 panels; Asha reports 25 panels for Q-101."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-044",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Withdraw the previous email rahul.old@example.test.",
+    "domain": "solar",
+    "expected": [],
+    "relationships": [],
+    "observations": [
+      {
+        "concept": "retraction_request",
+        "quote": "Withdraw the previous email rahul.old@example.test."
+      }
+    ],
+    "annotatedExample": {
+      "entities": [],
+      "relationships": [],
+      "observations": [
+        {
+          "concept": "retraction_request",
+          "quote": "Withdraw the previous email rahul.old@example.test."
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOLAR-045",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Rahul S. may be Rahul Sharma, but this is not confirmed.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul S.",
+        "quote": "Rahul S.",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Rahul Sharma",
+        "quote": "Rahul Sharma",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [],
+    "observations": [
+      {
+        "concept": "identity_uncertainty",
+        "quote": "may be Rahul Sharma, but this is not confirmed"
+      }
+    ],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Rahul S.",
+          "fields": {
+            "name": {
+              "value": "Rahul S.",
+              "quote": "Rahul S.",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "person",
+          "name": "Rahul Sharma",
+          "fields": {
+            "name": {
+              "value": "Rahul Sharma",
+              "quote": "Rahul Sharma",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [],
+      "observations": [
+        {
+          "concept": "identity_uncertainty",
+          "quote": "may be Rahul Sharma, but this is not confirmed"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOLAR-046",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "The transfer was promised, not received.",
+    "domain": "solar",
+    "expected": [],
+    "relationships": [],
+    "observations": [
+      {
+        "concept": "unreceived_payment",
+        "quote": "The transfer was promised, not received."
+      }
+    ],
+    "annotatedExample": {
+      "entities": [],
+      "relationships": [],
+      "observations": [
+        {
+          "concept": "unreceived_payment",
+          "quote": "The transfer was promised, not received."
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOLAR-047",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Quotation Q-101 revised total is INR 455000.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "quotation",
+        "fieldId": "reference",
+        "value": "Q-101",
+        "quote": "Q-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "quotation",
+        "fieldId": "total",
+        "value": {
+          "amount": "455000",
+          "currency": "INR"
+        },
+        "quote": "INR 455000",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "quotation",
+          "name": "Q-101",
+          "fields": {
+            "reference": {
+              "value": "Q-101",
+              "quote": "Q-101",
+              "verification": "reported"
+            },
+            "total": {
+              "value": {
+                "amount": "455000",
+                "currency": "INR"
+              },
+              "quote": "INR 455000",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-048",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Installation I-101 is not complete.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "installation",
+        "fieldId": "reference",
+        "value": "I-101",
+        "quote": "I-101",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "installation",
+        "fieldId": "is_complete",
+        "value": false,
+        "quote": "not complete",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "installation",
+          "name": "I-101",
+          "fields": {
+            "reference": {
+              "value": "I-101",
+              "quote": "I-101",
+              "verification": "reported"
+            },
+            "is_complete": {
+              "value": false,
+              "quote": "not complete",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-049",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "A second Anil Kumar joined XYZ Solar.",
+    "domain": "solar",
+    "expected": [
+      {
+        "conceptId": "person",
+        "fieldId": "name",
+        "value": "Anil Kumar",
+        "quote": "Anil Kumar",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "organization",
+        "fieldId": "name",
+        "value": "XYZ Solar",
+        "quote": "XYZ Solar",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "affiliated_with",
+        "source": {
+          "conceptId": "person",
+          "fields": {
+            "name": "Anil Kumar"
+          }
+        },
+        "target": {
+          "conceptId": "organization",
+          "fields": {
+            "name": "XYZ Solar"
+          }
+        },
+        "quote": "A second Anil Kumar joined XYZ Solar."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "person",
+          "name": "Anil Kumar",
+          "fields": {
+            "name": {
+              "value": "Anil Kumar",
+              "quote": "Anil Kumar",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "organization",
+          "name": "XYZ Solar",
+          "fields": {
+            "name": {
+              "value": "XYZ Solar",
+              "quote": "XYZ Solar",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "affiliated_with",
+          "source": "m0",
+          "target": "m1",
+          "quote": "A second Anil Kumar joined XYZ Solar."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "SOLAR-050",
+    "workspace": "solar-a",
+    "source": "fictional-correction",
+    "sourcePolicy": "untrusted",
+    "text": "Correction: the installation date is unknown.",
+    "domain": "solar",
+    "expected": [],
+    "relationships": [],
+    "observations": [
+      {
+        "concept": "unresolved_date",
+        "quote": "Correction: the installation date is unknown."
+      }
+    ],
+    "annotatedExample": {
+      "entities": [],
+      "relationships": [],
+      "observations": [
+        {
+          "concept": "unresolved_date",
+          "quote": "Correction: the installation date is unknown."
+        }
+      ]
+    }
+  },
+  {
+    "id": "RENTAL-001",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-001 returned with condition: working. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-001",
+        "quote": "CAM-001",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "working"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-001"
+          }
+        },
+        "quote": "Rental asset CAM-001 returned with condition: working. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-001"
+          }
+        },
+        "quote": "Rental asset CAM-001 returned with condition: working. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-001",
+          "fields": {
+            "reference": {
+              "value": "CAM-001",
+              "quote": "CAM-001",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "working",
+          "fields": {
+            "description": {
+              "value": "working",
+              "quote": "working",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-001 returned with condition: working. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-001 returned with condition: working. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-002",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-002 returned with condition: scratched lens. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-002",
+        "quote": "CAM-002",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "scratched lens"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-002"
+          }
+        },
+        "quote": "Rental asset CAM-002 returned with condition: scratched lens. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-002"
+          }
+        },
+        "quote": "Rental asset CAM-002 returned with condition: scratched lens. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-002",
+          "fields": {
+            "reference": {
+              "value": "CAM-002",
+              "quote": "CAM-002",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "scratched lens",
+          "fields": {
+            "description": {
+              "value": "scratched lens",
+              "quote": "scratched lens",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-002 returned with condition: scratched lens. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-002 returned with condition: scratched lens. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-003",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-003 returned with condition: working. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-003",
+        "quote": "CAM-003",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "working"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-003"
+          }
+        },
+        "quote": "Rental asset CAM-003 returned with condition: working. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-003"
+          }
+        },
+        "quote": "Rental asset CAM-003 returned with condition: working. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-003",
+          "fields": {
+            "reference": {
+              "value": "CAM-003",
+              "quote": "CAM-003",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "working",
+          "fields": {
+            "description": {
+              "value": "working",
+              "quote": "working",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-003 returned with condition: working. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-003 returned with condition: working. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-004",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-004 returned with condition: scratched lens. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-004",
+        "quote": "CAM-004",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "scratched lens"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-004"
+          }
+        },
+        "quote": "Rental asset CAM-004 returned with condition: scratched lens. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-004"
+          }
+        },
+        "quote": "Rental asset CAM-004 returned with condition: scratched lens. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-004",
+          "fields": {
+            "reference": {
+              "value": "CAM-004",
+              "quote": "CAM-004",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "scratched lens",
+          "fields": {
+            "description": {
+              "value": "scratched lens",
+              "quote": "scratched lens",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-004 returned with condition: scratched lens. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-004 returned with condition: scratched lens. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-005",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-005 returned with condition: working. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-005",
+        "quote": "CAM-005",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "working"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-005"
+          }
+        },
+        "quote": "Rental asset CAM-005 returned with condition: working. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-005"
+          }
+        },
+        "quote": "Rental asset CAM-005 returned with condition: working. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-005",
+          "fields": {
+            "reference": {
+              "value": "CAM-005",
+              "quote": "CAM-005",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "working",
+          "fields": {
+            "description": {
+              "value": "working",
+              "quote": "working",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-005 returned with condition: working. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-005 returned with condition: working. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-006",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-006 returned with condition: scratched lens. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-006",
+        "quote": "CAM-006",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "scratched lens"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-006"
+          }
+        },
+        "quote": "Rental asset CAM-006 returned with condition: scratched lens. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-006"
+          }
+        },
+        "quote": "Rental asset CAM-006 returned with condition: scratched lens. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-006",
+          "fields": {
+            "reference": {
+              "value": "CAM-006",
+              "quote": "CAM-006",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "scratched lens",
+          "fields": {
+            "description": {
+              "value": "scratched lens",
+              "quote": "scratched lens",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-006 returned with condition: scratched lens. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-006 returned with condition: scratched lens. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-007",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-007 returned with condition: working. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-007",
+        "quote": "CAM-007",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "working"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-007"
+          }
+        },
+        "quote": "Rental asset CAM-007 returned with condition: working. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-007"
+          }
+        },
+        "quote": "Rental asset CAM-007 returned with condition: working. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-007",
+          "fields": {
+            "reference": {
+              "value": "CAM-007",
+              "quote": "CAM-007",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "working",
+          "fields": {
+            "description": {
+              "value": "working",
+              "quote": "working",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-007 returned with condition: working. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-007 returned with condition: working. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-008",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-008 returned with condition: scratched lens. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-008",
+        "quote": "CAM-008",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "scratched lens"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-008"
+          }
+        },
+        "quote": "Rental asset CAM-008 returned with condition: scratched lens. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-008"
+          }
+        },
+        "quote": "Rental asset CAM-008 returned with condition: scratched lens. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-008",
+          "fields": {
+            "reference": {
+              "value": "CAM-008",
+              "quote": "CAM-008",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "scratched lens",
+          "fields": {
+            "description": {
+              "value": "scratched lens",
+              "quote": "scratched lens",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-008 returned with condition: scratched lens. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-008 returned with condition: scratched lens. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-009",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-009 returned with condition: working. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-009",
+        "quote": "CAM-009",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "working",
+        "quote": "working",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "working"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-009"
+          }
+        },
+        "quote": "Rental asset CAM-009 returned with condition: working. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-009"
+          }
+        },
+        "quote": "Rental asset CAM-009 returned with condition: working. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-009",
+          "fields": {
+            "reference": {
+              "value": "CAM-009",
+              "quote": "CAM-009",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "working",
+          "fields": {
+            "description": {
+              "value": "working",
+              "quote": "working",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-009 returned with condition: working. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-009 returned with condition: working. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  },
+  {
+    "id": "RENTAL-010",
+    "workspace": "rental-b",
+    "source": "fictional-rental",
+    "sourcePolicy": "untrusted",
+    "text": "Rental asset CAM-010 returned with condition: scratched lens. Schedule maintenance review.",
+    "domain": "rental",
+    "expected": [
+      {
+        "conceptId": "asset",
+        "fieldId": "reference",
+        "value": "CAM-010",
+        "quote": "CAM-010",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "condition_observation",
+        "fieldId": "description",
+        "value": "scratched lens",
+        "quote": "scratched lens",
+        "verification": "reported"
+      },
+      {
+        "conceptId": "maintenance_request",
+        "fieldId": "description",
+        "value": "maintenance review",
+        "quote": "maintenance review",
+        "verification": "reported"
+      }
+    ],
+    "relationships": [
+      {
+        "relationId": "condition_asset",
+        "source": {
+          "conceptId": "condition_observation",
+          "fields": {
+            "description": "scratched lens"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-010"
+          }
+        },
+        "quote": "Rental asset CAM-010 returned with condition: scratched lens. Schedule maintenance review."
+      },
+      {
+        "relationId": "maintenance_asset",
+        "source": {
+          "conceptId": "maintenance_request",
+          "fields": {
+            "description": "maintenance review"
+          }
+        },
+        "target": {
+          "conceptId": "asset",
+          "fields": {
+            "reference": "CAM-010"
+          }
+        },
+        "quote": "Rental asset CAM-010 returned with condition: scratched lens. Schedule maintenance review."
+      }
+    ],
+    "observations": [],
+    "annotatedExample": {
+      "entities": [
+        {
+          "mentionId": "m0",
+          "conceptId": "asset",
+          "name": "CAM-010",
+          "fields": {
+            "reference": {
+              "value": "CAM-010",
+              "quote": "CAM-010",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m1",
+          "conceptId": "condition_observation",
+          "name": "scratched lens",
+          "fields": {
+            "description": {
+              "value": "scratched lens",
+              "quote": "scratched lens",
+              "verification": "reported"
+            }
+          }
+        },
+        {
+          "mentionId": "m2",
+          "conceptId": "maintenance_request",
+          "name": "maintenance review",
+          "fields": {
+            "description": {
+              "value": "maintenance review",
+              "quote": "maintenance review",
+              "verification": "reported"
+            }
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "relationId": "condition_asset",
+          "source": "m1",
+          "target": "m0",
+          "quote": "Rental asset CAM-010 returned with condition: scratched lens. Schedule maintenance review."
+        },
+        {
+          "relationId": "maintenance_asset",
+          "source": "m2",
+          "target": "m0",
+          "quote": "Rental asset CAM-010 returned with condition: scratched lens. Schedule maintenance review."
+        }
+      ],
+      "observations": []
+    }
+  }
+]

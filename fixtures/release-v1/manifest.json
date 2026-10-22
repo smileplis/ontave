@@ -1,0 +1,11 @@
+{
+  "version": "maintainer-labels-v1",
+  "fictional": true,
+  "independentReview": false,
+  "records": 60,
+  "assertions": 179,
+  "relationships": 107,
+  "definitionHash": "d192ead726ca7b565f9a50394f55982de446d1f79729da1b12e3d52a784d32ca",
+  "labelsHash": "24f92a0a99c17fae773fcacc36636db41c0bbabaf6bdeaded8c2813f9df9bef6",
+  "policy": "All 60 original inputs included, including corrections and unresolved cases. Labels are maintainer-authored, not independently certified. Human correction does not alter raw scores. No candidate-generation model sees labels."
+}

@@ -95,6 +95,8 @@ export interface ModelTask {
   ontology: Definition;
   signal: AbortSignal;
   candidates: { id: string; name: string; conceptId: string }[];
+  verifiedFields?: string[];
+  identifierRules?: { authority: string; kind: string }[];
 }
 export interface ModelResult {
   output: unknown;
@@ -155,18 +157,58 @@ export interface EntityQuery {
   cursor?: string;
   include?: string[];
 }
-export interface EvaluationTask {
-  id: string;
-  kind: "extract" | "contract";
-  evidenceId?: string;
-  contractId?: string;
-  expected?: {
-    conceptId: string;
-    fieldId: string;
-    value: Json;
-    verification?: Verification;
-  }[];
-}
+export type EvaluationTask =
+  | {
+      id: string;
+      kind: "extract";
+      evidenceId: string;
+      expected: {
+        conceptId: string;
+        fieldId: string;
+        value: Json;
+        verification?: Verification;
+        equivalentValues?: string[];
+        entityName?: string;
+        quote?: string;
+        path?: string;
+        occurrence?: number;
+      }[];
+      identities?: {
+        conceptId: string;
+        name: string;
+        existingId: string | null;
+        identifiers?: { authority: string; kind: string; value: string }[];
+      }[];
+      relationships?: {
+        relationId: string;
+        source: {
+          conceptId: string;
+          name?: string;
+          fields?: Record<string, Json>;
+        };
+        target: {
+          conceptId: string;
+          name?: string;
+          fields?: Record<string, Json>;
+        };
+        quote: string;
+        path?: string;
+        occurrence?: number;
+      }[];
+      observations?: (EvidenceRef & { concept: string })[];
+      candidates?: { id: string; name: string; conceptId: string }[];
+    }
+  | { id: string; kind: "contract"; contractId: string }
+  | {
+      id: string;
+      kind: "read";
+      definition: Definition;
+      records: EntityRecord[];
+      query: Omit<EntityQuery, "contractId" | "contractHash" | "cursor">;
+      expected:
+        | { records: EntityRecord[]; hasMore: boolean }
+        | { error: "INVALID_INPUT" | "CONTRACT_NOT_AVAILABLE" };
+    };
 export interface EvaluationSuite {
   name: string;
   tasks: EvaluationTask[];

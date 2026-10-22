@@ -1,49 +1,42 @@
 # Ontave implementation status
 
-Ontave `0.1.0-alpha.1` is a development alpha with a working evidence, review, evolution and contract-read flow. It is not the completed release candidate described by the handoff. The implementation, examples, fixtures, tests and public documentation live in this repository.
+**Developer preview `0.1.0-alpha.2`** is distributed through a versioned GitHub archive. The earlier `alpha.1` archive is preserved. npm registry publication remains blocked by full-MVP qualification gates; the developer preview is not a declaration that those gates have passed.
 
-## Verified behavior
+## Developer-preview entry points
 
-The deterministic suite exercises canonical JSON, UTF-8 quotes and JSON Pointer references, strict value validation, decimal normalization, safe contract generation and mocked provider HTTP failures. Real PostgreSQL suites exercise atomic ingestion, row security under a restricted runtime role, authorization, leased workers, stale results, concurrent approvals, source verification rules, corrections, conflicts, identity replay, additive activation, affected replay, pinned current-data contracts, numeric reads, deadlines and failed-attempt history.
+- A guided browser sandbox replays fictional reference runs generated with the actual SDK and PostgreSQL.
+- `ontave playground --install` runs the interactive example against a real temporary local PostgreSQL database, with a restricted role and explicit fictional fixture adapter. No Docker or provider key is needed.
+- Model evaluation and identity/fact review remain real SDK operations. New accepted concepts render through an adopted contract without rebuilding the generic playground. Custom application interfaces still require development.
+- Explicit setup downloads optional tooling only when requested. Core package import/install performs no database provisioning or playground installation.
 
-The packed artifact is tested outside this source tree. Its ESM imports, CLI, declarations and generated validators work without a provider credential. The separate Node example uses the installed tarball. The Next.js example builds the tarball into server routes, checks fictional secret canaries in browser assets, denies unauthenticated requests and rejects request-body privileges. Exact results and artifact hashes are in [the build report](BUILD_REPORT.md).
+## Implemented and exercised
 
-A fictional Groq extraction has completed the full database flow. Gemini has returned both HTTP 503 failures and a valid staged result that remained waiting for ontology review. These development smoke checks establish neither the handoff's extraction targets nor general discovery quality. The experiments preserve that distinction.
+- Immutable text/JSON evidence, request-envelope idempotency, explicit provisioning and host authorization with restricted PostgreSQL roles and forced row security.
+- Durable fenced workers, bounded attempts, independent model deadlines, append-only attempt accounting, real process-kill/restart, cooperative shutdown and ten-second hung-call drain.
+- Whole-bundle review, exact digest/revision checks, partial-name candidate review, authority-scoped identifiers, amendments, rejection, corrections, conflict resolution and replay respecting retractions.
+- Additive ontology proposals, structural reuse/rejection hints, parent/candidate evaluation, exact publication artifacts and atomic activation/replay scheduling with fault injection.
+- Closed extraction, identity, relationship, observation, contract and isolated structured-read evaluation. Immutable JSON fixtures use the same SQL read implementation without canonical writes.
+- Pinned current-data contracts, generated TypeScript/runtime validators, typed scalar predicates, state/verification filters, ordered signed cursors and bounded one-hop links.
+- Actual CLI workflow and clean packed Node/Next.js consumers. Server/client import and fictional secret-canary checks are exercised.
+- Operator backup/restore across two disposable PostgreSQL instances, including an abandoned processing job, role isolation and all 18 table hashes.
+- Workspace-scoped operational metrics, deterministic user-benefit measurements and 100/1,000/10,000-record load measurements with query diagnostics outside timing samples.
 
-## Work package progress
+The solar and rental governance demonstrations use the same generic runtime and deterministic fictional adapter. Solar accepted 44 of 50 bundles and retained six unresolved; rental accepted ten. These are database lifecycle tests, not live discovery accuracy results.
 
-| Package | Current result                                                                                                        | Remaining gate                                                                                                                                  |
-| ------- | --------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| WP00    | Decisions, source pin, fictional 50 solar and 10 rental inputs, initial labels and 20 task descriptions               | Complete independent labels, source/identity checks and frozen scoring policy; current holdout descriptions are not an executable release suite |
-| WP01    | Compiled npm tarball and clean ESM, CLI, type and generation consumers                                                | CI execution in an actual repository and additional platform support                                                                            |
-| WP02    | Restricted PostgreSQL storage, explicit checksummed migrations and authorized provisioning                            | Complete privilege/failure coverage and expanded restore/failure coverage                                                                       |
-| WP03    | Atomic receipts, durable waiting states, leases, fencing, deadlines and failed-run history                            | Real process-kill/restart and shutdown fault matrix                                                                                             |
-| WP04    | Guarded whole-bundle publication, amendment and rejection                                                             | Complete adversarial review and stale-digest cases                                                                                              |
-| WP05    | Authority-scoped identifiers, identity decisions, source-bound replay and staged corrections/conflict resolution      | Full authority-collision, partial-name candidate and correction-reconciliation matrix                                                           |
-| WP06    | Additive-only candidates and deterministic contract checks                                                            | Better synonym/reuse explanations and rejection deduplication policy                                                                            |
-| WP07    | Registered contracts, source lineage, generated declarations/validators and structured current reads                  | Complete scalar, relationship, cursor and hostile-generation matrix                                                                             |
-| WP08    | Explicit Gemini REST adapter and experimental Groq JSON-mode adapter                                                  | Reliable Gemini end-to-end result, frozen live quality trials and experimental Groq token accounting                                            |
-| WP09    | Bounded model proposal requests, extraction/contract comparison, exact evaluation hashes and atomic activation/replay | Structured-read fixture tasks, identity/relationship scoring, complete evaluation attempt records and full solar/rental traces                  |
-| WP10    | SDK, CLI and actual Node/Next.js examples                                                                             | Full CLI command/failure audit and fresh-developer walkthrough                                                                                  |
-| WP11    | Local tests, clean consumers, deterministic load measurements and scoped secret/isolation checks                      | All outstanding acceptance cases, backup/restore and three successful frozen semantic trials                                                    |
-| WP12    | Public alpha authorized; Apache 2.0 selected                                                                          | Registry authentication and complete MVP acceptance remain open                                                                                 |
+## Accuracy qualification
 
-## Current differences from the complete handoff
+The expanded maintainer fixture set includes all 60 original inputs, 179 expected field assertions and 107 relationships. Twenty read tasks are executable. Labels remain explicitly **not independently reviewed**, and the regression tasks are not an independently authored held-out set.
 
-- Evaluation supports `extract` and `contract` tasks. It does not yet implement isolated structured-read fixtures, relationship/identity scoring or semantic equivalence mappings. Failed attempts now persist non-passing artifacts retrievable by evaluation ID. Exact task success is stricter than a partial-match average, but it cannot replace those missing checks.
-- Gemini now counts the complete request with the provider tokenizer before inference against at most 16,384 input tokens. Experimental Groq still uses a conservative byte guard. Definitions above 25 concepts fail explicitly.
-- A generated proposal reserves one call per request key. A failed or abandoned request needs an explicit new key after inspection through `ontology.proposalStatus`; there is no automatic proposal repair loop. Candidate generation is supported by the Gemini adapter; Groq currently supports extraction only.
-- Failed extraction attempts retain available output/usage, or explicitly unknown usage. Complete provider usage on connection loss, refusals and shutdown is not always available.
-- JSON evidence uses canonical JSON, RFC 6901 pointers and UTF-8 byte spans. Text evidence preserves the supplied text. Evidence inspection returns an explicitly ranged excerpt, up to 8 KiB; workers read the full preserved source within processing limits.
-- Timestamp equality currently follows the preserved typed string representation; decimal and money values normalize numeric strings. Money supports equality, with range/sort rejected. Rich schema constraints, automatic established-entity merges and physical business DDL are outside this alpha.
-- The public website and GitHub alpha distribution are being prepared. No managed database service, worker daemon, npm registry publication, managed backup or automatic operational rollback is supplied.
+Three frozen `gemini-3.1-flash-lite` trials and three `ministral-8b-2512` trials failed the unchanged 95% precision / 90% recall targets. All completed, failed and earlier aborted attempts remain retained. See [the quality report](QUALITY_REPORT.md) for the complete matrix and method. The constrained 14B v2 profile also failed. The separately frozen v3 `ministral-14b-2512` profile passed all three aggregate field targets: precision 97.7–97.8%, recall 96.1–97.2%. Its explicit text-equivalence policy was revised after v2, so it is a development result on maintainer labels. Earlier failures are unchanged. Other semantic components remain unqualified.
 
-[Acceptance coverage](acceptance-coverage.json) lists every original acceptance ID. A passing local test is not a blanket claim that all 123 cases pass.
+Provider factories now constrain short text quotes to an immutable source anchor and restrict IDs to authorized candidate enums. Concept fields remain closed and typed. Gemini preflights complete input with the provider tokenizer; Mistral, OpenRouter and Groq are experimental bounded alternatives. Byte guards are not provider-certified token accounting. An explicit adapter/model is always required.
 
-## Next implementation sequence
+## Remaining release gates
 
-1. Complete the declarative evaluator's read-fixture, identity, relation and uncertainty checks, with frozen parent/candidate metadata and failure artifacts.
-2. Complete provider token accounting and the remaining job/review/identity fault cases.
-3. Finish the independently labeled solar and rental fixtures and executable holdout tasks before scored trials. Keep these labels out of candidate prompts.
-4. Run the complete solar and rental demonstrations, then all three declared live quality trials. Record every outcome against the unchanged 95% precision and 90% recall thresholds.
-5. Exercise PostgreSQL backup/restore, audit every acceptance case, and freeze a new release-candidate tarball.
+1. Independently review labels, source meaning, identity expectations and held-out task boundaries. Candidate-generation prompts must not receive answer keys.
+2. Qualify live established-identity linking, observation/discovery behavior and end-to-end reviewed publication independently of the passing raw field trials. Keep all unresolved cases, errors and usage in the record.
+3. Finish the remaining 40 partial acceptance cases. Current development mapping has 81 tested and two measured cases; partial coverage is not a pass.
+4. Bind successful deterministic, consumer, recovery and CI evidence to the final source revision and package archive. `npm run verify:release` refuses missing, stale or non-passing evidence.
+5. Perform a fresh-developer walkthrough and an explicit npm release only after qualification. No npm publication has occurred.
+
+[Acceptance coverage](acceptance-coverage.json) preserves each original acceptance ID. [User benefits](USER_BENEFITS.md) separates operation counts and machine latency from unmeasured human productivity. Private research and credentials remain excluded from source control and package contents.
