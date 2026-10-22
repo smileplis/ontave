@@ -160,7 +160,7 @@ test("real process death, restart and CLI shutdown preserve work and usage uncer
   const config = resolve(dir, "config.mjs");
   await writeFile(
     config,
-    `import {createOntave} from ${JSON.stringify(pathToFileURL(resolve("dist/index.js")).href)};import {postgres} from ${JSON.stringify(pathToFileURL(resolve("dist/postgres.js")).href)};import {personFixture} from ${JSON.stringify(pathToFileURL(resolve("dist/testing.js")).href)};export default()=>({context:"test",runtime:createOntave({storage:postgres({connectionString:process.env.ONTAVE_TEST_DATABASE}),authorize:()=>({actorId:"cli",workspaceId:process.env.ONTAVE_TEST_WORKSPACE,capabilities:["worker"]}),limits:{leaseMs:300},model:{async extract(task){process.send?.({event:"inference-started"});if(process.env.ONTAVE_TEST_MODE==="hang")await new Promise(()=>{});else await new Promise(r=>setTimeout(r,200));return {output:personFixture(task.text),model:"cli-fixture",usage:{totalTokens:0}};}}})});`,
+    `import {createOntave} from ${JSON.stringify(pathToFileURL(resolve("dist/index.js")).href)};import {postgres} from ${JSON.stringify(pathToFileURL(resolve("dist/postgres.js")).href)};import {personFixture} from ${JSON.stringify(pathToFileURL(resolve("dist/testing.js")).href)};export default()=>({context:"test",runtime:createOntave({storage:postgres({connectionString:process.env.ONTAVE_TEST_DATABASE}),authorize:()=>({actorId:"cli",workspaceId:process.env.ONTAVE_TEST_WORKSPACE,capabilities:["worker"]}),limits:{leaseMs:30000},model:{async extract(task){process.send?.({event:"inference-started"});if(process.env.ONTAVE_TEST_MODE==="hang")await new Promise(()=>{});else await new Promise(r=>setTimeout(r,200));return {output:personFixture(task.text),model:"cli-fixture",usage:{totalTokens:0}};}}})});`,
   );
   const cli = (mode) => {
     const c = fork(resolve("dist/cli.js"), ["worker", "--config", config], {
@@ -216,8 +216,19 @@ test("real process death, restart and CLI shutdown preserve work and usage uncer
         exit = once(c, "exit");
       c.kill("SIGTERM");
       assert.equal((await exit)[0], 0);
-      assert.ok(Date.now() - at >= 9500 && Date.now() - at < 13000);
-      await delay(400);
+      const elapsed = Date.now() - at;
+      assert.ok(
+        elapsed >= 9500 && elapsed < 13000,
+        `Hung drain took ${elapsed} ms`,
+      );
+      assert.equal((await app.jobs.get(null, r.job_id)).state, "processing");
+      // The drain test uses a long lease so scheduler jitter cannot turn it into
+      // a lease-loss test. Advance expiry only after the original process exits.
+      // Real elapsed-lease recovery is exercised by the SIGKILL tests above.
+      await db.admin.query(
+        "UPDATE ontave.jobs SET lease_until=now()-interval '1 second' WHERE id=$1",
+        [r.job_id],
+      );
       assert.equal((await app.worker.runOnce(null)).state, "waiting_review");
       assert.equal(
         (await app.jobs.attempts(null, r.job_id)).filter(
