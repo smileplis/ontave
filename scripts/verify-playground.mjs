@@ -13,7 +13,7 @@ const root = resolve(import.meta.dirname, ".."),
   );
 const temporaryParent = resolve(
   packed.consumer,
-  "long-temporary-path-for-postgresql-startup-without-unix-sockets",
+  "long-temporary-path-for-postgresql-startup-without-unix-sockets".repeat(2),
 );
 await mkdir(temporaryParent, { recursive: true });
 assert.ok(Buffer.byteLength(temporaryParent) > 103);
