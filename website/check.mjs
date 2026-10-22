@@ -93,7 +93,7 @@ for (const id of ["deliveries", "reads", "provenance"]) {
   assert.ok(home.includes(`aria-controls="chart-${id}"`));
   assert.ok(home.includes(`id="chart-${id}"`));
 }
-assert.ok(home.includes("Synthetic workload") || home.includes("SYNTHETIC WORKLOAD"));
+assert.ok(/synthetic workload/i.test(home));
 assert.ok(home.includes("/docs/benchmarks/"));
 assert.ok(benchmark.limitations.includes("model accuracy"));
 assert.ok(

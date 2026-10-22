@@ -42,7 +42,7 @@ const readPath = readPoints
 const chart = (id, title, description, content) =>
   `<svg viewBox="0 0 560 300" role="img" aria-labelledby="${id}-title ${id}-description"><title id="${id}-title">${title}</title><desc id="${id}-description">${description}</desc>${content}</svg>`;
 
-export const metrics = `<section class="benchmarks frame section" id="benchmarks" data-reactive-grid><canvas class="reactive-canvas" aria-hidden="true"></canvas><span class="section-kicker">MEASURED FRAMEWORK BEHAVIOR <span class="benchmark-origin">SYNTHETIC WORKLOAD</span></span>
+export const metrics = `<section class="benchmarks frame section" id="benchmarks">
   <div class="section-title"><h2>Fewer repeat calls.<br><span class="gradient-type">More context kept.</span></h2><a class="text-link" href="/docs/benchmarks/">How we measured it <span>↗</span></a></div>
   <div class="benchmark-tabs" role="tablist" aria-label="Measured framework behavior">
     <button role="tab" id="benchmark-deliveries" aria-selected="true" aria-controls="chart-deliveries" data-benchmark="deliveries">Repeated deliveries</button>

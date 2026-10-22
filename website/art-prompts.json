@@ -1,0 +1,22 @@
+{
+  "generator": "Built-in image_gen",
+  "created": "2026-10-22",
+  "notes": "Original generated illustrations inspired by post-impressionist oil painting. These are not works by Vincent van Gogh.",
+  "prompts": [
+    {
+      "key": "evidence",
+      "prompt": "Use case: stylized-concept. Asset type: editorial painting for a light themed data infrastructure website. Create an original oil painting in Vincent van Gogh's post-impressionist style: a single golden pear on a quiet pale wooden table beside a small upright mirror, its painted reflection visibly separate from the tangible fruit. A thoughtful visual metaphor for a reported claim versus verified evidence. Expressive directional impasto brushwork, visible linen texture, muted sage, cornflower blue, warm ivory and restrained harvest gold. Wide landscape composition, simple uncluttered arrangement, abundant quiet space, pear and mirror occupying the right half so a dark text overlay can sit on the left. Museum-quality painterly detail rather than an icon or cartoon. No text, lettering, diagrams, signature, border, watermark or UI.",
+      "output": "public/art/claim-and-evidence.webp"
+    },
+    {
+      "key": "identity",
+      "prompt": "Use case: stylized-concept. Asset type: editorial painting for a light themed data infrastructure website. Create an original oil painting in Vincent van Gogh's post-impressionist style: two blue iris plants growing beside one another in an airy Proven\u00e7al garden. The flowers resemble each other but each has its own clearly distinct stem, leaves and visible roots through a small earth bank, suggesting identity and traceable lineage. Expressive directional impasto brushwork, visible linen texture, muted sage, cornflower blue, warm ivory and restrained harvest gold. Wide landscape composition, plants on the right half with generous quiet pale sky and ground on the left for dark website copy. Sophisticated restrained painting, not a diagram or icon. No text, lettering, signature, border, watermark or UI.",
+      "output": "public/art/distinct-roots.webp"
+    },
+    {
+      "key": "uncertainty",
+      "prompt": "Use case: stylized-concept. Asset type: editorial painting for a light themed data infrastructure website. Create an original oil painting in Vincent van Gogh's post-impressionist style: a winding country path through pale wheat and olive trees, the near path clear and distinct while the far route and distant farmhouse dissolve gently into morning mist. A calm visual metaphor for uncertainty remaining visible rather than invented certainty. Expressive directional impasto brushwork, visible linen texture, muted sage, cornflower blue, warm ivory and restrained harvest gold. Wide landscape composition, path and farmhouse on the right half with abundant quiet pale atmosphere on the left for dark website copy. Sophisticated soft painting, not an icon or cartoon. No text, lettering, signature, border, watermark or UI.",
+      "output": "public/art/uncertain-path.webp"
+    }
+  ]
+}
