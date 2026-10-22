@@ -121,9 +121,9 @@ for (let position = 0; position < pages.length; position++) {
 await writeFile(
   resolve(dist, "index.html"),
   document({
-    title: "Ontave — Your schema didn’t see this coming.",
+    title: "Ontave — A data model for what comes next.",
     description:
-      "Evidence-backed information, reviewed model changes and typed application contracts. An open-source TypeScript framework for what comes next.",
+      "Turn unexpected messages into useful records. An open-source TypeScript framework for preserved evidence, reviewed model changes, and typed application contracts.",
     body: home(storyMarkup),
   }),
 );

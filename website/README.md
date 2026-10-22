@@ -18,3 +18,5 @@ The atomic logo and wordmark use the owner-supplied option 2 artwork from Google
 Vercel project settings: root directory website, framework Other, build command npm run build, output dist. Node.js 24. Do not add any framework provider keys or database secrets to the static website project.
 
 DM Sans regular and medium are self-hosted under the SIL Open Font License, included in `public/fonts/OFL.txt`. The owner-supplied Van Gogh images are compressed as WebP in `public/art/`; the 97 MB farmhouse source is not served. `public/ontave-display.svg` extracts the existing path-based wordmark for the oversized footer, so it stays sharp at every size. The canonical production address is `https://ontave.daltn.tech`; the existing `app.daltn.tech` alias remains usable.
+
+The landing-page narrative follows promise → benefits → walkthrough → developer integration → measured results → first session. Copy is adapted from the existing app.daltn.tech site to the concise, product-led cadence of the supplied Wafer reference. Technical qualification boundaries, benchmark disclosures and the fictional nature of examples remain explicit. Both public hostnames serve this same site.

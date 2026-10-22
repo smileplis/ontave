@@ -9,23 +9,23 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const chapters = [
   {
     name: "The message",
-    body: "People and installations fit. An inspection is new.",
+    body: "A familiar installation. An unexpected inspection. The source stays intact.",
   },
   {
     name: "The proposal",
-    body: "Propose a concept. Keep the approved model unchanged.",
+    body: "An inspection needs a place in the model. Ontave proposes an addition for review.",
   },
   {
     name: "The evaluation",
-    body: "Check the source. Keep the existing contract readable.",
+    body: "Check the candidate against its source and the existing contract before activation.",
   },
   {
     name: "The review",
-    body: "Approve the model. Review the facts separately.",
+    body: "Approve the model change. Decide which facts to accept in a separate review.",
   },
   {
     name: "The record",
-    body: "An accepted requirement. Still reported. Always source-linked.",
+    body: "A useful record, linked to its evidence. Accepted as a requirement. Still reported.",
   },
 ];
 function Arrow({ className = "" }: { className?: string }) {
@@ -167,6 +167,7 @@ export function Story() {
       aria-label="From source message to accepted record"
     >
       <div className="story-sticky">
+        <span className="section-kicker">HOW ONTAVE WORKS</span>
         <div className="story-heading">
           <h2>
             One message.
