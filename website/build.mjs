@@ -5,6 +5,7 @@ import {
   rm,
   copyFile,
   readdir,
+  cp,
 } from "node:fs/promises";
 import { resolve } from "node:path";
 import { build } from "esbuild";
@@ -120,9 +121,9 @@ for (let position = 0; position < pages.length; position++) {
 await writeFile(
   resolve(dist, "index.html"),
   document({
-    title: "Ontave — Your schema didn’t see this coming.",
+    title: "Ontave — A data model for what comes next.",
     description:
-      "Evidence-backed information, reviewed model changes and typed application contracts. An open-source TypeScript framework for what comes next.",
+      "Turn unexpected messages into useful records. An open-source TypeScript framework for preserved evidence, reviewed model changes, and typed application contracts.",
     body: home(storyMarkup),
   }),
 );
@@ -177,15 +178,15 @@ await build({
 });
 await writeFile(resolve(dist, "search-index.json"), JSON.stringify(index));
 for (const file of await readdir(resolve(root, "public"))) {
-  await copyFile(resolve(root, "public", file), resolve(dist, file));
+  await cp(resolve(root, "public", file), resolve(dist, file), { recursive: true });
 }
 await writeFile(
   resolve(dist, "robots.txt"),
-  "User-agent: *\nAllow: /\nSitemap: https://app.daltn.tech/sitemap.xml\n",
+  "User-agent: *\nAllow: /\nSitemap: https://ontave.daltn.tech/sitemap.xml\n",
 );
 await writeFile(
   resolve(dist, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", ...pages.map((p) => p.path)].map((path) => `<url><loc>https://app.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", ...pages.map((p) => p.path)].map((path) => `<url><loc>https://ontave.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
 );
 console.log(
   JSON.stringify({ pages: pages.length + 3, output: "dist", status: "built" }),

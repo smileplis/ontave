@@ -70,6 +70,12 @@ document.addEventListener("click", async (event) => {
     toast("Copy unavailable. Select the code to copy it.");
   }
 });
+const landingHeader = q<HTMLElement>(".landing-header");
+if (landingHeader) {
+  const updateHeader = () => landingHeader.classList.toggle("is-scrolled", window.scrollY > 480);
+  window.addEventListener("scroll", updateHeader, { passive: true });
+  updateHeader();
+}
 q(".menu-toggle")?.addEventListener("click", () => {
   const menu = q<HTMLElement>(".mobile-nav")!,
     button = q(".menu-toggle")!;
@@ -84,6 +90,7 @@ qa(".mobile-nav a").forEach((a) =>
   a.addEventListener("click", () => {
     q<HTMLElement>(".mobile-nav")!.hidden = true;
     q(".menu-toggle")!.setAttribute("aria-expanded", "false");
+    q(".menu-toggle")!.setAttribute("aria-label", "Open navigation");
   }),
 );
 q(".docs-mobile-toggle")?.addEventListener("click", () => {
@@ -131,8 +138,8 @@ const features: Record<
   }
 > = {
   evidence: {
-    title: "Keep the original.",
-    description: "Every proposed value links back to its source.",
+    title: "Keep the source in sight.",
+    description: "Preserve the original message. Keep every proposed value connected to the evidence behind it.",
     symbol: "↳",
     link: "evidence",
     label: "Explore evidence",
@@ -153,8 +160,8 @@ const job = await ontave.jobs.get(
 );`,
   },
   review: {
-    title: "Make acceptance explicit.",
-    description: "Approve the exact bundle you inspected.",
+    title: "Every change. Your call.",
+    description: "Review the proposed interpretation, then approve the exact bundle you inspected.",
     symbol: "✓",
     link: "review",
     label: "Understand review",
@@ -175,8 +182,8 @@ await ontave.reviews.accept(context, {
 // A modified bundle requires a new review.`,
   },
   evolve: {
-    title: "Add a concept. Keep control.",
-    description: "Evaluate a model extension before activating it.",
+    title: "Room for the next concept.",
+    description: "Evaluate an additive model extension before you activate it. Keep existing contracts pinned.",
     symbol: "◇",
     link: "evolution",
     label: "Explore model evolution",
@@ -197,8 +204,8 @@ const evaluation = await ontave.evaluations.evaluate(
 // Inspect the report before explicit publication.`,
   },
   read: {
-    title: "Query without inference.",
-    description: "Read accepted data through a pinned contract.",
+    title: "Read data. Skip the inference.",
+    description: "Read accepted records through a pinned application contract, without another model call.",
     symbol: "⌑",
     link: "queries",
     label: "Explore structured reads",
@@ -343,6 +350,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     q<HTMLElement>(".mobile-nav")!.hidden = true;
     q(".menu-toggle")!.setAttribute("aria-expanded", "false");
+    q(".menu-toggle")!.setAttribute("aria-label", "Open navigation");
     q(".docs-sidebar")?.classList.remove("open");
     q(".docs-mobile-toggle")?.setAttribute("aria-expanded", "false");
   }
@@ -372,8 +380,7 @@ motion.add("(prefers-reduced-motion: no-preference)", () => {
   const heroElements = qa<HTMLElement>(".hero-line,.hero-copy,.hero-actions");
   if (heroElements.length)
     gsap.from(heroElements, {
-      y: 25,
-      opacity: 0,
+      y: 18,
       duration: 1.1,
       stagger: 0.13,
       ease: "power3.out",
