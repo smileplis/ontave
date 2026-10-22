@@ -1106,16 +1106,11 @@ input:focus-visible {
     gap: 23px;
   }
   .benchmark-panel {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .benchmark-copy p {
-    max-width: 450px;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 28px;
   }
   .benchmark-chart {
-    max-width: 590px;
     width: 100%;
-    justify-self: center;
   }
   .story-workspace {
     min-height: 310px;
