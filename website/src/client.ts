@@ -1,3 +1,4 @@
+import { initReactiveGrids } from "./interaction";
 import { searchDocuments } from "./search";
 import React from "react";
 import { hydrateRoot } from "react-dom/client";
@@ -97,6 +98,14 @@ q(".docs-mobile-toggle")?.addEventListener("click", () => {
   const side = q(".docs-sidebar")!;
   const open = side.classList.toggle("open");
   q(".docs-mobile-toggle")!.setAttribute("aria-expanded", String(open));
+  const backdrop = q<HTMLElement>(".docs-backdrop");
+  if (backdrop) backdrop.hidden = !open;
+});
+q(".docs-backdrop")?.addEventListener("click", () => {
+  q(".docs-sidebar")?.classList.remove("open");
+  q<HTMLElement>(".docs-backdrop")!.hidden = true;
+  q<HTMLElement>(".docs-mobile-toggle")?.setAttribute("aria-expanded", "false");
+  q<HTMLElement>(".docs-mobile-toggle")?.focus();
 });
 function setupTabs(selector: string, change: (button: HTMLElement) => void) {
   const tabs = qa<HTMLElement>(selector);
@@ -124,140 +133,6 @@ function setupTabs(selector: string, change: (button: HTMLElement) => void) {
   });
   return select;
 }
-const features: Record<
-  string,
-  {
-    title: string;
-    description: string;
-    symbol: string;
-    link: string;
-    label: string;
-    detail: string;
-    filename: string;
-    code: string;
-  }
-> = {
-  evidence: {
-    title: "Keep the source in sight.",
-    description: "Preserve the original message. Keep every proposed value connected to the evidence behind it.",
-    symbol: "↳",
-    link: "evidence",
-    label: "Explore evidence",
-    detail: "Receipt ≠ accepted fact",
-    filename: "preserve.ts",
-    code: `const receipt = await ontave.ingest(context, {
-  source: "messages",
-  idempotencyKey: "message-014",
-  payload: {
-    kind: "text",
-    text: "Ramesh needs to inspect the roof.",
-  },
-});
-
-// Preserved now. Interpreted by your worker.
-const job = await ontave.jobs.get(
-  context, receipt.job_id,
-);`,
-  },
-  review: {
-    title: "Every change. Your call.",
-    description: "Review the proposed interpretation, then approve the exact bundle you inspected.",
-    symbol: "✓",
-    link: "review",
-    label: "Understand review",
-    detail: "Acceptance ≠ independent verification",
-    filename: "review.ts",
-    code: `const bundle = await ontave.reviews.get(
-  context, bundleId,
-);
-
-// After an authorized reviewer checks it:
-await ontave.reviews.accept(context, {
-  bundleId: bundle.id,
-  digest: bundle.hash,
-  requestKey: "review-message-014",
-  reason: "Checked the proposal against its source",
-});
-
-// A modified bundle requires a new review.`,
-  },
-  evolve: {
-    title: "Room for the next concept.",
-    description: "Evaluate an additive model extension before you activate it. Keep existing contracts pinned.",
-    symbol: "◇",
-    link: "evolution",
-    label: "Explore model evolution",
-    detail: "Candidate activation ≠ fact acceptance",
-    filename: "evolve.ts",
-    code: `const candidate = await ontave.ontology.propose(
-  context, {
-    evidenceIds: [evidenceId],
-    requestKey: "roof-inspection-v1",
-    reason: "An inspection precedes installation",
-    patch: reviewedAdditiveDefinition,
-  },
-);
-
-const evaluation = await ontave.evaluations.evaluate(
-  context, { candidateId: candidate.candidateId, suiteId },
-);
-// Inspect the report before explicit publication.`,
-  },
-  read: {
-    title: "Read data. Skip the inference.",
-    description: "Read accepted records through a pinned application contract, without another model call.",
-    symbol: "⌑",
-    link: "queries",
-    label: "Explore structured reads",
-    detail: "Database read · zero inference calls",
-    filename: "read.ts",
-    code: `const page = await ontave.entities.find(context, {
-  contractId: contract.id,
-  contractHash: contract.hash,
-  conceptId: "person",
-  where: [{ field: "name", op: "eq", value: "Ramesh" }],
-  limit: 25,
-});
-
-const name = page.records[0]?.fields.name;
-if (name?.state === "value") {
-  console.log(name.value, name.verification);
-  console.log(name.assertionIds);
-}`,
-  },
-};
-setupTabs("[data-feature]", (button) => {
-  const item = features[button.dataset.feature!];
-  q<HTMLElement>("#feature-title")!.innerHTML = item.title
-    .split("\n")
-    .map(escape)
-    .join("<br>");
-  q("#feature-description")!.textContent = item.description;
-  q("#feature-symbol")!.textContent = item.symbol;
-  const link = q<HTMLAnchorElement>("#feature-link")!;
-  link.href = `/docs/${item.link}/`;
-  link.innerHTML = `${escape(item.label)} <span>↗</span>`;
-  q("#feature-detail")!.innerHTML =
-    `<span class="status-light"></span> ${escape(item.detail)}`;
-  q("#feature-code")!.innerHTML =
-    `<div class="code-window"><div class="code-toolbar"><span><i></i>${escape(item.filename)}</span><button class="copy-code" aria-label="Copy code">Copy <span aria-hidden="true">⧉</span></button></div><pre><code>${escape(item.code)}</code></pre></div>`;
-  highlight(q<HTMLElement>("#feature-code code")!);
-  q("#feature-panel")!.setAttribute("aria-labelledby", button.id);
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    gsap.fromTo(
-      "#feature-title,#feature-description,#feature-code",
-      { y: 10, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.35,
-        stagger: 0.035,
-        ease: "power2.out",
-        overwrite: true,
-      },
-    );
-  }
-});
 setupTabs("[data-benchmark]", (button) => {
   qa<HTMLElement>(".benchmark-panel").forEach((panel) => {
     panel.hidden = panel.id !== button.getAttribute("aria-controls");
@@ -352,6 +227,8 @@ document.addEventListener("keydown", (e) => {
     q(".menu-toggle")!.setAttribute("aria-expanded", "false");
     q(".menu-toggle")!.setAttribute("aria-label", "Open navigation");
     q(".docs-sidebar")?.classList.remove("open");
+    const backdrop = q<HTMLElement>(".docs-backdrop");
+    if (backdrop) backdrop.hidden = true;
     q(".docs-mobile-toggle")?.setAttribute("aria-expanded", "false");
   }
 });
@@ -443,7 +320,7 @@ motion.add("(prefers-reduced-motion: no-preference)", () => {
       event.preventDefault();
       history.pushState(null, "", hash);
       gsap.to(window, {
-        scrollTo: { y: element, offsetY: 90 },
+        scrollTo: { y: element, offsetY: element.id === "walkthrough" ? 0 : 90 },
         duration: 1.1,
         ease: "power3.inOut",
         overwrite: "auto",
@@ -451,3 +328,5 @@ motion.add("(prefers-reduced-motion: no-preference)", () => {
     }),
   );
 });
+
+initReactiveGrids();

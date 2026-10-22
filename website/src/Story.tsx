@@ -2,374 +2,70 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { Button } from "./components/ui/button";
-import { Badge } from "./components/ui/badge";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const chapters = [
-  {
-    name: "The message",
-    body: "A familiar installation. An unexpected inspection. The source stays intact.",
-  },
-  {
-    name: "The proposal",
-    body: "An inspection needs a place in the model. Ontave proposes an addition for review.",
-  },
-  {
-    name: "The evaluation",
-    body: "Check the candidate against its source and the existing contract before activation.",
-  },
-  {
-    name: "The review",
-    body: "Approve the model change. Decide which facts to accept in a separate review.",
-  },
-  {
-    name: "The record",
-    body: "A useful record, linked to its evidence. Accepted as a requirement. Still reported.",
-  },
+  { label: "Capture", title: "Start with what happened.", description: "The message stays intact. Every interpretation has somewhere to point back to." },
+  { label: "Propose", title: "Make room for something new.", description: "An inspection doesn’t fit the existing model. Ontave proposes a concept and its relationship." },
+  { label: "Evaluate", title: "Check the change before it lands.", description: "Evaluate the proposed addition against its evidence and the existing application contract." },
+  { label: "Review", title: "Keep the decision in your hands.", description: "Approve the model change. Review and accept the proposed facts separately." },
+  { label: "Use", title: "Give your application something useful.", description: "Read an accepted, source-linked record through a typed contract. No inference on read." },
 ];
-function Arrow({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-function Check() {
-  return (
-    <svg
-      width="15"
-      height="15"
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path d="m4 10 4 4 8-8" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
 export function Story() {
   const root = useRef<HTMLElement>(null);
   const trigger = useRef<ScrollTrigger | null>(null);
   const [chapter, setChapter] = useState(0);
-  const [reduced, setReduced] = useState(false);
-  const [inspector, setInspector] = useState(false);
+  const [manual, setManual] = useState(true);
   useEffect(() => {
     const media = gsap.matchMedia();
-    media.add(
-      {
-        motion:
-          "(prefers-reduced-motion: no-preference) and (min-height: 800px) and (min-width: 761px)",
-        reduced:
-          "(prefers-reduced-motion: reduce), (max-height: 799px), (max-width: 760px)",
-      },
-      (context) => {
-        const reduce = Boolean(context.conditions?.reduced);
-        setReduced(reduce);
-        if (reduce) return;
-        const element = root.current!;
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: element,
-            start: "top 90px",
-            end: "bottom bottom",
-            scrub: 0.7,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              const next = Math.min(4, Math.floor(self.progress * 5));
-              setChapter((previous) => (previous === next ? previous : next));
-            },
-            onRefresh: (self) => {
-              trigger.current = self;
-            },
-          },
-        });
-        trigger.current = timeline.scrollTrigger!;
-        timeline.fromTo(
-          ".story-progress-fill",
-          { scaleX: 0 },
-          { scaleX: 1, duration: 5, ease: "none" },
-          0,
-        );
-        timeline.fromTo(
-          ".source-highlight",
-          { backgroundSize: "0% 1px" },
-          { backgroundSize: "100% 1px", duration: 0.8, ease: "none" },
-          0.1,
-        );
-        timeline.fromTo(
-          ".story-flow-line",
-          { strokeDashoffset: 220 },
-          { strokeDashoffset: 0, duration: 0.7, ease: "none" },
-          0.5,
-        );
-        return () => {
-          timeline.kill();
-          trigger.current = null;
-        };
-      },
-    );
+    media.add("(prefers-reduced-motion: no-preference) and (min-width: 960px) and (min-height: 640px)", () => {
+      setManual(false);
+      return () => setManual(true);
+    });
     return () => media.revert();
   }, []);
   useEffect(() => {
-    if (reduced) return;
-    const context = gsap.context(() => {
-      gsap.fromTo(
-        ".story-narrative-content",
-        { opacity: 0, y: 12 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          ease: "power2.out",
-          overwrite: true,
-        },
-      );
-      gsap.fromTo(
-        ".story-stage-content",
-        { opacity: 0, y: 10 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.4,
-          ease: "power2.out",
-          overwrite: true,
-        },
-      );
-    }, root);
-    return () => context.revert();
-  }, [chapter, reduced]);
-  function navigate(index: number) {
-    if (reduced || !trigger.current) {
-      setChapter(index);
-      return;
-    }
-    const t = trigger.current;
-    gsap.to(window, {
-      scrollTo: t.start + (t.end - t.start) * ((index + 0.18) / 5),
-      duration: 0.8,
-      ease: "power2.inOut",
-      overwrite: "auto",
+    if (manual) return;
+    // Measure after React has committed the tall scroll layout.
+    const scroll = ScrollTrigger.create({
+      trigger: root.current,
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: self => {
+        setChapter(Math.min(4, Math.floor(self.progress * 5)));
+        root.current?.style.setProperty("--story-progress", String(self.progress));
+      },
     });
+    trigger.current = scroll;
+    ScrollTrigger.refresh();
+    return () => { scroll.kill(); trigger.current = null; };
+  }, [manual]);
+  function navigate(index: number) {
+    setChapter(index);
+    const scroll = trigger.current;
+    if (!manual && scroll) gsap.to(window, { scrollTo: scroll.start + (scroll.end - scroll.start) * ((index + .45) / 5), duration: .7, ease: "power2.inOut", overwrite: true });
   }
-  return (
-    <section
-      className={`story-section frame ${reduced ? "reduced-story" : ""}`}
-      id="walkthrough"
-      ref={root}
-      aria-label="From source message to accepted record"
-    >
-      <div className="story-sticky">
-        <span className="section-kicker">HOW ONTAVE WORKS</span>
-        <div className="story-heading">
-          <h2>
-            One message.
-            <br />
-            <span>A new concept.</span>
-          </h2>
-          <div className="story-narrative">
-            <div className="story-narrative-content" key={chapter}>
-              <p>{chapters[chapter].body}</p>
-            </div>
-          </div>
-        </div>
-        <div className="story-application">
-          <div className="story-workspace">
-            <div className="story-source">
-              <div className="story-source-head">
-                <strong>Ramesh</strong>
-                <span>Source 014</span>
-              </div>
-              <p className="story-message">
-                Before we install the panels,
-                <br />
-                Ramesh needs to{" "}
-                <span className="source-highlight">inspect the roof.</span>
-              </p>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="source-inspector-button"
-                aria-expanded={inspector}
-                onClick={() => setInspector(!inspector)}
-              >
-                {inspector ? "Close source details" : "Inspect the source"}{" "}
-                <Arrow />
-              </Button>
-              {inspector && (
-                <div className="source-inspector">
-                  <span>message.txt · UTF-8 text</span>
-                  <p>
-                    “inspect the roof” is the supporting quote. Ontave derives
-                    exact source coordinates during validation.
-                  </p>
-                </div>
-              )}
-            </div>
-            <div className="story-connection" aria-hidden="true">
-              <svg viewBox="0 0 220 100" preserveAspectRatio="none">
-                <path d="M0 50H220" stroke="#303035" />
-                <path
-                  className="story-flow-line"
-                  d="M0 50H220"
-                  stroke="#d6c39a"
-                  strokeDasharray="220"
-                />
-                <circle cx="216" cy="50" r="3" fill="#c5d1b2" />
-              </svg>
-            </div>
-            <div className="story-model">
-              <div
-                className="story-stage-content"
-                key={chapter}
-                aria-live="polite"
-              >
-                {chapter === 0 && (
-                  <>
-                    <div className="stage-heading">
-                      <span>Current model</span>
-                      <Badge variant="outline">v1</Badge>
-                    </div>
-                    <div className="existing-model">
-                      <div className="model-concept">
-                        <span>○</span> Person
-                      </div>
-                      <span className="model-connection-line" />
-                      <div className="model-concept">
-                        <span>□</span> Installation
-                      </div>
-                    </div>
-                    <div className="model-gap">
-                      <span>?</span>
-                      <p>Where does an inspection fit?</p>
-                    </div>
-                  </>
-                )}
-                {(chapter === 1 || chapter === 2) && (
-                  <>
-                    <div className="stage-heading">
-                      <span>
-                        {chapter === 1
-                          ? "Proposed addition"
-                          : "Candidate evaluation"}
-                      </span>
-                      <Badge variant="outline">Not applied</Badge>
-                    </div>
-                    <div className="story-new-concept">
-                      <div className="new-concept-heading">
-                        <span className="concept-shape">◇</span>
-                        <h4>RoofInspection</h4>
-                        <span className="concept-add">+</span>
-                      </div>
-                      <div className="new-concept-relation">
-                        <span>RoofInspection</span>
-                        <span>
-                          precedes <Arrow />
-                        </span>
-                        <span>Installation</span>
-                      </div>
-                    </div>
-                    {chapter === 2 && (
-                      <div className="story-proof-lines">
-                        <div>
-                          <Check />
-                          <span>Existing contract</span>
-                        </div>
-                        <div>
-                          <Check />
-                          <span>Source evidence</span>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )}
-                {chapter === 3 && (
-                  <>
-                    <div className="stage-heading">
-                      <span>Review decisions</span>
-                    </div>
-                    <div className="review-decision">
-                      <div className="decision-check">
-                        <Check />
-                      </div>
-                      <div>
-                        <strong>Model approved.</strong>
-                      </div>
-                    </div>
-                    <div className="review-decision">
-                      <div className="decision-check">
-                        <Check />
-                      </div>
-                      <div>
-                        <strong>Facts reviewed.</strong>
-                      </div>
-                    </div>
-                  </>
-                )}
-                {chapter === 4 && (
-                  <>
-                    <div className="stage-heading">
-                      <span>Accepted record</span>
-                    </div>
-                    <div className="accepted-record">
-                      <div className="accepted-record-title">
-                        <span>◇</span>
-                        <strong>RoofInspection</strong>
-                        <span>reported</span>
-                      </div>
-                      <div className="record-field">
-                        <span>requirement</span>
-                        <strong>inspect the roof</strong>
-                      </div>
-                      <div className="record-field source">
-                        <span>evidence</span>
-                        <a href="/docs/evidence/">
-                          Message 014 <Arrow />
-                        </a>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="story-bottom">
-          <nav className="story-chapters" aria-label="Walkthrough chapters">
-            {chapters.map((item, index) => (
-              <Button
-                key={item.name}
-                variant="ghost"
-                size="sm"
-                aria-label={item.name}
-                aria-current={chapter === index ? "step" : undefined}
-                onClick={() => navigate(index)}
-              >
-                <span className="chapter-index">{index + 1}</span>
-                {item.name.replace("The ", "")}
-              </Button>
-            ))}
-          </nav>
-          <span className="story-scroll-hint">
-            {reduced ? "Select a chapter" : "Scroll to follow the story"}{" "}
-            <span>↓</span>
-          </span>
-        </div>
-        <div className="story-progress">
-          <div className="story-progress-fill" />
-        </div>
-        <a className="story-try-link" href="/playground/">
-          Try this example yourself <Arrow />
-        </a>
-        <p className="story-disclaimer">Illustrative walkthrough</p>
+  return <section ref={root} id="walkthrough" className={`evolution-story ${manual ? "story-manual" : "story-scroll"}`} data-phase={chapter} aria-label="How Ontave works">
+    <div className="evolution-sticky" data-reactive-grid>
+      <canvas className="reactive-canvas" aria-hidden="true" />
+      <div className="evolution-heading"><div><span className="section-kicker">HOW ONTAVE WORKS</span><h2>How Ontave works.</h2></div><div className="evolution-narrative" aria-live={manual ? "polite" : "off"}><span className="stage-count">0{chapter + 1} / 05</span><h3>{chapters[chapter].title}</h3><p>{chapters[chapter].description}</p></div></div>
+      <div className="evolution-scene">
+        <div className="scene-source"><span className="scene-label">A MESSAGE</span><blockquote>“Before installation,<br /><mark>inspect the roof.</mark>”</blockquote><div className="source-trace"><span className="trace-dot" />Original evidence retained</div><div className="scene-flow" aria-hidden="true"><span /><i>→</i></div></div>
+        <div className="scene-model"><span className="scene-label">{chapter === 0 ? "YOUR EXISTING MODEL" : chapter < 3 ? "A PROPOSED ADDITION" : "YOUR REVIEWED MODEL"}</span><svg className="ontology-graph" viewBox="0 0 500 330" role="img" aria-label={`An inspection concept ${chapter < 1 ? "has no place yet" : chapter < 3 ? "is proposed for review" : "has been approved"} alongside Person and Installation.`}>
+          <defs><radialGradient id="node-wash"><stop stopColor="#9eb7b1" stopOpacity=".14"/><stop offset="1" stopColor="#9eb7b1" stopOpacity="0"/></radialGradient></defs>
+          <circle className="graph-halo" cx="260" cy="170" r="160" fill="url(#node-wash)"/>
+          <path className="graph-edge existing-edge" d="M115 78H365"/><circle className="graph-endpoint" cx="115" cy="78" r="3"/><circle className="graph-endpoint" cx="365" cy="78" r="3"/>
+          <g className="existing-node"><rect x="15" y="42" width="145" height="70" rx="35"/><circle cx="42" cy="77" r="7"/><text x="65" y="84">Person</text></g>
+          <g className="existing-node"><rect x="302" y="42" width="178" height="70" rx="35"/><rect x="326" y="70" width="14" height="14" rx="2"/><text x="352" y="84">Installation</text></g>
+          <path className="graph-edge new-edge" d="M254 228C254 155 392 174 392 114"/><text className="relation-label" x="318" y="170">precedes</text>
+          <g className="unknown-concept"><circle cx="255" cy="255" r="36"/><text x="255" y="264" textAnchor="middle">?</text><text className="unknown-caption" x="255" y="323" textAnchor="middle">An inspection is new.</text></g>
+          <g className="proposed-node"><rect x="113" y="220" width="284" height="74" rx="37"/><path d="m141 258 9-9 9 9-9 9Z"/><text x="175" y="265">RoofInspection</text></g>
+          <g className="evaluation-orbit"><circle cx="255" cy="257" r="112"/><circle cx="367" cy="257" r="4"/></g>
+        </svg><div className="model-decision"><span className="decision-dot" />{chapter === 0 ? "A little room for what comes next" : chapter === 1 ? "Proposed · nothing applied" : chapter === 2 ? "The evaluation · checked before activation" : chapter === 3 ? "Model approved · facts reviewed separately" : "Model extended · evidence kept"}</div></div>
+        <div className="scene-record"><div className="scene-flow" aria-hidden="true"><span /><i>→</i></div><span className="scene-label">{chapter < 4 ? "READY WHEN YOU ARE" : "AN ACCEPTED RECORD"}</span><div className="record-reveal" aria-hidden={chapter < 4}><div className="record-type"><span>◇</span> RoofInspection</div><dl><div><dt>requirement</dt><dd>inspect the roof</dd></div><div><dt>verification</dt><dd><span className="reported-state">reported</span></dd></div><div><dt>source</dt><dd className="source-linked">linked <span>↗</span></dd></div></dl><span className="typed-read-label">Typed reads. No model call.</span></div><div className="record-placeholder" aria-hidden="true"><span /><span /><span /><p>Your application’s next useful record.</p></div></div>
       </div>
-    </section>
-  );
+      <div className="evolution-bottom"><nav className="evolution-chapters" aria-label="Walkthrough chapters">{chapters.map((item,index)=><button key={item.label} type="button" aria-pressed={chapter === index} onClick={()=>navigate(index)} onKeyDown={e=>{if(e.key === "ArrowRight" || e.key === "ArrowLeft"){e.preventDefault(); const next=(index+(e.key === "ArrowRight" ? 1 : 4))%5; navigate(next); (e.currentTarget.parentElement?.children[next] as HTMLButtonElement)?.focus();}}}><span>0{index+1}</span>{item.label}<i aria-hidden="true"/></button>)}</nav><div className="evolution-bottom-links"><span className="scroll-cue">{manual ? "Choose a step to explore" : "Scroll to follow the change"} <span aria-hidden="true">↓</span></span><a href="/playground/">Try the interactive example <span aria-hidden="true">↗</span></a></div></div>
+      <span className="story-example-label">Illustrative example</span>
+    </div>
+  </section>;
 }

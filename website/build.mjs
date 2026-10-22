@@ -91,14 +91,12 @@ for (let position = 0; position < pages.length; position++) {
     .replace(/<table>/g, '<div class="table-wrap"><table>')
     .replace(/<\/table>/g, "</table></div>");
   const side = navigation
-    .map(
-      (g) =>
-        `<div class="docs-nav-group"><h2>${escape(g.title)}</h2>${g.pages.map((p) => `<a href="${p.slug === "introduction" ? "/docs/" : `/docs/${p.slug}/`}" ${p.slug === page.slug ? 'aria-current="page"' : ""}>${escape(p.title)}</a>`).join("")}</div>`,
-    )
+    .map(g => `<details class="docs-nav-group" ${g.title === page.group || g.title === "Start" ? "open" : ""}><summary>${escape(g.title)}</summary><div>${g.pages.map(p => `<a href="${p.slug === "introduction" ? "/docs/" : `/docs/${p.slug}/`}" ${p.slug === page.slug ? 'aria-current="page"' : ""}>${escape(p.title)}</a>`).join("")}</div></details>`)
     .join("");
-  const previous = pages[position - 1],
-    next = pages[position + 1];
-  const body = `<button class="docs-mobile-toggle" aria-expanded="false" aria-controls="docs-sidebar">Browse documentation <span>☰</span></button><div class="docs-layout"><aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation"><a href="/docs/status/" class="docs-version">Ontave Zero <span>${version} · Preview ↓</span></a>${side}</aside><main class="docs-main" id="main"><div class="docs-breadcrumb">Documentation <span>/</span> ${escape(page.group)}</div><h1>${escape(page.title)}</h1><p class="docs-lede">${escape(page.description)}</p><article class="docs-prose">${html}</article><div class="docs-pagination">${previous ? `<a href="${previous.path}"><span>← PREVIOUS</span>${escape(previous.title)}</a>` : "<div></div>"}${next ? `<a href="${next.path}"><span>NEXT →</span>${escape(next.title)}</a>` : "<div></div>"}</div><div class="docs-meta">Ontave Zero · Apache 2.0 · <a href="/docs/status/">Alpha release status</a></div></main><aside class="docs-toc" aria-label="On this page"><strong>On this page</strong>${headings.map((h) => `<a class="${h.depth === 3 ? "toc-sub" : ""}" href="#${h.id}">${h.label}</a>`).join("")}<a class="edit-link" href="https://github.com/smileplis/ontave/blob/main/website/content/${page.slug}.md">Edit this page ↗</a></aside></div>`;
+  const previous = pages[position - 1], next = pages[position + 1];
+  const docsHome = page.slug === "introduction";
+  const intro = docsHome ? `<div class="docs-home-hero"><span class="section-kicker">THE ONTAVE DEVELOPER GUIDE</span><h1>From a first source<br>to a useful record.</h1><p class="docs-lede">Set up Ontave, connect your data, and build on a model you control.</p><div class="docs-home-actions"><a class="button primary" href="/docs/quickstart/">Start building <span aria-hidden="true">↗</span></a><a class="text-link" href="/docs/api/">Explore the API <span aria-hidden="true">↗</span></a></div><div class="docs-paths"><a href="/docs/quickstart/"><span>01 / GET STARTED</span><h2>Your first record <i aria-hidden="true">↗</i></h2><p>One source. A reviewed interpretation. A typed read.</p></a><a href="/docs/architecture/"><span>02 / UNDERSTAND</span><h2>The architecture <i aria-hidden="true">↗</i></h2><p>See how evidence, models, and contracts fit.</p></a><a href="/docs/node/"><span>03 / MAKE IT YOURS</span><h2>Your own stack <i aria-hidden="true">↗</i></h2><p>Connect your server, database, and model.</p></a></div></div>` : `<div class="docs-article-heading"><span class="section-kicker">${escape(page.group.toUpperCase())}</span><h1>${escape(page.title)}</h1><p class="docs-lede">${escape(page.description)}</p></div>`;
+  const body = `<div class="docs-mobile-bar"><button class="docs-mobile-toggle" aria-expanded="false" aria-controls="docs-sidebar"><span aria-hidden="true">☷</span> Browse documentation <span aria-hidden="true">⌄</span></button><span>${escape(page.title)}</span></div><button class="docs-backdrop" hidden tabindex="-1" aria-label="Close documentation navigation"></button><div class="docs-layout"><aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation"><a href="/docs/" class="docs-sidebar-title"><span class="docs-sidebar-mark" aria-hidden="true">↳</span> Developer guide</a><a href="/docs/status/" class="docs-version"><span class="live-dot" aria-hidden="true"></span> ${version} <span>Preview ↗</span></a><nav aria-label="Documentation pages">${side}</nav><a class="docs-sidebar-playground" href="/playground/"><span>Learn by doing.</span>Open the playground <span aria-hidden="true">↗</span></a></aside><main class="docs-main ${docsHome ? "docs-home" : ""}" id="main"><div class="docs-breadcrumb"><a href="/docs/">Docs</a><span>/</span>${escape(page.group)}<span>/</span><span>${escape(page.title)}</span></div>${intro}<article class="docs-prose">${html}</article><div class="docs-pagination">${previous ? `<a href="${previous.path}"><span>← PREVIOUS</span>${escape(previous.title)}</a>` : "<div></div>"}${next ? `<a href="${next.path}"><span>NEXT →</span>${escape(next.title)}</a>` : "<div></div>"}</div><div class="docs-meta">Ontave · Apache 2.0 · <a href="/docs/status/">Release status ↗</a></div></main><aside class="docs-toc" aria-label="On this page"><strong>On this page</strong><div class="docs-toc-links">${headings.map(h=>`<a class="${h.depth === 3 ? "toc-sub" : ""}" href="#${h.id}">${h.label}</a>`).join("")}</div><a class="edit-link" href="https://github.com/smileplis/ontave/blob/main/website/content/${page.slug}.md">Edit this page <span aria-hidden="true">↗</span></a><a class="docs-toc-help" href="https://github.com/smileplis/ontave/issues/new?template=developer-preview.yml">Something unclear?<br><span>Help improve the guide ↗</span></a></aside></div>`;
   const path = resolve(dist, "." + page.path);
   await mkdir(path, { recursive: true });
   await writeFile(
@@ -121,7 +119,7 @@ for (let position = 0; position < pages.length; position++) {
 await writeFile(
   resolve(dist, "index.html"),
   document({
-    title: "Ontave — A data model for what comes next.",
+    title: "Ontave — A data layer that adapts as your business changes.",
     description:
       "Turn unexpected messages into useful records. An open-source TypeScript framework for preserved evidence, reviewed model changes, and typed application contracts.",
     body: home(storyMarkup),
@@ -163,8 +161,10 @@ await writeFile(
     "\n" +
     (await readFile(resolve(root, "src/style.css"), "utf8")) +
     "\n" +
-    (await readFile(resolve(root, "src/expressive.css"), "utf8")),
+    (await readFile(resolve(root, "src/expressive.css"), "utf8")) + "\n" +
+    (await readFile(resolve(root, "src/refined.css"), "utf8")),
 );
+await copyFile(resolve(root, "src/light.css"), resolve(dist, "light.css"));
 await build({
   entryPoints: [resolve(root, "src/client.ts")],
   outfile: resolve(dist, "client.js"),
