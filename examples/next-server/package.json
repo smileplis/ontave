@@ -7,7 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "ontave": "file:../../artifacts/ontave-0.1.0-alpha.0.tgz",
+    "ontave": "https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz",
     "next": "16.4.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",

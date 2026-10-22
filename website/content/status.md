@@ -1,8 +1,8 @@
-## Ontave Zero: development alpha
+## Ontave developer preview
 
-The public GitHub archive remains `0.1.0-alpha.1`. The repository’s incoming `0.1.0-alpha.2` work adds robustness and qualification evidence; it is unreleased and has not been published to npm. No general production-readiness or arbitrary-data accuracy claim has been established.
+The working developer preview is `0.1.0-alpha.2`, distributed as a versioned GitHub archive. Earlier archives are preserved. There is no npm registry publication. No general production-readiness or arbitrary-data accuracy claim has been established.
 
-## Incoming alpha.2
+## Available in alpha.2
 
 - Immutable evidence, scoped authorization and fenced durable workers with append-only attempt accounting.
 - Real process-kill/restart, bounded shutdown, lost-acknowledgement retries and repeated-crash budget checks.
@@ -12,6 +12,10 @@ The public GitHub archive remains `0.1.0-alpha.1`. The repository’s incoming `
 - Operator restore checks across all 18 tables, clean Node/Next.js package consumers and workspace-scoped metrics.
 
 The complete solar/rental lifecycle demonstrations use a deterministic fictional adapter. They establish database behavior, rather than autonomous discovery accuracy.
+
+## Try the preview
+
+The [browser sandbox](/playground/) explores fictional SDK reference runs. The [one-command local playground](/docs/quickstart/) runs real SDK calls against temporary PostgreSQL, with a fixture adapter and no provider key. You can approve or decline the model, confirm identity matches, accept or reject the interpretation, and inspect the resulting record. Neither is a live-model accuracy demonstration.
 
 ## Qualification still open
 
@@ -25,4 +29,4 @@ Independent label review, live identity/discovery qualification, the remaining p
 
 The alpha does not implement physical business DDL, destructive model changes, automatic established-entity merges, a hosted database, Studio, browser/edge runtime, React hooks, MCP integration or autonomous acceptance of facts.
 
-Source uses Apache License 2.0. Follow the [installation instructions](/docs/installation/) for the existing public archive or a locally built source package.
+Source uses Apache License 2.0. Follow the [installation instructions](/docs/installation/) for the alpha.2 preview archive or a locally built source package.

@@ -18,6 +18,7 @@ jobs:
       - run: npm run measure:benefits
       - run: node scripts/verify-public.mjs
       - run: npm run verify:package
+      - run: npm run verify:playground
       - run: npm run verify:node
       - run: node scripts/verify-next.mjs
   website:

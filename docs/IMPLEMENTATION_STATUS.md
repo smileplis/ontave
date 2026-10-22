@@ -1,6 +1,13 @@
 # Ontave implementation status
 
-The source is **unreleased `0.1.0-alpha.2`**. The existing public `alpha.1` archive is unchanged. npm registry publication remains blocked by qualification gates; this is not a declaration that the full MVP has passed.
+**Developer preview `0.1.0-alpha.2`** is distributed through a versioned GitHub archive. The earlier `alpha.1` archive is preserved. npm registry publication remains blocked by full-MVP qualification gates; the developer preview is not a declaration that those gates have passed.
+
+## Developer-preview entry points
+
+- A guided browser sandbox replays fictional reference runs generated with the actual SDK and PostgreSQL.
+- `ontave playground --install` runs the interactive example against a real temporary local PostgreSQL database, with a restricted role and explicit fictional fixture adapter. No Docker or provider key is needed.
+- Model evaluation and identity/fact review remain real SDK operations. New accepted concepts render through an adopted contract without rebuilding the generic playground. Custom application interfaces still require development.
+- Explicit setup downloads optional tooling only when requested. Core package import/install performs no database provisioning or playground installation.
 
 ## Implemented and exercised
 

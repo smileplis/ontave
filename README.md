@@ -4,31 +4,39 @@ Your schema didn’t see this coming.
 
 Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed assertions and additive ontology evolution. Keep the source, review proposed changes and read accepted data through a typed application contract.
 
-**Development alpha:** unreleased source work is `0.1.0-alpha.2`; the public download remains `alpha.1`. The working lifecycle has deterministic and PostgreSQL coverage. The complete MVP acceptance and frozen live-model quality gates remain open. See [implementation status](docs/IMPLEMENTATION_STATUS.md).
+**Developer preview `0.1.0-alpha.2`.** The source-to-reviewed-record lifecycle is available as a runnable local playground and a versioned GitHub package. Full MVP qualification remains open; this is not a production-readiness claim. See [release status](docs/IMPLEMENTATION_STATUS.md).
 
-## Get started
+## Try Ontave
 
-[Documentation](https://app.daltn.tech/docs/) · [Quickstart](https://app.daltn.tech/docs/quickstart/) · [API reference](docs/API_REFERENCE.md) · [Release status](https://app.daltn.tech/docs/status/)
+[Browser sandbox](https://app.daltn.tech/playground/) · [Quickstart](https://app.daltn.tech/docs/quickstart/) · [API reference](docs/API_REFERENCE.md)
 
-Use Node.js 24 and a dedicated PostgreSQL 18 database. The package is ESM and runs in trusted server processes.
+With **Node.js 24** on macOS or Linux:
 
 ```sh
-# Install the public alpha tarball, without a registry publication.
-npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.1/ontave-0.1.0-alpha.1.tgz
+npx --yes --package=https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz ontave playground --install
+```
+
+Open the localhost URL printed in the terminal. The explicit command prepares a temporary PostgreSQL database and restricted role. `--install` downloads optional platform tooling into a temporary directory if needed. No Docker or model key is required. Ctrl+C stops the playground and removes the temporary database.
+
+The local playground uses real SDK/database operations with an explicitly fictional fixture adapter. The hosted browser sandbox replays reference runs from that same SDK harness. Neither demonstrates arbitrary-message model accuracy. Try the roof-inspection and payment-claim scenarios, inspect the source, evaluate the proposal, approve the model, confirm identity links and accept or reject the facts.
+
+## Install in your application
+
+```sh
+npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz
 npx ontave help
 ```
 
-Or build from source:
+The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. There is no npm registry publication yet. Core imports perform no setup or provider calls. Follow the [Node.js integration guide](https://app.daltn.tech/docs/node/) for your own data, model and authorization.
+
+Build from source:
 
 ```sh
 git clone https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
-npm run build
-npm pack --pack-destination artifacts
+npm run playground
 ```
-
-There is no public npm registry release yet. Installing a library does not provision a database or run migrations. [Set up the database](https://app.daltn.tech/docs/database/) explicitly, then follow the deterministic quickstart. No provider key is needed for the example or deterministic tests.
 
 ## What it does
 
@@ -53,7 +61,7 @@ const receipt = await ontave.ingest(context, {
 
 The host resolves authenticated actor, workspace, capabilities and trusted source policy. PostgreSQL uses a separate restricted runtime role with forced row-level security. Database credentials and model keys belong on the server.
 
-Gemini is an explicit replaceable adapter, with full-request token preflight. The experimental Groq adapter supports extraction only. Model output is validated and cannot approve changes. Accepting “I paid” as a correctly extracted claim does not independently verify payment.
+Gemini is an explicit replaceable adapter, with full-request token preflight. Experimental Mistral and OpenRouter adapters are explicit alternatives; Groq supports extraction only. Model output is validated and cannot approve changes. Accepting “I paid” as a correctly extracted claim does not independently verify payment.
 
 The alpha does not perform physical business-table migrations, destructive ontology changes, automatic established-entity merging or autonomous fact acceptance. It does not supply a hosted database, browser/edge SDK or React data hooks.
 
@@ -94,3 +102,7 @@ Run `npm run verify:release` before any npm publication. The prepublish guard re
 [Operator runbook](docs/OPERATOR_RUNBOOK.md) · [Build report](docs/BUILD_REPORT.md) · [Annotation rubric](docs/ANNOTATION_RUBRIC.md) · [Architectural source reference](docs/SOURCE_REFERENCE.md)
 
 Copyright 2026 Ontave contributors. See [Apache 2.0](LICENSE) and [NOTICE](NOTICE).
+
+## Developer-preview feedback
+
+[Report a preview issue](https://github.com/smileplis/ontave/issues/new?template=developer-preview.yml). Share setup friction, review effort and the workflow you want to support, with a fictional or redacted reproduction. The playground does not send telemetry or your messages to us.

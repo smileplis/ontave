@@ -19,7 +19,9 @@ for (const file of files) {
   assert.ok(html.includes('lang="en"'));
   assert.equal((html.match(/<h1(?: |>)/g) || []).length, 1, file);
   assert.ok(
-    !/AIza[A-Za-z0-9_-]{30,}|gsk_[A-Za-z0-9]{35,}|sk-or-v1-[0-9a-f]{40,}|mstrl_[A-Za-z0-9_-]{35,}|\/Users\//.test(html),
+    !/AIza[A-Za-z0-9_-]{30,}|gsk_[A-Za-z0-9]{35,}|sk-or-v1-[0-9a-f]{40,}|mstrl_[A-Za-z0-9_-]{35,}|\/Users\//.test(
+      html,
+    ),
     "Private content found",
   );
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
@@ -53,6 +55,50 @@ assert.ok(!home.includes('class="eyebrow"'));
 assert.ok(home.includes('data-slot="button"'));
 assert.ok(home.includes("The evaluation"));
 assert.ok(!files.some((f) => f.includes("/research/")));
+const playground = await readFile(
+  resolve(root, "playground/index.html"),
+  "utf8",
+);
+assert.ok(playground.includes('data-mode="reference"'));
+assert.ok(playground.includes("0.1.0-alpha.2"));
+assert.ok(playground.includes("playground --install"));
+assert.ok(playground.includes("Guided sandbox"));
+const reference = JSON.parse(
+  await readFile(resolve(root, "preview-reference.json"), "utf8"),
+);
+assert.equal(reference.version, "0.1.0-alpha.2");
+assert.equal(reference.kind, "recorded-sdk-fixtures");
+assert.equal(reference.scenarios.roof.states.at(-1).records.length, 1);
+assert.equal(
+  reference.scenarios.payment.states.at(-1).records[0].fields.amount
+    .verification,
+  "reported",
+);
+assert.ok(home.includes("/ontave-wordmark.svg"));
+const benchmark = JSON.parse(
+  await readFile(resolve(root, "benchmarks.json"), "utf8"),
+);
+assert.equal(
+  benchmark.deliveries.counterfactualCalls -
+    benchmark.deliveries.extractionCalls,
+  400,
+);
+assert.equal(benchmark.reads.modelCalls, 0);
+assert.deepEqual(
+  benchmark.orderedReadP95.map((x) => x.ms),
+  [0.95, 1.37, 8.27],
+);
+assert.equal(benchmark.provenance.sourceReferencedAssertions, 100);
+for (const id of ["deliveries", "reads", "provenance"]) {
+  assert.ok(home.includes(`aria-controls="chart-${id}"`));
+  assert.ok(home.includes(`id="chart-${id}"`));
+}
+assert.ok(home.includes("It does not establish semantic accuracy."));
+assert.ok(
+  !(await readFile(resolve(root, "favicon.svg"), "utf8")).includes(
+    "paint0_linear_95_806",
+  ),
+);
 console.log(
   JSON.stringify({
     ok: true,

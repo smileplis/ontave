@@ -1,6 +1,6 @@
 # Ontave MVP qualification
 
-**Unreleased `0.1.0-alpha.2`; npm publication blocked.** This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
+**Developer preview `0.1.0-alpha.2`; npm registry publication blocked.** This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
 
 ## Deterministic behavior
 

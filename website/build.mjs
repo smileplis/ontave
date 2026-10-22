@@ -15,7 +15,12 @@ import { Scanner } from "@tailwindcss/oxide";
 import { marked } from "marked";
 import { document, escape } from "./src/layout.mjs";
 import { home } from "./src/home.mjs";
+import { benchmarkData } from "./src/benchmarks.mjs";
+import { playgroundMarkup } from "../examples/playground/markup.mjs";
 const root = import.meta.dirname;
+const version = JSON.parse(
+  await readFile(resolve(root, "../package.json"), "utf8"),
+).version;
 const dist = resolve(root, "dist");
 await mkdir(resolve(root, ".cache"), { recursive: true });
 await build({
@@ -92,7 +97,7 @@ for (let position = 0; position < pages.length; position++) {
     .join("");
   const previous = pages[position - 1],
     next = pages[position + 1];
-  const body = `<button class="docs-mobile-toggle" aria-expanded="false" aria-controls="docs-sidebar">Browse documentation <span>☰</span></button><div class="docs-layout"><aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation"><a href="/docs/status/" class="docs-version">Ontave Zero <span>0.1.0 · Alpha ↓</span></a>${side}</aside><main class="docs-main" id="main"><div class="docs-breadcrumb">Documentation <span>/</span> ${escape(page.group)}</div><h1>${escape(page.title)}</h1><p class="docs-lede">${escape(page.description)}</p><article class="docs-prose">${html}</article><div class="docs-pagination">${previous ? `<a href="${previous.path}"><span>← PREVIOUS</span>${escape(previous.title)}</a>` : "<div></div>"}${next ? `<a href="${next.path}"><span>NEXT →</span>${escape(next.title)}</a>` : "<div></div>"}</div><div class="docs-meta">Ontave Zero · Apache 2.0 · <a href="/docs/status/">Alpha release status</a></div></main><aside class="docs-toc" aria-label="On this page"><strong>On this page</strong>${headings.map((h) => `<a class="${h.depth === 3 ? "toc-sub" : ""}" href="#${h.id}">${h.label}</a>`).join("")}<a class="edit-link" href="https://github.com/smileplis/ontave/blob/main/website/content/${page.slug}.md">Edit this page ↗</a></aside></div>`;
+  const body = `<button class="docs-mobile-toggle" aria-expanded="false" aria-controls="docs-sidebar">Browse documentation <span>☰</span></button><div class="docs-layout"><aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation"><a href="/docs/status/" class="docs-version">Ontave Zero <span>${version} · Preview ↓</span></a>${side}</aside><main class="docs-main" id="main"><div class="docs-breadcrumb">Documentation <span>/</span> ${escape(page.group)}</div><h1>${escape(page.title)}</h1><p class="docs-lede">${escape(page.description)}</p><article class="docs-prose">${html}</article><div class="docs-pagination">${previous ? `<a href="${previous.path}"><span>← PREVIOUS</span>${escape(previous.title)}</a>` : "<div></div>"}${next ? `<a href="${next.path}"><span>NEXT →</span>${escape(next.title)}</a>` : "<div></div>"}</div><div class="docs-meta">Ontave Zero · Apache 2.0 · <a href="/docs/status/">Alpha release status</a></div></main><aside class="docs-toc" aria-label="On this page"><strong>On this page</strong>${headings.map((h) => `<a class="${h.depth === 3 ? "toc-sub" : ""}" href="#${h.id}">${h.label}</a>`).join("")}<a class="edit-link" href="https://github.com/smileplis/ontave/blob/main/website/content/${page.slug}.md">Edit this page ↗</a></aside></div>`;
   const path = resolve(dist, "." + page.path);
   await mkdir(path, { recursive: true });
   await writeFile(
@@ -121,6 +126,27 @@ await writeFile(
     body: home(storyMarkup),
   }),
 );
+await writeFile(
+  resolve(dist, "benchmarks.json"),
+  JSON.stringify(benchmarkData, null, 2) + "\n",
+);
+await mkdir(resolve(dist, "playground"), { recursive: true });
+await writeFile(
+  resolve(dist, "playground/index.html"),
+  document({
+    title: "Playground — Ontave",
+    description:
+      "Explore a fictional message-to-record flow, then run the real SDK and PostgreSQL locally.",
+    path: "/playground/",
+    body: playgroundMarkup(version),
+    playground: true,
+  }),
+);
+for (const file of ["playground.js", "playground.css"])
+  await copyFile(
+    resolve(root, "../examples/playground/web", file),
+    resolve(dist, file),
+  );
 await writeFile(
   resolve(dist, "404.html"),
   document({
@@ -157,8 +183,8 @@ await writeFile(
 );
 await writeFile(
   resolve(dist, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", ...pages.map((p) => p.path)].map((path) => `<url><loc>https://app.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", ...pages.map((p) => p.path)].map((path) => `<url><loc>https://app.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
 );
 console.log(
-  JSON.stringify({ pages: pages.length + 2, output: "dist", status: "built" }),
+  JSON.stringify({ pages: pages.length + 3, output: "dist", status: "built" }),
 );

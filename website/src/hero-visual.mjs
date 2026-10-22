@@ -1,0 +1,9 @@
+export const heroVisual = `<div class="hero-visual" aria-label="Illustration of a source message becoming a reviewed, source-linked record">
+  <div class="signal-grid" aria-hidden="true"></div>
+  <svg class="signal-paths" viewBox="0 0 600 480" fill="none" aria-hidden="true"><defs><linearGradient id="signal-gradient"><stop stop-color="#9c8cc2" stop-opacity=".1"/><stop offset=".5" stop-color="#f344bc"/><stop offset="1" stop-color="#c1bacb" stop-opacity=".15"/></linearGradient></defs><g class="signal-track"><path d="M0 112H115Q145 112 145 142V214Q145 244 175 244H315"/><path d="M0 349H83Q115 349 115 317V274Q115 244 145 244H315"/><path d="M315 244H385Q410 244 410 219V126Q410 102 434 102H600"/><path d="M315 244H385Q410 244 410 269V346Q410 370 434 370H600"/></g><g class="signal-travel"><path d="M0 112H115Q145 112 145 142V214Q145 244 175 244H315"/><path d="M315 244H385Q410 244 410 269V346Q410 370 434 370H600"/></g><circle cx="145" cy="244" r="3" fill="#d1c3d6"/><circle cx="410" cy="244" r="3" fill="#d1c3d6"/></svg>
+  <div class="signal-source"><span class="signal-caption">message_014.txt</span><p>“Before we install the panels,<br>Ramesh needs to <em>inspect the roof.</em>”</p><span class="source-bytes">source preserved <i>↳</i></span></div>
+  <div class="signal-atom"><div class="atom-halo"></div><img src="/favicon.svg" width="136" height="136" alt=""><span>ontave</span></div>
+  <div class="signal-record"><span class="signal-caption">RoofInspection</span><div><span>requirement</span><strong>inspect the roof</strong></div><div><span>verification</span><strong class="record-reported"><i></i> reported</strong></div><div><span>evidence</span><strong>message_014 <b>↗</b></strong></div></div>
+  <div class="signal-decision"><span class="decision-tick">✓</span><span>Reviewed model.<br>Accepted interpretation.</span></div>
+  <span class="signal-illustration">Illustrative flow · separate model and fact approvals</span>
+</div>`;

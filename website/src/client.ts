@@ -241,6 +241,11 @@ setupTabs("[data-feature]", (button) => {
   highlight(q<HTMLElement>("#feature-code code")!);
   q("#feature-panel")!.setAttribute("aria-labelledby", button.id);
 });
+setupTabs("[data-benchmark]", (button) => {
+  qa<HTMLElement>(".benchmark-panel").forEach((panel) => {
+    panel.hidden = panel.id !== button.getAttribute("aria-controls");
+  });
+});
 const dialog = q<HTMLDialogElement>("#search-dialog")!;
 const input = q<HTMLInputElement>("#docs-search")!;
 const results = q("#search-results")!;
@@ -364,6 +369,32 @@ motion.add("(prefers-reduced-motion: no-preference)", () => {
       ease: "power3.out",
       delay: 0.08,
     });
+  if (q(".hero-visual")) {
+    gsap.from(".signal-source,.signal-atom,.signal-record,.signal-decision", {
+      opacity: 0,
+      y: 18,
+      duration: 1.2,
+      stagger: 0.14,
+      delay: 0.3,
+      ease: "power3.out",
+    });
+    gsap.to(".atom-halo", {
+      scale: 1.15,
+      opacity: 0.7,
+      duration: 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+  }
+  qa<HTMLElement>(".benchmarks").forEach((chart) => {
+    gsap.from(chart, {
+      y: 18,
+      opacity: 0,
+      duration: 0.8,
+      scrollTrigger: { trigger: chart, start: "top 90%", once: true },
+    });
+  });
   qa<HTMLElement>(".section:not(.walkthrough) .section-title").forEach(
     (section) =>
       gsap.from(section, {

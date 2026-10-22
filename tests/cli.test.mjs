@@ -15,6 +15,10 @@ test("CLI invalid arguments and missing config return safe JSON without stack tr
     ["ingest"],
     ["unknown-command"],
     ["--yes=false"],
+    ["playground", "--port", "NaN"],
+    ["playground", "--port", "-1"],
+    ["playground", "--port", "65536"],
+    ["playground", "--port", "1.5"],
   ]) {
     const r = run(args);
     assert.equal(r.status, 1);

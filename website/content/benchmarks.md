@@ -25,7 +25,7 @@ The latest profiled run processed every input with zero recorded job failures:
 | 1,000   | 0.93 ms     | 1.37 ms          | 1.59 ms    |
 | 10,000  | 1.65 ms     | 8.27 ms          | 8.93 ms    |
 
-These are measurements of incoming unreleased alpha.2. SQL diagnostics run outside the timed samples. The first ordered read is separate from 100 subsequent reads alternating ascending and descending order.
+These are measurements of alpha.2. SQL diagnostics run outside the timed samples. The first ordered read is separate from 100 subsequent reads alternating ascending and descending order.
 
 An earlier stale-statistics plan performed nearly 50 million join comparisons. The shared read transaction now discourages nested loops and disables JIT for this closed query profile; those settings reset afterward. Earlier slow measurements remain retained. The improvement is specific to the disclosed local workload.
 
@@ -42,7 +42,7 @@ The script creates a disposable database, records timings and query plans under 
 
 ## Quality is still open
 
-A deterministic database benchmark cannot establish semantic accuracy. Live trials are recorded separately, and the richer evaluator is implemented in incoming alpha.2. Independent labels and full semantic qualification remain release gates. [See the full status](/docs/status/).
+A deterministic database benchmark cannot establish semantic accuracy. Live trials are recorded separately, and the richer evaluator is implemented in alpha.2. Independent labels and full semantic qualification remain release gates. [See the full status](/docs/status/).
 
 ## Measured operation savings
 
@@ -50,4 +50,4 @@ A deterministic fixture test delivered 100 distinct sources five times each. Ide
 
 One thousand queries over accepted records used zero model calls. All 100 accepted field assertions retained source references; zero records appeared before review. The harness recorded 100 acceptance actions.
 
-These counts do not establish human time saved, actual provider cost savings or a general productivity percentage. Those require a timed user study and real provider billing. Workspace-scoped `metrics.summary(context)` in incoming alpha.2 exposes counts, usage availability and machine latency to help measure real deployments.
+These counts do not establish human time saved, actual provider cost savings or a general productivity percentage. Those require a timed user study and real provider billing. Workspace-scoped `metrics.summary(context)` in alpha.2 exposes counts, usage availability and machine latency to help measure real deployments.

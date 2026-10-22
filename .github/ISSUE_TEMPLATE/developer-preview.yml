@@ -1,0 +1,39 @@
+name: Developer preview feedback
+description: Tell us what worked, where you got stuck, and what you want to build.
+title: "[Preview]: "
+labels: [developer-preview]
+body:
+  - type: textarea
+    id: setup
+    attributes:
+      label: Your setup
+      description: Ontave version, operating system, Node version and browser. Do not include credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What were you trying to build?
+      description: Describe the real workflow and the step you reached.
+    validations:
+      required: true
+  - type: textarea
+    id: friction
+    attributes:
+      label: What took too much effort?
+      description: Setup time, active review time, corrections or anything unclear. Estimates are useful if labelled as estimates.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Use fictional or redacted messages and safe error output. Never post API keys, database credentials or private business data.
+  - type: dropdown
+    id: again
+    attributes:
+      label: Would you use Ontave for this workflow again?
+      options:
+        - "Yes"
+        - "With changes"
+        - "Not yet"

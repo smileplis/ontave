@@ -2,7 +2,7 @@
 
 When a source introduces an unknown concept, extraction preserves a source-backed observation and the bundle waits for ontology work. The model does not create an approved concept while processing the message.
 
-The website's RoofInspection example is illustrative. Installation must already be present in that example's model; the Person/Organization quickstart does not preload it.
+The landing-page RoofInspection story introduces the flow. The interactive playground seeds a fictional installation through the same governed SDK path, then lets you review the inspection proposal. A plain `people` seed contains only Person/Organization; your application must explicitly adopt other starting definitions.
 
 ## Propose an additive candidate
 

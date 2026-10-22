@@ -57,7 +57,7 @@ Model factories request at most 4,096 output tokens and reject refusals/truncati
 
 Failed evaluations persist a non-passing artifact with available traces and usage. The thrown `OntaveError.details.evaluationId` identifies it for `evaluations.get`; the CLI exposes `evaluation get --id`.
 
-## Unreleased alpha.2 evaluation and operations
+## Alpha.2 evaluation and operations
 
 `jobs.attempts(context, jobId)` requires read capability and returns append-only `started`, `completed`, `failed` and `lease_expired` events with fences and available usage. A killed process can leave an unfinished attempt with unknown usage. Late fenced responses retain accounting without replacing a current bundle.
 
@@ -78,3 +78,9 @@ Suites cap at 40 tasks, 80 inference calls, ten minutes and 1 MiB encoded size. 
 The experimental `ontave/models/mistral` and `ontave/models/openrouter` factories accept explicit `{apiKey, model}` and have no environment reads, automatic model fallback or implicit runtime startup. Their complete encoded request is limited to 15,360 bytes and output to 4,096 tokens; this byte guard is not provider-certified token accounting. OpenRouter requires parameter support and disables fallback routes. Actual route/model metadata and available usage are retained. The shared provider schema uses typed per-concept alternatives with closed fields. Date formats, safe integers and enums are constrained before generation; runtime validation remains authoritative. Existing IDs are limited to the authorized candidates of that concept, and identifiers require configured host rules. For text of at most 1,024 bytes, quotations bind the complete immutable source with occurrence zero. Longer text requires exact source quotes; JSON requires valid paths and values. These source anchors prevent invented quotations but do not prove that an interpretation is correct. Gemini retains provider token preflight. The trusted host supplies the list of fields permitted to be marked verified; source text cannot grant that permission.
 
 Provider references: [Mistral custom structured output](https://docs.mistral.ai/studio/conversations/structured-output/custom), [OpenRouter structured output](https://openrouter.ai/docs/guides/features/structured-outputs), [Gemini structured output limits](https://ai.google.dev/gemini-api/docs/structured-output).
+
+## Local developer playground
+
+`ontave playground --install [--port 4320]` explicitly starts a loopback-only interactive example. It prepares a temporary PostgreSQL database and restricted runtime role, runs the public SDK with a fictional fixture adapter, and removes the temporary database on normal shutdown. If the optional `embedded-postgres` tooling is missing, `--install` permits a pinned tooling install in the temporary directory. Core import/install does not load or install that tooling. The playground supports only its two supplied fictional scenarios; use a configured server adapter for arbitrary messages.
+
+The corresponding browser sandbox replays generated SDK reference runs. It is labelled separately from the local PostgreSQL runtime. The example’s authored evaluation expectations and explicit identity-confirmation action are teaching orchestration, not an automatic discovery or identity policy added to the core.

@@ -22,7 +22,8 @@
     "examples/next-server",
     "docs/QUALITY_REPORT.md",
     "docs/USER_BENEFITS.md",
-    "scripts/release-gate.mjs"
+    "scripts/release-gate.mjs",
+    "examples/playground"
   ],
   "exports": {
     ".": {
@@ -71,7 +72,10 @@
     "measure:benefits": "npm run build && node scripts/measure-benefits.mjs",
     "evaluate:live": "npm run build && node scripts/run-semantic-trials.mjs --live",
     "verify:release": "node scripts/release-gate.mjs",
-    "prepublishOnly": "node scripts/release-gate.mjs"
+    "prepublishOnly": "node scripts/release-gate.mjs",
+    "playground": "npm run build && node dist/cli.js playground",
+    "preview:fixtures": "npm run build && node scripts/prepare-preview.mjs",
+    "verify:playground": "node scripts/verify-playground.mjs"
   },
   "dependencies": {
     "canonicalize": "5.1.0",

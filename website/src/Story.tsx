@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { Button } from "./components/ui/button";
-import { Card } from "./components/ui/card";
 import { Badge } from "./components/ui/badge";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -72,8 +71,9 @@ export function Story() {
     media.add(
       {
         motion:
-          "(prefers-reduced-motion: no-preference) and (min-height: 700px)",
-        reduced: "(prefers-reduced-motion: reduce), (max-height: 699px)",
+          "(prefers-reduced-motion: no-preference) and (min-height: 700px) and (min-width: 761px)",
+        reduced:
+          "(prefers-reduced-motion: reduce), (max-height: 699px), (max-width: 760px)",
       },
       (context) => {
         const reduce = Boolean(context.conditions?.reduced);
@@ -301,7 +301,7 @@ export function Story() {
                       </span>
                       <Badge variant="outline">Not applied</Badge>
                     </div>
-                    <Card className="story-new-concept">
+                    <div className="story-new-concept">
                       <div className="new-concept-heading">
                         <span className="concept-shape">◇</span>
                         <h4>RoofInspection</h4>
@@ -317,7 +317,7 @@ export function Story() {
                       <div className="new-concept-source">
                         Source <span>Message 014 ↗</span>
                       </div>
-                    </Card>
+                    </div>
                     {chapter === 1 ? (
                       <p className="stage-footnote">
                         A proposal grounded in the message. No automatic write.
@@ -434,8 +434,11 @@ export function Story() {
         <div className="story-progress">
           <div className="story-progress-fill" />
         </div>
+        <a className="story-try-link" href="/playground/">
+          Try this example yourself <Arrow />
+        </a>
         <p className="story-disclaimer">
-          An illustrative walkthrough of the review flow.
+          A guided introduction. Try the interactive playground next.
         </p>
       </div>
     </section>

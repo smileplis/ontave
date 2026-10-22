@@ -12,6 +12,7 @@ import type { Ontave } from "./runtime.js";
 const help = `Ontave development alpha
 Usage: ontave <command> [action] --config ./ontave.config.mjs --input request.json
 
+playground [--install]       Run the key-free local PostgreSQL playground
 init                         Create a local config template without overwriting
 doctor                       Check runtime configuration and workspace access
 migrate plan|apply           Explicit internal migrations (apply requires --yes)
@@ -36,6 +37,8 @@ const options = {
   allowPositionals: true,
   options: {
     config: { type: "string" },
+    port: { type: "string" },
+    install: { type: "boolean" },
     input: { type: "string" },
     id: { type: "string" },
     output: { type: "string" },
@@ -84,6 +87,15 @@ async function main(): Promise<unknown> {
     );
     process.stdout.write(pkg.version + "\n");
     return;
+  }
+  if (command === "playground") {
+    check(!action, "INVALID_INPUT", "Use playground without an action");
+    const { startPlayground } = await import("./playground.js");
+    return startPlayground({
+      port:
+        args.values.port === undefined ? undefined : Number(args.values.port),
+      install: args.values.install,
+    });
   }
   if (command === "init") {
     const path = resolve(args.values.output ?? "ontave.config.mjs");
