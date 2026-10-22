@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, writeFile, readFile } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+await mkdir(resolve("artifacts"), { recursive: true });
 const run = (args) =>
   spawnSync(process.execPath, [resolve("dist/cli.js"), ...args], {
     encoding: "utf8",
