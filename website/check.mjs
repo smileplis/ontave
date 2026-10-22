@@ -52,8 +52,8 @@ assert.equal(search.length, 29);
 assert.ok(search.some((x) => x.title === "Your first accepted record"));
 const home = await readFile(resolve(root, "index.html"), "utf8");
 assert.ok(!home.includes('class="eyebrow"'));
-assert.ok(home.includes('data-slot="button"'));
-assert.ok(home.includes("The evaluation"));
+assert.ok(home.includes('aria-label="How Ontave works"'));
+assert.ok(home.includes("Walkthrough chapters"));
 assert.ok(!files.some((f) => f.includes("/research/")));
 const playground = await readFile(
   resolve(root, "playground/index.html"),
@@ -93,7 +93,9 @@ for (const id of ["deliveries", "reads", "provenance"]) {
   assert.ok(home.includes(`aria-controls="chart-${id}"`));
   assert.ok(home.includes(`id="chart-${id}"`));
 }
-assert.ok(home.includes("It does not establish semantic accuracy."));
+assert.ok(home.includes("Synthetic workload") || home.includes("SYNTHETIC WORKLOAD"));
+assert.ok(home.includes("/docs/benchmarks/"));
+assert.ok(benchmark.limitations.includes("model accuracy"));
 assert.ok(
   !(await readFile(resolve(root, "favicon.svg"), "utf8")).includes(
     "paint0_linear_95_806",
@@ -105,7 +107,7 @@ console.log(
     htmlPages: files.filter((f) => f.endsWith(".html")).length,
     internalLinksChecked: links,
     searchDocuments: search.length,
-    shadcnStoryRendered: true,
+    scrollStoryRendered: true,
     privateContentExcluded: true,
   }),
 );
