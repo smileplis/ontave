@@ -131,9 +131,8 @@ const features: Record<
   }
 > = {
   evidence: {
-    title: "A source for\nevery assertion.",
-    description:
-      "Preserve the message before interpreting it. Every proposed value points back to a quote, a JSON path or an exact byte span.",
+    title: "Keep the original.",
+    description: "Every proposed value links back to its source.",
     symbol: "↳",
     link: "evidence",
     label: "Explore evidence",
@@ -154,9 +153,8 @@ const job = await ontave.jobs.get(
 );`,
   },
   review: {
-    title: "Approval is a step\nin the API.",
-    description:
-      "Inspect a staged bundle. Resolve its dependencies. Accept the exact revision you reviewed, with a recorded decision and reason.",
+    title: "Make acceptance explicit.",
+    description: "Approve the exact bundle you inspected.",
     symbol: "✓",
     link: "review",
     label: "Understand review",
@@ -177,9 +175,8 @@ await ontave.reviews.accept(context, {
 // A modified bundle requires a new review.`,
   },
   evolve: {
-    title: "A new concept.\nA deliberate change.",
-    description:
-      "Propose an additive extension from selected evidence. Compare it against the parent with a frozen evaluation suite, then explicitly activate it.",
+    title: "Add a concept. Keep control.",
+    description: "Evaluate a model extension before activating it.",
     symbol: "◇",
     link: "evolution",
     label: "Explore model evolution",
@@ -200,9 +197,8 @@ const evaluation = await ontave.evaluations.evaluate(
 // Inspect the report before explicit publication.`,
   },
   read: {
-    title: "Current data.\nA known shape.",
-    description:
-      "Pin an application contract and query accepted data through a bounded, structured interface. Values arrive with verification and provenance.",
+    title: "Query without inference.",
+    description: "Read accepted data through a pinned contract.",
     symbol: "⌑",
     link: "queries",
     label: "Explore structured reads",
@@ -240,6 +236,20 @@ setupTabs("[data-feature]", (button) => {
     `<div class="code-window"><div class="code-toolbar"><span><i></i>${escape(item.filename)}</span><button class="copy-code" aria-label="Copy code">Copy <span aria-hidden="true">⧉</span></button></div><pre><code>${escape(item.code)}</code></pre></div>`;
   highlight(q<HTMLElement>("#feature-code code")!);
   q("#feature-panel")!.setAttribute("aria-labelledby", button.id);
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.fromTo(
+      "#feature-title,#feature-description,#feature-code",
+      { y: 10, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.35,
+        stagger: 0.035,
+        ease: "power2.out",
+        overwrite: true,
+      },
+    );
+  }
 });
 setupTabs("[data-benchmark]", (button) => {
   qa<HTMLElement>(".benchmark-panel").forEach((panel) => {
@@ -359,7 +369,7 @@ if (headings.length && "IntersectionObserver" in window) {
 
 const motion = gsap.matchMedia();
 motion.add("(prefers-reduced-motion: no-preference)", () => {
-  const heroElements = qa<HTMLElement>(".hero h1,.hero-copy,.hero-actions");
+  const heroElements = qa<HTMLElement>(".hero-line,.hero-copy,.hero-actions");
   if (heroElements.length)
     gsap.from(heroElements, {
       y: 25,
@@ -369,6 +379,18 @@ motion.add("(prefers-reduced-motion: no-preference)", () => {
       ease: "power3.out",
       delay: 0.08,
     });
+  if (q(".hero-glyph")) {
+    gsap.to(".hero-glyph", {
+      rotation: 150,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  }
   if (q(".hero-visual")) {
     gsap.from(".signal-source,.signal-atom,.signal-record,.signal-decision", {
       opacity: 0,

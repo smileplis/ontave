@@ -160,7 +160,9 @@ await writeFile(
   resolve(dist, "style.css"),
   (await readFile(resolve(root, ".cache/tailwind.css"), "utf8")) +
     "\n" +
-    (await readFile(resolve(root, "src/style.css"), "utf8")),
+    (await readFile(resolve(root, "src/style.css"), "utf8")) +
+    "\n" +
+    (await readFile(resolve(root, "src/expressive.css"), "utf8")),
 );
 await build({
   entryPoints: [resolve(root, "src/client.ts")],

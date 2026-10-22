@@ -9,28 +9,23 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const chapters = [
   {
     name: "The message",
-    title: "A familiar workflow.\nAn unfamiliar detail.",
-    body: "Your application knows people and installations. The next message introduces something it cannot represent yet.",
+    body: "People and installations fit. An inspection is new.",
   },
   {
     name: "The proposal",
-    title: "Give the new idea\na place in the model.",
-    body: "Ontave preserves the source and proposes RoofInspection. A proposal changes nothing until you decide.",
+    body: "Propose a concept. Keep the approved model unchanged.",
   },
   {
     name: "The evaluation",
-    title: "A change worth making\nshould keep its promises.",
-    body: "Compare the candidate with its parent. Check the existing application contract and the new capability before activation.",
+    body: "Check the source. Keep the existing contract readable.",
   },
   {
     name: "The review",
-    title: "Two decisions.\nBoth yours.",
-    body: "Approve the model change. Then review the extracted facts. An active concept does not automatically make its assertions accepted.",
+    body: "Approve the model. Review the facts separately.",
   },
   {
     name: "The record",
-    title: "A useful record.\nA source you can get back to.",
-    body: "Read the accepted interpretation through a typed contract. The requirement stays reported, with its supporting message attached.",
+    body: "An accepted requirement. Still reported. Always source-linked.",
   },
 ];
 function Arrow({ className = "" }: { className?: string }) {
@@ -180,45 +175,16 @@ export function Story() {
           </h2>
           <div className="story-narrative">
             <div className="story-narrative-content" key={chapter}>
-              <h3>
-                {chapters[chapter].title.split("\n").map((line, i) => (
-                  <React.Fragment key={line}>
-                    {i > 0 && (
-                      <>
-                        <br />{" "}
-                      </>
-                    )}
-                    {line}
-                  </React.Fragment>
-                ))}
-              </h3>
               <p>{chapters[chapter].body}</p>
             </div>
           </div>
         </div>
         <div className="story-application">
-          <div className="story-app-chrome">
-            <div className="story-app-title">
-              <span className="app-mark">◇</span>
-              <span>Installation workspace</span>
-            </div>
-            <span className="story-chrome-state">
-              {chapter < 3 ? "Your current model" : "Model v2"}
-              <i />{" "}
-              {chapter < 3
-                ? "Proposed changes stay separate"
-                : "Explicitly adopted"}
-            </span>
-          </div>
           <div className="story-workspace">
             <div className="story-source">
               <div className="story-source-head">
-                <span className="source-avatar">R</span>
-                <div>
-                  <strong>Ramesh</strong>
-                  <span>Message 014</span>
-                </div>
-                <span className="source-time">09:41</span>
+                <strong>Ramesh</strong>
+                <span>Source 014</span>
               </div>
               <p className="story-message">
                 Before we install the panels,
@@ -226,9 +192,6 @@ export function Story() {
                 Ramesh needs to{" "}
                 <span className="source-highlight">inspect the roof.</span>
               </p>
-              <div className="source-preserved">
-                <Check /> <span>Original message preserved</span>
-              </div>
               <Button
                 variant="ghost"
                 size="sm"
@@ -255,10 +218,10 @@ export function Story() {
                 <path
                   className="story-flow-line"
                   d="M0 50H220"
-                  stroke="#a0a0a9"
+                  stroke="#f20aad"
                   strokeDasharray="220"
                 />
-                <circle cx="216" cy="50" r="3" fill="#c6c6ce" />
+                <circle cx="216" cy="50" r="3" fill="#d9f542" />
               </svg>
             </div>
             <div className="story-model">
@@ -286,9 +249,6 @@ export function Story() {
                       <span>?</span>
                       <p>Where does an inspection fit?</p>
                     </div>
-                    <p className="stage-footnote">
-                      The source is kept, including what does not fit.
-                    </p>
                   </>
                 )}
                 {(chapter === 1 || chapter === 2) && (
@@ -314,28 +274,17 @@ export function Story() {
                         </span>
                         <span>Installation</span>
                       </div>
-                      <div className="new-concept-source">
-                        Source <span>Message 014 ↗</span>
-                      </div>
                     </div>
-                    {chapter === 1 ? (
-                      <p className="stage-footnote">
-                        A proposal grounded in the message. No automatic write.
-                      </p>
-                    ) : (
+                    {chapter === 2 && (
                       <div className="story-proof-lines">
                         <div>
                           <Check />
-                          <span>Existing contract remains compatible</span>
+                          <span>Existing contract</span>
                         </div>
                         <div>
                           <Check />
-                          <span>New capability checked against evidence</span>
+                          <span>Source evidence</span>
                         </div>
-                        <p>
-                          Illustrative checks. Inspect the actual evaluation
-                          report before approval.
-                        </p>
                       </div>
                     )}
                   </>
@@ -344,16 +293,13 @@ export function Story() {
                   <>
                     <div className="stage-heading">
                       <span>Review decisions</span>
-                      <Badge variant="outline">Your application</Badge>
                     </div>
                     <div className="review-decision">
                       <div className="decision-check">
                         <Check />
                       </div>
                       <div>
-                        <span>Model change</span>
-                        <strong>Add RoofInspection</strong>
-                        <small>Candidate evaluated and approved</small>
+                        <strong>Model approved.</strong>
                       </div>
                     </div>
                     <div className="review-decision">
@@ -361,21 +307,15 @@ export function Story() {
                         <Check />
                       </div>
                       <div>
-                        <span>Extracted assertion</span>
-                        <strong>An inspection is required</strong>
-                        <small>Source checked and bundle accepted</small>
+                        <strong>Facts reviewed.</strong>
                       </div>
                     </div>
-                    <p className="stage-footnote">
-                      Accepted interpretation. Still a reported requirement.
-                    </p>
                   </>
                 )}
                 {chapter === 4 && (
                   <>
                     <div className="stage-heading">
                       <span>Accepted record</span>
-                      <Badge variant="outline">Typed result</Badge>
                     </div>
                     <div className="accepted-record">
                       <div className="accepted-record-title">
@@ -387,14 +327,6 @@ export function Story() {
                         <span>requirement</span>
                         <strong>inspect the roof</strong>
                       </div>
-                      <div className="record-field">
-                        <span>state</span>
-                        <code>value</code>
-                      </div>
-                      <div className="record-field">
-                        <span>verification</span>
-                        <code>reported</code>
-                      </div>
                       <div className="record-field source">
                         <span>evidence</span>
                         <a href="/docs/evidence/">
@@ -402,9 +334,6 @@ export function Story() {
                         </a>
                       </div>
                     </div>
-                    <p className="stage-footnote">
-                      Query approved data. No inference call needed.
-                    </p>
                   </>
                 )}
               </div>
@@ -418,11 +347,12 @@ export function Story() {
                 key={item.name}
                 variant="ghost"
                 size="sm"
+                aria-label={item.name}
                 aria-current={chapter === index ? "step" : undefined}
                 onClick={() => navigate(index)}
               >
-                <span className="chapter-dot" />
-                {item.name}
+                <span className="chapter-index">{index + 1}</span>
+                {item.name.replace("The ", "")}
               </Button>
             ))}
           </nav>
@@ -437,9 +367,7 @@ export function Story() {
         <a className="story-try-link" href="/playground/">
           Try this example yourself <Arrow />
         </a>
-        <p className="story-disclaimer">
-          A guided introduction. Try the interactive playground next.
-        </p>
+        <p className="story-disclaimer">Illustrative walkthrough</p>
       </div>
     </section>
   );
