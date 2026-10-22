@@ -102,7 +102,7 @@ for (let position = 0; position < pages.length; position++) {
   await writeFile(
     resolve(path, "index.html"),
     document({
-      title: `${page.title} — Ontave`,
+      title: `${page.title} · Ontave`,
       description: page.description,
       path: page.path,
       body,
@@ -119,7 +119,7 @@ for (let position = 0; position < pages.length; position++) {
 await writeFile(
   resolve(dist, "index.html"),
   document({
-    title: "Ontave — A data layer that adapts as your business changes.",
+    title: "Ontave · A data layer that adapts as your business changes.",
     description:
       "Turn unexpected messages into useful records. An open-source TypeScript framework for preserved evidence, reviewed model changes, and typed application contracts.",
     body: home(storyMarkup),
@@ -133,7 +133,7 @@ await mkdir(resolve(dist, "playground"), { recursive: true });
 await writeFile(
   resolve(dist, "playground/index.html"),
   document({
-    title: "Playground — Ontave",
+    title: "Playground · Ontave",
     description:
       "Explore a fictional message-to-record flow, then run the real SDK and PostgreSQL locally.",
     path: "/playground/",
@@ -149,7 +149,7 @@ for (const file of ["playground.js", "playground.css"])
 await writeFile(
   resolve(dist, "404.html"),
   document({
-    title: "Page not found — Ontave",
+    title: "Page not found · Ontave",
     description: "This page has moved or does not exist.",
     path: "/404",
     body: '<main id="main" class="not-found frame"><span class="eyebrow">A MISSING PAGE, EXPLICITLY.</span><h1>404</h1><p>There is no accepted value at this address.</p><a class="button primary" href="/docs/">Find your way in the docs ↗</a></main>',
