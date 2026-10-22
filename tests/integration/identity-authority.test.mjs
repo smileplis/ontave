@@ -42,8 +42,9 @@ test("authority collisions, partial names, reviewer amendments and rejection do 
       contractHash: contract.hash,
       conceptId: "person",
     };
-  const stage = async (name, key, authority, context = null) => {
+  const stage = async (name, key, authority, context = null, email) => {
     output = personFixture(name);
+    if (email) output.entities[0].fields.email = { value: email, quote: email };
     if (authority)
       output.entities[0].identifiers = [
         { authority, kind: "contact", value: "42", quote: "42" },
@@ -51,7 +52,10 @@ test("authority collisions, partial names, reviewer amendments and rejection do 
     await app.ingest(context, {
       source: "authority",
       idempotencyKey: key,
-      payload: { kind: "text", text: name + " 42" },
+      payload: {
+        kind: "text",
+        text: name + " 42" + (email ? " " + email : ""),
+      },
     });
     const result = await app.worker.runOnce(context);
     assert.ok(result.bundleId, JSON.stringify(result));
@@ -76,6 +80,20 @@ test("authority collisions, partial names, reviewer amendments and rejection do 
       assert.equal((await app.entities.find(null, query)).records.length, 2);
       const linked = await stage("Alice A", "repeat", "crm_a");
       assert.equal(linked.body.resolutions.person_1.entityId, first);
+      assert.deepEqual(linked.body.resolutions.person_1.basis, {
+        kind: "trusted_identifier",
+        evidenceId: linked.evidence_id,
+        identifierMatches: [
+          {
+            authority: "crm_a",
+            kind: "contact",
+            normalizedValue: "42",
+            lowercase: false,
+            entityIds: [first],
+          },
+        ],
+        acceptedEntityIds: [],
+      });
       await accept(linked, "accept-repeat");
       assert.equal((await app.entities.find(null, query)).records.length, 2);
     },
@@ -107,6 +125,26 @@ test("authority collisions, partial names, reviewer amendments and rejection do 
         reason: "Two established identities need investigation",
       });
       assert.equal((await app.entities.find(null, query)).records.length, 2);
+    },
+  );
+  await t.test(
+    "an email without an explicitly configured authority never merges two otherwise distinct people",
+    async () => {
+      const a = await accept(
+        await stage("Nila", "email-a", undefined, null, "same@example.test"),
+        "accept-email-a",
+      );
+      const b = await stage(
+        "Mira",
+        "email-b",
+        undefined,
+        null,
+        "same@example.test",
+      );
+      assert.equal(b.body.resolutions.person_1.mode, "new");
+      assert.equal(b.body.resolutions.person_1.basis.kind, "new");
+      const second = await accept(b, "accept-email-b");
+      assert.notEqual(a.entityIds[0], second.entityIds[0]);
     },
   );
   await t.test(

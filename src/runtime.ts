@@ -9,6 +9,7 @@ import { entityQuerySchema, readRecords } from "./read.js";
 import { validateContractRecords } from "./codegen.js";
 import { randomUUID, randomBytes } from "node:crypto";
 import type { PoolClient } from "pg";
+import { conceptReuseReasons } from "./definition-review.js";
 import { z } from "zod";
 import type { Storage } from "./postgres.js";
 import type {
@@ -17,6 +18,7 @@ import type {
   Definition,
   Extraction,
   ModelAdapter,
+  ModelTask,
   Limits,
   Json,
   FieldResult,
@@ -63,6 +65,18 @@ type Resolution = {
   revision: number;
   mode: "new" | "link";
   reviewer?: boolean;
+  basis?: {
+    kind: "trusted_identifier" | "accepted_source" | "unresolved" | "new";
+    evidenceId: string;
+    identifierMatches: {
+      authority: string;
+      kind: string;
+      normalizedValue: string;
+      lowercase: boolean;
+      entityIds: string[];
+    }[];
+    acceptedEntityIds: string[];
+  };
 };
 type Body = {
   extraction: Extraction;
@@ -157,6 +171,33 @@ export class Ontave {
     );
     check(r.rows.length === 1, "NOT_FOUND", "Workspace not found");
     return r.rows[0];
+  }
+  private modelInput(
+    evidence: { payload: string; kind: string; source_policy: string },
+    ontology: Definition,
+    candidates: { id: string; name: string; conceptId: string }[],
+  ): Omit<ModelTask, "signal"> {
+    check(
+      ontology.concepts.length <= 25,
+      "BUDGET_EXHAUSTED",
+      "Model task exceeds the 25-concept limit; no definitions were omitted",
+    );
+    const input: Omit<ModelTask, "signal"> = {
+      text: evidence.payload,
+      kind: evidence.kind === "json" ? "json" : "text",
+      ontology,
+      candidates,
+      identifierRules: this.config.identifierRules ?? [],
+      verifiedFields:
+        this.config.sourcePolicies?.[evidence.source_policy]?.verifiedFields ??
+        [],
+    };
+    check(
+      Buffer.byteLength(json(input)) <= 60000,
+      "BUDGET_EXHAUSTED",
+      "Complete model context exceeds the bounded profile; no content was truncated",
+    );
+    return input;
   }
   private async decision(
     c: PoolClient,
@@ -571,6 +612,9 @@ export class Ontave {
       });
     for (const mention of e.entities) {
       const exact = new Set<string>();
+      const identifierMatches: NonNullable<
+        Resolution["basis"]
+      >["identifierMatches"] = [];
       for (const ident of mention.identifiers ?? []) {
         const rule = this.config.identifierRules?.find(
           (r) => r.authority === ident.authority && r.kind === ident.kind,
@@ -583,6 +627,13 @@ export class Ontave {
           "SELECT entity_id FROM ontave.identifiers WHERE authority=$1 AND kind=$2 AND normalized=$3",
           [ident.authority, ident.kind, value],
         );
+        identifierMatches.push({
+          authority: rule.authority,
+          kind: rule.kind,
+          normalizedValue: value,
+          lowercase: rule.lowercase === true,
+          entityIds: found.rows.map((row) => row.entity_id),
+        });
         for (const row of found.rows) exact.add(row.entity_id);
       }
       const previousIds = new Set<string>();
@@ -668,6 +719,18 @@ export class Ontave {
         entityId,
         revision: existing.rows[0]?.revision ?? 0,
         mode: existing.rows.length ? "link" : "new",
+        basis: {
+          kind: pending.includes(mention.mentionId)
+            ? "unresolved"
+            : identifierMatches.some((match) => match.entityIds.length)
+              ? "trusted_identifier"
+              : previousIds.size === 1
+                ? "accepted_source"
+                : "new",
+          evidenceId,
+          identifierMatches,
+          acceptedEntityIds: [...previousIds].sort(),
+        },
       };
     }
     return { resolutions, pending, identityCandidates };
@@ -766,23 +829,13 @@ export class Ontave {
         attemptUsage: string | null = null,
         attemptOutput: string | null = null;
       try {
-        check(
-          Buffer.byteLength(evidence.payload) <= 60000,
-          "BUDGET_EXHAUSTED",
-          "Input exceeds the current bounded inference context; no content was truncated",
+        const input = this.modelInput(
+          evidence,
+          snapshot.definition,
+          candidates,
         );
         const response = await abortable(controller.signal, () =>
-          this.config.model.extract({
-            text: evidence.payload,
-            kind: evidence.kind === "json" ? "json" : "text",
-            ontology: snapshot.definition,
-            candidates,
-            identifierRules: this.config.identifierRules ?? [],
-            verifiedFields:
-              this.config.sourcePolicies?.[evidence.source_policy]
-                ?.verifiedFields ?? [],
-            signal: controller.signal,
-          }),
+          this.config.model.extract({ ...input, signal: controller.signal }),
         );
         check(
           typeof response.model === "string" &&
@@ -1450,8 +1503,36 @@ export class Ontave {
     body: Body,
   ) {
     check(body.reason?.trim(), "INVALID_INPUT", "A reason is required");
+    const snapshot = await this.active(c);
+    const prior = (
+      await c.query("SELECT definition FROM ontave.versions WHERE id=$1", [
+        b.ontology_id,
+      ])
+    ).rows[0];
+    check(
+      prior && compatible(prior.definition, snapshot.definition),
+      "STALE_ONTOLOGY",
+      "Definitions are incompatible; reprocess the source and review a new interpretation",
+    );
+    const evidence = (
+      await c.query(
+        "SELECT payload,kind,envelope_hash FROM ontave.evidence WHERE id=$1",
+        [b.evidence_id],
+      )
+    ).rows[0];
+    validateExtraction(
+      body.extraction,
+      evidence.payload,
+      snapshot.definition,
+      evidence.kind === "json" ? "json" : "text",
+    );
     const id = randomUUID(),
-      digest = hash({ body, parent: b.hash });
+      digest = hash({
+        body,
+        parent: b.hash,
+        ontologyHash: snapshot.hash,
+        evidenceHash: evidence.envelope_hash,
+      });
     await c.query(
       "INSERT INTO ontave.bundles(workspace_id,id,job_id,evidence_id,ontology_id,hash,body,revision) VALUES($1,$2,$3,$4,$5,$6,$7,$8)",
       [
@@ -1459,7 +1540,7 @@ export class Ontave {
         id,
         b.job_id,
         b.evidence_id,
-        b.ontology_id,
+        snapshot.id,
         digest,
         json(body),
         b.revision + 1,
@@ -1966,6 +2047,17 @@ export class Ontave {
     const controller = new AbortController(),
       timer = setTimeout(() => controller.abort(), this.limits.modelTimeoutMs);
     try {
+      check(
+        reserved.parent.definition.concepts.length <= 25 &&
+          Buffer.byteLength(
+            json({
+              ontology: reserved.parent.definition,
+              observations: reserved.observations,
+            }),
+          ) <= 60000,
+        "BUDGET_EXHAUSTED",
+        "Proposal context exceeds the bounded profile; no definitions or observations were omitted",
+      );
       const result = await abortable(controller.signal, () =>
         this.config.model.propose!({
           observations: reserved.observations,
@@ -2088,21 +2180,13 @@ export class Ontave {
         );
         const reuseWarnings = addedConcepts.flatMap((n) =>
           parent.concepts
-            .filter(
-              (p) =>
-                n.fields.length > 0 &&
-                n.fields.every((f) =>
-                  p.fields.some(
-                    (old) => old.id === f.id && old.type === f.type,
-                  ),
-                ),
-            )
             .map((p) => ({
               proposedConceptId: n.id,
               existingConceptId: p.id,
-              reason:
-                "All proposed fields already exist with these types on an existing concept. Compare meanings and justify reuse or a distinct concept; shared shape is not semantic equivalence.",
-            })),
+              reasons: conceptReuseReasons(n, p),
+            }))
+            .filter((hint) => hint.reasons.length > 0)
+            .map((hint) => ({ ...hint, reason: hint.reasons.join(" ") })),
         );
         const previousRejections = (
           await c.query(
@@ -2491,6 +2575,7 @@ export class Ontave {
               scores.push(ok ? 1 : 0);
               continue;
             }
+            const input = this.modelInput(evidence, d, task.candidates ?? []);
             check(
               ++calls <= suite.maxCalls,
               "BUDGET_EXHAUSTED",
@@ -2517,18 +2602,7 @@ export class Ontave {
             traces.push(trace);
             const result = await abortable(
               callSignal,
-              () =>
-                this.config.model.extract({
-                  text: evidence.payload,
-                  kind: evidence.kind === "json" ? "json" : "text",
-                  ontology: d,
-                  candidates: task.candidates ?? [],
-                  identifierRules: this.config.identifierRules ?? [],
-                  verifiedFields:
-                    this.config.sourcePolicies?.[evidence.source_policy]
-                      ?.verifiedFields ?? [],
-                  signal: callSignal,
-                }),
+              () => this.config.model.extract({ ...input, signal: callSignal }),
               "EVALUATION_INCOMPLETE",
             );
             check(

@@ -3,6 +3,7 @@ import { check, definitionSchema, json, OntaveError } from "../core.js";
 import type { Definition, ModelAdapter } from "../types.js";
 import { responseSchema } from "./schema.js";
 import { extractionPrompt } from "./prompt.js";
+import { providerJson } from "./response.js";
 export interface ChatConfig {
   apiKey: string;
   model: string;
@@ -81,36 +82,7 @@ export function chatAdapter(
         r.status === 429 || r.status >= 500,
         { model: config.model, outcome: "request_failed" },
       );
-    const reader = r.body?.getReader();
-    let size = 0;
-    const chunks: Uint8Array[] = [];
-    if (reader)
-      for (;;) {
-        const chunk = await reader.read();
-        if (chunk.done) break;
-        size += chunk.value.length;
-        if (size > 2097152) {
-          await reader.cancel();
-          throw new OntaveError(
-            "INVALID_MODEL_OUTPUT",
-            "Provider response exceeds 2 MiB",
-            false,
-            { model: config.model },
-          );
-        }
-        chunks.push(chunk.value);
-      }
-    let data: any;
-    try {
-      data = JSON.parse(Buffer.concat(chunks).toString("utf8"));
-    } catch {
-      throw new OntaveError(
-        "INVALID_MODEL_OUTPUT",
-        "Provider response is malformed JSON",
-        false,
-        { model: config.model },
-      );
-    }
+    const data = await providerJson(r, config.model);
     const usage = {
       ...(data.usage ?? {}),
       requestedModel: config.model,

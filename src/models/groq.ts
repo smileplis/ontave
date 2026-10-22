@@ -1,3 +1,4 @@
+import { providerJson } from "./response.js";
 import { json, check, OntaveError } from "../core.js";
 import { responseSchema } from "./schema.js";
 import type { ModelAdapter } from "../types.js";
@@ -54,26 +55,22 @@ export function groq(config: {
           `Groq request failed with HTTP ${r.status}`,
           r.status === 429 || r.status >= 500,
         );
-      const raw = await r.text();
-      check(
-        Buffer.byteLength(raw) <= 2097152,
-        "INVALID_MODEL_OUTPUT",
-        "Groq response exceeds limit",
-      );
-      let data: any;
-      try {
-        data = JSON.parse(raw);
-      } catch {
+      const data = await providerJson(r, config.model);
+      const details = {
+        model: config.model,
+        usage: data.usage ?? null,
+        outcome:
+          data.choices?.[0]?.finish_reason === "length"
+            ? "truncated"
+            : "refused",
+      };
+      if (data.choices?.[0]?.finish_reason !== "stop")
         throw new OntaveError(
           "INVALID_MODEL_OUTPUT",
-          "Groq returned malformed JSON",
+          "Groq refused, truncated or did not complete output",
+          false,
+          details,
         );
-      }
-      check(
-        data.choices?.[0]?.finish_reason === "stop",
-        "INVALID_MODEL_OUTPUT",
-        "Groq refused, truncated or did not complete output",
-      );
       let output: unknown;
       try {
         output = JSON.parse(data.choices[0].message.content);
@@ -81,6 +78,8 @@ export function groq(config: {
         throw new OntaveError(
           "INVALID_MODEL_OUTPUT",
           "Groq output is not valid JSON",
+          false,
+          { ...details, outcome: "malformed" },
         );
       }
       return { output, model: config.model, usage: data.usage ?? null };

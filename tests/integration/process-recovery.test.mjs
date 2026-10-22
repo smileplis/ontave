@@ -110,6 +110,52 @@ test("real process death, restart and CLI shutdown preserve work and usage uncer
       assert.equal((await app.jobs.get(null, receipt.job_id)).calls, 2);
     },
   );
+  await t.test(
+    "SIGKILL after the worker result commits leaves one durable review bundle and no duplicate inference",
+    async () => {
+      const r = await app.ingest(null, {
+        source: "fault",
+        idempotencyKey: "result-ack-lost",
+        payload: { kind: "text", text: "Committed" },
+      });
+      const c = child("kill-after-result");
+      const [, signal] = await once(c, "exit");
+      assert.equal(signal, "SIGKILL");
+      assert.equal(
+        (await app.jobs.get(null, r.job_id)).state,
+        "waiting_review",
+      );
+      await delay(400);
+      assert.equal(await app.worker.runOnce(null), null);
+      const rows = (
+        await db.admin.query(
+          "SELECT id,hash FROM ontave.bundles WHERE job_id=$1",
+          [r.job_id],
+        )
+      ).rows;
+      assert.equal(rows.length, 1);
+      assert.equal((await app.jobs.get(null, r.job_id)).calls, 1);
+      assert.equal((await app.entities.find(null, query)).records.length, 1);
+      const request = {
+        bundleId: rows[0].id,
+        digest: rows[0].hash,
+        requestKey: "accept-committed",
+        reason: "Review durable committed result",
+      };
+      await app.reviews.accept(null, request);
+      await app.reviews.accept(null, request);
+      assert.equal((await app.entities.find(null, query)).records.length, 2);
+      assert.equal(
+        (
+          await db.admin.query(
+            "SELECT count(*) FROM ontave.assertions WHERE evidence_id=$1",
+            [r.evidence_id],
+          )
+        ).rows[0].count,
+        "1",
+      );
+    },
+  );
   const dir = await mkdtemp(resolve("artifacts/worker-cli-"));
   const config = resolve(dir, "config.mjs");
   await writeFile(

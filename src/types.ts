@@ -38,6 +38,7 @@ export interface FieldDefinition {
 export interface Concept {
   id: string;
   name: string;
+  aliases?: string[];
   description: string;
   fields: FieldDefinition[];
 }

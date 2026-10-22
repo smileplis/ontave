@@ -23,6 +23,9 @@ const app = createOntave({
 });
 try {
   const result = await app.worker.runOnce(null);
+  // The transaction is committed, but the parent never receives an acknowledgement.
+  if (process.env.ONTAVE_TEST_MODE === "kill-after-result")
+    process.kill(process.pid, "SIGKILL");
   process.send?.({ event: "result", result });
 } finally {
   await app.close();

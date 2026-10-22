@@ -1,8 +1,8 @@
 {
   "scope": "Development coverage mapping, not release certification. Partial does not mean passed.",
   "counts": {
-    "tested": 81,
-    "partial": 40,
+    "tested": 116,
+    "partial": 5,
     "pending": 0,
     "measured": 2
   },
@@ -183,16 +183,17 @@
     {
       "id": "AC-EVD-006",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "A trusted source supplies malformed or contradictory content",
       "expected": "Source authority is recorded; it does not bypass schema validation, conflict handling or the configured confirmation rule",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/limits.test.mjs",
         "tests/integration/concurrency.test.mjs",
-        "tests/integration/adversarial.test.mjs"
+        "tests/integration/adversarial.test.mjs",
+        "tests/integration/source-authority.test.mjs"
       ],
-      "note": "Trusted-source verification and hostile output are exercised; the full authority/contradiction matrix still needs per-case review."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-JOB-001",
@@ -234,26 +235,28 @@
     {
       "id": "AC-JOB-004",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Crash after a transactional result commit but before receipt/status acknowledgement",
       "expected": "Retry recognizes committed effects and completes without duplication; processing is at least once and model requests may repeat, so the guarantee concerns effects rather than exactly-once inference",
       "evidence": [
         "tests/integration/concurrency.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-JOB-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Provider times out, rate limits or returns a transient failure",
       "expected": "Bounded retries follow configured policy, preserve attempt history and do not publish partial facts",
       "evidence": [
         "tests/integration/concurrency.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/provider-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-JOB-006",
@@ -349,15 +352,16 @@
     {
       "id": "AC-EXT-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Extract a payment statement without independent confirmation",
       "expected": "Result remains a claim; no confirmed payment or derived verified balance appears",
       "evidence": [
         "tests/core.test.mjs",
         "tests/provider.test.mjs",
-        "tests/integration/runtime.test.mjs"
+        "tests/integration/runtime.test.mjs",
+        "scripts/verify-domain-flows.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EXT-006",
@@ -431,27 +435,30 @@
     {
       "id": "AC-EXT-011",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Provider truncates output because of an output limit or connection interruption",
       "expected": "Incomplete output cannot be published or silently salvaged as complete. Bounded retry/failure behavior records truncation, incurred usage and the original evidence",
       "evidence": [
         "tests/core.test.mjs",
         "tests/provider.test.mjs",
-        "tests/integration/runtime.test.mjs"
+        "tests/integration/runtime.test.mjs",
+        "tests/provider-interruption.test.mjs",
+        "tests/integration/provider-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-ID-001",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Two records share a developer-configured trustworthy external ID in one workspace",
       "expected": "They can resolve to the same identity under the declared policy; the matching rule and evidence are recorded",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-ID-002",
@@ -481,26 +488,29 @@
     {
       "id": "AC-ID-004",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "The same email appears in separate workspaces or is not configured as an authoritative unique identifier",
       "expected": "No cross-workspace resolution; email presence alone does not create authority",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs",
+        "tests/integration/scope-matrix.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-ID-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Two established entities are later suspected to be duplicates",
       "expected": "A review issue is exposed; automatic destructive merge is unsupported in the first release",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-ID-006",
@@ -530,14 +540,17 @@
     {
       "id": "AC-ID-008",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Review a bundle containing known facts together with an unknown concept or unresolved identity",
       "expected": "The whole assertion bundle remains waiting until all dependencies are valid; no partial known-fact publication, dangling relationship or half-applied canonical bundle",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/adversarial.test.mjs",
+        "tests/integration/resource-boundaries.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-ID-009",
@@ -668,7 +681,7 @@
     {
       "id": "AC-EVO-004",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Candidate uses a new English label for an existing concept",
       "expected": "Existing descriptions, aliases and stable IDs are considered; duplicates are flagged for review rather than automatically creating synonym types",
       "evidence": [
@@ -677,20 +690,22 @@
         "tests/integration/limits.test.mjs",
         "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Structural reuse hints and same-definition rejection history are exercised. Semantic alias/description recognition is not established."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates. Name/alias/ID and description-vocabulary hints are bounded heuristics for explicit review, not semantic equivalence certification."
     },
     {
       "id": "AC-EVO-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Duplicate deliveries or another workspace supply similar observations",
       "expected": "Distinct-source support is not inflated; cross-workspace evidence cannot justify promotion",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs",
+        "tests/integration/scope-matrix.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EVO-006",
@@ -722,15 +737,16 @@
     {
       "id": "AC-EVO-008",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Publish an approved candidate while a worker used the parent ontology",
       "expected": "Worker follows the specified revision policy and cannot attach stale results to the new version without validation",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EVO-009",
@@ -748,7 +764,7 @@
     {
       "id": "AC-EVO-010",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Crash during activation or reprocessing scheduling, including immediately after activation commits",
       "expected": "Ontology activation and affected-job enqueue commit in one transaction. Assertion publication is a later separate reviewed transaction; crash/restart cannot lose the replay obligation or make pending facts appear approved",
       "evidence": [
@@ -758,7 +774,7 @@
         "tests/integration/ontology-faults.test.mjs",
         "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Fault injection proves activation and replay enqueue rollback together; a process-kill at the post-activation acknowledgement boundary remains separate."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EVO-011",
@@ -790,28 +806,32 @@
     {
       "id": "AC-EVO-013",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Inspect a previously published ontology",
       "expected": "Definition/version content is unchanged; later changes create a new immutable version",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EVO-014",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Cancel/reject a candidate before activation, then request operational rollback after activation",
       "expected": "Pre-activation cancellation/rejection preserves the active version. Operational rollback is unsupported in the MVP and is rejected explicitly; post-activation repair uses a reviewed forward correction and preserves history",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs",
+        "tests/cli.test.mjs",
+        "tests/integration/concurrency.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EVO-015",
@@ -843,15 +863,16 @@
     {
       "id": "AC-EVO-017",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Change candidate content, a validation result or evaluation boundary after its review is prepared",
       "expected": "Immutable diff and evaluation hashes no longer match the approval receipt; activation refuses stale evidence and requires renewed validation/review",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-EVO-018",
@@ -870,15 +891,16 @@
     {
       "id": "AC-EVO-019",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Revalidation of an old bundle changes operations, values, identities or definitions, or cannot establish compatibility",
       "expected": "Changed content creates a new revision requiring renewed review; otherwise return `STALE_ONTOLOGY` with the next action. No old approval is transferred to a changed interpretation",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/revalidation.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior; final source/archive/CI checks remain separately bound in the qualification report."
     },
     {
       "id": "AC-EVO-020",
@@ -975,14 +997,15 @@
     {
       "id": "AC-READ-006",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Page across unchanged data with equal sort values, then introduce concurrent changes between page requests",
       "expected": "Stable ID breaks ties for unchanged data. Each page is transaction-consistent, while concurrent changes may affect later membership; the alpha does not claim an enduring multi-page snapshot",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-READ-007",
@@ -1012,14 +1035,15 @@
     {
       "id": "AC-READ-009",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "A reader-only authorized context attempts an ingestion, review decision, reprocessing or ontology/contract mutation",
       "expected": "Capability enforcement returns a safe authorization error and leaves all affected state unchanged; selecting a reader API does not provide a back door to mutation",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-READ-010",
@@ -1063,7 +1087,7 @@
     {
       "id": "AC-CON-001",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Generate types and validators from a pinned contract",
       "expected": "Output contains contract/version identifiers and hash; generation is deterministic for identical definitions",
       "evidence": [
@@ -1071,20 +1095,21 @@
         "tests/core.test.mjs",
         "scripts/verify-package.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-CON-002",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Add Installation after an application pins its existing Customer/Quotation contract",
       "expected": "Existing application still compiles and returns compatible, semantically correct results; new concepts do not magically enter its static types",
       "evidence": [
         "tests/codegen.test.mjs",
         "tests/core.test.mjs",
-        "scripts/verify-package.mjs"
+        "scripts/verify-package.mjs",
+        "tests/integration/runtime.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-CON-003",
@@ -1129,7 +1154,7 @@
     {
       "id": "AC-CON-006",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Attempt a concept/field display-label rename through an alpha evolution patch",
       "expected": "Return `UNSUPPORTED_EVOLUTION`; existing stable IDs, names, stored values and contract meanings remain unchanged. Future stable naming support is not implemented by this test",
       "evidence": [
@@ -1137,25 +1162,26 @@
         "tests/core.test.mjs",
         "scripts/verify-package.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-CON-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Pull an explicitly selected new contract and rebuild the example",
       "expected": "New concepts become available only after generation/adoption; required reviewable diffs are retained",
       "evidence": [
         "tests/codegen.test.mjs",
         "tests/core.test.mjs",
-        "scripts/verify-package.mjs"
+        "scripts/verify-package.mjs",
+        "tests/integration/runtime.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-CON-008",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Generate a contract containing reserved words, Unicode, quotes, code-like strings and names that normalize to the same TypeScript symbol",
       "expected": "Generator deterministically escapes/maps permitted names or rejects unsupported names/collisions with a typed error. It never evaluates definition text, emits executable injected code or silently overwrites a generated symbol",
       "evidence": [
@@ -1163,7 +1189,7 @@
         "tests/core.test.mjs",
         "scripts/verify-package.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-CON-009",
@@ -1194,7 +1220,7 @@
     {
       "id": "AC-CON-011",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Generate and read all supported `FieldResult<T>` states, including an accepted reported value and a declared nullable field",
       "expected": "Types and runtime validators enforce discriminated envelopes: `value` carries typed value/verification/assertion IDs, `unknown` carries reason/relevant IDs, `conflict` carries typed candidates/verification/IDs, and `missing` marks an optional field. `value: null` is distinct from missing/unknown, and no conflict is coerced into a scalar",
       "evidence": [
@@ -1202,7 +1228,7 @@
         "tests/core.test.mjs",
         "scripts/verify-package.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-CON-012",
@@ -1221,28 +1247,30 @@
     {
       "id": "AC-SEC-001",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Use two workspaces with overlapping names/identifiers; query as workspace A",
       "expected": "No B records, evidence, identities, ontology, proposals, jobs or usage details are exposed through any supported runtime API",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/limits.test.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/scope-matrix.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-SEC-002",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Forge a B ID while performing an A write, approval, replay or evidence lookup",
       "expected": "Runtime and database integrity checks deny it; no cross-workspace association is created",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/limits.test.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/scope-matrix.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-SEC-003",
@@ -1273,28 +1301,33 @@
     {
       "id": "AC-SEC-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Invoke approval with missing or unauthorized actor context",
       "expected": "Denied without publication; user-supplied workspace/actor text is not proof of authorization",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/limits.test.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/scope-matrix.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-SEC-006",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Inspect logs, errors, generated contracts and packaged example artifacts",
       "expected": "No provider keys, database credentials or private raw evidence appear by default; diagnostic redaction is exercised with canary values",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/limits.test.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/provider-interruption.test.mjs",
+        "tests/integration/provider-recovery.test.mjs",
+        "scripts/verify-public.mjs",
+        "scripts/verify-package.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior; final source/archive/CI checks remain separately bound in the qualification report."
     },
     {
       "id": "AC-SEC-007",
@@ -1325,28 +1358,30 @@
     {
       "id": "AC-SEC-009",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Run a workspace-A-authorized worker with runtime RLS while workspace B also has pending jobs; attempt discovery/claim by a forged B job reference",
       "expected": "Scope is set before selection and A can discover/claim/process only A jobs. No global queue-discovery bypass or model/body workspace switch exists; B processing requires a separately authorized worker instance",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/limits.test.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/scope-matrix.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-PKG-001",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Produce a package tarball from a clean checkout",
       "expected": "Compiled ESM, declarations, required migrations/assets, README and license information are included; test credentials, local state and private fixtures are excluded",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "scripts/verify-public.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior; final source/archive/CI checks remain separately bound in the qualification report."
     },
     {
       "id": "AC-PKG-002",
@@ -1470,41 +1505,46 @@
     {
       "id": "AC-PKG-011",
       "gate": "D",
-      "status": "partial",
+      "status": "tested",
       "action": "Inspect declared runtime support and examples",
       "expected": "Actual tested Node/PostgreSQL/TypeScript versions, supported ESM behavior and unsupported browser/edge environments are documented",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "README.md",
+        "package.json"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior; final source/archive/CI checks remain separately bound in the qualification report."
     },
     {
       "id": "AC-PKG-012",
       "gate": "D",
-      "status": "partial",
+      "status": "tested",
       "action": "Compare documented package/API/CLI names with tarball exports and executable help",
       "expected": "No fictional commands, unavailable entry points or outdated examples are presented as implemented",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/cli-workflow.test.mjs",
+        "tests/cli.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior; final source/archive/CI checks remain separately bound in the qualification report."
     },
     {
       "id": "AC-PKG-013",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Install a core-only packed consumer without the optional Gemini SDK or any provider credential, then import core and use pure reads with a configured fixture/storage adapter",
       "expected": "Core import and supported provider-independent operations succeed without loading provider code or requesting credentials. Explicitly selecting an unavailable Gemini adapter returns an actionable configuration/dependency error, never fixture fallback",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/provider.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior; final source/archive/CI checks remain separately bound in the qualification report."
     },
     {
       "id": "AC-PKG-014",
@@ -1523,15 +1563,17 @@
     {
       "id": "AC-PKG-015",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Repeat provisioning with the same request key; try it without provisioning capability; run schema migrations without provisioning",
       "expected": "Same authorized request is idempotent and changed request conflicts safely. Unauthorized callers cannot create a workspace by naming a role. Migrations create no implicit global business workspace or seed, and a failed provisioning transaction creates neither partial head nor snapshot",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/scope-matrix.test.mjs",
+        "tests/integration/runtime.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Alpha.3 development checks exercise the stated behavior. Source/archive/CI bindings and independent semantic qualification remain separate release gates."
     },
     {
       "id": "AC-OPS-001",
@@ -1606,9 +1648,11 @@
         "docs/OPERATOR_RUNBOOK.md",
         "tests/integration/resource-boundaries.test.mjs",
         "tests/integration/evidence-envelope.test.mjs",
-        "tests/integration/process-recovery.test.mjs"
+        "tests/integration/process-recovery.test.mjs",
+        "tests/integration/definition-budget.test.mjs",
+        "tests/provider.test.mjs"
       ],
-      "note": "Exact payload/metadata/operation limits, lower overrides, bounded suites and repeated process death are covered. Full exhaustive section-18 boundary audit remains open."
+      "note": "Runtime now enforces 25 concepts and 60,000 bytes of complete context for custom adapters, including evaluation/generation. Exact byte/operation/read/suite/deadline/crash bounds are tested. Gemini has provider token preflight; experimental alternatives still lack certified complete-input token accounting. The full declared provider resource profile remains unqualified."
     }
   ]
 }

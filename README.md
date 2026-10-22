@@ -4,7 +4,7 @@ Your schema didn’t see this coming.
 
 Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed assertions and additive ontology evolution. Keep the source, review proposed changes and read accepted data through a typed application contract.
 
-**Developer preview `0.1.0-alpha.2`.** The source-to-reviewed-record lifecycle is available as a runnable local playground and a versioned GitHub package. Full MVP qualification remains open; this is not a production-readiness claim. See [release status](docs/IMPLEMENTATION_STATUS.md).
+**Qualification candidate `0.1.0-alpha.3`; public developer preview `0.1.0-alpha.2`.** The source-to-reviewed-record lifecycle is available as a runnable local playground and a versioned GitHub package. Full MVP qualification remains open; this is not a production-readiness claim. See [release status](docs/IMPLEMENTATION_STATUS.md).
 
 ## Try Ontave
 
@@ -27,7 +27,7 @@ npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2
 npx ontave help
 ```
 
-The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. There is no npm registry publication yet. Core imports perform no setup or provider calls. Follow the [Node.js integration guide](https://app.daltn.tech/docs/node/) for your own data, model and authorization.
+The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. Qualification uses Node.js 24.22.0, PostgreSQL 18.4 and TypeScript 7.0.2. Browser and edge runtimes are unsupported. There is no npm registry publication yet. Core imports perform no setup or provider calls. Follow the [Node.js integration guide](https://app.daltn.tech/docs/node/) for your own data, model and authorization.
 
 Build from source:
 
