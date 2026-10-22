@@ -70,6 +70,12 @@ document.addEventListener("click", async (event) => {
     toast("Copy unavailable. Select the code to copy it.");
   }
 });
+const landingHeader = q<HTMLElement>(".landing-header");
+if (landingHeader) {
+  const updateHeader = () => landingHeader.classList.toggle("is-scrolled", window.scrollY > 480);
+  window.addEventListener("scroll", updateHeader, { passive: true });
+  updateHeader();
+}
 q(".menu-toggle")?.addEventListener("click", () => {
   const menu = q<HTMLElement>(".mobile-nav")!,
     button = q(".menu-toggle")!;
@@ -84,6 +90,7 @@ qa(".mobile-nav a").forEach((a) =>
   a.addEventListener("click", () => {
     q<HTMLElement>(".mobile-nav")!.hidden = true;
     q(".menu-toggle")!.setAttribute("aria-expanded", "false");
+    q(".menu-toggle")!.setAttribute("aria-label", "Open navigation");
   }),
 );
 q(".docs-mobile-toggle")?.addEventListener("click", () => {
@@ -343,6 +350,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     q<HTMLElement>(".mobile-nav")!.hidden = true;
     q(".menu-toggle")!.setAttribute("aria-expanded", "false");
+    q(".menu-toggle")!.setAttribute("aria-label", "Open navigation");
     q(".docs-sidebar")?.classList.remove("open");
     q(".docs-mobile-toggle")?.setAttribute("aria-expanded", "false");
   }
