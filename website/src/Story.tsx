@@ -66,9 +66,9 @@ export function Story() {
     media.add(
       {
         motion:
-          "(prefers-reduced-motion: no-preference) and (min-height: 700px) and (min-width: 761px)",
+          "(prefers-reduced-motion: no-preference) and (min-height: 800px) and (min-width: 761px)",
         reduced:
-          "(prefers-reduced-motion: reduce), (max-height: 699px), (max-width: 760px)",
+          "(prefers-reduced-motion: reduce), (max-height: 799px), (max-width: 760px)",
       },
       (context) => {
         const reduce = Boolean(context.conditions?.reduced);
@@ -218,10 +218,10 @@ export function Story() {
                 <path
                   className="story-flow-line"
                   d="M0 50H220"
-                  stroke="#f20aad"
+                  stroke="#d6c39a"
                   strokeDasharray="220"
                 />
-                <circle cx="216" cy="50" r="3" fill="#d9f542" />
+                <circle cx="216" cy="50" r="3" fill="#c5d1b2" />
               </svg>
             </div>
             <div className="story-model">
