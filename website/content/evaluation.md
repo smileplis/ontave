@@ -38,9 +38,13 @@ The implemented exact extraction task requires every expected value and no unsup
 
 A suite has at most 40 tasks, 80 inference calls and a 10-minute deadline; individual model deadlines also apply. Failures cannot authorize publication.
 
-## Remaining release work
+## Incoming alpha.2 tasks
 
-The alpha's evaluator does not yet implement isolated structured-read fixture tasks or complete identity/relationship semantic scoring. Exact extraction success does not replace those checks. Failed evaluations now persist non-passing artifacts. Inspect the ID in `OntaveError.details.evaluationId` with `evaluations.get(context, id)`. Richer fixture tasks remain open.
+The existing public alpha.1 archive supports extraction/contract checks. Unreleased alpha.2 adds one-to-one identity, relationship and observation expectations, plus isolated `read` tasks over at most 100 complete fixture records. The same SQL implementation runs over immutable JSON fixtures for parent and candidate without writing accepted workspace data. Suites accept no executable SQL or JavaScript.
+
+Text expectations can declare explicit `equivalentValues`, frozen in the suite hash. A requested “maintenance review” can explicitly accept “Schedule maintenance review”; “maintenance completed” remains a different action. Amounts, dates, currency, verification and evidence checks remain strict. A revised equivalence policy needs a new trial, with previous failures preserved.
+
+Failed evaluations persist non-passing artifacts. Inspect `OntaveError.details.evaluationId` through `evaluations.get(context, id)`. See the [API reference](/docs/api/) for the complete bounded task surface.
 
 ## Live quality is a different result
 

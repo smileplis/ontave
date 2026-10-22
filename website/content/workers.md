@@ -25,3 +25,9 @@ The CLI worker loop stops claiming on SIGINT/SIGTERM and allows up to ten second
 `jobs.reprocess` creates another interpretation of preserved evidence. It does not silently retract accepted assertions or reactivate previously retracted facts.
 
 Real process-kill/restart and complete shutdown-fault coverage are still release checks; see [status](/docs/status/).
+
+## Incoming alpha.2 accounting
+
+Unreleased alpha.2 adds `jobs.attempts(context, jobId)` for started, completed, failed and expired-lease events. Model calls are reserved before networking, so a killed process still consumes its budget. Available returned usage is retained even when a late response is fenced. A process killed before returning can leave usage unknown; unknown usage is not a zero bill.
+
+Real process tests cover restart, bounded CLI drain, a hung request, lost acknowledgements and repeated crashes. The existing public alpha.1 archive does not contain these new attempt events.

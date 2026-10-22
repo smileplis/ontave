@@ -4,7 +4,7 @@ Your schema didn’t see this coming.
 
 Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed assertions and additive ontology evolution. Keep the source, review proposed changes and read accepted data through a typed application contract.
 
-**Development alpha:** the working lifecycle has deterministic and PostgreSQL coverage. The complete MVP acceptance and frozen live-model quality gates remain open. See [implementation status](docs/IMPLEMENTATION_STATUS.md).
+**Development alpha:** unreleased source work is `0.1.0-alpha.2`; the public download remains `alpha.1`. The working lifecycle has deterministic and PostgreSQL coverage. The complete MVP acceptance and frozen live-model quality gates remain open. See [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
 ## Get started
 
@@ -65,12 +65,14 @@ npm run test:integration
 npm run verify:package
 npm run verify:node
 npm run verify:next
+npm run verify:domains
+npm run measure:benefits
 npm run measure:load
 # Optional PostgreSQL operator client tools are required:
 npm run verify:restore
 ```
 
-Tests use fictional fixtures and disposable databases. Deterministic tests make no paid model calls. Live smoke checks do not establish the declared 95% precision / 90% recall targets; those frozen semantic trials are still open.
+Tests use fictional fixtures and disposable databases. Deterministic tests make no paid model calls. Live smoke checks do not establish the declared 95% precision / 90% recall targets; three new development trials met the aggregate field targets, while independent labels and identity/discovery qualification remain open. See the quality report for all earlier failures and the revised scoring policy.
 
 The static documentation/marketing site lives in `website`:
 
@@ -80,6 +82,12 @@ npm run build --prefix website
 npm run check --prefix website
 npm run dev --prefix website
 ```
+
+## Measured benefits and release qualification
+
+The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](docs/USER_BENEFITS.md) and the [quality report](docs/QUALITY_REPORT.md).
+
+Run `npm run verify:release` before any npm publication. The prepublish guard refuses missing, stale or non-passing qualification evidence. It never authenticates or publishes. Provider failures and unmet semantic thresholds remain blockers.
 
 ## References
 

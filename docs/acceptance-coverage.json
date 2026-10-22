@@ -1,10 +1,10 @@
 {
   "scope": "Development coverage mapping, not release certification. Partial does not mean passed.",
   "counts": {
-    "tested": 41,
-    "partial": 75,
-    "pending": 6,
-    "measured": 1
+    "tested": 81,
+    "partial": 40,
+    "pending": 0,
+    "measured": 2
   },
   "cases": [
     {
@@ -49,28 +49,30 @@
     {
       "id": "AC-ING-004",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Reuse an idempotency key with changed content or source identity",
       "expected": "A typed conflict is returned; earlier evidence is not overwritten",
       "evidence": [
         "tests/integration/limits.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/evidence-envelope.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ING-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Submit identical content using different keys and source references",
       "expected": "Records follow the documented source-identity rule; content equality alone does not discard a distinct real-world event",
       "evidence": [
         "tests/integration/limits.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/evidence-envelope.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ING-006",
@@ -88,28 +90,30 @@
     {
       "id": "AC-ING-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Submit missing source identity, unsupported input type, oversized input or malformed context",
       "expected": "Typed validation error occurs before model invocation; no partially accepted receipt",
       "evidence": [
         "tests/integration/limits.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/evidence-envelope.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ING-008",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Provide source-event time, then submit a later correction referring to an earlier event",
       "expected": "Source time and recorded time remain distinguishable; ingestion order does not silently establish business truth",
       "evidence": [
         "tests/integration/limits.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/evidence-envelope.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EVD-001",
@@ -185,33 +189,35 @@
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/limits.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/adversarial.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Trusted-source verification and hostile output are exercised; the full authority/contradiction matrix still needs per-case review."
     },
     {
       "id": "AC-JOB-001",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Start two workers against one pending job",
       "expected": "Only one valid lease owns processing; no duplicate canonical effects",
       "evidence": [
         "tests/integration/concurrency.test.mjs",
         "tests/integration/limits.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-JOB-002",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Crash a worker after evidence acceptance and before extraction completes",
       "expected": "Evidence remains intact; another worker can reclaim the job after the documented lease interval",
       "evidence": [
         "tests/integration/concurrency.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-JOB-003",
@@ -264,26 +270,28 @@
     {
       "id": "AC-JOB-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Restart the worker process while jobs await review",
       "expected": "Waiting state and proposal linkage survive; restarting does not treat waiting jobs as complete or auto-approve them",
       "evidence": [
         "tests/integration/concurrency.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-JOB-008",
       "gate": "C",
-      "status": "pending",
+      "status": "tested",
       "action": "Request cooperative worker shutdown while a provider request is in flight, then restart after the abandoned lease expires",
       "expected": "Worker stops claiming work and follows the documented bounded drain/abort policy. If it cannot finish, the job remains recoverable by lease-expiry/reclaim; a returning stale result is fenced and incurred usage remains recorded. No cancellation API is implied",
       "evidence": [
         "tests/integration/concurrency.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Required release evidence or behavior remains outstanding; see implementation status."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EXT-001",
@@ -314,15 +322,16 @@
     {
       "id": "AC-EXT-003",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Return an invented entity ID, field ID or relationship endpoint",
       "expected": "Referential and workspace checks reject it before persistence to approved state",
       "evidence": [
         "tests/core.test.mjs",
         "tests/provider.test.mjs",
-        "tests/integration/runtime.test.mjs"
+        "tests/integration/runtime.test.mjs",
+        "tests/integration/adversarial.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EXT-004",
@@ -353,28 +362,30 @@
     {
       "id": "AC-EXT-006",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Submit source text telling the model to run SQL, approve changes, reveal keys or change workspaces",
       "expected": "Source is treated as data; it cannot authorize operations or introduce privileged instructions",
       "evidence": [
         "tests/core.test.mjs",
         "tests/provider.test.mjs",
-        "tests/integration/runtime.test.mjs"
+        "tests/integration/runtime.test.mjs",
+        "tests/integration/adversarial.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EXT-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Return high self-reported confidence for an invalid or unsupported assertion",
       "expected": "Confidence does not bypass validation, source checks or review",
       "evidence": [
         "tests/core.test.mjs",
         "tests/provider.test.mjs",
-        "tests/integration/runtime.test.mjs"
+        "tests/integration/runtime.test.mjs",
+        "tests/integration/adversarial.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EXT-008",
@@ -392,15 +403,17 @@
     {
       "id": "AC-EXT-009",
       "gate": "Q",
-      "status": "pending",
+      "status": "partial",
       "action": "Run real-provider trials on the labeled datasets",
       "expected": "Report proposed and published metrics separately, all trials, corrections and unresolved cases",
       "evidence": [
         "tests/core.test.mjs",
         "tests/provider.test.mjs",
-        "tests/integration/runtime.test.mjs"
+        "tests/integration/runtime.test.mjs",
+        "scripts/run-semantic-trials.mjs",
+        "docs/QUALITY_REPORT.md"
       ],
-      "note": "Required release evidence or behavior remains outstanding; see implementation status."
+      "note": "Live raw trials and separate deterministic accepted-data counts are retained. Independent labels, live end-to-end publication/identity/discovery and human corrections remain unqualified."
     },
     {
       "id": "AC-EXT-010",
@@ -455,14 +468,15 @@
     {
       "id": "AC-ID-003",
       "gate": "C",
-      "status": "pending",
+      "status": "tested",
       "action": "\u201cRahul S.\u201d resembles an existing contact and has incomplete identifiers",
       "expected": "Matching candidates are offered for review; the runtime does not silently pick the nearest name",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Required release evidence or behavior remains outstanding; see implementation status."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-004",
@@ -503,14 +517,15 @@
     {
       "id": "AC-ID-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Change identifiers or facts after a review bundle is prepared",
       "expected": "Its content/revision check fails and requires renewed review; previous approval cannot apply to changed content",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-008",
@@ -527,14 +542,15 @@
     {
       "id": "AC-ID-009",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Reject a proposed fact or identity link",
       "expected": "The rejection and rationale remain inspectable; the rejected interpretation never appears as approved data",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-010",
@@ -551,50 +567,51 @@
     {
       "id": "AC-ID-011",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Two declared authorities reuse the same normalized identifier kind/value in one workspace",
       "expected": "Matching includes authority as well as workspace, kind and value. No cross-authority automatic link or uniqueness collision conflates the entities",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/identity-authority.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-012",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Reviewer accepts a correctly extracted statement that a person reports payment, without a confirming source or authorized attestation",
       "expected": "Acceptance becomes `accepted` while verification stays `reported`; reads do not relabel it `verified` or count it as confirmed receipt solely because review succeeded",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/concurrency.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-013",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Use `reviews.amend` or `reviews.resolveConflict` on a staged bundle",
       "expected": "A new bundle revision/digest records the change or explicit unresolved decision. No current accepted value changes before renewed validation and `reviews.accept`; an earlier acceptance digest is stale",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/concurrency.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-014",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Use `assertions.correct` or `assertions.retract` with the expected target revisions, evidence, reason and request key; repeat the request",
       "expected": "A correction bundle is staged idempotently. Accepted state changes only when that exact bundle is accepted; history, supersession/retraction references and prior human decisions remain traceable",
       "evidence": [
         "tests/integration/runtime.test.mjs",
         "tests/integration/concurrency.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-ID-015",
@@ -624,15 +641,16 @@
     {
       "id": "AC-EVO-002",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Candidate adds a concept, an optional field or a relationship rule",
       "expected": "Diff and deterministic compatibility checks expose exactly the requested additive changes",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EVO-003",
@@ -650,15 +668,16 @@
     {
       "id": "AC-EVO-004",
       "gate": "C",
-      "status": "pending",
+      "status": "partial",
       "action": "Candidate uses a new English label for an existing concept",
       "expected": "Existing descriptions, aliases and stable IDs are considered; duplicates are flagged for review rather than automatically creating synonym types",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Required release evidence or behavior remains outstanding; see implementation status."
+      "note": "Structural reuse hints and same-definition rejection history are exercised. Semantic alias/description recognition is not established."
     },
     {
       "id": "AC-EVO-005",
@@ -689,15 +708,16 @@
     {
       "id": "AC-EVO-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Reject or fail a candidate",
       "expected": "The active version is unchanged; candidate, evidence and evaluation remain inspectable",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EVO-008",
@@ -734,22 +754,25 @@
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Fault injection proves activation and replay enqueue rollback together; a process-kill at the post-activation acknowledgement boundary remains separate."
     },
     {
       "id": "AC-EVO-011",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Evaluate parent and candidate on frozen tasks/data/configuration",
       "expected": "Existing supported answers retain shape and meaning; extension tasks improve as declared, and unsupported answers stay explicit",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/evaluation.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EVO-012",
@@ -793,15 +816,16 @@
     {
       "id": "AC-EVO-015",
       "gate": "Q",
-      "status": "pending",
+      "status": "partial",
       "action": "Add a new discovered concept in RENTAL-TRANSFER",
       "expected": "Required distinctions are represented through the same core path without editing runtime domain code or introducing business DDL",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "scripts/verify-domain-flows.mjs"
       ],
-      "note": "Required release evidence or behavior remains outstanding; see implementation status."
+      "note": "The rental domain executes through the generic governance path with a deterministic adapter and explicit patch. Autonomous live discovery is not qualified."
     },
     {
       "id": "AC-EVO-016",
@@ -832,15 +856,16 @@
     {
       "id": "AC-EVO-018",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Accept an unchanged old extraction bundle after a compatible additive ontology becomes active",
       "expected": "Runtime checks every bound stable definition/normalized operation against the current head and checks entity revisions. Commit preserves the original extraction/approval digest and records the checked current-head hash; it does not silently rewrite the reviewed bundle",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/ontology-faults.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EVO-019",
@@ -858,40 +883,43 @@
     {
       "id": "AC-EVO-020",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Evaluate without an applicable consumer `EvaluationSuite`, with an unsupported task kind, or after mutating its tasks/expected checks/fixture boundary",
       "expected": "Missing/inapplicable/incomplete evaluation returns `EVALUATION_INCOMPLETE`; malformed suite registration is refused. No unrelated example-suite fallback occurs, and changing an immutable suite creates a new hash that invalidates prior results/approval",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/evaluation.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-EVO-021",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Run a registered suite against parent/candidate while checking accepted workspace state and evaluator permissions",
       "expected": "Evaluation uses isolated scratch state and frozen selected evidence/projection fixtures. It cannot publish assertions, alter current accepted workspace data, execute model-generated evaluator code or replay an arbitrary third-party database",
       "evidence": [
         "tests/core.test.mjs",
         "tests/integration/runtime.test.mjs",
-        "tests/integration/limits.test.mjs"
+        "tests/integration/limits.test.mjs",
+        "tests/integration/evaluation.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-001",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Query approved records with supported equality/range filters, ordering and pagination",
       "expected": "Correct deterministic results under the authorized context; reads require no model call",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-002",
@@ -908,38 +936,41 @@
     {
       "id": "AC-READ-003",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Traverse a supported one-hop relationship",
       "expected": "Only permitted endpoint types and workspace-local links appear; provenance is available",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/relationships.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-004",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Supply unknown fields, unsupported operators, malformed cursors or excessive traversal depth",
       "expected": "Typed validation error; no improvised SQL or partial silently broadened query",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-005",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Use hostile field names, values and order clauses",
       "expected": "Values are parameterized and identifiers/operators are allowlisted; no SQL execution outside the supported query model",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-006",
@@ -968,14 +999,15 @@
     {
       "id": "AC-READ-008",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Snapshot canonical records, ontology head, proposals and job effects; call every pure read/inspection operation repeatedly with valid and invalid inputs",
       "expected": "Reads never mutate accepted assertions, identities, ontology, decisions or jobs and never invoke a model. Documented read-access audit events, if any, are the only permitted persistent side effect",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-009",
@@ -992,38 +1024,41 @@
     {
       "id": "AC-READ-010",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Filter scalar `eq`, `in` and range predicates across `value`, `unknown`, `conflict`, `missing` and explicit null results",
       "expected": "Only compatible typed `value` results satisfy scalar comparisons. Unknown/conflict/missing do not match; null obeys explicit equality/null semantics and never a numeric/date range",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-011",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Query using supported `stateIs` and `verificationIn` predicates",
       "expected": "Uncertainty and verification are selected through declared typed semantics; accepted reported values remain distinguishable from verified values and unsupported states/operators fail validation",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-READ-012",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Sort/page a mixed set of usable values, explicit nulls, missing, unknown and conflict results; reuse its cursor with another query/contract/workspace",
       "expected": "Ordering is usable non-null values in the requested direction, then null, missing, unknown and conflict, with stable entity ID as final tie-breaker. Cursor binds workspace, contract, predicate/order hash and last ordering values/ID; a different scope/query rejects it",
       "evidence": [
         "tests/integration/runtime.test.mjs",
-        "tests/integration/concurrency.test.mjs"
+        "tests/integration/concurrency.test.mjs",
+        "tests/integration/reads.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-CON-001",
@@ -1054,15 +1089,16 @@
     {
       "id": "AC-CON-003",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Update an approved current fact after contract generation",
       "expected": "Pinned application reads the new authorized value through the stable contract; pinning is not an accidental historical-data freeze",
       "evidence": [
         "tests/codegen.test.mjs",
         "tests/core.test.mjs",
-        "scripts/verify-package.mjs"
+        "scripts/verify-package.mjs",
+        "tests/integration/concurrency.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-CON-004",
@@ -1171,15 +1207,16 @@
     {
       "id": "AC-CON-012",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Publish a new entity without a required valid accepted field value, then separately retract or dispute a required value of an existing entity",
       "expected": "New-entity publication fails. Existing entity remains inspectable with explicit unknown/conflict after an accepted retraction/conflict decision; validators do not hide the entity or fabricate null/zero. Bounded relationships similarly disclose conflict/link state and continuation",
       "evidence": [
         "tests/codegen.test.mjs",
         "tests/core.test.mjs",
-        "scripts/verify-package.mjs"
+        "scripts/verify-package.mjs",
+        "tests/integration/concurrency.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-SEC-001",
@@ -1262,7 +1299,7 @@
     {
       "id": "AC-SEC-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Reach configured input, output, attempts, elapsed-time or model-usage limits",
       "expected": "Explicit bounded behavior occurs and incurred usage is reported; no infinite repair/evolution loop",
       "evidence": [
@@ -1270,7 +1307,7 @@
         "tests/integration/limits.test.mjs",
         "scripts/verify-next.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-SEC-008",
@@ -1379,15 +1416,16 @@
     {
       "id": "AC-PKG-007",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Run CLI worker, proposal inspection, evaluation, approval and type generation with valid/invalid inputs",
       "expected": "Each command calls the same governed runtime operations as the SDK, with useful output and documented exit behavior",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/cli-workflow.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-PKG-008",
@@ -1411,9 +1449,10 @@
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/cli-workflow.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Automated CLI and packed consumers complete the lifecycle. An independent fresh-developer walkthrough remains outstanding."
     },
     {
       "id": "AC-PKG-010",
@@ -1470,15 +1509,16 @@
     {
       "id": "AC-PKG-014",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Explicitly call `workspaces.create`/`ontave workspace create` with trusted provisioning capability and either empty or selected starter mode",
       "expected": "Workspace head and immutable empty `v0` or explicitly selected Person/Organization starter snapshot commit atomically without a model call. No unselected business concepts appear; inspection works before first contract registration, while record reads require a registered contract",
       "evidence": [
         "scripts/verify-package.mjs",
         "scripts/verify-node-flow.mjs",
-        "scripts/verify-next.mjs"
+        "scripts/verify-next.mjs",
+        "tests/integration/cli-workflow.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-PKG-015",
@@ -1499,59 +1539,61 @@
       "status": "measured",
       "action": "Run generated LOAD datasets at 100, 1,000 and 10,000 records with declared concurrency and no inference calls",
       "expected": "Report throughput, queue depth, retries, failures and median/p95 latencies; identify growth or saturation rather than inventing a universal latency guarantee. Record all three sizes; the 1,000-record result alone does not satisfy the reporting gate",
-      "evidence": [
-        "scripts/measure-load.mjs",
-        "docs/OPERATOR_RUNBOOK.md"
-      ],
+      "evidence": ["scripts/measure-load.mjs", "docs/OPERATOR_RUNBOOK.md"],
       "note": "All three deterministic sizes measured; no performance SLO is claimed."
     },
     {
       "id": "AC-OPS-002",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Measure database-only structured reads with provider networking disabled",
       "expected": "Reads continue to work and no model cost is incurred; provider availability does not control approved-data access",
       "evidence": [
         "scripts/measure-load.mjs",
-        "docs/OPERATOR_RUNBOOK.md"
+        "docs/OPERATOR_RUNBOOK.md",
+        "scripts/measure-benefits.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-OPS-003",
       "gate": "C",
-      "status": "partial",
+      "status": "tested",
       "action": "Stop all workers and then restart them",
       "expected": "Queue and waiting/review state are durable; backlog is recoverable and observable",
       "evidence": [
         "scripts/measure-load.mjs",
-        "docs/OPERATOR_RUNBOOK.md"
+        "docs/OPERATOR_RUNBOOK.md",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-OPS-004",
       "gate": "C",
-      "status": "pending",
+      "status": "tested",
       "action": "Follow an explicit operator runbook to back up a disposable PostgreSQL 18 test database and restore it into another disposable instance with workers stopped at the documented consistency boundary",
       "expected": "Evidence, accepted state, ontology/contract references and review lineage remain consistent. Role/grant setup and handling expired leases are verified. This is an operator PostgreSQL backup/restore procedure, not a package export, automatic rollback or hosted backup feature",
       "evidence": [
         "scripts/measure-load.mjs",
-        "docs/OPERATOR_RUNBOOK.md"
+        "docs/OPERATOR_RUNBOOK.md",
+        "scripts/verify-restore.mjs"
       ],
-      "note": "Required release evidence or behavior remains outstanding; see implementation status."
+      "note": "Dedicated executable development evidence now covers this behavior. See the source-bound qualification report for fresh results; this mapping is not independent release certification."
     },
     {
       "id": "AC-OPS-005",
       "gate": "Q",
-      "status": "partial",
+      "status": "measured",
       "action": "Collect provider usage for each live trial",
       "expected": "Request counts, retries, token/usage fields and estimated costs use documented provider data or are labeled unavailable; no fabricated precision",
       "evidence": [
         "scripts/measure-load.mjs",
-        "docs/OPERATOR_RUNBOOK.md"
+        "docs/OPERATOR_RUNBOOK.md",
+        "scripts/run-semantic-trials.mjs",
+        "docs/QUALITY_REPORT.md"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Available provider usage, failures and unattempted inputs are retained per frozen experiment. Prices and costs are unavailable rather than invented."
     },
     {
       "id": "AC-OPS-006",
@@ -1561,9 +1603,12 @@
       "expected": "Payload/metadata, candidate/definition counts, bundle size, token/call/attempt/time budgets, lease/renewal/drain, read/link/excerpt limits and independent suite budgets follow their declared bounds. Accepted oversized-context evidence remains intact with an explicit processing-limit failure; no silent truncation, implicit chunking or partial publication",
       "evidence": [
         "scripts/measure-load.mjs",
-        "docs/OPERATOR_RUNBOOK.md"
+        "docs/OPERATOR_RUNBOOK.md",
+        "tests/integration/resource-boundaries.test.mjs",
+        "tests/integration/evidence-envelope.test.mjs",
+        "tests/integration/process-recovery.test.mjs"
       ],
-      "note": "Implementation/test coverage is incomplete for this complete acceptance case."
+      "note": "Exact payload/metadata/operation limits, lower overrides, bounded suites and repeated process death are covered. Full exhaustive section-18 boundary audit remains open."
     }
   ]
 }

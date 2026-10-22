@@ -1,3 +1,11 @@
+import { operationalMetrics } from "./metrics.js";
+import {
+  evaluationSuiteSchema,
+  evaluateRead,
+  scoreExtraction,
+  validateReadFixture,
+} from "./evaluation.js";
+import { entityQuerySchema, readRecords } from "./read.js";
 import { validateContractRecords } from "./codegen.js";
 import { randomUUID, randomBytes } from "node:crypto";
 import type { PoolClient } from "pg";
@@ -61,6 +69,10 @@ type Body = {
   resolutions: Record<string, Resolution>;
   pending: string[];
   retractions: string[];
+  identityCandidates?: Record<
+    string,
+    { id: string; name: string; conceptId: string }[]
+  >;
   reason?: string;
 };
 const limits: Limits = {
@@ -81,85 +93,6 @@ const accessSchema = z
       z.enum(["read", "ingest", "review", "worker", "provision"]),
     ),
     sourcePolicy: z.string().optional(),
-  })
-  .strict();
-
-const entityQuerySchema = z
-  .object({
-    contractId: uuid,
-    contractHash: z.string().regex(/^[a-f0-9]{64}$/),
-    conceptId: idSchema,
-    where: z
-      .array(
-        z
-          .object({
-            field: idSchema,
-            op: z.enum([
-              "eq",
-              "in",
-              "gt",
-              "gte",
-              "lt",
-              "lte",
-              "stateIs",
-              "verificationIn",
-            ]),
-            value: z.json(),
-          })
-          .strict(),
-      )
-      .max(20)
-      .optional(),
-    order: z
-      .object({ field: idSchema, direction: z.enum(["asc", "desc"]) })
-      .strict()
-      .optional(),
-    limit: z.number().int().min(1).max(100).optional(),
-    cursor: z.string().max(8192).optional(),
-    include: z.array(idSchema).max(10).optional(),
-  })
-  .strict();
-const evaluationSuiteSchema = z
-  .object({
-    name: z.string().min(1).max(200),
-    maxCalls: z.number().int().min(1).max(80),
-    timeoutMs: z.number().int().min(1).max(600000),
-    tasks: z
-      .array(
-        z.discriminatedUnion("kind", [
-          z
-            .object({
-              id: z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/),
-              kind: z.literal("extract"),
-              evidenceId: uuid,
-              expected: z
-                .array(
-                  z
-                    .object({
-                      conceptId: idSchema,
-                      fieldId: idSchema,
-                      value: z.json(),
-                      verification: z
-                        .enum(["reported", "verified", "disputed", "unknown"])
-                        .optional(),
-                    })
-                    .strict(),
-                )
-                .min(1)
-                .max(250),
-            })
-            .strict(),
-          z
-            .object({
-              id: z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/),
-              kind: z.literal("contract"),
-              contractId: uuid,
-            })
-            .strict(),
-        ]),
-      )
-      .min(1)
-      .max(40),
   })
   .strict();
 
@@ -233,7 +166,7 @@ export class Ontave {
     digest: string,
   ): Promise<any | undefined> {
     check(
-      key.length > 0 && key.length <= 200,
+      typeof key === "string" && key.length > 0 && key.length <= 200,
       "INVALID_INPUT",
       "A bounded request key is required",
     );
@@ -297,7 +230,9 @@ export class Ontave {
         "Provisioning context is scoped to a different workspace",
       );
       check(
-        input.name.length > 0 && input.name.length <= 200,
+        typeof input.name === "string" &&
+          input.name.length > 0 &&
+          input.name.length <= 200,
         "INVALID_INPUT",
         "Workspace name is required",
       );
@@ -352,7 +287,14 @@ export class Ontave {
   ) {
     const a = await this.access(context, "ingest");
     check(
-      input.source?.length > 0 &&
+      input && typeof input === "object" && !Array.isArray(input),
+      "INVALID_INPUT",
+      "An ingestion object is required",
+    );
+    check(
+      typeof input.source === "string" &&
+        typeof input.idempotencyKey === "string" &&
+        input.source.length > 0 &&
         input.source.length <= 200 &&
         input.idempotencyKey?.length > 0 &&
         input.idempotencyKey.length <= 200,
@@ -501,6 +443,21 @@ export class Ontave {
     },
   };
   readonly jobs = {
+    attempts: async (context: unknown, jobId: string) => {
+      const a = await this.access(context, "read");
+      return this.config.storage.transaction(a.workspaceId, async (c) => {
+        const job = await c.query("SELECT id FROM ontave.jobs WHERE id=$1", [
+          parseUUID(jobId),
+        ]);
+        check(job.rowCount, "NOT_FOUND", "Job unavailable");
+        return (
+          await c.query(
+            "SELECT fence,event,details,created_at FROM ontave.worker_events WHERE job_id=$1 ORDER BY created_at,id",
+            [jobId],
+          )
+        ).rows;
+      });
+    },
     list: async (context: unknown) => {
       const a = await this.access(context, "read");
       return this.config.storage.transaction(
@@ -573,9 +530,20 @@ export class Ontave {
     c: PoolClient,
     e: Extraction,
     evidenceId: string,
-  ): Promise<{ resolutions: Record<string, Resolution>; pending: string[] }> {
+  ): Promise<{
+    resolutions: Record<string, Resolution>;
+    pending: string[];
+    identityCandidates: Record<
+      string,
+      { id: string; name: string; conceptId: string }[]
+    >;
+  }> {
     const resolutions: Record<string, Resolution> = {};
     const pending: string[] = [];
+    const identityCandidates: Record<
+      string,
+      { id: string; name: string; conceptId: string }[]
+    > = {};
     // Reuse only exact source-bound mentions from accepted interpretations of this evidence.
     // A matching name in a different receipt is never sufficient identity proof.
     const accepted = await c.query(
@@ -630,10 +598,45 @@ export class Ontave {
       }
       if (previousIds.size === 1) exact.add([...previousIds][0]!);
       let entityId = exact.size === 1 ? [...exact][0] : undefined;
+      const tokens = (name: string) =>
+        name
+          .normalize("NFKC")
+          .toLocaleLowerCase("en-US")
+          .match(/[\p{L}\p{N}]+/gu) ?? [];
+      const nameTokens = tokens(mention.name);
+      const prefix = (nameTokens[0] ?? "")
+        .replaceAll("\\", "\\\\")
+        .replaceAll("%", "\\%")
+        .replaceAll("_", "\\_");
       const candidates = await c.query(
-        "SELECT id,revision,concept_id FROM ontave.entities WHERE lower(name)=lower($1) ORDER BY id LIMIT $2",
-        [mention.name, this.limits.candidates],
+        `SELECT id,revision,concept_id,name FROM ontave.entities WHERE concept_id=$1 AND (lower(name)=lower($2) OR lower(name) LIKE $3 ESCAPE E'\\\\') ORDER BY id LIMIT $4`,
+        [
+          mention.conceptId,
+          mention.name,
+          prefix + " %",
+          this.limits.candidates,
+        ],
       );
+      const similar = candidates.rows.filter((row) => {
+        const other = tokens(row.name);
+        return (
+          nameTokens.length > 0 &&
+          other[0] === nameTokens[0] &&
+          nameTokens
+            .slice(1, Math.min(nameTokens.length, other.length))
+            .every(
+              (token, i) =>
+                token === other[i + 1] ||
+                (token.length === 1 && other[i + 1]!.startsWith(token)) ||
+                (other[i + 1]!.length === 1 && token.startsWith(other[i + 1]!)),
+            )
+        );
+      });
+      identityCandidates[mention.mentionId] = similar.map((row) => ({
+        id: row.id,
+        name: row.name,
+        conceptId: row.concept_id,
+      }));
       if (mention.existingId) {
         const known = await c.query(
           "SELECT id FROM ontave.entities WHERE id=$1",
@@ -647,7 +650,7 @@ export class Ontave {
       }
       if (
         exact.size > 1 ||
-        (!entityId && (candidates.rows.length > 0 || !!mention.existingId))
+        (!entityId && (similar.length > 0 || !!mention.existingId))
       )
         pending.push(mention.mentionId);
       entityId ??= randomUUID();
@@ -667,7 +670,7 @@ export class Ontave {
         mode: existing.rows.length ? "link" : "new",
       };
     }
-    return { resolutions, pending };
+    return { resolutions, pending, identityCandidates };
   }
   readonly worker = {
     runOnce: async (context: unknown) => {
@@ -681,12 +684,27 @@ export class Ontave {
           );
           const j = r.rows[0];
           if (!j) return null;
+          if (j.state === "processing")
+            await c.query(
+              "INSERT INTO ontave.worker_events(workspace_id,id,job_id,fence,event,details) VALUES($1,$2,$3,$4,'lease_expired',$5) ON CONFLICT DO NOTHING",
+              [
+                a.workspaceId,
+                randomUUID(),
+                j.id,
+                j.fence,
+                json({
+                  usage: "unknown",
+                  reason:
+                    "Previous worker did not finalize before lease expiry",
+                }),
+              ],
+            );
           if (
             j.attempts >= this.limits.attempts ||
             j.calls >= this.limits.modelCalls
           ) {
             await c.query(
-              "UPDATE ontave.jobs SET state='failed',error=$2 WHERE id=$1",
+              "UPDATE ontave.jobs SET state='failed',error=$2,lease_owner=NULL,lease_until=NULL,updated_at=now() WHERE id=$1",
               [j.id, json({ code: "BUDGET_EXHAUSTED" })],
             );
             return { exhausted: true, jobId: j.id };
@@ -694,6 +712,16 @@ export class Ontave {
           const next = await c.query(
             "UPDATE ontave.jobs SET state='processing',attempts=attempts+1,calls=calls+1,fence=fence+1,lease_owner=$2,lease_until=now()+($3::text||' milliseconds')::interval,updated_at=now() WHERE id=$1 RETURNING *",
             [j.id, owner, this.limits.leaseMs],
+          );
+          await c.query(
+            "INSERT INTO ontave.worker_events(workspace_id,id,job_id,fence,event,details) VALUES($1,$2,$3,$4,'started',$5)",
+            [
+              a.workspaceId,
+              randomUUID(),
+              j.id,
+              next.rows[0].fence,
+              json({ attempt: next.rows[0].attempts, usage: "unknown" }),
+            ],
           );
           const ev = await c.query(
             "SELECT * FROM ontave.evidence WHERE id=$1",
@@ -749,6 +777,10 @@ export class Ontave {
             kind: evidence.kind === "json" ? "json" : "text",
             ontology: snapshot.definition,
             candidates,
+            identifierRules: this.config.identifierRules ?? [],
+            verifiedFields:
+              this.config.sourcePolicies?.[evidence.source_policy]
+                ?.verifiedFields ?? [],
             signal: controller.signal,
           }),
         );
@@ -763,8 +795,20 @@ export class Ontave {
         try {
           attemptUsage = response.usage ? json(response.usage) : null;
           const out = json(response.output);
-          if (Buffer.byteLength(out) <= 2097152) attemptOutput = out;
-        } catch {}
+          check(
+            Buffer.byteLength(out) <= 2097152,
+            "BUDGET_EXHAUSTED",
+            "Adapter output exceeds 2 MiB",
+          );
+          attemptOutput = out;
+        } catch (error) {
+          if (error instanceof OntaveError && error.code === "BUDGET_EXHAUSTED")
+            throw error;
+          throw new OntaveError(
+            "INVALID_MODEL_OUTPUT",
+            "Adapter output or usage is not bounded canonical JSON",
+          );
+        }
         const extraction = validateExtraction(
           response.output,
           evidence.payload,
@@ -840,6 +884,20 @@ export class Ontave {
               "UPDATE ontave.jobs SET state=$2,bundle_id=$3,lease_owner=NULL,lease_until=NULL,updated_at=now() WHERE id=$1",
               [job.id, state, bundle],
             );
+            await c.query(
+              "INSERT INTO ontave.worker_events(workspace_id,id,job_id,fence,event,details) VALUES($1,$2,$3,$4,'completed',$5)",
+              [
+                a.workspaceId,
+                randomUUID(),
+                job.id,
+                job.fence,
+                json({
+                  model: attemptModel,
+                  usage: response.usage ?? null,
+                  runId: run,
+                }),
+              ],
+            );
             return { jobId: job.id, bundleId: bundle, state };
           },
         );
@@ -866,26 +924,40 @@ export class Ontave {
             "SELECT id FROM ontave.jobs WHERE id=$1 AND fence=$2 AND lease_owner=$3 AND state='processing' FOR UPDATE",
             [job.id, job.fence, owner],
           );
-          if (owned.rows.length)
-            await c.query(
-              "INSERT INTO ontave.runs(workspace_id,id,job_id,ontology_id,model,error,output,usage) VALUES($1,$2,$3,$4,$5,$6,$7,$8)",
-              [
-                a.workspaceId,
-                randomUUID(),
-                job.id,
-                snapshot.id,
-                attemptModel,
-                json({
-                  code: err.code,
-                  message: err.message,
-                  attempt: job.attempts,
-                  fence: job.fence,
-                  usage: attemptUsage ? "recorded" : "unknown",
-                }),
-                attemptOutput,
-                attemptUsage,
-              ],
-            );
+          await c.query(
+            "INSERT INTO ontave.worker_events(workspace_id,id,job_id,fence,event,details) VALUES($1,$2,$3,$4,'failed',$5) ON CONFLICT DO NOTHING",
+            [
+              a.workspaceId,
+              randomUUID(),
+              job.id,
+              job.fence,
+              json({
+                model: attemptModel,
+                usage: attemptUsage ? JSON.parse(attemptUsage) : null,
+                code: err.code,
+                fenced: !owned.rows.length,
+              }),
+            ],
+          );
+          await c.query(
+            "INSERT INTO ontave.runs(workspace_id,id,job_id,ontology_id,model,error,output,usage) VALUES($1,$2,$3,$4,$5,$6,$7,$8)",
+            [
+              a.workspaceId,
+              randomUUID(),
+              job.id,
+              snapshot.id,
+              attemptModel,
+              json({
+                code: err.code,
+                message: err.message,
+                attempt: job.attempts,
+                fence: job.fence,
+                usage: attemptUsage ? "recorded" : "unknown",
+              }),
+              attemptOutput,
+              attemptUsage,
+            ],
+          );
           await c.query(
             "UPDATE ontave.jobs SET state=$4,error=$5,lease_owner=NULL,lease_until=NULL,next_at=now()+interval '1 second',updated_at=now() WHERE id=$1 AND fence=$2 AND lease_owner=$3 AND state='processing'",
             [
@@ -1177,16 +1249,24 @@ export class Ontave {
             (x) => x.id === relationship.relationId,
           )!;
           const existing = await c.query(
-            "SELECT id,target_entity_id FROM ontave.assertions WHERE entity_id=$1 AND relation_id=$2 AND kind='set' AND NOT EXISTS(SELECT 1 FROM ontave.assertions x WHERE x.target_assertion_id=ontave.assertions.id AND x.kind='retract')",
+            "SELECT a.id,a.target_entity_id,a.evidence_id,EXISTS(SELECT 1 FROM ontave.assertions x WHERE x.target_assertion_id=a.id AND x.kind='retract') AS retracted FROM ontave.assertions a WHERE a.entity_id=$1 AND a.relation_id=$2 AND a.kind='set'",
             [s.entityId, relationship.relationId],
           );
           if (def.max === 1)
             check(
-              existing.rows.every((x) => x.target_entity_id === t.entityId),
+              existing.rows
+                .filter((x) => !x.retracted && !body.retractions.includes(x.id))
+                .every((x) => x.target_entity_id === t.entityId),
               "UNRESOLVED_CONFLICT",
               "Relationship cardinality conflict",
             );
-          if (!existing.rows.some((x) => x.target_entity_id === t.entityId))
+          if (
+            !existing.rows.some(
+              (x) =>
+                x.target_entity_id === t.entityId &&
+                x.evidence_id === b.evidence_id,
+            )
+          )
             await c.query(
               "INSERT INTO ontave.assertions(workspace_id,id,entity_id,relation_id,target_entity_id,verification,kind,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,'reported','set',$6,$7,$8)",
               [
@@ -1318,7 +1398,9 @@ export class Ontave {
         check(
           b.hash === input.digest &&
             b.current_bundle === b.id &&
-            ["waiting_identity", "waiting_review"].includes(b.state),
+            ["waiting_ontology", "waiting_identity", "waiting_review"].includes(
+              b.state,
+            ),
           "STALE_BUNDLE",
           "Bundle cannot be amended",
         );
@@ -1341,6 +1423,9 @@ export class Ontave {
         const body: Body = {
           ...b.body,
           extraction,
+          pending: b.body.pending.filter((id: string) =>
+            extraction.entities.some((m) => m.mentionId === id),
+          ),
           retractions: input.retractions ?? b.body.retractions,
           reason: input.reason,
         };
@@ -1383,7 +1468,11 @@ export class Ontave {
     await c.query("UPDATE ontave.jobs SET bundle_id=$2,state=$3 WHERE id=$1", [
       b.job_id,
       id,
-      body.pending.length ? "waiting_identity" : "waiting_review",
+      body.extraction.observations.length
+        ? "waiting_ontology"
+        : body.pending.length
+          ? "waiting_identity"
+          : "waiting_review",
     ]);
     return { bundleId: id, digest };
   }
@@ -1525,7 +1614,9 @@ export class Ontave {
     const a = await this.access(context, "review");
     const digest = hash(input);
     check(
-      input.statement?.trim() && Buffer.byteLength(input.statement) <= 8192,
+      typeof input.statement === "string" &&
+        input.statement.trim() &&
+        Buffer.byteLength(input.statement) <= 8192,
       "INVALID_INPUT",
       "A bounded attestation statement is required",
     );
@@ -1954,6 +2045,21 @@ export class Ontave {
         reason: string;
       },
     ) => {
+      await this.access(context, "review");
+      check(
+        input &&
+          typeof input.requestKey === "string" &&
+          input.requestKey.length > 0 &&
+          input.requestKey.length <= 180 &&
+          typeof input.reason === "string" &&
+          input.reason.trim() &&
+          input.reason.length <= 2000 &&
+          Array.isArray(input.evidenceIds) &&
+          input.evidenceIds.length > 0 &&
+          input.evidenceIds.length <= 50,
+        "INVALID_INPUT",
+        "A bounded proposal key, evidence and rationale are required",
+      );
       check(
         !input.requestKey.startsWith("generated:"),
         "INVALID_INPUT",
@@ -1970,7 +2076,62 @@ export class Ontave {
           parseUUID(id),
         ]);
         check(r.rows[0], "NOT_FOUND", "Candidate not found");
-        return r.rows[0];
+        const row = r.rows[0];
+        const parent = (
+          await c.query("SELECT definition FROM ontave.versions WHERE id=$1", [
+            row.parent_id,
+          ])
+        ).rows[0].definition as Definition;
+        const next = row.definition as Definition;
+        const addedConcepts = next.concepts.filter(
+          (n) => !parent.concepts.some((p) => p.id === n.id),
+        );
+        const reuseWarnings = addedConcepts.flatMap((n) =>
+          parent.concepts
+            .filter(
+              (p) =>
+                n.fields.length > 0 &&
+                n.fields.every((f) =>
+                  p.fields.some(
+                    (old) => old.id === f.id && old.type === f.type,
+                  ),
+                ),
+            )
+            .map((p) => ({
+              proposedConceptId: n.id,
+              existingConceptId: p.id,
+              reason:
+                "All proposed fields already exist with these types on an existing concept. Compare meanings and justify reuse or a distinct concept; shared shape is not semantic equivalence.",
+            })),
+        );
+        const previousRejections = (
+          await c.query(
+            "SELECT id,hash FROM ontave.candidates WHERE parent_id=$1 AND definition=$2::jsonb AND state='rejected' AND id<>$3 ORDER BY created_at,id",
+            [row.parent_id, json(next), row.id],
+          )
+        ).rows;
+        return {
+          ...row,
+          reviewHints: {
+            addedConcepts: addedConcepts.map((c) => c.id),
+            addedFields: next.concepts.flatMap((n) =>
+              n.fields
+                .filter(
+                  (f) =>
+                    parent.concepts.some((p) => p.id === n.id) &&
+                    !parent.concepts
+                      .find((p) => p.id === n.id)!
+                      .fields.some((old) => old.id === f.id),
+                )
+                .map((f) => ({ conceptId: n.id, fieldId: f.id })),
+            ),
+            addedRelations: next.relations
+              .filter((n) => !parent.relations.some((p) => p.id === n.id))
+              .map((r) => r.id),
+            reuseWarnings,
+            previousRejections,
+          },
+        };
       });
     },
     publish: async (
@@ -2116,6 +2277,12 @@ export class Ontave {
       });
     },
   };
+  readonly metrics = {
+    summary: async (context: unknown) => {
+      const a = await this.access(context, "read");
+      return this.config.storage.transaction(a.workspaceId, operationalMetrics);
+    },
+  };
   readonly evaluations = {
     get: async (context: unknown, evaluationId: string) => {
       const a = await this.access(context, "review");
@@ -2134,6 +2301,17 @@ export class Ontave {
       check(parsed.success, "INVALID_INPUT", "Invalid closed evaluation suite");
       suite = parsed.data as EvaluationSuite;
       check(
+        Buffer.byteLength(json(suite)) <= 1048576,
+        "PAYLOAD_TOO_LARGE",
+        "Evaluation suite exceeds 1 MiB",
+      );
+      check(
+        suite.maxCalls >=
+          2 * suite.tasks.filter((t) => t.kind === "extract").length,
+        "INVALID_INPUT",
+        "Call budget cannot complete both sides of every extraction task",
+      );
+      check(
         suite.name.length > 0 &&
           suite.tasks.length > 0 &&
           suite.tasks.length <= 40 &&
@@ -2146,7 +2324,9 @@ export class Ontave {
       );
       check(
         new Set(suite.tasks.map((x) => x.id)).size === suite.tasks.length &&
-          suite.tasks.every((x) => ["extract", "contract"].includes(x.kind)),
+          suite.tasks.every((x) =>
+            ["extract", "contract", "read"].includes(x.kind),
+          ),
         "INVALID_INPUT",
         "Unsupported or duplicate evaluation tasks",
       );
@@ -2159,10 +2339,23 @@ export class Ontave {
               [parseUUID(t.evidenceId)],
             );
             check(
-              e.rows[0] && t.expected?.length,
+              e.rows[0],
               "INVALID_INPUT",
               "Extraction evaluation requires authorized evidence and expected checks",
             );
+            for (const candidate of t.candidates ?? []) {
+              const row = await c.query(
+                "SELECT id FROM ontave.entities WHERE id=$1 AND concept_id=$2",
+                [candidate.id, candidate.conceptId],
+              );
+              check(
+                row.rowCount,
+                "NOT_FOUND",
+                "Evaluation identity candidate unavailable",
+              );
+            }
+          } else if (t.kind === "read") {
+            validateReadFixture(t);
           } else {
             const r = await c.query(
               "SELECT id FROM ontave.contracts WHERE id=$1",
@@ -2218,6 +2411,8 @@ export class Ontave {
                 [t.evidenceId],
               );
               inputs.push({ task: t, evidence: e.rows[0] });
+            } else if (t.kind === "read") {
+              inputs.push({ task: t });
             } else {
               const q = await c.query(
                 "SELECT definition FROM ontave.contracts WHERE id=$1",
@@ -2235,6 +2430,19 @@ export class Ontave {
         },
       );
       const suite = data.suiteRow.suite as EvaluationSuite;
+      for (const task of suite.tasks)
+        if (task.kind === "extract")
+          for (const g of task.expected)
+            if (g.equivalentValues) {
+              const field = (data.candidate.definition as Definition).concepts
+                .find((c) => c.id === g.conceptId)
+                ?.fields.find((f) => f.id === g.fieldId);
+              check(
+                field?.type === "text" && typeof g.value === "string",
+                "INVALID_INPUT",
+                "Equivalent values are allowed only for explicitly labeled text fields",
+              );
+            }
       check(
         suite.tasks.some((t) => t.kind === "extract"),
         "EVALUATION_INCOMPLETE",
@@ -2249,6 +2457,11 @@ export class Ontave {
       let failure: OntaveError | undefined;
       try {
         for (const { task, evidence, contract } of data.inputs) {
+          check(
+            !controller.signal.aborted,
+            "EVALUATION_INCOMPLETE",
+            "Evaluation deadline exceeded",
+          );
           const scores: number[] = [];
           for (const d of [
             data.parent.definition,
@@ -2256,6 +2469,26 @@ export class Ontave {
           ] as Definition[]) {
             if (task.kind === "contract") {
               scores.push(compatible(contract, d) ? 1 : 0);
+              continue;
+            }
+            if (task.kind === "read") {
+              const result = await this.config.storage.transaction(
+                a.workspaceId,
+                (c) => evaluateRead(c, task, d, a.workspaceId),
+              );
+              const ok = sameValue(
+                result as unknown as Json,
+                task.expected as unknown as Json,
+              );
+              traces.push({
+                taskId: task.id,
+                side: scores.length === 0 ? "parent" : "candidate",
+                kind: "read",
+                fixtureHash: hash(task.records),
+                output: result as unknown as Json,
+                passed: ok,
+              });
+              scores.push(ok ? 1 : 0);
               continue;
             }
             check(
@@ -2272,6 +2505,16 @@ export class Ontave {
               controller.signal,
               AbortSignal.timeout(this.limits.modelTimeoutMs),
             ]);
+            const trace: Record<string, Json> = {
+              taskId: task.id,
+              side: scores.length === 0 ? "parent" : "candidate",
+              status: "started",
+              kind: "extract",
+              startedAt: new Date().toISOString(),
+              model: null,
+              usage: null,
+            };
+            traces.push(trace);
             const result = await abortable(
               callSignal,
               () =>
@@ -2279,58 +2522,80 @@ export class Ontave {
                   text: evidence.payload,
                   kind: evidence.kind === "json" ? "json" : "text",
                   ontology: d,
-                  candidates: [],
+                  candidates: task.candidates ?? [],
+                  identifierRules: this.config.identifierRules ?? [],
+                  verifiedFields:
+                    this.config.sourcePolicies?.[evidence.source_policy]
+                      ?.verifiedFields ?? [],
                   signal: callSignal,
                 }),
               "EVALUATION_INCOMPLETE",
             );
+            check(
+              typeof result.model === "string" &&
+                result.model.length > 0 &&
+                result.model.length <= 200,
+              "INVALID_MODEL_OUTPUT",
+              "Invalid provider model identifier",
+            );
+            trace.model = result.model;
+            try {
+              trace.usage =
+                result.usage === undefined
+                  ? null
+                  : JSON.parse(json(result.usage));
+            } catch {
+              throw new OntaveError(
+                "INVALID_MODEL_OUTPUT",
+                "Provider usage is not canonical JSON",
+              );
+            }
+            let encoded: string;
+            try {
+              encoded = json(result.output);
+            } catch {
+              throw new OntaveError(
+                "INVALID_MODEL_OUTPUT",
+                "Provider output is not canonical JSON",
+              );
+            }
+            check(
+              Buffer.byteLength(encoded) <= 2097152,
+              "BUDGET_EXHAUSTED",
+              "Evaluation output exceeds 2 MiB",
+            );
+            trace.output = JSON.parse(encoded);
+            trace.outputHash = hash(result.output);
             const e = validateExtraction(
               result.output,
               evidence.payload,
               d,
               evidence.kind === "json" ? "json" : "text",
             );
-            traces.push({
-              taskId: task.id,
-              side: scores.length === 0 ? "parent" : "candidate",
-              model: result.model,
-              usage: result.usage ?? null,
-              outputHash: hash(result.output),
-            });
-            const gold = task.expected!;
-            const proposed = e.entities.flatMap((m) =>
-              Object.entries(m.fields).map(([fieldId, f]) => ({
-                conceptId: m.conceptId,
-                fieldId,
-                value: f.value,
-                verification: f.verification ?? "reported",
-              })),
+            check(
+              e.entities.reduce(
+                (n, m) => n + 1 + Object.keys(m.fields).length,
+                e.relationships.length,
+              ) <= this.limits.operations,
+              "BUDGET_EXHAUSTED",
+              "Evaluation bundle operation limit exceeded",
             );
-            const matched = new Set<number>();
-            for (const g of gold) {
-              const index = proposed.findIndex(
-                (p, i) =>
-                  !matched.has(i) &&
-                  p.conceptId === g.conceptId &&
-                  p.fieldId === g.fieldId &&
-                  sameValue(
-                    p.value,
-                    normalizeValue(
-                      d.concepts
-                        .find((c) => c.id === p.conceptId)!
-                        .fields.find((f) => f.id === p.fieldId)!,
-                      g.value,
-                    ),
-                  ) &&
-                  p.verification === (g.verification ?? "reported"),
-              );
-              if (index >= 0) matched.add(index);
-            }
-            const precision = proposed.length
-                ? matched.size / proposed.length
-                : 0,
-              recall = matched.size / gold.length;
-            scores.push(precision === 1 && recall === 1 ? 1 : 0);
+            for (const m of e.entities)
+              for (const [field, f] of Object.entries(m.fields))
+                if (f.verification === "verified")
+                  check(
+                    this.config.sourcePolicies?.[
+                      evidence.source_policy
+                    ]?.verifiedFields.includes(m.conceptId + "." + field),
+                    "VALIDATION_FAILED",
+                    "This source cannot verify the evaluated field",
+                  );
+            const metrics = scoreExtraction(e, task, d, evidence.payload);
+            trace.durationMs =
+              Date.now() - Date.parse(trace.startedAt as string);
+            trace.metrics = metrics;
+            trace.status = "complete";
+            scores.push(metrics.passed ? 1 : 0);
           }
           const good = scores[1] === 1 && scores[1]! >= scores[0]!;
           passed &&= good;
@@ -2349,13 +2614,25 @@ export class Ontave {
                 "EVALUATION_INCOMPLETE",
                 "Evaluation failed; no publication is permitted",
               );
+        const last = traces.at(-1) as Record<string, Json> | undefined;
+        if (last?.status === "started") {
+          last.status = "failed";
+          last.durationMs = Date.now() - Date.parse(last.startedAt as string);
+          last.error = {
+            code: failure.code,
+            message: failure.message,
+            outcome: failure.details?.outcome ?? "unknown",
+          };
+          last.model = last.model ?? failure.details?.model ?? null;
+          last.usage = last.usage ?? failure.details?.usage ?? null;
+        }
         passed = false;
       } finally {
         clearTimeout(timer);
       }
       passed = passed && outcomes.some((x: any) => x.candidate > x.parent);
       const report = {
-        evaluatorVersion: "ontave-exact-task-v1",
+        evaluatorVersion: "ontave-exact-task-v3",
         status: failure ? "failed" : "complete",
         failure: failure
           ? { code: failure.code, message: failure.message }
@@ -2363,12 +2640,14 @@ export class Ontave {
         outcomes,
         traces,
         calls,
+        inferenceAttempts: traces.filter((t: any) => t.kind === "extract")
+          .length,
         parentHash: data.parent.hash,
         candidateHash: data.candidate.hash,
         suiteHash: data.suiteRow.hash,
         evidenceHashes: data.inputs
-          .filter((x) => x.evidence)
-          .map((x) => x.evidence.envelope_hash),
+          .filter((x) => "evidence" in x)
+          .map((x) => x.evidence?.envelope_hash),
       };
       const digest = hash(report),
         id = randomUUID();
@@ -2503,232 +2782,14 @@ export class Ontave {
           "CONTRACT_NOT_AVAILABLE",
           "Contract is incompatible",
         );
-        const values: unknown[] = [query.conceptId],
-          joins: string[] = [],
-          where = ["e.concept_id=$1"];
-        const bind = (x: unknown) => {
-          values.push(x);
-          return "$" + values.length;
-        };
-        // Keep an explicit scoped index bound in the compiled query as well as RLS.
-        where.push(`e.workspace_id=${bind(a.workspaceId)}::uuid`);
-        let idx = 0;
-        const column = (f: FieldDefinition) =>
-          ["integer", "decimal"].includes(f.type)
-            ? "val_num"
-            : f.type === "boolean"
-              ? "val_bool"
-              : ["date", "timestamp"].includes(f.type)
-                ? "val_ts"
-                : "val_text";
-        for (const filter of query.where ?? []) {
-          const f = concept.fields.find((x) => x.id === filter.field);
-          check(f, "INVALID_INPUT", "Unknown filter field");
-          const alias = "p" + idx++;
-          joins.push(
-            `LEFT JOIN LATERAL (SELECT * FROM ontave.projections fp WHERE fp.workspace_id=e.workspace_id AND fp.entity_id=e.id AND fp.field_id=${bind(f.id)} LIMIT 1) ${alias} ON true`,
-          );
-          if (filter.op === "stateIs") {
-            check(
-              ["value", "unknown", "missing", "conflict"].includes(
-                String(filter.value),
-              ),
-              "INVALID_INPUT",
-              "Unknown state",
-            );
-            where.push(
-              `coalesce(${alias}.result->>'state','missing')=${bind(filter.value)}`,
-            );
-            continue;
-          }
-          if (filter.op === "verificationIn") {
-            check(
-              Array.isArray(filter.value) &&
-                filter.value.every((x) =>
-                  ["reported", "verified", "disputed", "unknown"].includes(
-                    String(x),
-                  ),
-                ),
-              "INVALID_INPUT",
-              "Invalid verification filter",
-            );
-            where.push(
-              `${alias}.result->>'verification'=ANY(${bind(filter.value)}::text[])`,
-            );
-            continue;
-          }
-          check(
-            ["eq", "in", "gt", "gte", "lt", "lte"].includes(filter.op),
-            "INVALID_INPUT",
-            "Unsupported operator",
-          );
-          const vals = filter.op === "in" ? filter.value : [filter.value];
-          check(
-            Array.isArray(vals) && vals.length > 0 && vals.length <= 100,
-            "INVALID_INPUT",
-            "Invalid predicate value set",
-          );
-          for (const v of vals) validateValue(f, v);
-          where.push(`${alias}.result->>'state'='value'`);
-          if (filter.op === "eq" || filter.op === "in")
-            where.push(
-              "(" +
-                vals
-                  .map(
-                    (v) =>
-                      `${alias}.result->'value'=${bind(json(normalizeValue(f, v)))}::jsonb`,
-                  )
-                  .join(" OR ") +
-                ")",
-            );
-          else {
-            check(
-              filter.value !== null &&
-                [
-                  "integer",
-                  "decimal",
-                  "date",
-                  "timestamp",
-                  "text",
-                  "enum",
-                ].includes(f.type),
-              "INVALID_INPUT",
-              "Range unsupported for this value type",
-            );
-            const op = { gt: ">", gte: ">=", lt: "<", lte: "<=" }[
-              filter.op as "gt"
-            ];
-            where.push(`${alias}.${column(f)} ${op} ${bind(filter.value)}`);
-          }
-        }
-        let order = "e.id ASC",
-          cursorOrder: any = null;
-        const queryHash = hash({ ...query, cursor: null, limit: null });
-        if (query.order) {
-          const f = concept.fields.find((x) => x.id === query.order!.field);
-          check(
-            f &&
-              f.type !== "money" &&
-              ["asc", "desc"].includes(query.order.direction),
-            "INVALID_INPUT",
-            "Unsupported ordering",
-          );
-          const dir = query.order.direction === "asc" ? "ASC" : "DESC",
-            col = column(f);
-          joins.push(
-            `LEFT JOIN LATERAL (SELECT * FROM ontave.projections sp WHERE sp.workspace_id=e.workspace_id AND sp.entity_id=e.id AND sp.field_id=${bind(f.id)} LIMIT 1) sort ON true`,
-          );
-          order = `coalesce(sort.state_rank,3) ASC,sort.${col} ${dir} NULLS LAST,e.id ASC`;
-          cursorOrder = { field: f.id, col, direction: query.order.direction };
-          if (query.cursor) {
-            const cur = decodeCursor(query.cursor, this.cursorSecret) as any;
-            check(
-              cur.workspace === a.workspaceId && cur.queryHash === queryHash,
-              "INVALID_INPUT",
-              "Cursor belongs to another scope/query",
-            );
-            const rank = bind(cur.rank),
-              id = bind(parseUUID(cur.id));
-            const val = bind(cur.value);
-            const cmp = dir === "ASC" ? ">" : "<";
-            where.push(
-              `(coalesce(sort.state_rank,3)>${rank} OR (coalesce(sort.state_rank,3)=${rank} AND ((sort.${col} ${cmp} ${val}) OR (sort.${col} IS NOT DISTINCT FROM ${val} AND e.id>${id}::uuid))))`,
-            );
-          }
-        } else if (query.cursor) {
-          const cur = decodeCursor(query.cursor, this.cursorSecret) as any;
-          check(
-            cur.workspace === a.workspaceId && cur.queryHash === queryHash,
-            "INVALID_INPUT",
-            "Cursor belongs to another scope/query",
-          );
-          where.push(`e.id>${bind(parseUUID(cur.id))}::uuid`);
-        }
-        const select = cursorOrder
-          ? `,coalesce(sort.state_rank,3) AS sort_rank,sort.${cursorOrder.col}::text AS sort_value`
-          : "";
-        const rows = await c.query(
-          `SELECT e.*${select} FROM ontave.entities e ${joins.join(" ")} WHERE ${where.join(" AND ")} ORDER BY ${order} LIMIT ${bind((query.limit ?? 25) + 1)}`,
-          values,
+        return readRecords(
+          c,
+          query,
+          d,
+          a.workspaceId,
+          this.cursorSecret,
+          active.hash,
         );
-        const hasMore = rows.rows.length > (query.limit ?? 25);
-        const selected = rows.rows.slice(0, query.limit ?? 25);
-        const pageProjections = selected.length
-          ? await c.query(
-              "SELECT entity_id,field_id,result FROM ontave.projections WHERE workspace_id=$1 AND entity_id=ANY($2::uuid[])",
-              [a.workspaceId, selected.map((x) => x.id)],
-            )
-          : { rows: [] };
-        const records: EntityRecord[] = [];
-        for (const row of selected) {
-          const projections = pageProjections.rows.filter(
-            (p) => p.entity_id === row.id,
-          );
-          const fields: Record<string, FieldResult> = {};
-          for (const f of concept.fields) {
-            fields[f.id] =
-              projections.find((x) => x.field_id === f.id)?.result ??
-              (f.optional
-                ? { state: "missing" }
-                : {
-                    state: "unknown",
-                    reason: "No accepted value",
-                    assertionIds: [],
-                  });
-            if (fields[f.id]!.state === "value")
-              validateValue(f, (fields[f.id] as any).value);
-          }
-          const item: EntityRecord = {
-            id: row.id,
-            conceptId: row.concept_id,
-            name: row.name,
-            revision: row.revision,
-            fields,
-          };
-          if (query.include?.length) {
-            check(
-              query.include.length <= 10,
-              "INVALID_INPUT",
-              "Too many included relationships",
-            );
-            item.relationships = {};
-            for (const rid of query.include) {
-              const rel = d.relations.find(
-                (x) => x.id === rid && x.source === concept.id,
-              );
-              check(rel, "INVALID_INPUT", "Relationship absent from contract");
-              const rr = await c.query(
-                "SELECT a.id AS \"assertionId\",target_entity_id AS id,verification FROM ontave.assertions a WHERE entity_id=$1 AND relation_id=$2 AND kind='set' AND NOT EXISTS(SELECT 1 FROM ontave.assertions r WHERE r.target_assertion_id=a.id AND r.kind='retract') ORDER BY target_entity_id LIMIT 26",
-                [row.id, rid],
-              );
-              item.relationships[rid] = {
-                items: rr.rows.slice(0, 25),
-                hasMore: rr.rows.length > 25,
-              };
-            }
-          }
-          records.push(item);
-        }
-        validateContractRecords(records, d);
-        const last = selected.at(-1);
-        return {
-          records,
-          nextCursor:
-            hasMore && last
-              ? encodeCursor(
-                  {
-                    workspace: a.workspaceId,
-                    queryHash,
-                    id: last.id,
-                    rank: last.sort_rank ?? null,
-                    value: last.sort_value ?? null,
-                  },
-                  this.cursorSecret,
-                )
-              : null,
-          contractHash: query.contractHash,
-          ontologyHash: active.hash,
-        };
       });
     },
   };

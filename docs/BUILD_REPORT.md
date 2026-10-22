@@ -1,3 +1,5 @@
+> Historical `alpha.1` report. Current unreleased qualification and measured failures are in [QUALITY_REPORT.md](QUALITY_REPORT.md).
+
 # Ontave public alpha verification
 
 Version: `0.1.0-alpha.1`. Baseline: Node.js 24.22.0, PostgreSQL 18.4, TypeScript 7.0.2, macOS arm64. This report describes the development alpha; it does not certify the complete MVP or general extraction accuracy.

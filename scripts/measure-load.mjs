@@ -54,8 +54,12 @@ async function save() {
   );
 }
 try {
-  for (const size of [100, 1000, 10000]) {
+  for (const size of process.argv.includes("--quick")
+    ? [100, 1000]
+    : [100, 1000, 10000]) {
     let profiling = false;
+    const firstPlans = [];
+    let firstCompiled;
     const queryProfile = [],
       compiledPlans = [];
     const w = randomUUID(),
@@ -71,8 +75,14 @@ try {
                     return async (...args) => {
                       const at = performance.now();
                       const result = await target.query(...args);
+                      const sql = String(args[0]);
+                      if (sql.startsWith("SELECT e.*") && !firstCompiled)
+                        firstCompiled = {
+                          sql,
+                          values: args[1],
+                          ms: performance.now() - at,
+                        };
                       if (profiling) {
-                        const sql = String(args[0]);
                         queryProfile.push({ sql, ms: performance.now() - at });
                         if (sql.startsWith("SELECT e.*")) {
                           const plan = await target.query(
@@ -144,19 +154,40 @@ try {
       processed++;
     });
     const finished = performance.now();
-    for (let n = 0; n < 40; n++) {
-      profiling = n >= 38;
+    // Timed reads never execute EXPLAIN. First-call latency and warmed samples are separate.
+    let firstReadMs;
+    const readQuery = (n) => ({
+      contractId: contract.id,
+      contractHash: contract.hash,
+      conceptId: "person",
+      order: { field: "name", direction: n % 2 ? "asc" : "desc" },
+      limit: 25,
+    });
+    for (let n = 0; n < 101; n++) {
       const at = performance.now();
-      await app.entities.find(null, {
-        contractId: contract.id,
-        contractHash: contract.hash,
-        conceptId: "person",
-        order: { field: "name", direction: n % 2 ? "asc" : "desc" },
-        limit: 25,
-      });
-      readMs.push(performance.now() - at);
-      profiling = false;
+      await app.entities.find(null, readQuery(n));
+      const ms = performance.now() - at;
+      if (n === 0) {
+        firstReadMs = ms;
+        firstPlans.push(
+          await db.storage.transaction(
+            w,
+            async (c) =>
+              (
+                await c.query(
+                  "EXPLAIN(ANALYZE,BUFFERS,FORMAT JSON) " + firstCompiled.sql,
+                  firstCompiled.values,
+                )
+              ).rows,
+          ),
+        );
+      } else readMs.push(ms);
     }
+    // Plans are diagnostic samples outside the measurement interval.
+    profiling = true;
+    await app.entities.find(null, readQuery(0));
+    await app.entities.find(null, readQuery(1));
+    profiling = false;
     const counts = (
       await db.admin.query(
         "SELECT state,count(*)::int AS count FROM ontave.jobs WHERE workspace_id=$1 GROUP BY state",
@@ -200,6 +231,10 @@ try {
       stage: summarize(stageMs),
       automatedReview: summarize(reviewMs),
       read: summarize(readMs),
+      firstReadMs,
+      firstPlans,
+      method:
+        "One first read reported separately; 100 warmed alternating ascending/descending reads; all EXPLAIN diagnostics outside timed samples",
       receiptToStaging: summarize(queue),
       plan,
       queryProfile,

@@ -1,7 +1,11 @@
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
-const files = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" })
+const files = execFileSync(
+  "git",
+  ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+  { encoding: "utf8" },
+)
   .split("\0")
   .filter(Boolean);
 for (const file of files) {
@@ -13,7 +17,9 @@ for (const file of files) {
   );
   const data = await readFile(file, "utf8");
   assert.ok(
-    !/AIza[0-9A-Za-z_-]{35}|gsk_[0-9A-Za-z]{40,}/.test(data),
+    !/AIza[0-9A-Za-z_-]{35}|gsk_[0-9A-Za-z]{40,}|sk-or-v1-[0-9a-f]{40,}|mstrl_[0-9A-Za-z_-]{35,}/.test(
+      data,
+    ),
     "Credential pattern found in tracked content",
   );
 }

@@ -14,6 +14,9 @@ jobs:
       - run: npm ci --cache .cache/npm
       - run: npm test
       - run: npm run test:integration
+      - run: npm run verify:domains
+      - run: npm run measure:benefits
+      - run: node scripts/verify-public.mjs
       - run: npm run verify:package
       - run: npm run verify:node
       - run: node scripts/verify-next.mjs

@@ -19,7 +19,7 @@ for (const file of files) {
   assert.ok(html.includes('lang="en"'));
   assert.equal((html.match(/<h1(?: |>)/g) || []).length, 1, file);
   assert.ok(
-    !/AIza[A-Za-z0-9_-]{30,}|gsk_[A-Za-z0-9]{35,}|\/Users\//.test(html),
+    !/AIza[A-Za-z0-9_-]{30,}|gsk_[A-Za-z0-9]{35,}|sk-or-v1-[0-9a-f]{40,}|mstrl_[A-Za-z0-9_-]{35,}|\/Users\//.test(html),
     "Private content found",
   );
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {

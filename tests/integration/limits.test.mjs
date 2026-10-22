@@ -35,6 +35,28 @@ test("transaction failures, deadlines, immutable migration checks and scoped lim
     seed: "people",
   });
   await t.test(
+    "an idle database connection loss reconnects without crashing or leaking connection details",
+    async () => {
+      const before = (
+        await db.storage.transaction(w, (c) =>
+          c.query("SELECT pg_backend_pid() AS pid"),
+        )
+      ).rows[0].pid;
+      await db.admin.query("SELECT pg_terminate_backend($1)", [before]);
+      await new Promise((r) => setTimeout(r, 50));
+      const after = (
+        await db.storage.transaction(w, (c) =>
+          c.query("SELECT pg_backend_pid() AS pid"),
+        )
+      ).rows[0].pid;
+      assert.notEqual(after, before);
+      assert.equal(
+        (await app.ontology.inspect(null)).definition.concepts.length,
+        starter.concepts.length,
+      );
+    },
+  );
+  await t.test(
     "scoped provisioners cannot switch workspaces through input",
     async () => {
       await assert.rejects(

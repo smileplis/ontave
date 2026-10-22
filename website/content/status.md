@@ -1,34 +1,28 @@
 ## Ontave Zero: development alpha
 
-The evidence → staged interpretation → review → accepted-data read flow works in the current implementation. Additive model proposals, evaluation, activation and replay have deterministic database coverage. The full MVP acceptance specification is not yet complete.
+The public GitHub archive remains `0.1.0-alpha.1`. The repository’s incoming `0.1.0-alpha.2` work adds robustness and qualification evidence; it is unreleased and has not been published to npm. No general production-readiness or arbitrary-data accuracy claim has been established.
 
-Use this alpha for evaluation in a dedicated environment. No general production-readiness or arbitrary-data accuracy claim has been established.
+## Incoming alpha.2
 
-## Implemented surface
+- Immutable evidence, scoped authorization and fenced durable workers with append-only attempt accounting.
+- Real process-kill/restart, bounded shutdown, lost-acknowledgement retries and repeated-crash budget checks.
+- Whole-bundle review, authority-scoped identity decisions, corrections and replay respecting withdrawals.
+- Additive candidates, isolated extraction/identity/relationship/observation/read evaluation, and atomic activation/replay scheduling.
+- Pinned contracts, typed queries, bounded links, signed cursors and actual CLI workflows.
+- Operator restore checks across all 18 tables, clean Node/Next.js package consumers and workspace-scoped metrics.
 
-- Text/JSON evidence, idempotent durable receipts and explicit source inspection.
-- Workspace-scoped leased workers and bounded model attempts.
-- Atomic whole-bundle review, identity decisions and source-linked assertion history.
-- Staged corrections, retractions, attestations and conflict resolution.
-- Additive ontology candidates, exact extraction/contract evaluation and activation/replay.
-- Pinned contracts, structured reads, signed cursors and contract generation.
-- Node/Next.js server examples, Gemini and experimental Groq adapters.
+The complete solar/rental lifecycle demonstrations use a deterministic fictional adapter. They establish database behavior, rather than autonomous discovery accuracy.
 
-## Open release gates
+## Qualification still open
 
-- Richer read-fixture, relationship, identity and uncertainty evaluation tasks.
-- Complete process crash/shutdown fault coverage.
-- Independently reviewed fixture labels and executable held-out semantic tasks.
-- Complete solar/rental traces and three frozen live trials at the unchanged targets.
-- Full operator restore verification and remaining acceptance/CLI cases.
-- Registry publication and a broader platform support matrix.
+The 60-input maintainer dataset has 179 expected field assertions and 107 relationship checks. Its labels have not been independently reviewed. Twenty executable read tasks are available; they are not an independently authored held-out set.
 
-The original 95% precision / 90% recall targets are **unmeasured**, not achieved statistics. One successful fictional Groq flow and Gemini development responses do not satisfy them.
+Live Gemini and Mistral experiments now have recorded precision/recall and failure results. Earlier configurations failed the 95% precision / 90% recall targets. Every experiment is retained, including incomplete runs. New schema or scoring policies produce separately frozen trials. A new three-trial `ministral-14b-2512` profile met the aggregate field targets: 97.7–97.8% precision and 96.1–97.2% recall. It used an explicit revised description-equivalence rule, frozen before fresh collection. It is a development result on the same maintainer dataset, not independent complete-MVP certification. Each trial still rejected one invented year-zero date. See [measurements and benefits](/docs/benchmarks/).
+
+Independent label review, live identity/discovery qualification, the remaining per-case acceptance audit and a fresh-developer walkthrough remain open. The npm publication guard requires successful source- and archive-bound evidence. There is no registry publication yet.
 
 ## Deliberate boundaries
 
 The alpha does not implement physical business DDL, destructive model changes, automatic established-entity merges, a hosted database, Studio, browser/edge runtime, React hooks, MCP integration or autonomous acceptance of facts.
 
-## Public distribution
-
-Source uses Apache License 2.0. The package name `ontave` remains a working registry name until publication is confirmed. Follow the source/tarball [installation instructions](/docs/installation/) instead of assuming a registry release exists.
+Source uses Apache License 2.0. Follow the [installation instructions](/docs/installation/) for the existing public archive or a locally built source package.

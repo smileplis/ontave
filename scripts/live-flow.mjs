@@ -4,17 +4,38 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { createOntave, starter } from "../dist/index.js";
 import { gemini } from "../dist/models/gemini.js";
+import { mistral } from "../dist/models/mistral.js";
+import { openrouter } from "../dist/models/openrouter.js";
 import { groq } from "../dist/models/groq.js";
 import { disposablePostgres } from "../tests/helpers/postgres.mjs";
 process.loadEnvFile(".env");
-const provider = process.argv.includes("--groq") ? "groq" : "gemini";
+const provider = process.argv.includes("--mistral")
+  ? "mistral"
+  : process.argv.includes("--openrouter")
+    ? "openrouter"
+    : process.argv.includes("--groq")
+      ? "groq"
+      : "gemini";
 const model =
-  provider === "groq"
-    ? groq({ apiKey: process.env.GROQ_API_KEY, model: process.env.GROQ_MODEL })
-    : gemini({
-        apiKey: process.env.GEMINI_API_KEY,
-        model: process.env.GEMINI_MODEL,
-      });
+  provider === "mistral"
+    ? mistral({
+        apiKey: process.env.MISTRAL_API_KEY,
+        model: process.env.MISTRAL_MODEL,
+      })
+    : provider === "openrouter"
+      ? openrouter({
+          apiKey: process.env.OPENROUTER_API_KEY,
+          model: process.env.OPENROUTER_MODEL,
+        })
+      : provider === "groq"
+        ? groq({
+            apiKey: process.env.GROQ_API_KEY,
+            model: process.env.GROQ_MODEL,
+          })
+        : gemini({
+            apiKey: process.env.GEMINI_API_KEY,
+            model: process.env.GEMINI_MODEL,
+          });
 const db = await disposablePostgres(),
   w = randomUUID();
 const app = createOntave({

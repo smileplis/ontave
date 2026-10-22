@@ -25,6 +25,11 @@ export function postgres(config: PoolConfig): Storage {
     statement_timeout: 10000,
   });
   let checked = false;
+  // pg emits idle connection loss on the pool. Consume it without logging
+  // connection details; pg removes that client and the next transaction reconnects.
+  pool.on("error", () => {
+    checked = false;
+  });
   return {
     async transaction(workspace, fn, options) {
       parseUUID(workspace);
@@ -130,6 +135,7 @@ const migrationFiles = [
   "001_foundation.sql",
   "002_proposals.sql",
   "003_contract_lineage.sql",
+  "004_worker_events.sql",
 ];
 async function migrationSources() {
   return Promise.all(
