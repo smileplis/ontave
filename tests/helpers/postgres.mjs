@@ -25,7 +25,8 @@ export async function disposablePostgres() {
     port,
     persistent: false,
     initdbFlags: ["--locale=C", "--encoding=UTF8"],
-    postgresFlags: ["-k", dir],
+    // All test clients use localhost TCP. Avoid platform Unix-socket path limits.
+    postgresFlags: ["-k", ""],
     onLog: (m) => logs.push(String(m)),
     onError: (m) => logs.push(String(m)),
   });

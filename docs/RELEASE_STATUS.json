@@ -1,0 +1,25 @@
+{
+  "version": "0.1.0-alpha.4",
+  "channel": "developer-preview",
+  "fullMvpQualified": false,
+  "intendedUse": "Developer evaluation of the governed evidence-to-reviewed-record workflow",
+  "playground": "Fictional fixture adapter with real SDK and disposable PostgreSQL operations; no arbitrary-message accuracy claim",
+  "openGates": [
+    {
+      "id": "acceptance",
+      "reason": "Five acceptance cases remain partial, including the complete experimental-provider input token profile."
+    },
+    {
+      "id": "annotations",
+      "reason": "Independent source-label review and new independently authored holdout cases remain pending."
+    },
+    {
+      "id": "semantic",
+      "reason": "Live established-identity linking, autonomous discovery and reviewed publication qualification remain open. Historical aggregate field scores do not qualify these components."
+    },
+    {
+      "id": "walkthrough",
+      "reason": "An independent first-time setup walkthrough remains pending; automated clean installs are separately tested."
+    }
+  ]
+}

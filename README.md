@@ -4,16 +4,16 @@ Your schema didn’t see this coming.
 
 Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed assertions and additive ontology evolution. Keep the source, review proposed changes and read accepted data through a typed application contract.
 
-**Qualification candidate `0.1.0-alpha.3`; public developer preview `0.1.0-alpha.2`.** The source-to-reviewed-record lifecycle is available as a runnable local playground and a versioned GitHub package. Full MVP qualification remains open; this is not a production-readiness claim. See [release status](docs/IMPLEMENTATION_STATUS.md).
+**Developer preview `0.1.0-alpha.4`.** This alpha is intended for developer evaluation. Full MVP qualification remains open, including independent label review, live identity/discovery/publication checks and experimental-provider resource profiling. See the [packaged release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json) and [implementation status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/IMPLEMENTATION_STATUS.md).
 
 ## Try Ontave
 
-[Browser sandbox](https://app.daltn.tech/playground/) · [Quickstart](https://app.daltn.tech/docs/quickstart/) · [API reference](docs/API_REFERENCE.md)
+[Browser sandbox](https://app.daltn.tech/playground/) · [Quickstart](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUICKSTART.md) · [API reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/API_REFERENCE.md)
 
 With **Node.js 24** on macOS or Linux:
 
 ```sh
-npx --yes --package=https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz ontave playground --install
+npx --yes ontave@0.1.0-alpha.4 playground --install
 ```
 
 Open the localhost URL printed in the terminal. The explicit command prepares a temporary PostgreSQL database and restricted role. `--install` downloads optional platform tooling into a temporary directory if needed. No Docker or model key is required. Ctrl+C stops the playground and removes the temporary database.
@@ -23,16 +23,16 @@ The local playground uses real SDK/database operations with an explicitly fictio
 ## Install in your application
 
 ```sh
-npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz
+npm install ontave
 npx ontave help
 ```
 
-The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. Qualification uses Node.js 24.22.0, PostgreSQL 18.4 and TypeScript 7.0.2. Browser and edge runtimes are unsupported. There is no npm registry publication yet. Core imports perform no setup or provider calls. Follow the [Node.js integration guide](https://app.daltn.tech/docs/node/) for your own data, model and authorization.
+The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. Qualification uses Node.js 24.22.0, PostgreSQL 18.4 and TypeScript 7.0.2. Browser and edge runtimes are unsupported. The default npm installation selects the current alpha preview. Core imports perform no setup or provider calls. Follow the [package quickstart](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUICKSTART.md) for your own data, model and authorization.
 
 Build from source:
 
 ```sh
-git clone https://github.com/smileplis/ontave.git
+git clone --branch v0.1.0-alpha.4 https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
 npm run playground
@@ -55,7 +55,7 @@ const receipt = await ontave.ingest(context, {
 });
 ```
 
-`ontave` above is a configured server runtime. The receipt preserves evidence and a job; processing and review are separate operations. [Walk through the complete setup](https://app.daltn.tech/docs/quickstart/).
+`ontave` above is a configured server runtime. The receipt preserves evidence and a job; processing and review are separate operations. [Walk through the complete setup](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUICKSTART.md).
 
 ## Your infrastructure, explicit boundaries
 
@@ -93,13 +93,13 @@ npm run dev --prefix website
 
 ## Measured benefits and release qualification
 
-The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](docs/USER_BENEFITS.md) and the [quality report](docs/QUALITY_REPORT.md).
+The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/USER_BENEFITS.md) and the [quality report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUALITY_REPORT.md).
 
-Run `npm run verify:release` before any npm publication. The prepublish guard refuses missing, stale or non-passing qualification evidence. It never authenticates or publishes. Provider failures and unmet semantic thresholds remain blockers.
+Run `npm run verify:release` for full MVP qualification. It requires every quality gate, including independent semantic review. The separately selected `npm run verify:preview-release` permits only an alpha with passing implementation, recovery, consumer, security and exact-revision CI checks, plus a packaged disclosure of every open qualification gate. `npm run publish:preview` uploads the exact tested archive; `-- --dry-run` prepares the same command without publication. Both profiles reject stale source or changed evidence.
 
 ## References
 
-[Operator runbook](docs/OPERATOR_RUNBOOK.md) · [Build report](docs/BUILD_REPORT.md) · [Annotation rubric](docs/ANNOTATION_RUBRIC.md) · [Architectural source reference](docs/SOURCE_REFERENCE.md)
+[Operator runbook](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/OPERATOR_RUNBOOK.md) · [Build report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/BUILD_REPORT.md) · [Annotation rubric](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/ANNOTATION_RUBRIC.md) · [Architectural source reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/SOURCE_REFERENCE.md)
 
 Copyright 2026 Ontave contributors. See [Apache 2.0](LICENSE) and [NOTICE](NOTICE).
 

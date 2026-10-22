@@ -1,6 +1,6 @@
 # Ontave implementation status
 
-**Qualification candidate `0.1.0-alpha.3`** is under local validation. The public **developer preview `0.1.0-alpha.2`** is distributed through a versioned GitHub archive. The earlier `alpha.1` archive is preserved. npm registry publication remains blocked by full-MVP qualification gates; the developer preview is not a declaration that those gates have passed.
+**Developer preview `0.1.0-alpha.4`** is prepared for npm distribution. Its packaged [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json) records the open full-MVP qualification gates. Earlier GitHub alpha archives remain immutable. npm preview distribution has a separate explicit guard; it does not certify the full MVP.
 
 ## Developer-preview entry points
 
@@ -37,6 +37,6 @@ Provider factories now constrain short text quotes to an immutable source anchor
 2. Qualify live established-identity linking, observation/discovery behavior and end-to-end reviewed publication independently of the passing raw field trials. Keep all unresolved cases, errors and usage in the record.
 3. Finish the remaining 5 partial acceptance cases. Current development mapping has 116 tested and two measured cases; partial coverage is not a pass.
 4. Bind successful deterministic, consumer, recovery and CI evidence to the final source revision and package archive. `npm run verify:release` refuses missing, stale or non-passing evidence.
-5. Perform a fresh-developer walkthrough and an explicit npm release only after qualification. No npm publication has occurred.
+5. Perform a fresh-developer walkthrough before full MVP qualification. Alpha distribution is separately labelled and validated; it does not complete this requirement.
 
 [Acceptance coverage](acceptance-coverage.json) preserves each original acceptance ID. [User benefits](USER_BENEFITS.md) separates operation counts and machine latency from unmeasured human productivity. Private research and credentials remain excluded from source control and package contents.

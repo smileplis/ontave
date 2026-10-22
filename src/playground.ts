@@ -185,7 +185,7 @@ export async function startPlayground(
         "-h",
         "127.0.0.1",
         "-k",
-        directory,
+        "", // Local clients use TCP; Unix sockets fail under long temporary paths.
       ],
       {
         stdio: ["ignore", "ignore", "pipe"],

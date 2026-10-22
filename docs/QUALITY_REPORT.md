@@ -1,6 +1,6 @@
 # Ontave MVP qualification
 
-**Qualification candidate `0.1.0-alpha.3`; public preview `0.1.0-alpha.2`; npm registry publication blocked.** This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
+**Developer preview `0.1.0-alpha.4`; full MVP qualification remains blocked.** Alpha distribution preserves the open gates in [the packaged release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json). This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
 
 ## Deterministic behavior
 
@@ -57,6 +57,6 @@ The guarded local load profile processed all 11,100 fictional records without a 
 
 ## Remaining qualification
 
-Labels and semantic equivalences need independent review; human review time and manual-entry productivity remain unmeasured. Live established-identity linking and autonomous discovery are not demonstrated by the direct extraction trials. Acceptance coverage still distinguishes tested, partial and pending cases. The release guard remains closed until those requirements, the remaining partial acceptance cases, a fresh-developer walkthrough and source/archive/CI bindings pass. Current acceptance mapping is 116 tested, 5 partial and two measured cases; a passing test suite does not convert the partial cases to passed requirements.
+Labels and semantic equivalences need independent review; human review time and manual-entry productivity remain unmeasured. Live established-identity linking and autonomous discovery are not demonstrated by the direct extraction trials. Acceptance coverage still distinguishes tested, partial and pending cases. The full-MVP release guard remains closed until those requirements, the remaining partial acceptance cases, a fresh-developer walkthrough and source/archive/CI bindings pass. The separately selected alpha-distribution guard requires passing implementation, recovery, consumer, security and exact-revision CI evidence, with explicit packaged disclosure of open quality gates. Current acceptance mapping is 116 tested, 5 partial and two measured cases; a passing test suite does not convert the partial cases to passed requirements.
 
 Reproduction commands and bounded provider limits are in the README and API reference. Raw responses, per-input scores, protocols, hashes, available usage and failure history stay in ignored local artifacts; public documentation contains aggregate fictional results. No credentials, customer data or private research are included in the package.
