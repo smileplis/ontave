@@ -122,7 +122,7 @@
     "type": "git",
     "url": "git+https://github.com/smileplis/ontave.git"
   },
-  "homepage": "https://app.daltn.tech",
+  "homepage": "https://ontave.daltn.tech/",
   "bugs": {
     "url": "https://github.com/smileplis/ontave/issues"
   }

@@ -1,10 +1,10 @@
 # Local setup and optional hosting
 
-These APIs are part of the **unpublished alpha.5 candidate**. The npm `latest` tag still selects alpha.4. Until this candidate is released, build this branch and install its archive; do not expect the new exports in alpha.4.
+These APIs are available in **0.1.0-alpha.5**, a developer preview. Install with `npm install ontave` or pin `ontave@0.1.0-alpha.5`. Alpha.4 does not include these exports.
 
 ## Start locally
 
-Use Node.js 24 on macOS or Linux. Once the candidate is installed:
+Use Node.js 24 on macOS or Linux. After installing Ontave:
 
 ```sh
 npx ontave dev --install

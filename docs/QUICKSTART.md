@@ -1,6 +1,6 @@
 # Start with Ontave
 
-Ontave `0.1.0-alpha.4` is a developer preview for Node.js 24 servers. The alpha's open quality gates are recorded in [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json).
+Ontave `0.1.0-alpha.5` is a developer preview for Node.js 24 servers. The alpha's open quality gates are recorded in [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/RELEASE_STATUS.json).
 
 ## Install the framework
 
@@ -19,7 +19,7 @@ The package includes the TypeScript declarations, ESM runtime, CLI and internal 
 With Node.js 24 on macOS or Linux:
 
 ```sh
-npx --yes ontave@0.1.0-alpha.4 playground --install
+npx --yes ontave@0.1.0-alpha.5 playground --install
 ```
 
 Open the localhost URL printed by the command. It creates a temporary PostgreSQL instance and restricted role, then uses the actual SDK to exercise source preservation, model evaluation, identity decisions, fact review and accepted-data queries. `--install` explicitly permits downloading optional local tooling. No Docker or model key is needed. Ctrl+C stops the server and removes the temporary database.
@@ -28,9 +28,9 @@ Try the roof-inspection and payment-claim examples. Inspect the source, evaluate
 
 This playground uses fictional fixture responses. Its setup and governance flow do not establish arbitrary-message extraction accuracy.
 
-## Simplified local setup in the alpha.5 candidate
+## Simplified local setup in alpha.5
 
-The unpublished candidate adds `ontave dev --install`, persistent local PostgreSQL, `openOntave` and a ready review Studio. These exports are not in the current alpha.4 npm release. See [local setup](LOCAL_AND_HOSTED.md) for the few-line example, private provider configuration and bring-your-own-database option. The setup below remains available for shared authenticated applications.
+Alpha.5 adds `ontave dev --install`, persistent local PostgreSQL, `openOntave` and a ready review Studio. See [local setup](LOCAL_AND_HOSTED.md) for the few-line example, private provider configuration and bring-your-own-database option. The setup below remains available for shared authenticated applications.
 
 ## Connect an application
 
@@ -46,4 +46,4 @@ Run migration planning before applying internal migrations. Provision the worksp
 
 ## Evaluate the preview
 
-Check output against your own reviewed source examples, including conflicting information and ambiguous identities. Strict mode requires explicit review. The alpha.5 candidate can adopt eligible additions and reported facts under an explicit host policy; exceptions remain pending. Accepting an interpretation does not verify the underlying business event. Keep provider/model settings, expected answers and trial results so errors can be reproduced. Review [quality results and limits](QUALITY_REPORT.md) before choosing a workload.
+Check output against your own reviewed source examples, including conflicting information and ambiguous identities. Strict mode requires explicit review. Alpha.5 can adopt eligible additions and reported facts under an explicit host policy; exceptions remain pending. Accepting an interpretation does not verify the underlying business event. Keep provider/model settings, expected answers and trial results so errors can be reproduced. Review [quality results and limits](QUALITY_REPORT.md) before choosing a workload.

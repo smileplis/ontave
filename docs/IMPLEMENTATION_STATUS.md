@@ -1,8 +1,8 @@
 # Ontave implementation status
 
-**Developer preview `0.1.0-alpha.4`** is prepared for npm distribution. Its packaged [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json) records the open full-MVP qualification gates. Earlier GitHub alpha archives remain immutable. npm preview distribution has a separate explicit guard; it does not certify the full MVP.
+**Developer preview `0.1.0-alpha.5`** is prepared for npm distribution. Its packaged [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/RELEASE_STATUS.json) records the open full-MVP qualification gates. Earlier GitHub alpha archives remain immutable. npm preview distribution has a separate explicit guard; it does not certify the full MVP.
 
-The working tree targets unpublished `0.1.0-alpha.5`: a runnable supplier-quotation example, a standalone LLM + PostgreSQL comparator, optional models on non-inference services and one-transaction review/source snapshots. The [comparison report](SUPPLIER_QUOTATION_BENCHMARK.md) preserves the initial provider failures, the follow-up on reused cases and a completed one-maintainer walkthrough. This does not close independent qualification gates.
+Alpha.5 includes: a runnable supplier-quotation example, a standalone LLM + PostgreSQL comparator, optional models on non-inference services and one-transaction review/source snapshots. The [comparison report](SUPPLIER_QUOTATION_BENCHMARK.md) preserves the initial provider failures, the follow-up on reused cases and a completed one-maintainer walkthrough. This does not close independent qualification gates.
 
 ## Developer-preview entry points
 
@@ -31,7 +31,7 @@ The expanded maintainer fixture set includes all 60 original inputs, 179 expecte
 
 Three frozen `gemini-3.1-flash-lite` trials and three `ministral-8b-2512` trials failed the unchanged 95% precision / 90% recall targets. All completed, failed and earlier aborted attempts remain retained. See [the quality report](QUALITY_REPORT.md) for the complete matrix and method. The constrained 14B v2 profile also failed. The separately frozen v3 `ministral-14b-2512` profile passed all three aggregate field targets: precision 97.7–97.8%, recall 96.1–97.2%. Its explicit text-equivalence policy was revised after v2, so it is a development result on maintainer labels. Earlier failures are unchanged. Other semantic components remain unqualified.
 
-Provider factories now constrain short text quotes to an immutable source anchor and restrict IDs to authorized candidate enums. Concept fields remain closed and typed. Gemini preflights complete input with the provider tokenizer; Mistral, OpenRouter and Groq are experimental bounded alternatives. Byte guards are not provider-certified token accounting. An explicit adapter/model is required for inference; the alpha.5 candidate permits ingest/read/review services to omit it.
+Provider factories now constrain short text quotes to an immutable source anchor and restrict IDs to authorized candidate enums. Concept fields remain closed and typed. Gemini preflights complete input with the provider tokenizer; Mistral, OpenRouter and Groq are experimental bounded alternatives. Byte guards are not provider-certified token accounting. An explicit adapter/model is required for inference; alpha.5 permits ingest/read/review services to omit it.
 
 ## Remaining release gates
 
@@ -44,6 +44,6 @@ Provider factories now constrain short text quotes to an immutable source anchor
 [Acceptance coverage](acceptance-coverage.json) preserves each original acceptance ID. [User benefits](USER_BENEFITS.md) separates operation counts and machine latency from unmeasured human productivity. Private research and credentials remain excluded from source control and package contents.
 
 
-## Alpha.5 candidate additions
+## Alpha.5 additions
 
-Persistent local database provisioning, loopback Studio, bounded automatic additive publication/acceptance and a frozen quotation adaptation comparator are implemented. The [milestone report](ADAPTATION_MILESTONE.md) separates the successful development ablation from earlier failed acquisitions. Independent semantic qualification, external developer effort measurements and hosted operations remain open. These candidate additions do not change the published alpha.4 archive.
+Persistent local database provisioning, loopback Studio, bounded automatic additive publication/acceptance and a frozen quotation adaptation comparator are implemented. The [milestone report](ADAPTATION_MILESTONE.md) separates the successful development ablation from earlier failed acquisitions. Independent semantic qualification, external developer effort measurements and hosted operations remain open. Earlier published alpha archives remain immutable.

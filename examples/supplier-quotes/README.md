@@ -1,6 +1,6 @@
 # Supplier quotations: Ontave and plain PostgreSQL
 
-The example has a real PostgreSQL implementation in each arm, a shared neutral extractor, fictional sources, source-bound proposals and explicit review. Read the [benchmark method and measured results](../../docs/SUPPLIER_QUOTATION_BENCHMARK.md) before interpreting any score. The changes here target the unpublished alpha.5 candidate; npm currently distributes alpha.4.
+The example has a real PostgreSQL implementation in each arm, a shared neutral extractor, fictional sources, source-bound proposals and explicit review. Read the [benchmark method and measured results](../../docs/SUPPLIER_QUOTATION_BENCHMARK.md) before interpreting any score. The example is included in the alpha.5 developer preview.
 
 ## Run the paired comparison without model credentials
 
@@ -42,7 +42,7 @@ export ONTAVE_DATABASE_URL='postgresql://runtime-role:password@localhost/dedicat
 node node_modules/ontave/examples/supplier-quotes/run.mjs
 ```
 
-This command is available in the alpha.5 candidate archive after local installation (`npm install /absolute/path/ontave-0.1.0-alpha.5.tgz`); it is not in the published alpha.4. From the source checkout, run `npm run build` then `node examples/supplier-quotes/run.mjs` instead. No API key is required: this particular demonstration is explicitly fixture-backed. Entering anything other than `accept` leaves the proposal pending. No other code path auto-approves supplier data. The database retains this demo workspace, unlike the disposable comparison/study.
+This command is available after installing `ontave@0.1.0-alpha.5`. From the source checkout, run `npm run build` then `node examples/supplier-quotes/run.mjs` instead. No API key is required: this particular demonstration is explicitly fixture-backed. Entering anything other than `accept` leaves the proposal pending. No other code path auto-approves supplier data. The database retains this demo workspace, unlike the disposable comparison/study.
 
 ## Add an actual extraction provider
 

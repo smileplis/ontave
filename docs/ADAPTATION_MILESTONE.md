@@ -1,6 +1,6 @@
 # Frozen quotation app: learning delivery commitments
 
-This is a development milestone, not production or adoption qualification. New APIs are in the unpublished alpha.5 candidate. Public evidence lives in `benchmarks/adaptation-2026-10-23`; the runnable implementations are in `examples/adaptive-quotes`.
+This is a development milestone, not production or adoption qualification. New APIs are available in the alpha.5 developer preview. Public evidence lives in `benchmarks/adaptation-2026-10-23`; the runnable implementations are in `examples/adaptive-quotes`.
 
 ## Question
 
