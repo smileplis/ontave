@@ -592,3 +592,5 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 .index-card h3 .card-ending { display: inline-block; font-size: inherit; white-space: nowrap; }
 .index-card .card-ending > span { font-size: .7em; }
+.index-article .docs-prose th { background: #edf1e7; color: #3d5037; font-weight: 500; }
+.index-article .docs-prose .table-wrap { border-color: #dce3d3; }
