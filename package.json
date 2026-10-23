@@ -1,6 +1,6 @@
 {
   "name": "ontave",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "private": false,
   "description": "Evidence-backed operational data and governed ontology evolution for TypeScript applications",
   "license": "Apache-2.0",
@@ -23,7 +23,10 @@
     "docs/QUALITY_REPORT.md",
     "docs/USER_BENEFITS.md",
     "scripts/release-gate.mjs",
-    "examples/playground"
+    "examples/playground",
+    "docs/RELEASE_STATUS.json",
+    "scripts/publish-preview.mjs",
+    "docs/QUICKSTART.md"
   ],
   "exports": {
     ".": {
@@ -75,7 +78,9 @@
     "prepublishOnly": "node scripts/release-gate.mjs",
     "playground": "npm run build && node dist/cli.js playground",
     "preview:fixtures": "npm run build && node scripts/prepare-preview.mjs",
-    "verify:playground": "node scripts/verify-playground.mjs"
+    "verify:playground": "node scripts/verify-playground.mjs",
+    "verify:preview-release": "node scripts/release-gate.mjs --channel=developer-preview",
+    "publish:preview": "node scripts/publish-preview.mjs"
   },
   "dependencies": {
     "canonicalize": "5.1.0",

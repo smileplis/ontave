@@ -1,7 +1,7 @@
 // Exercise the installed archive in a clean consumer, including optional-tooling setup.
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import { createHash } from "node:crypto";
 const root = resolve(import.meta.dirname, ".."),
@@ -11,6 +11,12 @@ const root = resolve(import.meta.dirname, ".."),
       "utf8",
     ),
   );
+const temporaryParent = resolve(
+  packed.consumer,
+  "long-temporary-path-for-postgresql-startup-without-unix-sockets".repeat(2),
+);
+await mkdir(temporaryParent, { recursive: true });
+assert.ok(Buffer.byteLength(temporaryParent) > 103);
 const at = performance.now();
 let log = "",
   stderr = "",
@@ -31,6 +37,7 @@ const child = spawn(
       ...process.env,
       PATH: resolve(root, "node_modules/node/bin") + ":" + process.env.PATH,
       npm_config_cache: resolve(root, ".cache/npm"),
+      TMPDIR: temporaryParent,
     },
   },
 );
@@ -122,6 +129,7 @@ try {
       .digest("hex"),
     consumer: packed.consumer,
     optionalToolingInstall: log.includes("Preparing isolated"),
+    longTemporaryPathBytes: Buffer.byteLength(temporaryParent),
     startupMs,
     workflowMs: performance.now() - workflowAt,
     timingBoundary:
@@ -146,4 +154,5 @@ try {
     child.kill("SIGTERM");
     await exit;
   }
+  await rm(temporaryParent, { recursive: true, force: true });
 }
