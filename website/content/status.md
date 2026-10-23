@@ -1,6 +1,8 @@
 ## Ontave developer preview
 
-The public npm developer preview is **`0.1.0-alpha.5`**. Install it with `npm install ontave`, or run the [local playground](/docs/quickstart/) without an application setup. Earlier versioned GitHub archives remain available. No general production-readiness or arbitrary-data accuracy claim has been established.
+The public npm developer preview is **`0.1.0-alpha.6`**. Install it with `npm install ontave`, or run the [local playground](/docs/quickstart/) without an application setup. Earlier versioned GitHub archives remain available. No general production-readiness or arbitrary-data accuracy claim has been established.
+
+Alpha.6 fixes the automatic-acceptance boundary: existing records are read-only references, and protected-field changes remain pending for explicit review. New additive commitments remain eligible. Previously accepted conflicts require review; upgrading does not rewrite accepted history. See the [policy safety guide](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/POLICY_SAFETY.md).
 
 ## Available in the developer preview
 
@@ -13,7 +15,7 @@ The public npm developer preview is **`0.1.0-alpha.5`**. Install it with `npm in
 
 The complete solar/rental lifecycle demonstrations use a deterministic fictional adapter. They establish database behavior, rather than autonomous discovery accuracy.
 
-The hosted browser sandbox and published benchmark figures retain their disclosed alpha.2 reference fixtures. The local npm command installs alpha.5. Those versions describe different artifacts.
+The hosted browser sandbox and published benchmark figures retain their disclosed alpha.2 reference fixtures. The local npm command installs alpha.6. Those versions describe different artifacts.
 
 ## Try the preview
 
@@ -27,7 +29,7 @@ Live Gemini and Mistral experiments now have recorded precision/recall and failu
 
 Independent source-label review, independently authored holdout cases, live established-identity linking, discovery and reviewed publication qualification remain open. Five acceptance cases are still partial, including complete experimental-provider input token profiling. An independent first-time setup walkthrough remains pending; automated clean installs are tested separately.
 
-Public npm distribution uses a separate developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks. It does not claim that the full MVP quality gates passed. The [packaged alpha.5 release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/RELEASE_STATUS.json) records those open gates.
+Public npm distribution uses a separate developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks. It does not claim that the full MVP quality gates passed. The [packaged alpha.6 release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/RELEASE_STATUS.json) records those open gates.
 
 ## Deliberate boundaries
 

@@ -21,16 +21,16 @@ A data layer that adapts as your business changes.
 
 Ontave is an Apache 2.0 TypeScript framework for applications that need to adopt unfamiliar information while preserving evidence and existing query contracts. Strict review is the default; alpha.5 adds bounded automatic adoption selected by the host application.
 
-**Developer preview `0.1.0-alpha.5`.** This alpha is intended for developer evaluation. Full MVP qualification remains open, including independent label review, live identity/discovery/publication checks and experimental-provider resource profiling. See the [packaged release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/RELEASE_STATUS.json) and [implementation status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/IMPLEMENTATION_STATUS.md).
+**Developer preview `0.1.0-alpha.6`.** This alpha is intended for developer evaluation. Full MVP qualification remains open, including independent label review, live identity/discovery/publication checks and experimental-provider resource profiling. See the [packaged release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/RELEASE_STATUS.json) and [implementation status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/IMPLEMENTATION_STATUS.md).
 
 ## Try Ontave
 
-[Browser sandbox](https://ontave.daltn.tech/playground/) · [Quickstart](https://ontave.daltn.tech/docs/quickstart/) · [API reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/API_REFERENCE.md)
+[Browser sandbox](https://ontave.daltn.tech/playground/) · [Quickstart](https://ontave.daltn.tech/docs/quickstart/) · [API reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/API_REFERENCE.md)
 
 With **Node.js 24** on macOS or Linux:
 
 ```sh
-npx --yes ontave@0.1.0-alpha.5 playground --install
+npx --yes ontave@0.1.0-alpha.6 playground --install
 ```
 
 Open the localhost URL printed in the terminal. The explicit command prepares a temporary PostgreSQL database and restricted role. `--install` downloads optional platform tooling into a temporary directory if needed. No Docker or model key is required. Ctrl+C stops the playground and removes the temporary database.
@@ -44,18 +44,24 @@ npm install ontave
 npx ontave help
 ```
 
-The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. Qualification uses Node.js 24.22.0, PostgreSQL 18.4 and TypeScript 7.0.2. Browser and edge runtimes are unsupported. The default npm installation selects the current alpha preview. Core imports perform no setup or provider calls. Follow the [package quickstart](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/QUICKSTART.md) for your own data, model and authorization.
+The package is ESM for trusted Node.js 24 servers with a dedicated PostgreSQL 18 database. Qualification uses Node.js 24.22.0, PostgreSQL 18.4 and TypeScript 7.0.2. Browser and edge runtimes are unsupported. The default npm installation selects the current alpha preview. Core imports perform no setup or provider calls. Follow the [package quickstart](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/QUICKSTART.md) for your own data, model and authorization.
 
 Build from source:
 
 ```sh
-git clone --branch v0.1.0-alpha.5 https://github.com/smileplis/ontave.git
+git clone --branch v0.1.0-alpha.6 https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
 npm run playground
 ```
 
-## New in alpha.5
+## Policy safety fix in alpha.6
+
+Upgrade with `npm install ontave@latest`. Automatic acceptance now treats existing records as read-only references. A changed quotation currency, supplier, price, quantity, missing field, identifier or existing relationship stays pending for explicit review. Matching references do not add assertions or increment entity revisions. Checks and writes share one transaction with revision checks and row locks; a rejected bundle commits no partial facts.
+
+New delivery commitments can still be accepted automatically under the configured additive policy. Earlier alpha.5 decisions remain in the audit history; upgrading does not silently repair already accepted conflicts. See [policy safety and upgrade guidance](docs/POLICY_SAFETY.md).
+
+## Added in alpha.5
 
 Persistent local setup and a ready review Studio:
 
@@ -85,7 +91,7 @@ const receipt = await ontave.ingest(context, {
 });
 ```
 
-`ontave` above is a configured server runtime. The receipt preserves evidence and a job; processing and review are separate operations. [Walk through the complete setup](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/QUICKSTART.md).
+`ontave` above is a configured server runtime. The receipt preserves evidence and a job; processing and review are separate operations. [Walk through the complete setup](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/QUICKSTART.md).
 
 ## Your infrastructure, explicit boundaries
 
@@ -125,9 +131,9 @@ npm run dev --prefix website
 
 **Alpha.5** adds a [runnable supplier-quotation comparison](examples/supplier-quotes/README.md) against standalone LLM + PostgreSQL. The [benchmark report](docs/SUPPLIER_QUOTATION_BENCHMARK.md) includes shared live predictions, failure history, accepted-data coverage and an exploratory timed review. It makes no framework extraction-uplift or human time-saving claim. Optional models on non-inference services and `reviews.forJob` are available in alpha.5.
 
-The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/USER_BENEFITS.md) and the [quality report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/QUALITY_REPORT.md).
+The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/USER_BENEFITS.md) and the [quality report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/QUALITY_REPORT.md).
 
-Alpha.5 uses a developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks, plus a disclosure of every open quality gate. This is separate from full MVP qualification, which requires independent semantic review. See the [versioned release workflow](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/README.md#measured-benefits-and-release-qualification) for the commands and evidence policy belonging to that release.
+Alpha.6 uses a developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks, plus a disclosure of every open quality gate. This is separate from full MVP qualification, which requires independent semantic review. See the [versioned release workflow](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/README.md#measured-benefits-and-release-qualification) for the commands and evidence policy belonging to that release.
 
 ## Ideas to build on
 
@@ -139,7 +145,7 @@ Follow the [RSS feed](https://ontave.daltn.tech/feed.xml), use the [JSON feed](h
 
 ## References
 
-[Operator runbook](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/OPERATOR_RUNBOOK.md) · [Build report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/BUILD_REPORT.md) · [Annotation rubric](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/ANNOTATION_RUBRIC.md) · [Architectural source reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/SOURCE_REFERENCE.md)
+[Operator runbook](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/OPERATOR_RUNBOOK.md) · [Build report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/BUILD_REPORT.md) · [Annotation rubric](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/ANNOTATION_RUBRIC.md) · [Architectural source reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/SOURCE_REFERENCE.md)
 
 Copyright 2026 Ontave contributors. See [Apache 2.0](LICENSE) and [NOTICE](NOTICE). Cover artwork: *Noon, Rest from Work* by Vincent van Gogh. The vector wordmark and painting follow the website’s visual identity.
 

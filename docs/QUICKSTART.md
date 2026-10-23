@@ -1,6 +1,6 @@
 # Start with Ontave
 
-Ontave `0.1.0-alpha.5` is a developer preview for Node.js 24 servers. The alpha's open quality gates are recorded in [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/RELEASE_STATUS.json).
+Ontave `0.1.0-alpha.6` is a developer preview for Node.js 24 servers. The alpha's open quality gates are recorded in [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/RELEASE_STATUS.json).
 
 ## Install the framework
 
@@ -19,7 +19,7 @@ The package includes the TypeScript declarations, ESM runtime, CLI and internal 
 With Node.js 24 on macOS or Linux:
 
 ```sh
-npx --yes ontave@0.1.0-alpha.5 playground --install
+npx --yes ontave@0.1.0-alpha.6 playground --install
 ```
 
 Open the localhost URL printed by the command. It creates a temporary PostgreSQL instance and restricted role, then uses the actual SDK to exercise source preservation, model evaluation, identity decisions, fact review and accepted-data queries. `--install` explicitly permits downloading optional local tooling. No Docker or model key is needed. Ctrl+C stops the server and removes the temporary database.

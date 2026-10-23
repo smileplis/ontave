@@ -1,6 +1,6 @@
 {
   "name": "ontave",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "private": false,
   "description": "Evidence-backed operational data and governed ontology evolution for TypeScript applications",
   "license": "Apache-2.0",
@@ -34,7 +34,8 @@
     "examples/local",
     "docs/LOCAL_AND_HOSTED.md",
     "docs/ADAPTATION_MILESTONE.md",
-    "benchmarks/adaptation-2026-10-23"
+    "benchmarks/adaptation-2026-10-23",
+    "docs/POLICY_SAFETY.md"
   ],
   "exports": {
     ".": {

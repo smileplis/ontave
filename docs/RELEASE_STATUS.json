@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "channel": "developer-preview",
   "fullMvpQualified": false,
   "intendedUse": "Developer evaluation of evidence-backed records, local setup and bounded policy-authorized additive adaptation",
@@ -32,5 +32,10 @@
     "manualAdaptationReviews": 0,
     "hostedServiceLaunched": false,
     "productionQualified": false
+  },
+  "policySafety": {
+    "existingRecords": "reference-only on automatic acceptance",
+    "atomicValidation": true,
+    "previouslyAcceptedConflicts": "require explicit review; no silent history rewrite"
   }
 }

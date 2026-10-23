@@ -24,7 +24,7 @@ npx ontave version
 npx ontave help
 ```
 
-The current public npm release is **`0.1.0-alpha.5`**. It is a developer preview. To select that exact version, use `npm install ontave@0.1.0-alpha.5`.
+The current public npm release is **`0.1.0-alpha.6`**. It is a developer preview. To select that exact version, use `npm install ontave@0.1.0-alpha.6`.
 
 The package includes ESM runtime code, TypeScript declarations, CLI entry points and internal PostgreSQL migrations. Installing it does not provision a database or contact a model. Keep all database and model credentials on the server.
 
@@ -36,12 +36,12 @@ npx ontave dev --install
 
 This explicitly prepares local PostgreSQL, private workspace credentials and a ready review Studio. Ctrl+C stops the process and retains the data in `.ontave`. Configure a private `GEMINI_API_KEY` and explicit `GEMINI_MODEL` in the server environment to process your own messages; inference uses your provider account. No model is called on import. The Studio is a loopback developer tool, not a publicly authenticated hosted service.
 
-The [`openOntave` API](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/LOCAL_AND_HOSTED.md) provides the same setup from TypeScript.
+The [`openOntave` API](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/LOCAL_AND_HOSTED.md) provides the same setup from TypeScript.
 
 ## Build the published release from source
 
 ```sh
-git clone --branch v0.1.0-alpha.5 https://github.com/smileplis/ontave.git
+git clone --branch v0.1.0-alpha.6 https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
 npm run build
@@ -51,7 +51,7 @@ npm pack --pack-destination artifacts
 Install the resulting archive in your application:
 
 ```sh
-npm install ../ontave/artifacts/ontave-0.1.0-alpha.5.tgz
+npm install ../ontave/artifacts/ontave-0.1.0-alpha.6.tgz
 npx ontave help
 ```
 

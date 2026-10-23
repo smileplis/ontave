@@ -12,6 +12,7 @@ export interface AutomationPolicy {
   maxNewRelations: number;
   fieldTypes: FieldDefinition["type"][];
   relationshipTargets: string[];
+  /** Allows creating base-model entities; existing records remain reference-only. */
   allowNewExistingEntities?: boolean;
 }
 export function additivePolicy(options: {
