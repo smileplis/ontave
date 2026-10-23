@@ -1,6 +1,6 @@
 # Local setup and optional hosting
 
-These APIs are available in **0.1.0-alpha.5**, a developer preview. Install with `npm install ontave` or pin `ontave@0.1.0-alpha.5`. Alpha.4 does not include these exports.
+Use **0.1.0-alpha.6** or newer for the automatic-policy safety fix. Install with `npm install ontave` or pin `ontave@0.1.0-alpha.6`. Local setup APIs were introduced in alpha.5; alpha.4 does not include them.
 
 ## Start locally
 
@@ -45,7 +45,7 @@ const automation = additivePolicy({
 });
 ```
 
-The host chooses which sources and extensions can be adopted. The default profile permits one new namespaced concept, eight text/integer/date fields and one relationship per proposal. Existing meanings and field types cannot change. Extension records must link to an existing allowed parent. New base-model identities are held unless the host explicitly opts in. Retractions and assertions marked verified are held. Evidence, reported-claim semantics and existing contract checks still apply.
+The host chooses which sources and extensions can be adopted. The default profile permits one new namespaced concept, eight text/integer/date fields and one relationship per proposal. Existing meanings and field types cannot change. Extension records must link to an existing allowed parent. New base-model identities are held unless the host explicitly opts in. Retractions and assertions marked verified are held. In alpha.6, existing records are read-only references: supplied fields must match a current single accepted value, and supplied trusted identifiers must already bind that record. Matching references add no assertions and do not bump revisions. New identifiers, changed or missing/conflicted field values, and outgoing relationships on an existing record require explicit review. All checks and writes share one transaction; a rejection rolls back the entire bundle. Evidence, reported-claim semantics and existing contract checks still apply.
 
 This removes manual review for eligible cases. It cannot guarantee semantic correctness; quoted source evidence and structural validation do not prove that the model interpreted it correctly. Uncertainty, conflicting identity, disallowed sources and changes outside the policy stay pending. Review them as exceptions, or leave them unadopted. Do not automatically apply this profile to payments, permissions or irreversible actions.
 

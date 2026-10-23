@@ -110,3 +110,10 @@ These additions are available in alpha.5. `openOntave` is exported from `ontave/
 `advanceAutomatically(runtime,context,jobId)` performs up to four worker/proposal/publication/acceptance transitions and leaves unsupported cases pending with a reason. Local `process()` uses it only when automation is configured. Strict defaults are unchanged.
 
 `startStudio({runtime,context,port?,process?})` starts a loopback-only local owner UI. Prefer `app.studio()` for integrated lifecycle handling. It is not a hosted multi-user authentication layer. See [local boundaries](LOCAL_AND_HOSTED.md) and [the adaptation milestone](ADAPTATION_MILESTONE.md).
+
+
+## Alpha.6: reference-only automatic acceptance
+
+`reviews.acceptByPolicy` validates policy scope and performs acceptance in one transaction. Every existing entity is reference-only: supplied fields must match its current single accepted value, and recognized identifiers must already be bound to that entity. References do not append assertions, add identifiers or increment revisions. The automatic path cannot fill a missing/unknown field, endorse a conflict candidate, change an existing value or add an outgoing relationship to an existing record. Those proposals remain pending for explicit review. `allowNewExistingEntities` permits creation of base-model entities only; it does not grant mutation of existing records.
+
+New eligible entities and their allowed relationships can still be accepted automatically. Any protected mutation aborts the entire bundle, including earlier inserts. Concurrent parent changes retain the existing stale-revision behavior. Historical decisions accepted before the patch are not silently altered. See [policy safety](POLICY_SAFETY.md).

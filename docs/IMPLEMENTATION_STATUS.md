@@ -1,6 +1,6 @@
 # Ontave implementation status
 
-**Developer preview `0.1.0-alpha.5`** is prepared for npm distribution. Its packaged [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.5/docs/RELEASE_STATUS.json) records the open full-MVP qualification gates. Earlier GitHub alpha archives remain immutable. npm preview distribution has a separate explicit guard; it does not certify the full MVP.
+**Developer preview `0.1.0-alpha.6`** is prepared for npm distribution. Its packaged [release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.6/docs/RELEASE_STATUS.json) records the open full-MVP qualification gates. Earlier GitHub alpha archives remain immutable. npm preview distribution has a separate explicit guard; it does not certify the full MVP.
 
 Alpha.5 includes: a runnable supplier-quotation example, a standalone LLM + PostgreSQL comparator, optional models on non-inference services and one-transaction review/source snapshots. The [comparison report](SUPPLIER_QUOTATION_BENCHMARK.md) preserves the initial provider failures, the follow-up on reused cases and a completed one-maintainer walkthrough. This does not close independent qualification gates.
 
@@ -47,3 +47,8 @@ Provider factories now constrain short text quotes to an immutable source anchor
 ## Alpha.5 additions
 
 Persistent local database provisioning, loopback Studio, bounded automatic additive publication/acceptance and a frozen quotation adaptation comparator are implemented. The [milestone report](ADAPTATION_MILESTONE.md) separates the successful development ablation from earlier failed acquisitions. Independent semantic qualification, external developer effort measurements and hosted operations remain open. Earlier published alpha archives remain immutable.
+
+
+## Alpha.6 policy safety patch
+
+Automatic acceptance treats existing entities as read-only references. It holds protected-field changes, missing/conflicted values, new identifiers and outgoing changes on existing records. Matching references preserve accepted assertions and revisions. Policy validation, locked revision checks and writes occur within one transaction. New additive commitments remain automatic. See [upgrade guidance](POLICY_SAFETY.md).

@@ -1,4 +1,5 @@
 import { automationPolicy, checkAutomaticPatch } from "./policy.js";
+import type { AutomationPolicy } from "./policy.js";
 import { operationalMetrics } from "./metrics.js";
 import {
   evaluationSuiteSchema,
@@ -1077,86 +1078,407 @@ export class Ontave {
     check(r.rows[0], "NOT_FOUND", "Bundle not found");
     return r.rows[0];
   }
+  /** Policy validation and canonical writes share the same transaction and entity locks. */
+  private async acceptBundle(
+    context: unknown,
+    input: {
+      bundleId: string;
+      digest: string;
+      requestKey: string;
+      reason: string;
+    },
+    policy?: Readonly<AutomationPolicy>,
+  ) {
+    const a = await this.access(context, "review");
+    return this.config.storage.transaction(a.workspaceId, async (c) => {
+      const digest = hash(input),
+        old = await this.decision(c, a, "accept", input.requestKey, digest);
+      if (old) return old;
+      const b = await this.bundle(c, input.bundleId, true);
+      check(
+        b.hash === input.digest &&
+          b.current_bundle === b.id &&
+          b.state === "waiting_review",
+        "STALE_BUNDLE",
+        "Only the exact current review-ready bundle can be accepted",
+      );
+      const body = b.body as Body;
+      check(
+        body.pending.length === 0 && body.extraction.observations.length === 0,
+        "UNRESOLVED_IDENTITY",
+        "Bundle dependencies remain",
+      );
+      const active = await this.active(c);
+      const previous = await c.query(
+        "SELECT definition FROM ontave.versions WHERE id=$1",
+        [b.ontology_id],
+      );
+      check(
+        compatible(previous.rows[0].definition, active.definition),
+        "STALE_ONTOLOGY",
+        "Bundle requires renewed interpretation",
+      );
+      const evidence = await c.query(
+        "SELECT * FROM ontave.evidence WHERE id=$1",
+        [b.evidence_id],
+      );
+      validateExtraction(
+        body.extraction,
+        evidence.rows[0].payload,
+        active.definition,
+        evidence.rows[0].kind === "json" ? "json" : "text",
+      );
+      if (policy)
+        this.checkPolicyAcceptance(body, evidence.rows[0].source, policy);
+      const published: string[] = [],
+        changed: string[] = [];
+      for (const m of body.extraction.entities) {
+        const r = body.resolutions[m.mentionId];
+        check(r, "UNRESOLVED_IDENTITY", "Missing identity decision");
+        const current = await c.query(
+          "SELECT * FROM ontave.entities WHERE id=$1 FOR UPDATE",
+          [r.entityId],
+        );
+        if (r.mode === "new") {
+          check(
+            !current.rows.length,
+            "STALE_BUNDLE",
+            "Proposed identity already exists",
+          );
+          const concept = active.definition.concepts.find(
+            (x) => x.id === m.conceptId,
+          )!;
+          for (const f of concept.fields)
+            check(
+              f.optional || Object.hasOwn(m.fields, f.id),
+              "VALIDATION_FAILED",
+              "Required field missing",
+            );
+          await c.query(
+            "INSERT INTO ontave.entities(workspace_id,id,concept_id,name) VALUES($1,$2,$3,$4)",
+            [a.workspaceId, r.entityId, m.conceptId, m.name],
+          );
+        } else {
+          check(
+            current.rows[0]?.revision === r.revision &&
+              current.rows[0]?.concept_id === m.conceptId,
+            "STALE_BUNDLE",
+            "Entity changed since review",
+          );
+          if (policy) {
+            await this.checkPolicyReference(
+              c,
+              m,
+              r.entityId,
+              active.definition,
+            );
+            published.push(r.entityId);
+            continue;
+          }
+          await c.query(
+            "UPDATE ontave.entities SET revision=revision+1 WHERE id=$1",
+            [r.entityId],
+          );
+        }
+        published.push(r.entityId);
+        changed.push(r.entityId);
+        for (const ident of m.identifiers ?? []) {
+          const rule = this.config.identifierRules?.find(
+            (x) => x.authority === ident.authority && x.kind === ident.kind,
+          );
+          if (!rule) continue;
+          const value = rule.lowercase
+            ? ident.value.trim().toLowerCase()
+            : ident.value.trim();
+          const existing = await c.query(
+            "SELECT entity_id FROM ontave.identifiers WHERE authority=$1 AND kind=$2 AND normalized=$3",
+            [ident.authority, ident.kind, value],
+          );
+          check(
+            !existing.rows.length || existing.rows[0].entity_id === r.entityId,
+            "UNRESOLVED_IDENTITY",
+            "Identifier is already linked elsewhere",
+          );
+          await c.query(
+            "INSERT INTO ontave.identifiers(workspace_id,authority,kind,normalized,entity_id,evidence_id) VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT DO NOTHING",
+            [
+              a.workspaceId,
+              ident.authority,
+              ident.kind,
+              value,
+              r.entityId,
+              b.evidence_id,
+            ],
+          );
+        }
+        for (const [field, f] of Object.entries(m.fields)) {
+          const v = f.verification ?? "reported";
+          if (v === "verified")
+            check(
+              this.config.sourcePolicies?.[
+                evidence.rows[0].source_policy
+              ]?.verifiedFields.includes(m.conceptId + "." + field),
+              "VALIDATION_FAILED",
+              "Source verification rule denied",
+            );
+          const existing = await c.query(
+            "SELECT id FROM ontave.assertions WHERE entity_id=$1 AND field_id=$2 AND evidence_id=$3 AND value=$4::jsonb AND verification=$5 AND kind='set'",
+            [r.entityId, field, b.evidence_id, json(f.value), v],
+          );
+          if (!existing.rows.length)
+            await c.query(
+              "INSERT INTO ontave.assertions(workspace_id,id,entity_id,field_id,value,verification,kind,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,$6,'set',$7,$8,$9)",
+              [
+                a.workspaceId,
+                randomUUID(),
+                r.entityId,
+                field,
+                json(f.value),
+                v,
+                b.evidence_id,
+                b.id,
+                json(
+                  sourceReference(
+                    evidence.rows[0].payload,
+                    f,
+                    evidence.rows[0].kind === "json" ? "json" : "text",
+                  ),
+                ),
+              ],
+            );
+        }
+      }
+      for (const relationship of body.extraction.relationships) {
+        const s = body.resolutions[relationship.source]!,
+          t = body.resolutions[relationship.target]!;
+        const def = active.definition.relations.find(
+          (x) => x.id === relationship.relationId,
+        )!;
+        const existing = await c.query(
+          "SELECT a.id,a.target_entity_id,a.evidence_id,EXISTS(SELECT 1 FROM ontave.assertions x WHERE x.target_assertion_id=a.id AND x.kind='retract') AS retracted FROM ontave.assertions a WHERE a.entity_id=$1 AND a.relation_id=$2 AND a.kind='set'",
+          [s.entityId, relationship.relationId],
+        );
+        if (def.max === 1)
+          check(
+            existing.rows
+              .filter((x) => !x.retracted && !body.retractions.includes(x.id))
+              .every((x) => x.target_entity_id === t.entityId),
+            "UNRESOLVED_CONFLICT",
+            "Relationship cardinality conflict",
+          );
+        if (
+          !existing.rows.some(
+            (x) =>
+              x.target_entity_id === t.entityId &&
+              x.evidence_id === b.evidence_id,
+          )
+        )
+          await c.query(
+            "INSERT INTO ontave.assertions(workspace_id,id,entity_id,relation_id,target_entity_id,verification,kind,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,'reported','set',$6,$7,$8)",
+            [
+              a.workspaceId,
+              randomUUID(),
+              s.entityId,
+              relationship.relationId,
+              t.entityId,
+              b.evidence_id,
+              b.id,
+              json(
+                sourceReference(
+                  evidence.rows[0].payload,
+                  relationship,
+                  evidence.rows[0].kind === "json" ? "json" : "text",
+                ),
+              ),
+            ],
+          );
+      }
+      for (const target of body.retractions) {
+        const r = await c.query(
+          "SELECT * FROM ontave.assertions WHERE id=$1 AND kind='set'",
+          [parseUUID(target)],
+        );
+        check(r.rows[0], "NOT_FOUND", "Retraction target not found");
+        const x = r.rows[0];
+        check(
+          published.includes(x.entity_id),
+          "VALIDATION_FAILED",
+          "Retraction must bind a reviewed entity revision",
+        );
+        await c.query(
+          "INSERT INTO ontave.assertions(workspace_id,id,entity_id,field_id,relation_id,value,verification,kind,target_assertion_id,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,NULL,'unknown','retract',$6,$7,$8,$9)",
+          [
+            a.workspaceId,
+            randomUUID(),
+            x.entity_id,
+            x.field_id,
+            x.relation_id,
+            x.id,
+            b.evidence_id,
+            b.id,
+            json({
+              startByte: 0,
+              endByte: Buffer.byteLength(evidence.rows[0].payload),
+            }),
+          ],
+        );
+      }
+      for (const id of changed)
+        await this.project(c, a.workspaceId, id, active.definition);
+      await c.query(
+        "UPDATE ontave.jobs SET state='completed',updated_at=now() WHERE id=$1",
+        [b.job_id],
+      );
+      const result = {
+        entityIds: published,
+        bundleId: b.id,
+        ontologyHash: active.hash,
+      };
+      await this.record(
+        c,
+        a,
+        "accept",
+        input.requestKey,
+        digest,
+        result,
+        input.reason,
+      );
+      return result;
+    });
+  }
+  private checkPolicyAcceptance(
+    body: Body,
+    source: string,
+    policy: Readonly<AutomationPolicy>,
+  ) {
+    check(
+      policy.sources.includes(source),
+      "FORBIDDEN",
+      "Source is outside the automation policy",
+    );
+    if (!policy.allowNewExistingEntities)
+      for (const entity of body.extraction.entities)
+        if (!entity.conceptId.startsWith(policy.namespace))
+          check(
+            body.resolutions[entity.mentionId]?.mode === "link",
+            "FORBIDDEN",
+            "This policy extends existing identities; new base-model entities need explicit handling",
+          );
+    if (policy.relationshipTargets.length)
+      for (const entity of body.extraction.entities)
+        if (
+          entity.conceptId.startsWith(policy.namespace) &&
+          body.resolutions[entity.mentionId]?.mode === "new"
+        )
+          check(
+            body.extraction.relationships.some(
+              (r) => r.source === entity.mentionId,
+            ),
+            "FORBIDDEN",
+            "Automatic extension records need an explicit parent link",
+          );
+    check(
+      body.retractions.length === 0 &&
+        body.extraction.entities.every((e) =>
+          Object.values(e.fields).every(
+            (f) => !f.verification || f.verification === "reported",
+          ),
+        ),
+      "FORBIDDEN",
+      "Automatic acceptance cannot retract or verify assertions",
+    );
+    for (const rel of body.extraction.relationships) {
+      check(
+        body.resolutions[rel.source]?.mode === "new",
+        "FORBIDDEN",
+        "Automatic acceptance cannot change relationships of an existing record",
+      );
+      const from = body.extraction.entities.find(
+        (e) => e.mentionId === rel.source,
+      )!;
+      if (from.conceptId.startsWith(policy.namespace)) {
+        const target = body.extraction.entities.find(
+          (e) => e.mentionId === rel.target,
+        )!;
+        check(
+          body.resolutions[rel.target]?.mode === "link" &&
+            policy.relationshipTargets.includes(target.conceptId),
+          "FORBIDDEN",
+          "An automatic extension must link to an allowed existing parent identity",
+        );
+      }
+    }
+  }
+  /** Existing records are references, never implicit permission to add or alter accepted assertions. */
+  private async checkPolicyReference(
+    c: PoolClient,
+    mention: Extraction["entities"][number],
+    entityId: string,
+    definition: Definition,
+  ) {
+    const rows = await c.query(
+      "SELECT field_id,result FROM ontave.projections WHERE entity_id=$1",
+      [entityId],
+    );
+    const concept = definition.concepts.find(
+      (x) => x.id === mention.conceptId,
+    )!;
+    for (const [field, claim] of Object.entries(mention.fields)) {
+      const current = rows.rows.find((x) => x.field_id === field)?.result as
+        FieldResult | undefined;
+      check(
+        current?.state === "value" &&
+          sameValue(
+            current.value,
+            normalizeValue(
+              concept.fields.find((f) => f.id === field)!,
+              claim.value,
+            ),
+          ),
+        "FORBIDDEN",
+        "Automatic references cannot change protected fields, fill missing values or endorse conflicts; explicit review is required",
+      );
+    }
+    for (const identifier of mention.identifiers ?? []) {
+      const rule = this.config.identifierRules?.find(
+        (r) =>
+          r.authority === identifier.authority && r.kind === identifier.kind,
+      );
+      if (!rule) continue;
+      const value = rule.lowercase
+        ? identifier.value.trim().toLowerCase()
+        : identifier.value.trim();
+      const existing = await c.query(
+        "SELECT entity_id FROM ontave.identifiers WHERE authority=$1 AND kind=$2 AND normalized=$3",
+        [identifier.authority, identifier.kind, value],
+      );
+      check(
+        existing.rows[0]?.entity_id === entityId,
+        "FORBIDDEN",
+        "Automatic references cannot add or rebind identifiers; explicit review is required",
+      );
+    }
+  }
   readonly reviews = {
     /** Automated acceptance remains a reported claim; policy grants no verification. */
-    acceptByPolicy: async (
+    acceptByPolicy: (
       context: unknown,
       input: { bundleId: string; digest: string; requestKey: string },
     ) => {
-      const a = await this.access(context, "review"),
-        policy = this.automationPolicy;
+      const policy = this.automationPolicy;
       check(
         policy,
         "FORBIDDEN",
         "Automatic acceptance requires an explicit host policy",
       );
-      await this.config.storage.transaction(a.workspaceId, async (c) => {
-        const b = await this.bundle(c, input.bundleId);
-        check(
-          b.hash === input.digest && b.current_bundle === b.id,
-          "STALE_BUNDLE",
-          "Proposal changed",
-        );
-        const evidence = (
-          await c.query("SELECT source FROM ontave.evidence WHERE id=$1", [
-            b.evidence_id,
-          ])
-        ).rows[0];
-        check(
-          evidence && policy.sources.includes(evidence.source),
-          "FORBIDDEN",
-          "Source is outside the automation policy",
-        );
-        const body = b.body as Body;
-        if (!policy.allowNewExistingEntities)
-          for (const entity of body.extraction.entities)
-            if (!entity.conceptId.startsWith(policy.namespace))
-              check(
-                body.resolutions[entity.mentionId]?.mode === "link",
-                "FORBIDDEN",
-                "This policy extends existing identities; new base-model entities need explicit handling",
-              );
-        if (policy.relationshipTargets.length)
-          for (const entity of body.extraction.entities)
-            if (entity.conceptId.startsWith(policy.namespace))
-              check(
-                body.extraction.relationships.some(
-                  (r) => r.source === entity.mentionId,
-                ),
-                "FORBIDDEN",
-                "Automatic extension records need an explicit parent link",
-              );
-        check(
-          body.retractions.length === 0 &&
-            body.extraction.entities.every((e) =>
-              Object.values(e.fields).every(
-                (f) => !f.verification || f.verification === "reported",
-              ),
-            ),
-          "FORBIDDEN",
-          "Automatic acceptance cannot retract or verify assertions",
-        );
-        for (const rel of body.extraction.relationships) {
-          const source = body.extraction.entities.find(
-            (e) => e.mentionId === rel.source,
-          )!;
-          if (source.conceptId.startsWith(policy.namespace)) {
-            const target = body.extraction.entities.find(
-              (e) => e.mentionId === rel.target,
-            )!;
-            check(
-              body.resolutions[rel.target]?.mode === "link" &&
-                policy.relationshipTargets.includes(target.conceptId),
-              "FORBIDDEN",
-              "An automatic extension must link to an allowed existing parent identity",
-            );
-          }
-        }
-      });
-      return this.reviews.accept(context, {
-        ...input,
-        reason: `Automatic reported-claim acceptance under host policy ${policy.id} (${hash(policy)})`,
-      });
+      return this.acceptBundle(
+        context,
+        {
+          ...input,
+          reason: `Automatic reported-claim acceptance under host policy ${policy.id} (${hash(policy)})`,
+        },
+        policy,
+      );
     },
     /** One transaction for the current proposal and bounded original source. */
     forJob: async (context: unknown, jobId: string) => {
@@ -1276,7 +1598,7 @@ export class Ontave {
         return result;
       });
     },
-    accept: async (
+    accept: (
       context: unknown,
       input: {
         bundleId: string;
@@ -1284,252 +1606,7 @@ export class Ontave {
         requestKey: string;
         reason: string;
       },
-    ) => {
-      const a = await this.access(context, "review");
-      return this.config.storage.transaction(a.workspaceId, async (c) => {
-        const digest = hash(input),
-          old = await this.decision(c, a, "accept", input.requestKey, digest);
-        if (old) return old;
-        const b = await this.bundle(c, input.bundleId, true);
-        check(
-          b.hash === input.digest &&
-            b.current_bundle === b.id &&
-            b.state === "waiting_review",
-          "STALE_BUNDLE",
-          "Only the exact current review-ready bundle can be accepted",
-        );
-        const body = b.body as Body;
-        check(
-          body.pending.length === 0 &&
-            body.extraction.observations.length === 0,
-          "UNRESOLVED_IDENTITY",
-          "Bundle dependencies remain",
-        );
-        const active = await this.active(c);
-        const previous = await c.query(
-          "SELECT definition FROM ontave.versions WHERE id=$1",
-          [b.ontology_id],
-        );
-        check(
-          compatible(previous.rows[0].definition, active.definition),
-          "STALE_ONTOLOGY",
-          "Bundle requires renewed interpretation",
-        );
-        const evidence = await c.query(
-          "SELECT * FROM ontave.evidence WHERE id=$1",
-          [b.evidence_id],
-        );
-        validateExtraction(
-          body.extraction,
-          evidence.rows[0].payload,
-          active.definition,
-          evidence.rows[0].kind === "json" ? "json" : "text",
-        );
-        const published: string[] = [];
-        for (const m of body.extraction.entities) {
-          const r = body.resolutions[m.mentionId];
-          check(r, "UNRESOLVED_IDENTITY", "Missing identity decision");
-          const current = await c.query(
-            "SELECT * FROM ontave.entities WHERE id=$1 FOR UPDATE",
-            [r.entityId],
-          );
-          if (r.mode === "new") {
-            check(
-              !current.rows.length,
-              "STALE_BUNDLE",
-              "Proposed identity already exists",
-            );
-            const concept = active.definition.concepts.find(
-              (x) => x.id === m.conceptId,
-            )!;
-            for (const f of concept.fields)
-              check(
-                f.optional || Object.hasOwn(m.fields, f.id),
-                "VALIDATION_FAILED",
-                "Required field missing",
-              );
-            await c.query(
-              "INSERT INTO ontave.entities(workspace_id,id,concept_id,name) VALUES($1,$2,$3,$4)",
-              [a.workspaceId, r.entityId, m.conceptId, m.name],
-            );
-          } else {
-            check(
-              current.rows[0]?.revision === r.revision &&
-                current.rows[0]?.concept_id === m.conceptId,
-              "STALE_BUNDLE",
-              "Entity changed since review",
-            );
-            await c.query(
-              "UPDATE ontave.entities SET revision=revision+1 WHERE id=$1",
-              [r.entityId],
-            );
-          }
-          published.push(r.entityId);
-          for (const ident of m.identifiers ?? []) {
-            const rule = this.config.identifierRules?.find(
-              (x) => x.authority === ident.authority && x.kind === ident.kind,
-            );
-            if (!rule) continue;
-            const value = rule.lowercase
-              ? ident.value.trim().toLowerCase()
-              : ident.value.trim();
-            const existing = await c.query(
-              "SELECT entity_id FROM ontave.identifiers WHERE authority=$1 AND kind=$2 AND normalized=$3",
-              [ident.authority, ident.kind, value],
-            );
-            check(
-              !existing.rows.length ||
-                existing.rows[0].entity_id === r.entityId,
-              "UNRESOLVED_IDENTITY",
-              "Identifier is already linked elsewhere",
-            );
-            await c.query(
-              "INSERT INTO ontave.identifiers(workspace_id,authority,kind,normalized,entity_id,evidence_id) VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT DO NOTHING",
-              [
-                a.workspaceId,
-                ident.authority,
-                ident.kind,
-                value,
-                r.entityId,
-                b.evidence_id,
-              ],
-            );
-          }
-          for (const [field, f] of Object.entries(m.fields)) {
-            const v = f.verification ?? "reported";
-            if (v === "verified")
-              check(
-                this.config.sourcePolicies?.[
-                  evidence.rows[0].source_policy
-                ]?.verifiedFields.includes(m.conceptId + "." + field),
-                "VALIDATION_FAILED",
-                "Source verification rule denied",
-              );
-            const existing = await c.query(
-              "SELECT id FROM ontave.assertions WHERE entity_id=$1 AND field_id=$2 AND evidence_id=$3 AND value=$4::jsonb AND verification=$5 AND kind='set'",
-              [r.entityId, field, b.evidence_id, json(f.value), v],
-            );
-            if (!existing.rows.length)
-              await c.query(
-                "INSERT INTO ontave.assertions(workspace_id,id,entity_id,field_id,value,verification,kind,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,$6,'set',$7,$8,$9)",
-                [
-                  a.workspaceId,
-                  randomUUID(),
-                  r.entityId,
-                  field,
-                  json(f.value),
-                  v,
-                  b.evidence_id,
-                  b.id,
-                  json(
-                    sourceReference(
-                      evidence.rows[0].payload,
-                      f,
-                      evidence.rows[0].kind === "json" ? "json" : "text",
-                    ),
-                  ),
-                ],
-              );
-          }
-        }
-        for (const relationship of body.extraction.relationships) {
-          const s = body.resolutions[relationship.source]!,
-            t = body.resolutions[relationship.target]!;
-          const def = active.definition.relations.find(
-            (x) => x.id === relationship.relationId,
-          )!;
-          const existing = await c.query(
-            "SELECT a.id,a.target_entity_id,a.evidence_id,EXISTS(SELECT 1 FROM ontave.assertions x WHERE x.target_assertion_id=a.id AND x.kind='retract') AS retracted FROM ontave.assertions a WHERE a.entity_id=$1 AND a.relation_id=$2 AND a.kind='set'",
-            [s.entityId, relationship.relationId],
-          );
-          if (def.max === 1)
-            check(
-              existing.rows
-                .filter((x) => !x.retracted && !body.retractions.includes(x.id))
-                .every((x) => x.target_entity_id === t.entityId),
-              "UNRESOLVED_CONFLICT",
-              "Relationship cardinality conflict",
-            );
-          if (
-            !existing.rows.some(
-              (x) =>
-                x.target_entity_id === t.entityId &&
-                x.evidence_id === b.evidence_id,
-            )
-          )
-            await c.query(
-              "INSERT INTO ontave.assertions(workspace_id,id,entity_id,relation_id,target_entity_id,verification,kind,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,'reported','set',$6,$7,$8)",
-              [
-                a.workspaceId,
-                randomUUID(),
-                s.entityId,
-                relationship.relationId,
-                t.entityId,
-                b.evidence_id,
-                b.id,
-                json(
-                  sourceReference(
-                    evidence.rows[0].payload,
-                    relationship,
-                    evidence.rows[0].kind === "json" ? "json" : "text",
-                  ),
-                ),
-              ],
-            );
-        }
-        for (const target of body.retractions) {
-          const r = await c.query(
-            "SELECT * FROM ontave.assertions WHERE id=$1 AND kind='set'",
-            [parseUUID(target)],
-          );
-          check(r.rows[0], "NOT_FOUND", "Retraction target not found");
-          const x = r.rows[0];
-          check(
-            published.includes(x.entity_id),
-            "VALIDATION_FAILED",
-            "Retraction must bind a reviewed entity revision",
-          );
-          await c.query(
-            "INSERT INTO ontave.assertions(workspace_id,id,entity_id,field_id,relation_id,value,verification,kind,target_assertion_id,evidence_id,bundle_id,span) VALUES($1,$2,$3,$4,$5,NULL,'unknown','retract',$6,$7,$8,$9)",
-            [
-              a.workspaceId,
-              randomUUID(),
-              x.entity_id,
-              x.field_id,
-              x.relation_id,
-              x.id,
-              b.evidence_id,
-              b.id,
-              json({
-                startByte: 0,
-                endByte: Buffer.byteLength(evidence.rows[0].payload),
-              }),
-            ],
-          );
-        }
-        for (const id of published)
-          await this.project(c, a.workspaceId, id, active.definition);
-        await c.query(
-          "UPDATE ontave.jobs SET state='completed',updated_at=now() WHERE id=$1",
-          [b.job_id],
-        );
-        const result = {
-          entityIds: published,
-          bundleId: b.id,
-          ontologyHash: active.hash,
-        };
-        await this.record(
-          c,
-          a,
-          "accept",
-          input.requestKey,
-          digest,
-          result,
-          input.reason,
-        );
-        return result;
-      });
-    },
+    ) => this.acceptBundle(context, input),
     reject: async (
       context: unknown,
       input: {
