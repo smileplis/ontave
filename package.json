@@ -1,6 +1,6 @@
 {
   "name": "ontave",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "private": false,
   "description": "Evidence-backed operational data and governed ontology evolution for TypeScript applications",
   "license": "Apache-2.0",
@@ -26,7 +26,10 @@
     "examples/playground",
     "docs/RELEASE_STATUS.json",
     "scripts/publish-preview.mjs",
-    "docs/QUICKSTART.md"
+    "docs/QUICKSTART.md",
+    "examples/supplier-quotes",
+    "docs/SUPPLIER_QUOTATION_BENCHMARK.md",
+    "benchmarks/quotation-2026-10-23"
   ],
   "exports": {
     ".": {
@@ -80,7 +83,10 @@
     "preview:fixtures": "npm run build && node scripts/prepare-preview.mjs",
     "verify:playground": "node scripts/verify-playground.mjs",
     "verify:preview-release": "node scripts/release-gate.mjs --channel=developer-preview",
-    "publish:preview": "node scripts/publish-preview.mjs"
+    "publish:preview": "node scripts/publish-preview.mjs",
+    "example:quotes": "npm run build && node scripts/quotation-study.mjs",
+    "compare:quotes": "npm run build && node scripts/compare-quotations.mjs",
+    "collect:quotes": "node scripts/collect-quotation-trials.mjs"
   },
   "dependencies": {
     "canonicalize": "5.1.0",

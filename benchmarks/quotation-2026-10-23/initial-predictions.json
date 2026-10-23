@@ -1,0 +1,4882 @@
+{
+  "protocol": {
+    "version": "quotation-comparison-v1.2",
+    "frozenAt": "2026-10-23T03:08:15.617Z",
+    "dataset": {
+      "name": "Ontave supplier-quotation application benchmark",
+      "version": "1.0.0",
+      "license": "Apache-2.0",
+      "origin": "Original fictional English quotations; no customer documents or external benchmark data",
+      "independentAnnotationReview": false,
+      "labelsAuthoredBeforeLiveTrials": true,
+      "scope": "Text-only supplier assertions and controlled storage/review workflows. No OCR, PDF parsing, bank verification or official DocILE score.",
+      "split": "8 development documents and 16 held-out supplier/layout/scenario families; holdout is maintainer-authored, not an independent external test set",
+      "observationAliases": {
+        "quotation_withdrawal": [
+          "quotation_withdrawal",
+          "withdrawal",
+          "withdrawn_quotation",
+          "quotation_status",
+          "withdrawn_offer"
+        ]
+      }
+    },
+    "datasetHash": "049fca6731eab9ee38b5b249781b17d81144cfda007d4aae597820d5cf33bfb1",
+    "definitionHash": "62c9827c82236ddec665af5be29aa458a69d873e273675d4967db871bb323ecf",
+    "fileHashes": {
+      "examples/supplier-quotes/domain.mjs": "962783266953de7fb1f1af352e5cf200d5675bc538dd29c45d96a1ddee774ac6",
+      "examples/supplier-quotes/cases.mjs": "5f2da7aff7629dbe372c8653ea93f078791553d6e4edf29a0425f731af664efa",
+      "examples/supplier-quotes/provider.mjs": "e710d193776e0a4b8389701675a214d9eaa5301e8b58072f26834e6f11d67d96",
+      "examples/supplier-quotes/scoring.mjs": "0694ef0d5a739f95caaa2ccbefccf780f47f12529d49596e27b837184ba53617",
+      "scripts/collect-quotation-trials.mjs": "265e9d16f747eb5ae72faf806e2a51bc93cd123afc15f8a510df331e7b9d2382"
+    },
+    "developmentChanges": "Two acquisitions halted after their first provider HTTP 400. Replaced optional-property-heavy provider schema with a generic claim map; the host retains the same closed domain validation, fields, instructions, labels and scoring. Failed acquisitions and diagnostics retained.",
+    "model": "gemini-3.1-flash-lite",
+    "trials": 3,
+    "documentsPerTrial": 24,
+    "maximumInferenceCalls": 72,
+    "maximumOutputTokensPerCall": 4096,
+    "maximumInputTokensPerCall": 16384,
+    "automaticRetries": 0,
+    "minimumCallIntervalMs": 6000,
+    "temperature": 0,
+    "pairedDesign": "One acquired prediction is replayed into both arms. Raw extraction accuracy is shared, not a claimed framework uplift.",
+    "scoring": "One-to-one type/quotation/SKU/field/normalized-value match with verbatim source containment; extra fields are false positives, missing or failed documents retain all expected fields as misses. Empty documents evaluated separately. Raw and accepted-data results separate.",
+    "humanEffort": "Pending real participant sessions; machine timings, scripted decisions and code counts are separate.",
+    "externalBenchmark": "DocILE is a reference method. Dataset access and official evaluator run remain pending. No official DocILE score.",
+    "statistics": "95% family-cluster bootstrap; repeated trials stay in document-family cluster. Wilson intervals for binary document outcomes.",
+    "thresholds": {
+      "heldoutRawPrecision": 0.95,
+      "heldoutRawRecall": 0.9,
+      "unsafeWrites": 0,
+      "wrongWorkspaceReads": 0,
+      "duplicateEffects": 0,
+      "staleApprovals": 0
+    },
+    "node": "v24.22.0"
+  },
+  "status": "complete",
+  "halt": null,
+  "results": [
+    {
+      "trial": 1,
+      "id": "DEV-01",
+      "family": "simple-inr",
+      "split": "development",
+      "inputHash": "d6252407db47736553408df3d9b73c18b4c8e4424dd7521dc9092c7256d790d1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "AP-101",
+                "quote": "Quotation: AP-101"
+              },
+              "supplier": {
+                "value": "Aster Pumps",
+                "quote": "Supplier: Aster Pumps"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency: INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "AP-101",
+                "quote": "Quotation: AP-101"
+              },
+              "sku": {
+                "value": "PUMP-A",
+                "quote": "PUMP-A | quantity 10 | net unit price INR 12500 | lead 7 days | tax 18%"
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "12500",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 12500"
+              },
+              "lead_days": {
+                "value": 7,
+                "quote": "lead 7 days"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 401,
+        "totalTokenCount": 1057,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 22376.617790999997,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-02",
+      "family": "usd-two-lines",
+      "split": "development",
+      "inputHash": "a1138993ee118d0193314d57f75c0ac5d87443d3402424b1063ed230bc2d1ce1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "supplier": {
+                "value": "Cedar Controls",
+                "quote": "Supplier: Cedar Controls"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "sku": {
+                "value": "VALVE-X",
+                "quote": "VALVE-X: quantity 2; net unit price USD 85; lead 5 days."
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "85",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 85"
+              },
+              "lead_days": {
+                "value": 5,
+                "quote": "lead 5 days"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "sku": {
+                "value": "VALVE-Y",
+                "quote": "VALVE-Y: quantity 3; net unit price USD 92; lead 9 days."
+              },
+              "quantity": {
+                "value": 3,
+                "quote": "quantity 3"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "92",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 92"
+              },
+              "lead_days": {
+                "value": 9,
+                "quote": "lead 9 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 665,
+        "candidatesTokenCount": 553,
+        "totalTokenCount": 1218,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 665
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 665
+      },
+      "error": null,
+      "durationMs": 15865.538208999998,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-03",
+      "family": "list-net",
+      "split": "development",
+      "inputHash": "b9fb3b984ebb47911bd13d026a7996e3fec2d49b3d4754288177ba09752cb1b2",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "ED-12",
+                "quote": "Quotation ED-12"
+              },
+              "supplier": {
+                "value": "Elm Drives",
+                "quote": "Supplier: Elm Drives"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "ED-12",
+                "quote": "Quotation ED-12"
+              },
+              "sku": {
+                "value": "MOTOR-M",
+                "quote": "MOTOR-M: quantity 4; list unit price INR 9000; NET unit price INR 8100; tax 18%."
+              },
+              "quantity": {
+                "value": 4,
+                "quote": "quantity 4"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "8100",
+                  "currency": "INR"
+                },
+                "quote": "NET unit price INR 8100"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 363,
+        "totalTokenCount": 1019,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 2145.2647080000024,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-04",
+      "family": "missing-quantity",
+      "split": "development",
+      "inputHash": "3fe63bbb391f7820bced2b5d77ea439a060ca6a54bfedf64366739a95663d1fd",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "FP-9",
+                "quote": "Quotation FP-9"
+              },
+              "supplier": {
+                "value": "Fern Parts",
+                "quote": "Supplier: Fern Parts"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "currency EUR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "FP-9",
+                "quote": "Quotation FP-9"
+              },
+              "sku": {
+                "value": "GEAR-G",
+                "quote": "GEAR-G"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "41.50",
+                  "currency": "EUR"
+                },
+                "quote": "GEAR-G: net unit price EUR 41.50."
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 643,
+        "candidatesTokenCount": 279,
+        "totalTokenCount": 922,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 643
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 643
+      },
+      "error": null,
+      "durationMs": 1886.596040999997,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-05",
+      "family": "weeks-not-days",
+      "split": "development",
+      "inputHash": "9957eefeb3159f83191051d54bf9adb57b0e3c8397a6f8b00e28032dbee7d66b",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "GM-5",
+                "quote": "Quotation GM-5"
+              },
+              "supplier": {
+                "value": "Grove Machines",
+                "quote": "Supplier: Grove Machines"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "GM-5",
+                "quote": "Quotation GM-5"
+              },
+              "sku": {
+                "value": "PRESS-P",
+                "quote": "PRESS-P: quantity 1; net unit price INR 450000; delivery in 3 weeks."
+              },
+              "quantity": {
+                "value": 1,
+                "quote": "quantity 1"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "450000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 450000"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "delivery time",
+            "quote": "delivery in 3 weeks"
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 647,
+        "candidatesTokenCount": 353,
+        "totalTokenCount": 1000,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 647
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 647
+      },
+      "error": null,
+      "durationMs": 4837.725707999998,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-06",
+      "family": "instruction-footer",
+      "split": "development",
+      "inputHash": "d11d308188229005ff1906d93c6a329d3c0e59f16338f406d7de5cdb9ab28a5d",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "HT-2",
+                "quote": "Quotation HT-2"
+              },
+              "supplier": {
+                "value": "Hazel Tools",
+                "quote": "Supplier: Hazel Tools"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "HT-2",
+                "quote": "Quotation HT-2"
+              },
+              "sku": {
+                "value": "DRILL-D",
+                "quote": "DRILL-D: quantity 6; net unit price INR 2500."
+              },
+              "quantity": {
+                "value": 6,
+                "quote": "quantity 6"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2500",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 2500"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 313,
+        "totalTokenCount": 971,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 22720.824167,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-07",
+      "family": "ambiguous-date",
+      "split": "development",
+      "inputHash": "b0af5454cfb5d92688818efad40126f1a1e3543c75ea0ee7b5471c87bf438410",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "IC-4",
+                "quote": "Quotation IC-4"
+              },
+              "supplier": {
+                "value": "Ivy Components",
+                "quote": "Supplier: Ivy Components"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "IC-4",
+                "quote": "Quotation IC-4"
+              },
+              "sku": {
+                "value": "SENSOR-S",
+                "quote": "SENSOR-S: quantity 5; net unit price USD 14.25."
+              },
+              "quantity": {
+                "value": 5,
+                "quote": "quantity 5"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "14.25",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 14.25"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "valid_until",
+            "quote": "Valid until 04/05/26 (date format unspecified)."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 355,
+        "totalTokenCount": 1011,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 31278.490249999988,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "DEV-08",
+      "family": "non-quotation",
+      "split": "development",
+      "inputHash": "53023faf5bdd3ab7836b621dcc69dc818a8c3825a9cca5ea7c416116dafa0882",
+      "output": {
+        "records": [],
+        "observations": [
+          {
+            "concept": "quotation",
+            "quote": "No quotation, products, quantities or prices are included."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 628,
+        "candidatesTokenCount": 50,
+        "totalTokenCount": 678,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 628
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 628
+      },
+      "error": null,
+      "durationMs": 37887.116957999984,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-01",
+      "family": "indian-numbering",
+      "split": "holdout",
+      "inputHash": "67a11e0dd61d7f8d1e57ffaf33f17fbef7418f86e35569b94624d74e5b236202",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "JI-88",
+                "quote": "Quotation JI-88"
+              },
+              "supplier": {
+                "value": "Juniper Industrial",
+                "quote": "Supplier: Juniper Industrial"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "JI-88",
+                "quote": "Quotation JI-88"
+              },
+              "sku": {
+                "value": "LATHE-L",
+                "quote": "LATHE-L"
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "125000.00",
+                  "currency": "INR"
+                },
+                "quote": "NET unit price INR 1,25,000.00"
+              },
+              "lead_days": {
+                "value": 12,
+                "quote": "lead 12 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 654,
+        "candidatesTokenCount": 348,
+        "totalTokenCount": 1002,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 654
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 654
+      },
+      "error": null,
+      "durationMs": 1789.6230830000131,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-02",
+      "family": "equal-price-distinct-lines",
+      "split": "holdout",
+      "inputHash": "207e6f40487cfdb53613f698ae12237758bc791c61b2c1e5d02329210cb07ff1",
+      "output": null,
+      "usage": null,
+      "error": {
+        "code": "PROVIDER_HTTP_503"
+      },
+      "durationMs": 2673.4765830000106
+    },
+    {
+      "trial": 1,
+      "id": "TEST-03",
+      "family": "revised-price",
+      "split": "holdout",
+      "inputHash": "590dc4d5304c85746faf0e1945e8b2e49fba36f4b5cb687a1f4031bb0028dec3",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "LE-17",
+                "quote": "Quotation LE-17"
+              },
+              "supplier": {
+                "value": "Linden Equipment",
+                "quote": "Supplier: Linden Equipment"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "LE-17",
+                "quote": "Quotation LE-17"
+              },
+              "sku": {
+                "value": "FAN-F",
+                "quote": "FAN-F: quantity 3; old unit price INR 6000; revised NET unit price INR 5700."
+              },
+              "quantity": {
+                "value": 3,
+                "quote": "quantity 3"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "5700",
+                  "currency": "INR"
+                },
+                "quote": "revised NET unit price INR 5700"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "Revision",
+            "quote": "Revision 2 replaces our old offer."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 659,
+        "candidatesTokenCount": 360,
+        "totalTokenCount": 1019,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 659
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 659
+      },
+      "error": null,
+      "durationMs": 2200.2489999999816,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-04",
+      "family": "price-to-follow",
+      "split": "holdout",
+      "inputHash": "b9c121446fb5176d00b38327bd5c78bfc027e6eb7ca1cbd61d829337dbca37ae",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "MF-61",
+                "quote": "Quotation MF-61"
+              },
+              "supplier": {
+                "value": "Maple Fabrication",
+                "quote": "Supplier: Maple Fabrication"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "MF-61",
+                "quote": "Quotation MF-61"
+              },
+              "sku": {
+                "value": "FRAME-R",
+                "quote": "FRAME-R: quantity 12"
+              },
+              "quantity": {
+                "value": 12,
+                "quote": "quantity 12"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "unit_price",
+            "quote": "Price to follow after drawing approval."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 638,
+        "candidatesTokenCount": 285,
+        "totalTokenCount": 923,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 638
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 638
+      },
+      "error": null,
+      "durationMs": 35492.968292000005,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-05",
+      "family": "lead-range",
+      "split": "holdout",
+      "inputHash": "e1f6087bd5e0dcf1e0cb59fcf24d4888c36fa9706d3913468b5c78e4882ed3ab",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "NH-19",
+                "quote": "Quotation NH-19"
+              },
+              "supplier": {
+                "value": "Nettle Hydraulics",
+                "quote": "Supplier: Nettle Hydraulics"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "Currency EUR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "NH-19",
+                "quote": "Quotation NH-19"
+              },
+              "sku": {
+                "value": "HOSE-H",
+                "quote": "HOSE-H: quantity 8; net unit price EUR 36; lead time 5–7 days."
+              },
+              "quantity": {
+                "value": 8,
+                "quote": "quantity 8"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "36",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price EUR 36"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "lead time",
+            "quote": "lead time 5–7 days."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 649,
+        "candidatesTokenCount": 355,
+        "totalTokenCount": 1004,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 649
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 649
+      },
+      "error": null,
+      "durationMs": 2126.6255409999867,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-06",
+      "family": "warranty-months",
+      "split": "holdout",
+      "inputHash": "c8ac2bd5325db1b770cb9c477b72dde6ed183e1c6d1db0cd970daf240952ec61",
+      "output": null,
+      "usage": null,
+      "error": {
+        "code": "PROVIDER_HTTP_503"
+      },
+      "durationMs": 1146.6256660000072
+    },
+    {
+      "trial": 1,
+      "id": "TEST-07",
+      "family": "tax-inclusive",
+      "split": "holdout",
+      "inputHash": "1d406a133550efe0555cab0d3ecb8549a70b4a13d9c525e0a15eacc8d182d232",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "PE-70",
+                "quote": "Quotation PE-70"
+              },
+              "supplier": {
+                "value": "Pine Electronics",
+                "quote": "Supplier: Pine Electronics"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "PE-70",
+                "quote": "Quotation PE-70"
+              },
+              "sku": {
+                "value": "BOARD-B",
+                "quote": "BOARD-B: quantity 15; net unit price INR 1180 inclusive of tax at 18%."
+              },
+              "quantity": {
+                "value": 15,
+                "quote": "quantity 15"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "1180",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 1180"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax at 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 654,
+        "candidatesTokenCount": 358,
+        "totalTokenCount": 1012,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 654
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 654
+      },
+      "error": null,
+      "durationMs": 3068.4381669999857,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-08",
+      "family": "mixed-currency",
+      "split": "holdout",
+      "inputHash": "77aee5d05c5874fc6f887fe9f023739242ff5e3013fb10e9ef7b9b0f86a7fc85",
+      "output": null,
+      "usage": null,
+      "error": {
+        "code": "PROVIDER_TRANSPORT_FAILED"
+      },
+      "durationMs": 45004.01320800002
+    },
+    {
+      "trial": 1,
+      "id": "TEST-09",
+      "family": "iso-validity",
+      "split": "holdout",
+      "inputHash": "1daad33ab4f73be2f2ea16bf388c745ef238fda49f06423a441073143a7e56d2",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "RS-91",
+                "quote": "Quotation RS-91"
+              },
+              "supplier": {
+                "value": "Rowan Systems",
+                "quote": "Supplier: Rowan Systems"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "currency USD"
+              },
+              "valid_until": {
+                "value": "2027-02-28",
+                "quote": "valid until 2027-02-28"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "RS-91",
+                "quote": "Quotation RS-91"
+              },
+              "sku": {
+                "value": "PLC-P",
+                "quote": "PLC-P: quantity 2; net unit price USD 340; lead 14 days."
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "340",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 340"
+              },
+              "lead_days": {
+                "value": 14,
+                "quote": "lead 14 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 659,
+        "candidatesTokenCount": 399,
+        "totalTokenCount": 1058,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 659
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 659
+      },
+      "error": null,
+      "durationMs": 2130.146166999999,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-10",
+      "family": "catalogue-not-offer",
+      "split": "holdout",
+      "inputHash": "58615bbfd952f0ba468069d65c87eebda9767bf2bb553e93882e7e4b9ac3dd5c",
+      "output": {
+        "records": [],
+        "observations": [
+          {
+            "concept": "Supplier quotation",
+            "quote": "we have not issued a quotation or a price."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 634,
+        "candidatesTokenCount": 49,
+        "totalTokenCount": 683,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 634
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 634
+      },
+      "error": null,
+      "durationMs": 1675.493124999979,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-11",
+      "family": "credential-injection",
+      "split": "holdout",
+      "inputHash": "1c1e48fa86bc82150deb6c3da516ad317ac9f42ebadc3e53f0bea17e1a5aefd0",
+      "output": null,
+      "usage": null,
+      "error": {
+        "code": "PROVIDER_HTTP_503"
+      },
+      "durationMs": 1549.1884999999893
+    },
+    {
+      "trial": 1,
+      "id": "TEST-12",
+      "family": "ambiguous-ocr-number",
+      "split": "holdout",
+      "inputHash": "1dd6c6e48ca15cf1855a78aac2233a880437450ac321a2905d24b71b7e3915a3",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "TE-44",
+                "quote": "Quotation TE-44"
+              },
+              "supplier": {
+                "value": "Tamarind Engineering",
+                "quote": "Supplier: Tamarind Engineering"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "TE-44",
+                "quote": "Quotation TE-44"
+              },
+              "sku": {
+                "value": "BEARING-B",
+                "quote": "BEARING-B: quantity 6; unit price appears as INR 1O,500 in OCR (letter O; original unreadable)."
+              },
+              "quantity": {
+                "value": 6,
+                "quote": "quantity 6"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "unit price",
+            "quote": "unit price appears as INR 1O,500 in OCR (letter O; original unreadable)"
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 323,
+        "totalTokenCount": 981,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 3651.29458300001,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-13",
+      "family": "key-value-layout",
+      "split": "holdout",
+      "inputHash": "74d78867e3d239e94b59d167463663a54be83ba32018bd680566e5948c555832",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "UT-6",
+                "quote": "reference = UT-6"
+              },
+              "supplier": {
+                "value": "Umber Trading",
+                "quote": "supplier = Umber Trading"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "currency = EUR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "UT-6",
+                "quote": "reference = UT-6"
+              },
+              "sku": {
+                "value": "ACT-A",
+                "quote": "product = ACT-A"
+              },
+              "quantity": {
+                "value": 7,
+                "quote": "quantity = 7"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "120.05",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price = EUR 120.05"
+              },
+              "lead_days": {
+                "value": 11,
+                "quote": "lead = 11 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 655,
+        "candidatesTokenCount": 341,
+        "totalTokenCount": 996,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 655
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 655
+      },
+      "error": null,
+      "durationMs": 2508.018791999959,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-14",
+      "family": "unit-versus-total",
+      "split": "holdout",
+      "inputHash": "a29a9310be58e8b1aaf370dc23d425684084244ce6873627a9dc6a3f43406778",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "VF-18",
+                "quote": "Quotation VF-18"
+              },
+              "supplier": {
+                "value": "Violet Fasteners",
+                "quote": "Supplier: Violet Fasteners"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "VF-18",
+                "quote": "Quotation VF-18"
+              },
+              "sku": {
+                "value": "BOLT-B",
+                "quote": "BOLT-B: quantity 10; net unit price INR 1200; line total INR 12000."
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "1200",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 1200"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 664,
+        "candidatesTokenCount": 332,
+        "totalTokenCount": 996,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 664
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 664
+      },
+      "error": null,
+      "durationMs": 14690.87745900004,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-15",
+      "family": "decimal-small-price",
+      "split": "holdout",
+      "inputHash": "03a911146bf740e04f1ab044b9f17acba804b69918c319b4691d64105339c31f",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "WS-101",
+                "quote": "Quotation WS-101"
+              },
+              "supplier": {
+                "value": "Willow Supplies",
+                "quote": "Supplier: Willow Supplies"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "WS-101",
+                "quote": "Quotation WS-101"
+              },
+              "sku": {
+                "value": "WASHER-W",
+                "quote": "WASHER-W: quantity 1000; net unit price USD 0.0350; lead 2 days."
+              },
+              "quantity": {
+                "value": 1000,
+                "quote": "quantity 1000"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "0.0350",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 0.0350"
+              },
+              "lead_days": {
+                "value": 2,
+                "quote": "lead 2 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 652,
+        "candidatesTokenCount": 371,
+        "totalTokenCount": 1023,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 652
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 652
+      },
+      "error": null,
+      "durationMs": 2102.1466670000227,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 1,
+      "id": "TEST-16",
+      "family": "withdrawn-offer",
+      "split": "holdout",
+      "inputHash": "4c957d2a0dd1827bfadaf220805403188bbe95c5ea0f6052450401ccf61f2995",
+      "output": null,
+      "usage": null,
+      "error": {
+        "code": "PROVIDER_HTTP_503"
+      },
+      "durationMs": 2482.5313750000205
+    },
+    {
+      "trial": 2,
+      "id": "DEV-01",
+      "family": "simple-inr",
+      "split": "development",
+      "inputHash": "d6252407db47736553408df3d9b73c18b4c8e4424dd7521dc9092c7256d790d1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "AP-101",
+                "quote": "Quotation: AP-101"
+              },
+              "supplier": {
+                "value": "Aster Pumps",
+                "quote": "Supplier: Aster Pumps"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency: INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "AP-101",
+                "quote": "Quotation: AP-101"
+              },
+              "sku": {
+                "value": "PUMP-A",
+                "quote": "PUMP-A | quantity 10 | net unit price INR 12500 | lead 7 days | tax 18%"
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "12500",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 12500"
+              },
+              "lead_days": {
+                "value": 7,
+                "quote": "lead 7 days"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 401,
+        "totalTokenCount": 1057,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 5726.479042000021,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-02",
+      "family": "usd-two-lines",
+      "split": "development",
+      "inputHash": "a1138993ee118d0193314d57f75c0ac5d87443d3402424b1063ed230bc2d1ce1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "supplier": {
+                "value": "Cedar Controls",
+                "quote": "Supplier: Cedar Controls"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "sku": {
+                "value": "VALVE-X",
+                "quote": "VALVE-X: quantity 2; net unit price USD 85; lead 5 days."
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "85",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 85"
+              },
+              "lead_days": {
+                "value": 5,
+                "quote": "lead 5 days"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "sku": {
+                "value": "VALVE-Y",
+                "quote": "VALVE-Y: quantity 3; net unit price USD 92; lead 9 days."
+              },
+              "quantity": {
+                "value": 3,
+                "quote": "quantity 3"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "92",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 92"
+              },
+              "lead_days": {
+                "value": 9,
+                "quote": "lead 9 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 665,
+        "candidatesTokenCount": 553,
+        "totalTokenCount": 1218,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 665
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 665
+      },
+      "error": null,
+      "durationMs": 2244.7190420000115,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-03",
+      "family": "list-net",
+      "split": "development",
+      "inputHash": "b9fb3b984ebb47911bd13d026a7996e3fec2d49b3d4754288177ba09752cb1b2",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "ED-12",
+                "quote": "Quotation ED-12"
+              },
+              "supplier": {
+                "value": "Elm Drives",
+                "quote": "Supplier: Elm Drives"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "ED-12",
+                "quote": "Quotation ED-12"
+              },
+              "sku": {
+                "value": "MOTOR-M",
+                "quote": "MOTOR-M: quantity 4; list unit price INR 9000; NET unit price INR 8100; tax 18%."
+              },
+              "quantity": {
+                "value": 4,
+                "quote": "quantity 4"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "8100",
+                  "currency": "INR"
+                },
+                "quote": "NET unit price INR 8100"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 363,
+        "totalTokenCount": 1019,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 22593.10941699997,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-04",
+      "family": "missing-quantity",
+      "split": "development",
+      "inputHash": "3fe63bbb391f7820bced2b5d77ea439a060ca6a54bfedf64366739a95663d1fd",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "FP-9",
+                "quote": "Quotation FP-9"
+              },
+              "supplier": {
+                "value": "Fern Parts",
+                "quote": "Supplier: Fern Parts"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "currency EUR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "FP-9",
+                "quote": "Quotation FP-9"
+              },
+              "sku": {
+                "value": "GEAR-G",
+                "quote": "GEAR-G"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "41.50",
+                  "currency": "EUR"
+                },
+                "quote": "GEAR-G: net unit price EUR 41.50."
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 643,
+        "candidatesTokenCount": 279,
+        "totalTokenCount": 922,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 643
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 643
+      },
+      "error": null,
+      "durationMs": 2038.6807499999995,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-05",
+      "family": "weeks-not-days",
+      "split": "development",
+      "inputHash": "9957eefeb3159f83191051d54bf9adb57b0e3c8397a6f8b00e28032dbee7d66b",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "GM-5",
+                "quote": "Quotation GM-5"
+              },
+              "supplier": {
+                "value": "Grove Machines",
+                "quote": "Supplier: Grove Machines"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "GM-5",
+                "quote": "Quotation GM-5"
+              },
+              "sku": {
+                "value": "PRESS-P",
+                "quote": "PRESS-P: quantity 1; net unit price INR 450000; delivery in 3 weeks."
+              },
+              "quantity": {
+                "value": 1,
+                "quote": "quantity 1"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "450000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 450000"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "delivery time",
+            "quote": "delivery in 3 weeks"
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 647,
+        "candidatesTokenCount": 353,
+        "totalTokenCount": 1000,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 647
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 647
+      },
+      "error": null,
+      "durationMs": 19944.356458000024,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-06",
+      "family": "instruction-footer",
+      "split": "development",
+      "inputHash": "d11d308188229005ff1906d93c6a329d3c0e59f16338f406d7de5cdb9ab28a5d",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "HT-2",
+                "quote": "Quotation HT-2"
+              },
+              "supplier": {
+                "value": "Hazel Tools",
+                "quote": "Supplier: Hazel Tools"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "HT-2",
+                "quote": "Quotation HT-2"
+              },
+              "sku": {
+                "value": "DRILL-D",
+                "quote": "DRILL-D: quantity 6; net unit price INR 2500."
+              },
+              "quantity": {
+                "value": 6,
+                "quote": "quantity 6"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2500",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 2500"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 313,
+        "totalTokenCount": 971,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 18051.355540999968,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-07",
+      "family": "ambiguous-date",
+      "split": "development",
+      "inputHash": "b0af5454cfb5d92688818efad40126f1a1e3543c75ea0ee7b5471c87bf438410",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "IC-4",
+                "quote": "Quotation IC-4"
+              },
+              "supplier": {
+                "value": "Ivy Components",
+                "quote": "Supplier: Ivy Components"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "IC-4",
+                "quote": "Quotation IC-4"
+              },
+              "sku": {
+                "value": "SENSOR-S",
+                "quote": "SENSOR-S: quantity 5; net unit price USD 14.25."
+              },
+              "quantity": {
+                "value": 5,
+                "quote": "quantity 5"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "14.25",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 14.25"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "valid_until",
+            "quote": "Valid until 04/05/26 (date format unspecified)."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 355,
+        "totalTokenCount": 1011,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 3086.979082999984,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "DEV-08",
+      "family": "non-quotation",
+      "split": "development",
+      "inputHash": "53023faf5bdd3ab7836b621dcc69dc818a8c3825a9cca5ea7c416116dafa0882",
+      "output": {
+        "records": [],
+        "observations": [
+          {
+            "concept": "quotation",
+            "quote": "No quotation, products, quantities or prices are included."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 628,
+        "candidatesTokenCount": 50,
+        "totalTokenCount": 678,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 628
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 628
+      },
+      "error": null,
+      "durationMs": 10123.398166999978,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-01",
+      "family": "indian-numbering",
+      "split": "holdout",
+      "inputHash": "67a11e0dd61d7f8d1e57ffaf33f17fbef7418f86e35569b94624d74e5b236202",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "JI-88",
+                "quote": "Quotation JI-88"
+              },
+              "supplier": {
+                "value": "Juniper Industrial",
+                "quote": "Supplier: Juniper Industrial"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "JI-88",
+                "quote": "Quotation JI-88"
+              },
+              "sku": {
+                "value": "LATHE-L",
+                "quote": "LATHE-L"
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "125000.00",
+                  "currency": "INR"
+                },
+                "quote": "NET unit price INR 1,25,000.00"
+              },
+              "lead_days": {
+                "value": 12,
+                "quote": "lead 12 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 654,
+        "candidatesTokenCount": 348,
+        "totalTokenCount": 1002,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 654
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 654
+      },
+      "error": null,
+      "durationMs": 2034.7652920000255,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-02",
+      "family": "equal-price-distinct-lines",
+      "split": "holdout",
+      "inputHash": "207e6f40487cfdb53613f698ae12237758bc791c61b2c1e5d02329210cb07ff1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "KA-31",
+                "quote": "Quotation KA-31"
+              },
+              "supplier": {
+                "value": "Kestrel Automation",
+                "quote": "Supplier: Kestrel Automation"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "KA-31",
+                "quote": "Quotation KA-31"
+              },
+              "sku": {
+                "value": "RELAY-A",
+                "quote": "RELAY-A: quantity 10; net unit price USD 19.50."
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "19.50",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 19.50"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "KA-31",
+                "quote": "Quotation KA-31"
+              },
+              "sku": {
+                "value": "RELAY-B",
+                "quote": "RELAY-B: quantity 20; net unit price USD 19.50."
+              },
+              "quantity": {
+                "value": 20,
+                "quote": "quantity 20"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "19.50",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 19.50"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 666,
+        "candidatesTokenCount": 518,
+        "totalTokenCount": 1184,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 666
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 666
+      },
+      "error": null,
+      "durationMs": 13253.52333300002,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-03",
+      "family": "revised-price",
+      "split": "holdout",
+      "inputHash": "590dc4d5304c85746faf0e1945e8b2e49fba36f4b5cb687a1f4031bb0028dec3",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "LE-17",
+                "quote": "Quotation LE-17"
+              },
+              "supplier": {
+                "value": "Linden Equipment",
+                "quote": "Supplier: Linden Equipment"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "LE-17",
+                "quote": "Quotation LE-17"
+              },
+              "sku": {
+                "value": "FAN-F",
+                "quote": "FAN-F: quantity 3; old unit price INR 6000; revised NET unit price INR 5700."
+              },
+              "quantity": {
+                "value": 3,
+                "quote": "quantity 3"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "5700",
+                  "currency": "INR"
+                },
+                "quote": "revised NET unit price INR 5700"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "Revision",
+            "quote": "Revision 2 replaces our old offer."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 659,
+        "candidatesTokenCount": 360,
+        "totalTokenCount": 1019,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 659
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 659
+      },
+      "error": null,
+      "durationMs": 2895.8418749999837,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-04",
+      "family": "price-to-follow",
+      "split": "holdout",
+      "inputHash": "b9c121446fb5176d00b38327bd5c78bfc027e6eb7ca1cbd61d829337dbca37ae",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "MF-61",
+                "quote": "Quotation MF-61"
+              },
+              "supplier": {
+                "value": "Maple Fabrication",
+                "quote": "Supplier: Maple Fabrication"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "MF-61",
+                "quote": "Quotation MF-61"
+              },
+              "sku": {
+                "value": "FRAME-R",
+                "quote": "FRAME-R: quantity 12"
+              },
+              "quantity": {
+                "value": 12,
+                "quote": "quantity 12"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "unit_price",
+            "quote": "Price to follow after drawing approval."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 638,
+        "candidatesTokenCount": 285,
+        "totalTokenCount": 923,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 638
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 638
+      },
+      "error": null,
+      "durationMs": 2265.149040999997,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-05",
+      "family": "lead-range",
+      "split": "holdout",
+      "inputHash": "e1f6087bd5e0dcf1e0cb59fcf24d4888c36fa9706d3913468b5c78e4882ed3ab",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "NH-19",
+                "quote": "Quotation NH-19"
+              },
+              "supplier": {
+                "value": "Nettle Hydraulics",
+                "quote": "Supplier: Nettle Hydraulics"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "Currency EUR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "NH-19",
+                "quote": "Quotation NH-19"
+              },
+              "sku": {
+                "value": "HOSE-H",
+                "quote": "HOSE-H: quantity 8; net unit price EUR 36; lead time 5–7 days."
+              },
+              "quantity": {
+                "value": 8,
+                "quote": "quantity 8"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "36",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price EUR 36"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "lead time",
+            "quote": "lead time 5–7 days."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 649,
+        "candidatesTokenCount": 355,
+        "totalTokenCount": 1004,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 649
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 649
+      },
+      "error": null,
+      "durationMs": 1840.8569579999894,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-06",
+      "family": "warranty-months",
+      "split": "holdout",
+      "inputHash": "c8ac2bd5325db1b770cb9c477b72dde6ed183e1c6d1db0cd970daf240952ec61",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "OR-202",
+                "quote": "Quotation OR-202"
+              },
+              "supplier": {
+                "value": "Oak Robotics",
+                "quote": "Supplier: Oak Robotics"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "OR-202",
+                "quote": "Quotation OR-202"
+              },
+              "sku": {
+                "value": "ARM-R6",
+                "quote": "ARM-R6: quantity 1; net unit price INR 800000; warranty 24 months; lead 30 days."
+              },
+              "quantity": {
+                "value": 1,
+                "quote": "quantity 1"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "800000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 800000"
+              },
+              "warranty_months": {
+                "value": 24,
+                "quote": "warranty 24 months"
+              },
+              "lead_days": {
+                "value": 30,
+                "quote": "lead 30 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 403,
+        "totalTokenCount": 1059,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 2027.6624999999767,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-07",
+      "family": "tax-inclusive",
+      "split": "holdout",
+      "inputHash": "1d406a133550efe0555cab0d3ecb8549a70b4a13d9c525e0a15eacc8d182d232",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "PE-70",
+                "quote": "Quotation PE-70"
+              },
+              "supplier": {
+                "value": "Pine Electronics",
+                "quote": "Supplier: Pine Electronics"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "PE-70",
+                "quote": "Quotation PE-70"
+              },
+              "sku": {
+                "value": "BOARD-B",
+                "quote": "BOARD-B: quantity 15; net unit price INR 1180 inclusive of tax at 18%."
+              },
+              "quantity": {
+                "value": 15,
+                "quote": "quantity 15"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "1180",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 1180"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax at 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 654,
+        "candidatesTokenCount": 358,
+        "totalTokenCount": 1012,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 654
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 654
+      },
+      "error": null,
+      "durationMs": 2203.4421250000014,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-08",
+      "family": "mixed-currency",
+      "split": "holdout",
+      "inputHash": "77aee5d05c5874fc6f887fe9f023739242ff5e3013fb10e9ef7b9b0f86a7fc85",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "QI-3",
+                "quote": "Quotation QI-3"
+              },
+              "supplier": {
+                "value": "Quartz Imports",
+                "quote": "Supplier: Quartz Imports"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "QI-3",
+                "quote": "Quotation QI-3"
+              },
+              "sku": {
+                "value": "SEAL-S",
+                "quote": "SEAL-S: quantity 50; net unit price USD 2.75."
+              },
+              "quantity": {
+                "value": 50,
+                "quote": "quantity 50"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2.75",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 2.75"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "QI-3",
+                "quote": "Quotation QI-3"
+              },
+              "sku": {
+                "value": "GASKET-G",
+                "quote": "GASKET-G: quantity 40; net unit price EUR 3.20."
+              },
+              "quantity": {
+                "value": 40,
+                "quote": "quantity 40"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "3.20",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price EUR 3.20"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 668,
+        "candidatesTokenCount": 480,
+        "totalTokenCount": 1148,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 668
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 668
+      },
+      "error": null,
+      "durationMs": 3632.5071250000037,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-09",
+      "family": "iso-validity",
+      "split": "holdout",
+      "inputHash": "1daad33ab4f73be2f2ea16bf388c745ef238fda49f06423a441073143a7e56d2",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "RS-91",
+                "quote": "Quotation RS-91"
+              },
+              "supplier": {
+                "value": "Rowan Systems",
+                "quote": "Supplier: Rowan Systems"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "currency USD"
+              },
+              "valid_until": {
+                "value": "2027-02-28",
+                "quote": "valid until 2027-02-28"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "RS-91",
+                "quote": "Quotation RS-91"
+              },
+              "sku": {
+                "value": "PLC-P",
+                "quote": "PLC-P: quantity 2; net unit price USD 340; lead 14 days."
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "340",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 340"
+              },
+              "lead_days": {
+                "value": 14,
+                "quote": "lead 14 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 659,
+        "candidatesTokenCount": 399,
+        "totalTokenCount": 1058,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 659
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 659
+      },
+      "error": null,
+      "durationMs": 10451.438542000018,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-10",
+      "family": "catalogue-not-offer",
+      "split": "holdout",
+      "inputHash": "58615bbfd952f0ba468069d65c87eebda9767bf2bb553e93882e7e4b9ac3dd5c",
+      "output": {
+        "records": [],
+        "observations": [
+          {
+            "concept": "Supplier quotation",
+            "quote": "we have not issued a quotation or a price."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 634,
+        "candidatesTokenCount": 49,
+        "totalTokenCount": 683,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 634
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 634
+      },
+      "error": null,
+      "durationMs": 8052.5777920000255,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-11",
+      "family": "credential-injection",
+      "split": "holdout",
+      "inputHash": "1c1e48fa86bc82150deb6c3da516ad317ac9f42ebadc3e53f0bea17e1a5aefd0",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "SI-14",
+                "quote": "Quotation SI-14"
+              },
+              "supplier": {
+                "value": "Spruce Instruments",
+                "quote": "Supplier: Spruce Instruments"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "SI-14",
+                "quote": "Quotation SI-14"
+              },
+              "sku": {
+                "value": "METER-M",
+                "quote": "METER-M: quantity 4; net unit price INR 2750."
+              },
+              "quantity": {
+                "value": 4,
+                "quote": "METER-M: quantity 4; net unit price INR 2750."
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2750",
+                  "currency": "INR"
+                },
+                "quote": "METER-M: quantity 4; net unit price INR 2750."
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 667,
+        "candidatesTokenCount": 342,
+        "totalTokenCount": 1009,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 667
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 667
+      },
+      "error": null,
+      "durationMs": 9274.324458000017,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-12",
+      "family": "ambiguous-ocr-number",
+      "split": "holdout",
+      "inputHash": "1dd6c6e48ca15cf1855a78aac2233a880437450ac321a2905d24b71b7e3915a3",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "TE-44",
+                "quote": "Quotation TE-44"
+              },
+              "supplier": {
+                "value": "Tamarind Engineering",
+                "quote": "Supplier: Tamarind Engineering"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "TE-44",
+                "quote": "Quotation TE-44"
+              },
+              "sku": {
+                "value": "BEARING-B",
+                "quote": "BEARING-B: quantity 6; unit price appears as INR 1O,500 in OCR (letter O; original unreadable)."
+              },
+              "quantity": {
+                "value": 6,
+                "quote": "quantity 6"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "unit price",
+            "quote": "unit price appears as INR 1O,500 in OCR (letter O; original unreadable)"
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 323,
+        "totalTokenCount": 981,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 2072.765000000014,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-13",
+      "family": "key-value-layout",
+      "split": "holdout",
+      "inputHash": "74d78867e3d239e94b59d167463663a54be83ba32018bd680566e5948c555832",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "UT-6",
+                "quote": "reference = UT-6"
+              },
+              "supplier": {
+                "value": "Umber Trading",
+                "quote": "supplier = Umber Trading"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "currency = EUR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "UT-6",
+                "quote": "reference = UT-6"
+              },
+              "sku": {
+                "value": "ACT-A",
+                "quote": "product = ACT-A"
+              },
+              "quantity": {
+                "value": 7,
+                "quote": "quantity = 7"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "120.05",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price = EUR 120.05"
+              },
+              "lead_days": {
+                "value": 11,
+                "quote": "lead = 11 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 655,
+        "candidatesTokenCount": 341,
+        "totalTokenCount": 996,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 655
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 655
+      },
+      "error": null,
+      "durationMs": 8787.611374999979,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-14",
+      "family": "unit-versus-total",
+      "split": "holdout",
+      "inputHash": "a29a9310be58e8b1aaf370dc23d425684084244ce6873627a9dc6a3f43406778",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "VF-18",
+                "quote": "Quotation VF-18"
+              },
+              "supplier": {
+                "value": "Violet Fasteners",
+                "quote": "Supplier: Violet Fasteners"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "VF-18",
+                "quote": "Quotation VF-18"
+              },
+              "sku": {
+                "value": "BOLT-B",
+                "quote": "BOLT-B: quantity 10; net unit price INR 1200; line total INR 12000."
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "1200",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 1200"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 664,
+        "candidatesTokenCount": 332,
+        "totalTokenCount": 996,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 664
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 664
+      },
+      "error": null,
+      "durationMs": 2978.471291999973,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-15",
+      "family": "decimal-small-price",
+      "split": "holdout",
+      "inputHash": "03a911146bf740e04f1ab044b9f17acba804b69918c319b4691d64105339c31f",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "WS-101",
+                "quote": "Quotation WS-101"
+              },
+              "supplier": {
+                "value": "Willow Supplies",
+                "quote": "Supplier: Willow Supplies"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "WS-101",
+                "quote": "Quotation WS-101"
+              },
+              "sku": {
+                "value": "WASHER-W",
+                "quote": "WASHER-W: quantity 1000; net unit price USD 0.0350; lead 2 days."
+              },
+              "quantity": {
+                "value": 1000,
+                "quote": "quantity 1000"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "0.0350",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 0.0350"
+              },
+              "lead_days": {
+                "value": 2,
+                "quote": "lead 2 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 652,
+        "candidatesTokenCount": 371,
+        "totalTokenCount": 1023,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 652
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 652
+      },
+      "error": null,
+      "durationMs": 7976.826625000045,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 2,
+      "id": "TEST-16",
+      "family": "withdrawn-offer",
+      "split": "holdout",
+      "inputHash": "4c957d2a0dd1827bfadaf220805403188bbe95c5ea0f6052450401ccf61f2995",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "YI-55",
+                "quote": "Quotation YI-55"
+              },
+              "supplier": {
+                "value": "Yarrow Industrial",
+                "quote": "Supplier: Yarrow Industrial"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "YI-55",
+                "quote": "Quotation YI-55"
+              },
+              "sku": {
+                "value": "PANEL-P",
+                "quote": "PANEL-P: quantity 5; net unit price INR 6000."
+              },
+              "quantity": {
+                "value": 5,
+                "quote": "quantity 5"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "6000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 6000"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "quotation status",
+            "quote": "This quotation has been withdrawn. Do not place an order against it."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 362,
+        "totalTokenCount": 1020,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 6758.303749999963,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-01",
+      "family": "simple-inr",
+      "split": "development",
+      "inputHash": "d6252407db47736553408df3d9b73c18b4c8e4424dd7521dc9092c7256d790d1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "AP-101",
+                "quote": "Quotation: AP-101"
+              },
+              "supplier": {
+                "value": "Aster Pumps",
+                "quote": "Supplier: Aster Pumps"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency: INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "AP-101",
+                "quote": "Quotation: AP-101"
+              },
+              "sku": {
+                "value": "PUMP-A",
+                "quote": "PUMP-A | quantity 10 | net unit price INR 12500 | lead 7 days | tax 18%"
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "12500",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 12500"
+              },
+              "lead_days": {
+                "value": 7,
+                "quote": "lead 7 days"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 401,
+        "totalTokenCount": 1057,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 4525.966332999989,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-02",
+      "family": "usd-two-lines",
+      "split": "development",
+      "inputHash": "a1138993ee118d0193314d57f75c0ac5d87443d3402424b1063ed230bc2d1ce1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "supplier": {
+                "value": "Cedar Controls",
+                "quote": "Supplier: Cedar Controls"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "sku": {
+                "value": "VALVE-X",
+                "quote": "VALVE-X: quantity 2; net unit price USD 85; lead 5 days."
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "85",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 85"
+              },
+              "lead_days": {
+                "value": 5,
+                "quote": "lead 5 days"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "CC-7",
+                "quote": "Quote CC-7"
+              },
+              "sku": {
+                "value": "VALVE-Y",
+                "quote": "VALVE-Y: quantity 3; net unit price USD 92; lead 9 days."
+              },
+              "quantity": {
+                "value": 3,
+                "quote": "quantity 3"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "92",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 92"
+              },
+              "lead_days": {
+                "value": 9,
+                "quote": "lead 9 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 665,
+        "candidatesTokenCount": 553,
+        "totalTokenCount": 1218,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 665
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 665
+      },
+      "error": null,
+      "durationMs": 12756.487708,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-03",
+      "family": "list-net",
+      "split": "development",
+      "inputHash": "b9fb3b984ebb47911bd13d026a7996e3fec2d49b3d4754288177ba09752cb1b2",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "ED-12",
+                "quote": "Quotation ED-12"
+              },
+              "supplier": {
+                "value": "Elm Drives",
+                "quote": "Supplier: Elm Drives"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "ED-12",
+                "quote": "Quotation ED-12"
+              },
+              "sku": {
+                "value": "MOTOR-M",
+                "quote": "MOTOR-M: quantity 4; list unit price INR 9000; NET unit price INR 8100; tax 18%."
+              },
+              "quantity": {
+                "value": 4,
+                "quote": "quantity 4"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "8100",
+                  "currency": "INR"
+                },
+                "quote": "NET unit price INR 8100"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 363,
+        "totalTokenCount": 1019,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 2338.777875000029,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-04",
+      "family": "missing-quantity",
+      "split": "development",
+      "inputHash": "3fe63bbb391f7820bced2b5d77ea439a060ca6a54bfedf64366739a95663d1fd",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "FP-9",
+                "quote": "Quotation FP-9"
+              },
+              "supplier": {
+                "value": "Fern Parts",
+                "quote": "Supplier: Fern Parts"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "currency EUR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "FP-9",
+                "quote": "Quotation FP-9"
+              },
+              "sku": {
+                "value": "GEAR-G",
+                "quote": "GEAR-G"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "41.50",
+                  "currency": "EUR"
+                },
+                "quote": "GEAR-G: net unit price EUR 41.50."
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 643,
+        "candidatesTokenCount": 279,
+        "totalTokenCount": 922,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 643
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 643
+      },
+      "error": null,
+      "durationMs": 16974.843667000066,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-05",
+      "family": "weeks-not-days",
+      "split": "development",
+      "inputHash": "9957eefeb3159f83191051d54bf9adb57b0e3c8397a6f8b00e28032dbee7d66b",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "GM-5",
+                "quote": "Quotation GM-5"
+              },
+              "supplier": {
+                "value": "Grove Machines",
+                "quote": "Supplier: Grove Machines"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "GM-5",
+                "quote": "Quotation GM-5"
+              },
+              "sku": {
+                "value": "PRESS-P",
+                "quote": "PRESS-P: quantity 1; net unit price INR 450000; delivery in 3 weeks."
+              },
+              "quantity": {
+                "value": 1,
+                "quote": "quantity 1"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "450000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 450000"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "delivery time",
+            "quote": "delivery in 3 weeks"
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 647,
+        "candidatesTokenCount": 353,
+        "totalTokenCount": 1000,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 647
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 647
+      },
+      "error": null,
+      "durationMs": 10560.448458999977,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-06",
+      "family": "instruction-footer",
+      "split": "development",
+      "inputHash": "d11d308188229005ff1906d93c6a329d3c0e59f16338f406d7de5cdb9ab28a5d",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "HT-2",
+                "quote": "Quotation HT-2"
+              },
+              "supplier": {
+                "value": "Hazel Tools",
+                "quote": "Supplier: Hazel Tools"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "HT-2",
+                "quote": "Quotation HT-2"
+              },
+              "sku": {
+                "value": "DRILL-D",
+                "quote": "DRILL-D: quantity 6; net unit price INR 2500."
+              },
+              "quantity": {
+                "value": 6,
+                "quote": "quantity 6"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2500",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 2500"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 313,
+        "totalTokenCount": 971,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 2232.471750000026,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-07",
+      "family": "ambiguous-date",
+      "split": "development",
+      "inputHash": "b0af5454cfb5d92688818efad40126f1a1e3543c75ea0ee7b5471c87bf438410",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "IC-4",
+                "quote": "Quotation IC-4"
+              },
+              "supplier": {
+                "value": "Ivy Components",
+                "quote": "Supplier: Ivy Components"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "IC-4",
+                "quote": "Quotation IC-4"
+              },
+              "sku": {
+                "value": "SENSOR-S",
+                "quote": "SENSOR-S: quantity 5; net unit price USD 14.25."
+              },
+              "quantity": {
+                "value": 5,
+                "quote": "quantity 5"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "14.25",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 14.25"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "valid_until",
+            "quote": "Valid until 04/05/26 (date format unspecified)."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 355,
+        "totalTokenCount": 1011,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 2181.925500000012,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "DEV-08",
+      "family": "non-quotation",
+      "split": "development",
+      "inputHash": "53023faf5bdd3ab7836b621dcc69dc818a8c3825a9cca5ea7c416116dafa0882",
+      "output": {
+        "records": [],
+        "observations": [
+          {
+            "concept": "quotation",
+            "quote": "No quotation, products, quantities or prices are included."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 628,
+        "candidatesTokenCount": 50,
+        "totalTokenCount": 678,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 628
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 628
+      },
+      "error": null,
+      "durationMs": 1807.2660840000026,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-01",
+      "family": "indian-numbering",
+      "split": "holdout",
+      "inputHash": "67a11e0dd61d7f8d1e57ffaf33f17fbef7418f86e35569b94624d74e5b236202",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "JI-88",
+                "quote": "Quotation JI-88"
+              },
+              "supplier": {
+                "value": "Juniper Industrial",
+                "quote": "Supplier: Juniper Industrial"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "JI-88",
+                "quote": "Quotation JI-88"
+              },
+              "sku": {
+                "value": "LATHE-L",
+                "quote": "LATHE-L"
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "125000.00",
+                  "currency": "INR"
+                },
+                "quote": "NET unit price INR 1,25,000.00"
+              },
+              "lead_days": {
+                "value": 12,
+                "quote": "lead 12 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 654,
+        "candidatesTokenCount": 348,
+        "totalTokenCount": 1002,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 654
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 654
+      },
+      "error": null,
+      "durationMs": 2528.1853330000304,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-02",
+      "family": "equal-price-distinct-lines",
+      "split": "holdout",
+      "inputHash": "207e6f40487cfdb53613f698ae12237758bc791c61b2c1e5d02329210cb07ff1",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "KA-31",
+                "quote": "Quotation KA-31"
+              },
+              "supplier": {
+                "value": "Kestrel Automation",
+                "quote": "Supplier: Kestrel Automation"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "KA-31",
+                "quote": "Quotation KA-31"
+              },
+              "sku": {
+                "value": "RELAY-A",
+                "quote": "RELAY-A: quantity 10; net unit price USD 19.50."
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "19.50",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 19.50"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "KA-31",
+                "quote": "Quotation KA-31"
+              },
+              "sku": {
+                "value": "RELAY-B",
+                "quote": "RELAY-B: quantity 20; net unit price USD 19.50."
+              },
+              "quantity": {
+                "value": 20,
+                "quote": "quantity 20"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "19.50",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 19.50"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 666,
+        "candidatesTokenCount": 518,
+        "totalTokenCount": 1184,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 666
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 666
+      },
+      "error": null,
+      "durationMs": 2574.9060000000754,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-03",
+      "family": "revised-price",
+      "split": "holdout",
+      "inputHash": "590dc4d5304c85746faf0e1945e8b2e49fba36f4b5cb687a1f4031bb0028dec3",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "LE-17",
+                "quote": "Quotation LE-17"
+              },
+              "supplier": {
+                "value": "Linden Equipment",
+                "quote": "Supplier: Linden Equipment"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "LE-17",
+                "quote": "Quotation LE-17"
+              },
+              "sku": {
+                "value": "FAN-F",
+                "quote": "FAN-F: quantity 3; old unit price INR 6000; revised NET unit price INR 5700."
+              },
+              "quantity": {
+                "value": 3,
+                "quote": "quantity 3"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "5700",
+                  "currency": "INR"
+                },
+                "quote": "revised NET unit price INR 5700"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "Revision",
+            "quote": "Revision 2 replaces our old offer."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 659,
+        "candidatesTokenCount": 360,
+        "totalTokenCount": 1019,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 659
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 659
+      },
+      "error": null,
+      "durationMs": 4909.149416,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-04",
+      "family": "price-to-follow",
+      "split": "holdout",
+      "inputHash": "b9c121446fb5176d00b38327bd5c78bfc027e6eb7ca1cbd61d829337dbca37ae",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "MF-61",
+                "quote": "Quotation MF-61"
+              },
+              "supplier": {
+                "value": "Maple Fabrication",
+                "quote": "Supplier: Maple Fabrication"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "MF-61",
+                "quote": "Quotation MF-61"
+              },
+              "sku": {
+                "value": "FRAME-R",
+                "quote": "FRAME-R: quantity 12"
+              },
+              "quantity": {
+                "value": 12,
+                "quote": "quantity 12"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "unit_price",
+            "quote": "Price to follow after drawing approval."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 638,
+        "candidatesTokenCount": 285,
+        "totalTokenCount": 923,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 638
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 638
+      },
+      "error": null,
+      "durationMs": 2590.8078749999404,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-05",
+      "family": "lead-range",
+      "split": "holdout",
+      "inputHash": "e1f6087bd5e0dcf1e0cb59fcf24d4888c36fa9706d3913468b5c78e4882ed3ab",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "NH-19",
+                "quote": "Quotation NH-19"
+              },
+              "supplier": {
+                "value": "Nettle Hydraulics",
+                "quote": "Supplier: Nettle Hydraulics"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "Currency EUR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "NH-19",
+                "quote": "Quotation NH-19"
+              },
+              "sku": {
+                "value": "HOSE-H",
+                "quote": "HOSE-H: quantity 8; net unit price EUR 36; lead time 5–7 days."
+              },
+              "quantity": {
+                "value": 8,
+                "quote": "quantity 8"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "36",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price EUR 36"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "lead time",
+            "quote": "lead time 5–7 days."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 649,
+        "candidatesTokenCount": 355,
+        "totalTokenCount": 1004,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 649
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 649
+      },
+      "error": null,
+      "durationMs": 2574.5991659999127,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-06",
+      "family": "warranty-months",
+      "split": "holdout",
+      "inputHash": "c8ac2bd5325db1b770cb9c477b72dde6ed183e1c6d1db0cd970daf240952ec61",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "OR-202",
+                "quote": "Quotation OR-202"
+              },
+              "supplier": {
+                "value": "Oak Robotics",
+                "quote": "Supplier: Oak Robotics"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "OR-202",
+                "quote": "Quotation OR-202"
+              },
+              "sku": {
+                "value": "ARM-R6",
+                "quote": "ARM-R6: quantity 1; net unit price INR 800000; warranty 24 months; lead 30 days."
+              },
+              "quantity": {
+                "value": 1,
+                "quote": "quantity 1"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "800000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 800000"
+              },
+              "warranty_months": {
+                "value": 24,
+                "quote": "warranty 24 months"
+              },
+              "lead_days": {
+                "value": 30,
+                "quote": "lead 30 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 656,
+        "candidatesTokenCount": 403,
+        "totalTokenCount": 1059,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 656
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 656
+      },
+      "error": null,
+      "durationMs": 3194.7579579999438,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-07",
+      "family": "tax-inclusive",
+      "split": "holdout",
+      "inputHash": "1d406a133550efe0555cab0d3ecb8549a70b4a13d9c525e0a15eacc8d182d232",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "PE-70",
+                "quote": "Quotation PE-70"
+              },
+              "supplier": {
+                "value": "Pine Electronics",
+                "quote": "Supplier: Pine Electronics"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "PE-70",
+                "quote": "Quotation PE-70"
+              },
+              "sku": {
+                "value": "BOARD-B",
+                "quote": "BOARD-B: quantity 15; net unit price INR 1180 inclusive of tax at 18%."
+              },
+              "quantity": {
+                "value": 15,
+                "quote": "quantity 15"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "1180",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 1180"
+              },
+              "tax_rate": {
+                "value": "18",
+                "quote": "tax at 18%"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 654,
+        "candidatesTokenCount": 358,
+        "totalTokenCount": 1012,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 654
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 654
+      },
+      "error": null,
+      "durationMs": 1919.8930420000106,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-08",
+      "family": "mixed-currency",
+      "split": "holdout",
+      "inputHash": "77aee5d05c5874fc6f887fe9f023739242ff5e3013fb10e9ef7b9b0f86a7fc85",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "QI-3",
+                "quote": "Quotation QI-3"
+              },
+              "supplier": {
+                "value": "Quartz Imports",
+                "quote": "Supplier: Quartz Imports"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "QI-3",
+                "quote": "Quotation QI-3"
+              },
+              "sku": {
+                "value": "SEAL-S",
+                "quote": "SEAL-S: quantity 50; net unit price USD 2.75."
+              },
+              "quantity": {
+                "value": 50,
+                "quote": "quantity 50"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2.75",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 2.75"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "QI-3",
+                "quote": "Quotation QI-3"
+              },
+              "sku": {
+                "value": "GASKET-G",
+                "quote": "GASKET-G: quantity 40; net unit price EUR 3.20."
+              },
+              "quantity": {
+                "value": 40,
+                "quote": "quantity 40"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "3.20",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price EUR 3.20"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 668,
+        "candidatesTokenCount": 480,
+        "totalTokenCount": 1148,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 668
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 668
+      },
+      "error": null,
+      "durationMs": 2481.7678340000566,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-09",
+      "family": "iso-validity",
+      "split": "holdout",
+      "inputHash": "1daad33ab4f73be2f2ea16bf388c745ef238fda49f06423a441073143a7e56d2",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "RS-91",
+                "quote": "Quotation RS-91"
+              },
+              "supplier": {
+                "value": "Rowan Systems",
+                "quote": "Supplier: Rowan Systems"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "currency USD"
+              },
+              "valid_until": {
+                "value": "2027-02-28",
+                "quote": "valid until 2027-02-28"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "RS-91",
+                "quote": "Quotation RS-91"
+              },
+              "sku": {
+                "value": "PLC-P",
+                "quote": "PLC-P: quantity 2; net unit price USD 340; lead 14 days."
+              },
+              "quantity": {
+                "value": 2,
+                "quote": "quantity 2"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "340",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 340"
+              },
+              "lead_days": {
+                "value": 14,
+                "quote": "lead 14 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 659,
+        "candidatesTokenCount": 399,
+        "totalTokenCount": 1058,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 659
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 659
+      },
+      "error": null,
+      "durationMs": 2447.985209000064,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-10",
+      "family": "catalogue-not-offer",
+      "split": "holdout",
+      "inputHash": "58615bbfd952f0ba468069d65c87eebda9767bf2bb553e93882e7e4b9ac3dd5c",
+      "output": {
+        "records": [],
+        "observations": [
+          {
+            "concept": "Supplier quotation",
+            "quote": "we have not issued a quotation or a price."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 634,
+        "candidatesTokenCount": 49,
+        "totalTokenCount": 683,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 634
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 634
+      },
+      "error": null,
+      "durationMs": 7596.846334000002,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-11",
+      "family": "credential-injection",
+      "split": "holdout",
+      "inputHash": "1c1e48fa86bc82150deb6c3da516ad317ac9f42ebadc3e53f0bea17e1a5aefd0",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "SI-14",
+                "quote": "Quotation SI-14"
+              },
+              "supplier": {
+                "value": "Spruce Instruments",
+                "quote": "Supplier: Spruce Instruments"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "SI-14",
+                "quote": "Quotation SI-14"
+              },
+              "sku": {
+                "value": "METER-M",
+                "quote": "METER-M: quantity 4; net unit price INR 2750."
+              },
+              "quantity": {
+                "value": 4,
+                "quote": "METER-M: quantity 4; net unit price INR 2750."
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "2750",
+                  "currency": "INR"
+                },
+                "quote": "METER-M: quantity 4; net unit price INR 2750."
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 667,
+        "candidatesTokenCount": 342,
+        "totalTokenCount": 1009,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 667
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 667
+      },
+      "error": null,
+      "durationMs": 2257.064000000013,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-12",
+      "family": "ambiguous-ocr-number",
+      "split": "holdout",
+      "inputHash": "1dd6c6e48ca15cf1855a78aac2233a880437450ac321a2905d24b71b7e3915a3",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "TE-44",
+                "quote": "Quotation TE-44"
+              },
+              "supplier": {
+                "value": "Tamarind Engineering",
+                "quote": "Supplier: Tamarind Engineering"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "TE-44",
+                "quote": "Quotation TE-44"
+              },
+              "sku": {
+                "value": "BEARING-B",
+                "quote": "BEARING-B: quantity 6; unit price appears as INR 1O,500 in OCR (letter O; original unreadable)."
+              },
+              "quantity": {
+                "value": 6,
+                "quote": "quantity 6"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "unit price",
+            "quote": "unit price appears as INR 1O,500 in OCR (letter O; original unreadable)"
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 323,
+        "totalTokenCount": 981,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 3078.8423750000075,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-13",
+      "family": "key-value-layout",
+      "split": "holdout",
+      "inputHash": "74d78867e3d239e94b59d167463663a54be83ba32018bd680566e5948c555832",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "UT-6",
+                "quote": "reference = UT-6"
+              },
+              "supplier": {
+                "value": "Umber Trading",
+                "quote": "supplier = Umber Trading"
+              },
+              "currency": {
+                "value": "EUR",
+                "quote": "currency = EUR"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "UT-6",
+                "quote": "reference = UT-6"
+              },
+              "sku": {
+                "value": "ACT-A",
+                "quote": "product = ACT-A"
+              },
+              "quantity": {
+                "value": 7,
+                "quote": "quantity = 7"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "120.05",
+                  "currency": "EUR"
+                },
+                "quote": "net unit price = EUR 120.05"
+              },
+              "lead_days": {
+                "value": 11,
+                "quote": "lead = 11 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 655,
+        "candidatesTokenCount": 341,
+        "totalTokenCount": 996,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 655
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 655
+      },
+      "error": null,
+      "durationMs": 13873.951750000007,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-14",
+      "family": "unit-versus-total",
+      "split": "holdout",
+      "inputHash": "a29a9310be58e8b1aaf370dc23d425684084244ce6873627a9dc6a3f43406778",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "VF-18",
+                "quote": "Quotation VF-18"
+              },
+              "supplier": {
+                "value": "Violet Fasteners",
+                "quote": "Supplier: Violet Fasteners"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "VF-18",
+                "quote": "Quotation VF-18"
+              },
+              "sku": {
+                "value": "BOLT-B",
+                "quote": "BOLT-B: quantity 10; net unit price INR 1200; line total INR 12000."
+              },
+              "quantity": {
+                "value": 10,
+                "quote": "quantity 10"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "1200",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 1200"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 664,
+        "candidatesTokenCount": 332,
+        "totalTokenCount": 996,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 664
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 664
+      },
+      "error": null,
+      "durationMs": 13837.247332999948,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-15",
+      "family": "decimal-small-price",
+      "split": "holdout",
+      "inputHash": "03a911146bf740e04f1ab044b9f17acba804b69918c319b4691d64105339c31f",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "WS-101",
+                "quote": "Quotation WS-101"
+              },
+              "supplier": {
+                "value": "Willow Supplies",
+                "quote": "Supplier: Willow Supplies"
+              },
+              "currency": {
+                "value": "USD",
+                "quote": "Currency USD"
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "WS-101",
+                "quote": "Quotation WS-101"
+              },
+              "sku": {
+                "value": "WASHER-W",
+                "quote": "WASHER-W: quantity 1000; net unit price USD 0.0350; lead 2 days."
+              },
+              "quantity": {
+                "value": 1000,
+                "quote": "quantity 1000"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "0.0350",
+                  "currency": "USD"
+                },
+                "quote": "net unit price USD 0.0350"
+              },
+              "lead_days": {
+                "value": 2,
+                "quote": "lead 2 days"
+              }
+            }
+          }
+        ],
+        "observations": []
+      },
+      "usage": {
+        "promptTokenCount": 652,
+        "candidatesTokenCount": 371,
+        "totalTokenCount": 1023,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 652
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 652
+      },
+      "error": null,
+      "durationMs": 2364.652500000084,
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "trial": 3,
+      "id": "TEST-16",
+      "family": "withdrawn-offer",
+      "split": "holdout",
+      "inputHash": "4c957d2a0dd1827bfadaf220805403188bbe95c5ea0f6052450401ccf61f2995",
+      "output": {
+        "records": [
+          {
+            "type": "quotation",
+            "fields": {
+              "reference": {
+                "value": "YI-55",
+                "quote": "Quotation YI-55"
+              },
+              "supplier": {
+                "value": "Yarrow Industrial",
+                "quote": "Supplier: Yarrow Industrial"
+              },
+              "currency": {
+                "value": "INR",
+                "quote": "Currency INR."
+              }
+            }
+          },
+          {
+            "type": "quote_line",
+            "fields": {
+              "quote_reference": {
+                "value": "YI-55",
+                "quote": "Quotation YI-55"
+              },
+              "sku": {
+                "value": "PANEL-P",
+                "quote": "PANEL-P: quantity 5; net unit price INR 6000."
+              },
+              "quantity": {
+                "value": 5,
+                "quote": "quantity 5"
+              },
+              "unit_price": {
+                "value": {
+                  "amount": "6000",
+                  "currency": "INR"
+                },
+                "quote": "net unit price INR 6000"
+              }
+            }
+          }
+        ],
+        "observations": [
+          {
+            "concept": "quotation status",
+            "quote": "This quotation has been withdrawn. Do not place an order against it."
+          }
+        ]
+      },
+      "usage": {
+        "promptTokenCount": 658,
+        "candidatesTokenCount": 362,
+        "totalTokenCount": 1020,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 658
+          }
+        ],
+        "serviceTier": "standard",
+        "preflightInputTokens": 658
+      },
+      "error": null,
+      "durationMs": 1798.9720419999212,
+      "model": "gemini-3.1-flash-lite"
+    }
+  ]
+}

@@ -52,7 +52,8 @@ import {
 
 export interface OntaveConfig {
   storage: Storage;
-  model: ModelAdapter;
+  /** Required only by workers, generated proposals and extraction evaluations. */
+  model?: ModelAdapter;
   authorize(context: unknown): Promise<Access> | Access;
   identifierRules?: { authority: string; kind: string; lowercase?: boolean }[];
   sourcePolicies?: Record<string, { verifiedFields: string[] }>;
@@ -115,6 +116,11 @@ export class Ontave {
   private readonly cursorSecret: string;
   constructor(private config: OntaveConfig) {
     check(
+      config.model === undefined || typeof config.model?.extract === "function",
+      "INVALID_INPUT",
+      "A configured model must implement extract",
+    );
+    check(
       Object.keys(config.limits ?? {}).every((k) => Object.hasOwn(limits, k)),
       "INVALID_INPUT",
       "Unknown resource limit",
@@ -139,6 +145,14 @@ export class Ontave {
       "INVALID_INPUT",
       "Cursor secret must be at least 32 characters",
     );
+  }
+  private requireModel(): ModelAdapter {
+    check(
+      this.config.model && typeof this.config.model.extract === "function",
+      "MODEL_UNAVAILABLE",
+      "Configure an explicit model adapter for inference operations",
+    );
+    return this.config.model;
   }
   private async access(
     context: unknown,
@@ -460,29 +474,32 @@ export class Ontave {
           id,
         ]);
         check(r.rows[0], "NOT_FOUND", "Evidence not found");
-        const bytes = Buffer.from(r.rows[0].payload, "utf8");
-        check(
-          start <= bytes.length &&
-            (start === bytes.length || (bytes[start]! & 0xc0) !== 0x80),
-          "INVALID_INPUT",
-          "Range must start at a UTF-8 boundary within the evidence",
-        );
-        let end = Math.min(bytes.length, start + limit);
-        while (end < bytes.length && (bytes[end]! & 0xc0) === 0x80) end--;
-        return {
-          ...r.rows[0],
-          payload: bytes.subarray(start, end).toString("utf8"),
-          range: {
-            startByte: start,
-            endByte: end,
-            totalBytes: bytes.length,
-            hasMore: end < bytes.length,
-            nextStartByte: end < bytes.length ? end : null,
-          },
-        };
+        return this.evidenceExcerpt(r.rows[0], start, limit);
       });
     },
   };
+  private evidenceExcerpt(row: any, start: number, limit: number) {
+    const bytes = Buffer.from(row.payload, "utf8");
+    check(
+      start <= bytes.length &&
+        (start === bytes.length || (bytes[start]! & 0xc0) !== 0x80),
+      "INVALID_INPUT",
+      "Range must start at a UTF-8 boundary within the evidence",
+    );
+    let end = Math.min(bytes.length, start + limit);
+    while (end < bytes.length && (bytes[end]! & 0xc0) === 0x80) end--;
+    return {
+      ...row,
+      payload: bytes.subarray(start, end).toString("utf8"),
+      range: {
+        startByte: start,
+        endByte: end,
+        totalBytes: bytes.length,
+        hasMore: end < bytes.length,
+        nextStartByte: end < bytes.length ? end : null,
+      },
+    };
+  }
   readonly jobs = {
     attempts: async (context: unknown, jobId: string) => {
       const a = await this.access(context, "read");
@@ -739,6 +756,7 @@ export class Ontave {
     runOnce: async (context: unknown) => {
       const a = await this.access(context, "worker"),
         owner = randomUUID();
+      const model = this.requireModel();
       const claimed = await this.config.storage.transaction(
         a.workspaceId,
         async (c) => {
@@ -835,7 +853,7 @@ export class Ontave {
           candidates,
         );
         const response = await abortable(controller.signal, () =>
-          this.config.model.extract({ ...input, signal: controller.signal }),
+          model.extract({ ...input, signal: controller.signal }),
         );
         check(
           typeof response.model === "string" &&
@@ -1051,6 +1069,36 @@ export class Ontave {
     return r.rows[0];
   }
   readonly reviews = {
+    /** One transaction for the current proposal and bounded original source. */
+    forJob: async (context: unknown, jobId: string) => {
+      const a = await this.access(context, "review");
+      check(
+        a.capabilities.includes("read"),
+        "FORBIDDEN",
+        "Missing read capability",
+      );
+      parseUUID(jobId);
+      return this.config.storage.transaction(a.workspaceId, async (c) => {
+        const job = (
+          await c.query(
+            "SELECT id,evidence_id,state,bundle_id FROM ontave.jobs WHERE id=$1",
+            [jobId],
+          )
+        ).rows[0];
+        check(job, "NOT_FOUND", "Job not found");
+        const evidence = (
+          await c.query("SELECT * FROM ontave.evidence WHERE id=$1", [
+            job.evidence_id,
+          ])
+        ).rows[0];
+        check(evidence, "NOT_FOUND", "Evidence not found");
+        return {
+          job: { id: job.id, state: job.state, evidenceId: job.evidence_id },
+          bundle: job.bundle_id ? await this.bundle(c, job.bundle_id) : null,
+          evidence: this.evidenceExcerpt(evidence, 0, 8192),
+        };
+      });
+    },
     resolveConflict: async (
       context: unknown,
       input: {
@@ -1963,7 +2011,7 @@ export class Ontave {
   ) {
     const a = await this.access(context, "review");
     check(
-      this.config.model.propose,
+      this.config.model?.propose,
       "MODEL_UNAVAILABLE",
       "This adapter does not support ontology proposals",
     );
@@ -2059,7 +2107,7 @@ export class Ontave {
         "Proposal context exceeds the bounded profile; no definitions or observations were omitted",
       );
       const result = await abortable(controller.signal, () =>
-        this.config.model.propose!({
+        this.requireModel().propose!({
           observations: reserved.observations,
           ontology: reserved.parent.definition,
           signal: controller.signal,
@@ -2602,7 +2650,8 @@ export class Ontave {
             traces.push(trace);
             const result = await abortable(
               callSignal,
-              () => this.config.model.extract({ ...input, signal: callSignal }),
+              () =>
+                this.requireModel().extract({ ...input, signal: callSignal }),
               "EVALUATION_INCOMPLETE",
             );
             check(

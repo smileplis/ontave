@@ -2,6 +2,8 @@
 
 These results use fictional deterministic inputs and real disposable PostgreSQL on a local Apple M4 Pro. They measure framework behavior. They do not measure general extraction accuracy, production response time or human productivity.
 
+The separate [supplier quotation comparison](SUPPLIER_QUOTATION_BENCHMARK.md) adds shared live-model predictions and an exploratory timed walkthrough. Both implementations had the same raw accuracy; Ontave took longer in the one-maintainer guided install/review session. The concrete alpha.5 integration improvement is a source/proposal snapshot in one transaction instead of three and no model credentials on ingest/read/review services. The study does not establish population-level time savings. These additions are in the unpublished alpha.5 candidate; npm remains alpha.4.
+
 | Benefit                                | Observed result                                                                       | Boundary                                                                                                                                                         |
 | -------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Avoid repeated extraction work         | 100 extraction calls for 500 deliveries of 100 distinct inputs                        | Receipt idempotency avoided 400 calls: 80% fewer than a counterfactual that extracts every delivery. This is an operation-count comparison, not a billing study. |

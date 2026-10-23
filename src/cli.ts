@@ -101,7 +101,7 @@ async function main(): Promise<unknown> {
     const path = resolve(args.values.output ?? "ontave.config.mjs");
     await writeFile(
       path,
-      `// Trusted server-side configuration. Do not expose this file to browsers.\nimport { createOntave, OntaveError } from 'ontave';\nimport { postgres } from 'ontave/postgres';\nimport { gemini } from 'ontave/models/gemini';\nexport default () => {\n const token = process.env.ONTAVE_LOCAL_TOKEN;\n if (!token || token.length < 32) throw new Error('Set ONTAVE_LOCAL_TOKEN to a private local secret');\n const runtime = createOntave({\n  storage: postgres({ connectionString: process.env.ONTAVE_DATABASE_URL }),\n  authorize: credential => {\n   if (credential !== token) throw new OntaveError('UNAUTHORIZED', 'Invalid local credential');\n   return { actorId: 'local-owner', workspaceId: process.env.ONTAVE_WORKSPACE_ID, capabilities: ['provision','read','ingest','review','worker'] };\n  },\n  model: process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL ? gemini({apiKey:process.env.GEMINI_API_KEY,model:process.env.GEMINI_MODEL}) : {async extract(){throw new OntaveError('MODEL_UNAVAILABLE','Configure GEMINI_API_KEY and GEMINI_MODEL; no fixture fallback');}},\n  cursorSecret: process.env.ONTAVE_CURSOR_SECRET\n });\n return { runtime, context: token, migrationConnectionString: process.env.ONTAVE_MIGRATION_DATABASE_URL, runtimeRole: process.env.ONTAVE_RUNTIME_ROLE };\n};\n`,
+      `// Trusted server-side configuration. Do not expose this file to browsers.\nimport { createOntave, OntaveError } from 'ontave';\nimport { postgres } from 'ontave/postgres';\nimport { gemini } from 'ontave/models/gemini';\nexport default () => {\n const token = process.env.ONTAVE_LOCAL_TOKEN;\n if (!token || token.length < 32) throw new Error('Set ONTAVE_LOCAL_TOKEN to a private local secret');\n const runtime = createOntave({\n  storage: postgres({ connectionString: process.env.ONTAVE_DATABASE_URL }),\n  authorize: credential => {\n   if (credential !== token) throw new OntaveError('UNAUTHORIZED', 'Invalid local credential');\n   return { actorId: 'local-owner', workspaceId: process.env.ONTAVE_WORKSPACE_ID, capabilities: ['provision','read','ingest','review','worker'] };\n  },\n  model: process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL ? gemini({apiKey:process.env.GEMINI_API_KEY,model:process.env.GEMINI_MODEL}) : undefined,\n  cursorSecret: process.env.ONTAVE_CURSOR_SECRET\n });\n return { runtime, context: token, migrationConnectionString: process.env.ONTAVE_MIGRATION_DATABASE_URL, runtimeRole: process.env.ONTAVE_RUNTIME_ROLE };\n};\n`,
       { flag: "wx" },
     );
     return {
@@ -171,7 +171,7 @@ async function main(): Promise<unknown> {
       return {
         node: process.version,
         workspace: await app.ontology.inspect(ctx),
-        model: "Configured adapter; no provider call performed",
+        model: "Not checked; doctor performs no provider call",
       };
     if (command === "workspace" && action === "create")
       return await app.workspaces.create(ctx, await readInput());

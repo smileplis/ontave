@@ -15,10 +15,12 @@ export function getRuntime(): Ontave {
   const model =
     process.env.ONTAVE_DEMO_MODE === "fixture"
       ? fixtureAdapter((task) => personFixture(task.text))
-      : gemini({
-          apiKey: process.env.GEMINI_API_KEY ?? "",
-          model: process.env.GEMINI_MODEL ?? "",
-        });
+      : process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL
+        ? gemini({
+            apiKey: process.env.GEMINI_API_KEY,
+            model: process.env.GEMINI_MODEL,
+          })
+        : undefined;
   instance = createOntave({
     storage: postgres({ connectionString: process.env.ONTAVE_DATABASE_URL }),
     model,

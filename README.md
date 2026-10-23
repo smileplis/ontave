@@ -110,6 +110,8 @@ npm run dev --prefix website
 
 ## Measured benefits and release qualification
 
+The unpublished **alpha.5 candidate** adds a [runnable supplier-quotation comparison](examples/supplier-quotes/README.md) against standalone LLM + PostgreSQL. The [benchmark report](docs/SUPPLIER_QUOTATION_BENCHMARK.md) includes shared live predictions, failure history, accepted-data coverage and an exploratory timed review. It makes no framework extraction-uplift or human time-saving claim. Optional models on non-inference services and `reviews.forJob` are candidate additions; `npm install ontave` still selects the published alpha.4.
+
 The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/USER_BENEFITS.md) and the [quality report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUALITY_REPORT.md).
 
 The published alpha.4 uses a developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks, plus a disclosure of every open quality gate. This is separate from full MVP qualification, which requires independent semantic review. See the [versioned release workflow](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/README.md#measured-benefits-and-release-qualification) for the commands and evidence policy belonging to that release.

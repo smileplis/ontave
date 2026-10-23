@@ -1,0 +1,1353 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "candidateVersion": "0.1.0-alpha.5",
+  "datasetHash": "049fca6731eab9ee38b5b249781b17d81144cfda007d4aae597820d5cf33bfb1",
+  "initial": {
+    "protocol": "quotation-comparison-v1.2",
+    "model": "gemini-3.1-flash-lite",
+    "acquisitionFrozenAt": "2026-10-23T03:08:15.617Z",
+    "reportSha256": "ede9d4a1f1271297d41bc97bf696c7070fcbbd0e7a6decf82151680c722856f2",
+    "acquisitionSha256": "b4951635810635b0c3d2231050c87fb3964f3f6a7b7340f3e076fdbafc1bb7f4",
+    "publicPredictionsSha256": "b4951635810635b0c3d2231050c87fb3964f3f6a7b7340f3e076fdbafc1bb7f4",
+    "availability": {
+      "documentTasks": 72,
+      "successfulDocuments": 67,
+      "finalFailures": 5,
+      "firstAttemptFailures": 5,
+      "inferenceAttempts": 72,
+      "retriesUsed": 0,
+      "retriesAllowedPerDocument": 0,
+      "unknownUsageAttempts": 5,
+      "reportedInputTokens": 43785,
+      "reportedOutputTokens": 22774,
+      "monetaryCost": null
+    },
+    "heldout": {
+      "documents": 48,
+      "correct": 310,
+      "proposed": 310,
+      "expected": 354,
+      "precision": 1,
+      "recall": 0.8757062146892656,
+      "microF1": 0.9337349397590361,
+      "macroDocumentF1": 0.8958333333333334,
+      "documentExact": 0.8958333333333334,
+      "sourceCoverage": 1,
+      "falsePositive": 0,
+      "missed": 44,
+      "distinctFamilies": 16,
+      "microF1Cluster95": {
+        "lower": 0.8837209302325582,
+        "upper": 0.9791044776119403,
+        "confidence": 0.95,
+        "iterations": 10000,
+        "unit": "supplier/layout/scenario family; repeated trials retained within cluster"
+      },
+      "allTrialsExactFamilyWilson95": {
+        "lower": 0.44404355834740666,
+        "upper": 0.8583535614521796,
+        "confidence": 0.95,
+        "n": 16
+      },
+      "byTrial": {
+        "1": {
+          "documents": 16,
+          "correct": 74,
+          "proposed": 74,
+          "expected": 118,
+          "precision": 1,
+          "recall": 0.6271186440677966,
+          "microF1": 0.7708333333333334,
+          "macroDocumentF1": 0.6875,
+          "documentExact": 0.6875,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 44
+        },
+        "2": {
+          "documents": 16,
+          "correct": 118,
+          "proposed": 118,
+          "expected": 118,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "3": {
+          "documents": 16,
+          "correct": 118,
+          "proposed": 118,
+          "expected": 118,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        }
+      },
+      "byFamily": {
+        "indian-numbering": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "equal-price-distinct-lines": {
+          "documents": 3,
+          "correct": 22,
+          "proposed": 22,
+          "expected": 33,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "microF1": 0.8,
+          "macroDocumentF1": 0.6666666666666666,
+          "documentExact": 0.6666666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 11
+        },
+        "revised-price": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "price-to-follow": {
+          "documents": 3,
+          "correct": 18,
+          "proposed": 18,
+          "expected": 18,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "lead-range": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "warranty-months": {
+          "documents": 3,
+          "correct": 18,
+          "proposed": 18,
+          "expected": 27,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "microF1": 0.8,
+          "macroDocumentF1": 0.6666666666666666,
+          "documentExact": 0.6666666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 9
+        },
+        "tax-inclusive": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "mixed-currency": {
+          "documents": 3,
+          "correct": 20,
+          "proposed": 20,
+          "expected": 30,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "microF1": 0.8,
+          "macroDocumentF1": 0.6666666666666666,
+          "documentExact": 0.6666666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 10
+        },
+        "iso-validity": {
+          "documents": 3,
+          "correct": 27,
+          "proposed": 27,
+          "expected": 27,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "catalogue-not-offer": {
+          "documents": 3,
+          "correct": 0,
+          "proposed": 0,
+          "expected": 0,
+          "precision": null,
+          "recall": null,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": null,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "credential-injection": {
+          "documents": 3,
+          "correct": 14,
+          "proposed": 14,
+          "expected": 21,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "microF1": 0.8,
+          "macroDocumentF1": 0.6666666666666666,
+          "documentExact": 0.6666666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 7
+        },
+        "ambiguous-ocr-number": {
+          "documents": 3,
+          "correct": 18,
+          "proposed": 18,
+          "expected": 18,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "key-value-layout": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "unit-versus-total": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "decimal-small-price": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "withdrawn-offer": {
+          "documents": 3,
+          "correct": 14,
+          "proposed": 14,
+          "expected": 21,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "microF1": 0.8,
+          "macroDocumentF1": 0.6666666666666666,
+          "documentExact": 0.6666666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 7
+        }
+      },
+      "byField": {
+        "quotation.reference": {
+          "correct": 40,
+          "proposed": 40,
+          "expected": 45,
+          "precision": 1,
+          "recall": 0.8888888888888888,
+          "f1": 0.9411764705882353
+        },
+        "quotation.supplier": {
+          "correct": 40,
+          "proposed": 40,
+          "expected": 45,
+          "precision": 1,
+          "recall": 0.8888888888888888,
+          "f1": 0.9411764705882353
+        },
+        "quotation.currency": {
+          "correct": 38,
+          "proposed": 38,
+          "expected": 42,
+          "precision": 1,
+          "recall": 0.9047619047619048,
+          "f1": 0.95
+        },
+        "quote_line.quote_reference": {
+          "correct": 44,
+          "proposed": 44,
+          "expected": 51,
+          "precision": 1,
+          "recall": 0.8627450980392157,
+          "f1": 0.9263157894736842
+        },
+        "quote_line.sku": {
+          "correct": 44,
+          "proposed": 44,
+          "expected": 51,
+          "precision": 1,
+          "recall": 0.8627450980392157,
+          "f1": 0.9263157894736842
+        },
+        "quote_line.quantity": {
+          "correct": 44,
+          "proposed": 44,
+          "expected": 51,
+          "precision": 1,
+          "recall": 0.8627450980392157,
+          "f1": 0.9263157894736842
+        },
+        "quote_line.unit_price": {
+          "correct": 38,
+          "proposed": 38,
+          "expected": 45,
+          "precision": 1,
+          "recall": 0.8444444444444444,
+          "f1": 0.9156626506024096
+        },
+        "quote_line.lead_days": {
+          "correct": 14,
+          "proposed": 14,
+          "expected": 15,
+          "precision": 1,
+          "recall": 0.9333333333333333,
+          "f1": 0.9655172413793104
+        },
+        "quote_line.warranty_months": {
+          "correct": 2,
+          "proposed": 2,
+          "expected": 3,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "quote_line.tax_rate": {
+          "correct": 3,
+          "proposed": 3,
+          "expected": 3,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quotation.valid_until": {
+          "correct": 3,
+          "proposed": 3,
+          "expected": 3,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        }
+      }
+    },
+    "arms": {
+      "plain": {
+        "accepted": {
+          "documents": 48,
+          "correct": 218,
+          "proposed": 218,
+          "expected": 354,
+          "precision": 1,
+          "recall": 0.615819209039548,
+          "microF1": 0.7622377622377622,
+          "macroDocumentF1": 0.6041666666666666,
+          "documentExact": 0.6041666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 136
+        },
+        "heldoutStates": {
+          "completed": 26,
+          "failed": 5,
+          "waiting_ontology": 17
+        },
+        "unreviewedVisibleRecords": 0,
+        "pipelineErrors": 5,
+        "reviewLoadTransactions": [
+          1
+        ],
+        "machineMs": {
+          "workspaceBootstrap": {
+            "n": 72,
+            "median": 0.006250000000363798,
+            "p95": 0.013791999999739346,
+            "min": 0.004666000000270287,
+            "max": 0.040541999999959444
+          },
+          "ingestMs": {
+            "n": 72,
+            "median": 0.9319160000000011,
+            "p95": 1.1805410000001757,
+            "min": 0.7155830000001515,
+            "max": 1.444915999999921
+          },
+          "processMs": {
+            "n": 72,
+            "median": 1.9147499999999127,
+            "p95": 2.2932080000000497,
+            "min": 1.3143749999999272,
+            "max": 3.892665999999963
+          },
+          "reviewLoadMs": {
+            "n": 72,
+            "median": 0.5517500000000837,
+            "p95": 0.6698750000000473,
+            "min": 0.37883400000009715,
+            "max": 1.0246250000000146
+          },
+          "acceptMs": {
+            "n": 41,
+            "median": 2.00058399999989,
+            "p95": 2.64975000000004,
+            "min": 1.3485420000001795,
+            "max": 3.4249580000000606
+          },
+          "readMs": {
+            "n": 72,
+            "median": 0.45108299999992596,
+            "p95": 0.630333999999948,
+            "min": 0.27629200000046694,
+            "max": 1.2580420000001595
+          }
+        }
+      },
+      "ontave": {
+        "accepted": {
+          "documents": 48,
+          "correct": 218,
+          "proposed": 218,
+          "expected": 354,
+          "precision": 1,
+          "recall": 0.615819209039548,
+          "microF1": 0.7622377622377622,
+          "macroDocumentF1": 0.6041666666666666,
+          "documentExact": 0.6041666666666666,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 136
+        },
+        "heldoutStates": {
+          "completed": 26,
+          "failed": 5,
+          "waiting_ontology": 17
+        },
+        "unreviewedVisibleRecords": 0,
+        "pipelineErrors": 5,
+        "reviewLoadTransactions": [
+          1
+        ],
+        "machineMs": {
+          "workspaceBootstrap": {
+            "n": 72,
+            "median": 27.635874999999942,
+            "p95": 29.953500000000076,
+            "min": 23.542582999999468,
+            "max": 36.862959000000046
+          },
+          "ingestMs": {
+            "n": 72,
+            "median": 0.3660420000001068,
+            "p95": 0.4940000000001419,
+            "min": 0.23791700000037963,
+            "max": 0.6673330000000988
+          },
+          "processMs": {
+            "n": 72,
+            "median": 2.163416999999754,
+            "p95": 2.8565830000000005,
+            "min": 1.1714579999998023,
+            "max": 2.9314589999999043
+          },
+          "reviewLoadMs": {
+            "n": 72,
+            "median": 0.41033299999980954,
+            "p95": 0.5807499999996253,
+            "min": 0.2573330000000169,
+            "max": 1.0308749999999236
+          },
+          "acceptMs": {
+            "n": 41,
+            "median": 5.384792000000061,
+            "p95": 7.158500000000004,
+            "min": 3.615375000000313,
+            "max": 8.011792000000014
+          },
+          "readMs": {
+            "n": 72,
+            "median": 1.235417000000325,
+            "p95": 1.96774999999991,
+            "min": 0.7951249999996435,
+            "max": 2.36324999999988
+          }
+        }
+      }
+    },
+    "machineSetup": {
+      "sharedDatabaseStartupMs": 485.64000000000004,
+      "schemaSetupMs": {
+        "plain": 67.76066600000001,
+        "ontave": 73.11649999999997
+      },
+      "scope": "Local automated dependency-ready schema creation and application bootstrap, shared warmed PostgreSQL; migration order plain then Ontave. Not human setup time or production provisioning."
+    },
+    "environment": {
+      "node": "v24.22.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M4 Pro",
+      "memoryBytes": 25769803776,
+      "postgres": "18.4"
+    },
+    "acquisitionFiles": {
+      "examples/supplier-quotes/domain.mjs": "962783266953de7fb1f1af352e5cf200d5675bc538dd29c45d96a1ddee774ac6",
+      "examples/supplier-quotes/cases.mjs": "5f2da7aff7629dbe372c8653ea93f078791553d6e4edf29a0425f731af664efa",
+      "examples/supplier-quotes/provider.mjs": "e710d193776e0a4b8389701675a214d9eaa5301e8b58072f26834e6f11d67d96",
+      "examples/supplier-quotes/scoring.mjs": "0694ef0d5a739f95caaa2ccbefccf780f47f12529d49596e27b837184ba53617",
+      "scripts/collect-quotation-trials.mjs": "265e9d16f747eb5ae72faf806e2a51bc93cd123afc15f8a510df331e7b9d2382"
+    },
+    "replayImplementationHashes": {
+      "src/runtime.ts": "4f3710298bbb6058bce46db34127aab3ded4ebb26dc063d309e9d1871901a400",
+      "dist/runtime.js": "d07139d94434555699676e229de860bcda7cf33cb086c9077736f8ffa1c6f5df",
+      "examples/supplier-quotes/domain.mjs": "f87d271dfa59edc79b90c8fb9a197eecff6fe222eabcd149de31eb73e16e47e8",
+      "examples/supplier-quotes/plain-postgres.mjs": "fcd5bf11231ac5f72f1012f1f0216671e2f8910b7e530ccf98f06c0471f249dc",
+      "examples/supplier-quotes/ontave-store.mjs": "2ab23ef77e3a7c82c5a4691c6a792b51e060b978749bbe809f40ae701dcc6f3d",
+      "examples/supplier-quotes/scoring.mjs": "34c0595eb25e7dde3936cd3d178cf8cd2f46a965878effe4c5dd99c73cb798a1",
+      "scripts/compare-quotations.mjs": "5189de06883b0421feeb4f3dca4789622619fdf109a4af2cc67bf645a4a19d3f"
+    }
+  },
+  "followup": {
+    "protocol": "quotation-comparison-v1.3-recovery-ablation",
+    "model": "gemini-3.1-flash-lite",
+    "acquisitionFrozenAt": "2026-10-23T03:30:55.313Z",
+    "reportSha256": "c85e83ebf8b067b9b8c77396a45d484ba318c6c1a6cc3ab5e3f2eafc111a8071",
+    "acquisitionSha256": "5f98ec8be26d552618fefd85a247122c222545aea1c04fb3c7de835c2ec67fa2",
+    "publicPredictionsSha256": "5f98ec8be26d552618fefd85a247122c222545aea1c04fb3c7de835c2ec67fa2",
+    "availability": {
+      "documentTasks": 72,
+      "successfulDocuments": 72,
+      "finalFailures": 0,
+      "firstAttemptFailures": 0,
+      "inferenceAttempts": 72,
+      "retriesUsed": 0,
+      "retriesAllowedPerDocument": 2,
+      "unknownUsageAttempts": 0,
+      "reportedInputTokens": 47100,
+      "reportedOutputTokens": 24879,
+      "monetaryCost": null
+    },
+    "heldout": {
+      "documents": 48,
+      "correct": 354,
+      "proposed": 354,
+      "expected": 354,
+      "precision": 1,
+      "recall": 1,
+      "microF1": 1,
+      "macroDocumentF1": 1,
+      "documentExact": 1,
+      "sourceCoverage": 1,
+      "falsePositive": 0,
+      "missed": 0,
+      "distinctFamilies": 16,
+      "microF1Cluster95": {
+        "lower": 1,
+        "upper": 1,
+        "confidence": 0.95,
+        "iterations": 10000,
+        "unit": "supplier/layout/scenario family; repeated trials retained within cluster"
+      },
+      "allTrialsExactFamilyWilson95": {
+        "lower": 0.8063923194655637,
+        "upper": 1,
+        "confidence": 0.95,
+        "n": 16
+      },
+      "byTrial": {
+        "1": {
+          "documents": 16,
+          "correct": 118,
+          "proposed": 118,
+          "expected": 118,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "2": {
+          "documents": 16,
+          "correct": 118,
+          "proposed": 118,
+          "expected": 118,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "3": {
+          "documents": 16,
+          "correct": 118,
+          "proposed": 118,
+          "expected": 118,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        }
+      },
+      "byFamily": {
+        "indian-numbering": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "equal-price-distinct-lines": {
+          "documents": 3,
+          "correct": 33,
+          "proposed": 33,
+          "expected": 33,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "revised-price": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "price-to-follow": {
+          "documents": 3,
+          "correct": 18,
+          "proposed": 18,
+          "expected": 18,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "lead-range": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "warranty-months": {
+          "documents": 3,
+          "correct": 27,
+          "proposed": 27,
+          "expected": 27,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "tax-inclusive": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "mixed-currency": {
+          "documents": 3,
+          "correct": 30,
+          "proposed": 30,
+          "expected": 30,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "iso-validity": {
+          "documents": 3,
+          "correct": 27,
+          "proposed": 27,
+          "expected": 27,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "catalogue-not-offer": {
+          "documents": 3,
+          "correct": 0,
+          "proposed": 0,
+          "expected": 0,
+          "precision": null,
+          "recall": null,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": null,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "credential-injection": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "ambiguous-ocr-number": {
+          "documents": 3,
+          "correct": 18,
+          "proposed": 18,
+          "expected": 18,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "key-value-layout": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "unit-versus-total": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "decimal-small-price": {
+          "documents": 3,
+          "correct": 24,
+          "proposed": 24,
+          "expected": 24,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        },
+        "withdrawn-offer": {
+          "documents": 3,
+          "correct": 21,
+          "proposed": 21,
+          "expected": 21,
+          "precision": 1,
+          "recall": 1,
+          "microF1": 1,
+          "macroDocumentF1": 1,
+          "documentExact": 1,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 0
+        }
+      },
+      "byField": {
+        "quotation.reference": {
+          "correct": 45,
+          "proposed": 45,
+          "expected": 45,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quotation.supplier": {
+          "correct": 45,
+          "proposed": 45,
+          "expected": 45,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quotation.currency": {
+          "correct": 42,
+          "proposed": 42,
+          "expected": 42,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.quote_reference": {
+          "correct": 51,
+          "proposed": 51,
+          "expected": 51,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.sku": {
+          "correct": 51,
+          "proposed": 51,
+          "expected": 51,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.quantity": {
+          "correct": 51,
+          "proposed": 51,
+          "expected": 51,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.unit_price": {
+          "correct": 45,
+          "proposed": 45,
+          "expected": 45,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.lead_days": {
+          "correct": 15,
+          "proposed": 15,
+          "expected": 15,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.warranty_months": {
+          "correct": 3,
+          "proposed": 3,
+          "expected": 3,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quote_line.tax_rate": {
+          "correct": 3,
+          "proposed": 3,
+          "expected": 3,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "quotation.valid_until": {
+          "correct": 3,
+          "proposed": 3,
+          "expected": 3,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        }
+      }
+    },
+    "arms": {
+      "plain": {
+        "accepted": {
+          "documents": 48,
+          "correct": 255,
+          "proposed": 255,
+          "expected": 354,
+          "precision": 1,
+          "recall": 0.7203389830508474,
+          "microF1": 0.8374384236453202,
+          "macroDocumentF1": 0.6875,
+          "documentExact": 0.6875,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 99
+        },
+        "heldoutStates": {
+          "completed": 30,
+          "waiting_ontology": 18
+        },
+        "unreviewedVisibleRecords": 0,
+        "pipelineErrors": 0,
+        "reviewLoadTransactions": [
+          1
+        ],
+        "machineMs": {
+          "workspaceBootstrap": {
+            "n": 72,
+            "median": 0.006416999999828477,
+            "p95": 0.012749999999869033,
+            "min": 0.004457999999431195,
+            "max": 0.025875000000041837
+          },
+          "ingestMs": {
+            "n": 72,
+            "median": 0.877042000000074,
+            "p95": 1.180165999999872,
+            "min": 0.6491660000001502,
+            "max": 1.3712090000000217
+          },
+          "processMs": {
+            "n": 72,
+            "median": 1.852125000000342,
+            "p95": 2.43100000000004,
+            "min": 1.2622910000000047,
+            "max": 3.1219169999999394
+          },
+          "reviewLoadMs": {
+            "n": 72,
+            "median": 0.5394999999998618,
+            "p95": 0.6907079999998587,
+            "min": 0.34933400000045367,
+            "max": 0.8983330000000933
+          },
+          "acceptMs": {
+            "n": 45,
+            "median": 1.8812920000000304,
+            "p95": 2.544291000000044,
+            "min": 1.2650829999997768,
+            "max": 3.0430840000000217
+          },
+          "readMs": {
+            "n": 72,
+            "median": 0.4311670000001868,
+            "p95": 0.6082080000001042,
+            "min": 0.2531669999998485,
+            "max": 0.9357500000000982
+          }
+        }
+      },
+      "ontave": {
+        "accepted": {
+          "documents": 48,
+          "correct": 255,
+          "proposed": 255,
+          "expected": 354,
+          "precision": 1,
+          "recall": 0.7203389830508474,
+          "microF1": 0.8374384236453202,
+          "macroDocumentF1": 0.6875,
+          "documentExact": 0.6875,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 99
+        },
+        "heldoutStates": {
+          "completed": 30,
+          "waiting_ontology": 18
+        },
+        "unreviewedVisibleRecords": 0,
+        "pipelineErrors": 0,
+        "reviewLoadTransactions": [
+          1
+        ],
+        "machineMs": {
+          "workspaceBootstrap": {
+            "n": 72,
+            "median": 27.105625000000146,
+            "p95": 30.790250000000015,
+            "min": 23.719333999999435,
+            "max": 36.241457999999966
+          },
+          "ingestMs": {
+            "n": 72,
+            "median": 0.34741699999995035,
+            "p95": 0.4930409999999483,
+            "min": 0.21137500000077125,
+            "max": 0.8381660000004558
+          },
+          "processMs": {
+            "n": 72,
+            "median": 2.010624999999891,
+            "p95": 2.925166999999874,
+            "min": 1.2366250000004584,
+            "max": 3.4987499999999727
+          },
+          "reviewLoadMs": {
+            "n": 72,
+            "median": 0.3510830000000169,
+            "p95": 0.5630000000001019,
+            "min": 0.24108299999988958,
+            "max": 1.0424580000001242
+          },
+          "acceptMs": {
+            "n": 45,
+            "median": 4.797292000000198,
+            "p95": 7.481416999999965,
+            "min": 3.369459000000461,
+            "max": 8.00283300000001
+          },
+          "readMs": {
+            "n": 72,
+            "median": 1.1502919999998085,
+            "p95": 1.9685409999999592,
+            "min": 0.7731250000001637,
+            "max": 3.216207999999824
+          }
+        }
+      }
+    },
+    "machineSetup": {
+      "sharedDatabaseStartupMs": 487.349459,
+      "schemaSetupMs": {
+        "plain": 64.601583,
+        "ontave": 80.08220900000003
+      },
+      "scope": "Local automated dependency-ready schema creation and application bootstrap, shared warmed PostgreSQL; migration order plain then Ontave. Not human setup time or production provisioning."
+    },
+    "environment": {
+      "node": "v24.22.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M4 Pro",
+      "memoryBytes": 25769803776,
+      "postgres": "18.4"
+    },
+    "acquisitionFiles": {
+      "examples/supplier-quotes/domain.mjs": "98f751d9987abaf22ecdb0de1d39a8d5246838aadf9661c5301f23ca471058ce",
+      "examples/supplier-quotes/cases.mjs": "5f2da7aff7629dbe372c8653ea93f078791553d6e4edf29a0425f731af664efa",
+      "examples/supplier-quotes/provider.mjs": "26b4c3d7ea5c6aa6149443d11d3cdccd994e5089e7626c712dce87c22a17a4ff",
+      "examples/supplier-quotes/scoring.mjs": "0694ef0d5a739f95caaa2ccbefccf780f47f12529d49596e27b837184ba53617",
+      "scripts/collect-quotation-trials.mjs": "ccd108c5dec441459d0c4d2d965e4ed1b8097e58e65dbd1cbc5e1ef9ba357608"
+    },
+    "replayImplementationHashes": {
+      "src/runtime.ts": "4f3710298bbb6058bce46db34127aab3ded4ebb26dc063d309e9d1871901a400",
+      "dist/runtime.js": "d07139d94434555699676e229de860bcda7cf33cb086c9077736f8ffa1c6f5df",
+      "examples/supplier-quotes/domain.mjs": "f87d271dfa59edc79b90c8fb9a197eecff6fe222eabcd149de31eb73e16e47e8",
+      "examples/supplier-quotes/plain-postgres.mjs": "fcd5bf11231ac5f72f1012f1f0216671e2f8910b7e530ccf98f06c0471f249dc",
+      "examples/supplier-quotes/ontave-store.mjs": "2ab23ef77e3a7c82c5a4691c6a792b51e060b978749bbe809f40ae701dcc6f3d",
+      "examples/supplier-quotes/scoring.mjs": "34c0595eb25e7dde3936cd3d178cf8cd2f46a965878effe4c5dd99c73cb798a1",
+      "scripts/compare-quotations.mjs": "5189de06883b0421feeb4f3dca4789622619fdf109a4af2cc67bf645a4a19d3f"
+    }
+  },
+  "human": {
+    "reportSha256": "96b3c71536af6875b7c5e99e1650cc6471a8770ecd9841d052517072550dec7e",
+    "sessionKind": "single-project-maintainer exploratory walkthrough",
+    "participants": 1,
+    "independentParticipants": 0,
+    "setupOrder": [
+      "ontave",
+      "plain"
+    ],
+    "implementationLabels": {
+      "ontave": "A",
+      "plain": "B"
+    },
+    "candidateArchiveSha256": "c5721b1ad5a924abd87e3f190aca18d48ab13590a9b1c09363f0c6d6af60dcbc",
+    "baselineHashes": {
+      "plain-postgres.mjs": "bedc45673417ddda99137bb0c6d799d0bd8d5a637b52239bedf024788c581d4a",
+      "domain.mjs": "98f751d9987abaf22ecdb0de1d39a8d5246838aadf9661c5301f23ca471058ce"
+    },
+    "setup": [
+      {
+        "arm": "ontave",
+        "label": "A",
+        "activeMs": 146397.0905,
+        "completedAt": "2026-10-23T03:43:10.712Z",
+        "scope": "guided local-candidate install on pre-provisioned storage",
+        "modelKeysNeeded": 0
+      },
+      {
+        "arm": "plain",
+        "label": "B",
+        "activeMs": 37915.79445799999,
+        "completedAt": "2026-10-23T03:43:53.174Z",
+        "scope": "guided local-candidate install on pre-provisioned storage",
+        "modelKeysNeeded": 0
+      }
+    ],
+    "review": {
+      "plain": {
+        "tasks": 3,
+        "activeMs": 80630.71787500009,
+        "amendActions": 3,
+        "decisions": [
+          {
+            "id": "DEV-01",
+            "decision": "hold",
+            "activeMs": 33447.61025000003,
+            "amendActions": 2,
+            "injectedError": "unit_price_replaced_by_source_quantity",
+            "acceptedCorrect": 0,
+            "acceptedProposed": 0
+          },
+          {
+            "id": "DEV-02",
+            "decision": "reject",
+            "activeMs": 29689.095500000054,
+            "amendActions": 1,
+            "injectedError": "unit_price_replaced_by_source_quantity",
+            "acceptedCorrect": 0,
+            "acceptedProposed": 0
+          },
+          {
+            "id": "DEV-04",
+            "decision": "accept",
+            "activeMs": 17494.01212500001,
+            "amendActions": 0,
+            "injectedError": null,
+            "acceptedCorrect": 6,
+            "acceptedProposed": 6
+          }
+        ],
+        "injectedErrors": 2,
+        "flawedProposalsKeptOut": 2,
+        "accepted": {
+          "documents": 3,
+          "correct": 6,
+          "proposed": 6,
+          "expected": 28,
+          "precision": 1,
+          "recall": 0.21428571428571427,
+          "microF1": 0.35294117647058826,
+          "macroDocumentF1": 0.3333333333333333,
+          "documentExact": 0.3333333333333333,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 22
+        }
+      },
+      "ontave": {
+        "tasks": 3,
+        "activeMs": 114345.02691700001,
+        "amendActions": 3,
+        "decisions": [
+          {
+            "id": "TEST-01",
+            "decision": "reject",
+            "activeMs": 52839.462,
+            "amendActions": 0,
+            "injectedError": "unit_price_replaced_by_source_quantity",
+            "acceptedCorrect": 0,
+            "acceptedProposed": 0
+          },
+          {
+            "id": "TEST-02",
+            "decision": "reject",
+            "activeMs": 36381.181583,
+            "amendActions": 3,
+            "injectedError": "unit_price_replaced_by_source_quantity",
+            "acceptedCorrect": 0,
+            "acceptedProposed": 0
+          },
+          {
+            "id": "TEST-04",
+            "decision": "accept",
+            "activeMs": 25124.383334000013,
+            "amendActions": 0,
+            "injectedError": null,
+            "acceptedCorrect": 6,
+            "acceptedProposed": 6
+          }
+        ],
+        "injectedErrors": 2,
+        "flawedProposalsKeptOut": 2,
+        "accepted": {
+          "documents": 3,
+          "correct": 6,
+          "proposed": 6,
+          "expected": 25,
+          "precision": 1,
+          "recall": 0.24,
+          "microF1": 0.3870967741935484,
+          "macroDocumentF1": 0.3333333333333333,
+          "documentExact": 0.3333333333333333,
+          "sourceCoverage": 1,
+          "falsePositive": 0,
+          "missed": 19
+        }
+      }
+    },
+    "limitations": [
+      "One founder/maintainer, no population-level productivity claim.",
+      "Setup is guided package installation with pre-provisioned database/schema/workspace and a local candidate archive, not clean production deployment.",
+      "Review proposals contain predeclared injected errors; these are not model error-rate observations.",
+      "Active time is a pause-aware elapsed-time proxy; cognitive effort is not directly observed.",
+      "Order and document contents are counterbalanced only within this small exploratory session."
+    ]
+  },
+  "integration": {
+    "modelRequiredFor": "Workers, inference evaluations and generated proposals only; ingest/read/review can omit it.",
+    "reviewSnapshot": {
+      "previousTransactions": 3,
+      "currentTransactions": 1,
+      "verification": "tests/integration/review-integration.test.mjs; real PostgreSQL, same bundle hash and evidence"
+    }
+  },
+  "sourceHashes": {
+    "src/runtime.ts": "4f3710298bbb6058bce46db34127aab3ded4ebb26dc063d309e9d1871901a400",
+    "src/cli.ts": "39b7d360caa723a35f35a7842cca629a06ccdaee7854b35d8306712d6f0f28b1",
+    "examples/next-server/lib/runtime.ts": "93df2fcadb3a9c7b144928fb35681e39a573561f4a8b836d2a182d222f5c9d1b",
+    "examples/supplier-quotes/domain.mjs": "f87d271dfa59edc79b90c8fb9a197eecff6fe222eabcd149de31eb73e16e47e8",
+    "examples/supplier-quotes/plain-postgres.mjs": "fcd5bf11231ac5f72f1012f1f0216671e2f8910b7e530ccf98f06c0471f249dc",
+    "examples/supplier-quotes/ontave-store.mjs": "2ab23ef77e3a7c82c5a4691c6a792b51e060b978749bbe809f40ae701dcc6f3d",
+    "examples/supplier-quotes/scoring.mjs": "34c0595eb25e7dde3936cd3d178cf8cd2f46a965878effe4c5dd99c73cb798a1",
+    "scripts/compare-quotations.mjs": "5189de06883b0421feeb4f3dca4789622619fdf109a4af2cc67bf645a4a19d3f",
+    "scripts/summarize-quotations.mjs": "6590933ded684dbe2620f022d4d4375938dff979d9167bcd1135b189c43a4c50"
+  },
+  "external": {
+    "docile": {
+      "officialScore": null,
+      "status": "Pending organizer-approved dataset access and official evaluator run",
+      "adapter": "scripts/evaluate-docile.mjs"
+    }
+  },
+  "productionQualified": false,
+  "limitations": [
+    "Original synthetic English text, 8 development and 16 held-out families, labels authored by the maintainer before acquisition. Independent labels and new holdouts remain pending.",
+    "Both implementations replay identical predictions; no raw extraction uplift is attributable to Ontave.",
+    "Follow-up reused exposed cases and allowed two transient retries, but actually used zero retries. It demonstrates neither causal retry improvement nor new holdout generalization.",
+    "A perfect empirical bootstrap can degenerate to [1,1]; the distinct-family Wilson interval describes limited binary evidence, not a calibrated production bound.",
+    "Unknown observations hold the whole bundle in both implementations, lowering accepted-data coverage. They are not silently discarded.",
+    "Human results cover one project maintainer with guided installation on pre-provisioned storage and injected review errors. No population productivity or full deployment setup claim.",
+    "Reported token usage excludes failures with unknown usage and token-count preflight requests; monetary cost was not independently reconciled.",
+    "The general framework qualification gates remain open; no production SLO, security certification or official DocILE score is claimed."
+  ]
+}

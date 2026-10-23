@@ -4,7 +4,7 @@ The package exposes a server runtime through `createOntave`. Every operation rec
 
 ## Runtime configuration
 
-Supply a `Storage`, `ModelAdapter` and authorization callback. `postgres` is imported separately from `ontave/postgres`; provider factories use separate `ontave/models/gemini`, `groq`, `mistral` or `openrouter` entry points. Deterministic adapters use `ontave/testing`. Construction/import performs no migration, inference or worker startup. Call `close` when the process finishes.
+Supply a `Storage` and authorization callback. `model: ModelAdapter` is optional for ingest, read and review services. Workers, inference evaluations and generated ontology proposals require an explicit adapter; missing worker configuration fails before a job attempt is claimed. Authored proposals and non-inference operations do not require model credentials. `postgres` is imported separately from `ontave/postgres`; provider factories use separate `ontave/models/gemini`, `groq`, `mistral` or `openrouter` entry points. Deterministic adapters use `ontave/testing`. Construction/import performs no migration, inference or worker startup. Call `close` when the process finishes. Optional model configuration and `reviews.forJob` are alpha.5 candidate additions, not part of npm alpha.4.
 
 `cursorSecret` should be a stable private secret of at least 32 characters when requests span processes. The development default is random per instance. `identifierRules` explicitly allow authority/kind combinations; names and unconfigured email addresses do not authorize automatic linking. `sourcePolicies` lists fields a specific trusted source may verify. A reviewer statement uses the separate `reviewer-attestation` policy.
 
@@ -21,6 +21,7 @@ The default metadata keys are `sourceEventTime`, `sourceTimezone`, `sourceRefere
 | `jobs.reprocess(context, input)`         | `evidenceId`, `requestKey`, `reason`; stages a new interpretation without changing accepted data                                                                                          |
 | `worker.runOnce(context)`                | Claims at most one job in the authorized workspace; returns staged result, bounded failure, exhausted result or null                                                                      |
 | `reviews.get(context, bundleId)`         | Inspect source-bound extraction, resolutions, pending dependencies, revision and hash                                                                                                     |
+| `reviews.forJob(context, jobId)`         | One repeatable-read snapshot of the scoped job, current bundle (or null) and first bounded evidence excerpt; requires both read and review capabilities                                   |
 | `reviews.resolveIdentity`                | Exact `bundleId`, `digest`, `mentionId`, compatible `entityId` or `'new'`, `requestKey`, `reason`; creates a new bundle/digest                                                            |
 | `reviews.amend`                          | Exact bundle/digest, complete `extraction`, optional retractions, request key and reason; existing mention identities remain bound                                                        |
 | `reviews.accept/reject`                  | Exact `bundleId`, `digest`, `requestKey`, `reason`; acceptance checks current dependencies and entity revisions atomically                                                                |
@@ -38,6 +39,8 @@ The default metadata keys are `sourceEventTime`, `sourceTimezone`, `sourceRefere
 | `generateContract(lock, directory)`      | Writes lock, `.d.ts`/`.d.mts` declarations and executable `.mjs` validators under an explicit directory; rejects symlinks and incomplete lineage                                          |
 
 Mutation results return the next digest for review. Retrying the same key and exact input returns the earlier effect. Reusing a key with changed input conflicts. Acceptance never turns a reported event into a verified event.
+
+`reviews.forJob` returns `{job: {id, state, evidenceId}, bundle, evidence}`. Evidence has the same shape and explicit byte-range metadata as `evidence.get`; inspect `range.hasMore` and paginate the source before reviewing large inputs. The returned snapshot neither resolves dependencies nor grants acceptance. Submit the current bundle ID/hash through a separate authorized review action. In an integration regression, the former job/bundle/evidence calls use three transactions; the combined snapshot uses one.
 
 ## Values and query dialect
 
