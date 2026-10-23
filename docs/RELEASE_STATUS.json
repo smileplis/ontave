@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "channel": "developer-preview",
   "fullMvpQualified": false,
   "intendedUse": "Developer evaluation of the governed evidence-to-reviewed-record workflow",
@@ -21,5 +21,10 @@
       "id": "walkthrough",
       "reason": "An independent first-time setup walkthrough remains pending; automated clean installs are separately tested."
     }
-  ]
+  ],
+  "supplierBenchmark": {
+    "status": "development comparison completed; independent and external qualification pending",
+    "humanEffort": "One project-maintainer exploratory walkthrough completed; no population productivity claim",
+    "officialDocileScore": null
+  }
 }

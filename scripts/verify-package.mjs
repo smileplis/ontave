@@ -82,9 +82,11 @@ import {type OntaveEntities,validate} from './generated/index.mjs';
 const value: FieldResult<string> = {state:'unknown',reason:'test',assertionIds:[]};
 const model:ModelAdapter={async extract(){return {model:'test',output:{entities:[],relationships:[],observations:[]}}}};
 const name:OntaveEntities['person']['fields']['name']={state:'value',value:'Asha',verification:'reported',assertionIds:[]};
+const reviewOnly=createOntave({storage:postgres({connectionString:'postgresql://unused.invalid/db'}),authorize:async()=>({actorId:'reader',workspaceId:'00000000-0000-4000-8000-000000000001',capabilities:['read','review']})});
+const reviewSnapshot=()=>reviewOnly.reviews.forJob('trusted context','00000000-0000-4000-8000-000000000002');
 // @ts-expect-error declared person name cannot contain a number
 const wrongName:OntaveEntities['person']['fields']['name']={state:'value',value:123,verification:'reported',assertionIds:[]};
-void [value,model,createOntave,postgres,name,wrongName,validate];`,
+void [value,model,createOntave,postgres,name,wrongName,validate,reviewSnapshot];`,
 );
 run(
   node,
@@ -120,6 +122,23 @@ const installed = JSON.parse(
 );
 if (installed.scripts?.postinstall || installed.scripts?.install)
   throw Error("Package has an installation side effect");
+await readFile(
+  resolve(consumer, "node_modules/ontave/examples/supplier-quotes/run.mjs"),
+);
+await readFile(
+  resolve(consumer, "node_modules/ontave/docs/SUPPLIER_QUOTATION_BENCHMARK.md"),
+);
+const publishedResults = JSON.parse(
+  await readFile(
+    resolve(
+      consumer,
+      "node_modules/ontave/benchmarks/quotation-2026-10-23/results.json",
+    ),
+    "utf8",
+  ),
+);
+if (publishedResults.productionQualified !== false)
+  throw Error("Benchmark must preserve open qualification gates");
 const report = {
   archive,
   consumer,

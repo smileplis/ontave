@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Quotation comparison · local study</title>
+  <style>
+    html {
+      color-scheme: dark;
+      font: 16px/1.5 system-ui;
+      background: #101114;
+      color: #f1f1f4;
+    }
+    body {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    h1 {
+      font-size: 32px;
+      letter-spacing: -1px;
+    }
+    p {
+      max-width: 850px;
+      color: #c7c9d3;
+    }
+    button,
+    input {
+      font: inherit;
+      border: 1px solid #555b70;
+      border-radius: 5px;
+      padding: 9px 14px;
+      background: #20232c;
+      color: inherit;
+    }
+    button {
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    button.primary {
+      background: #d5ff5f;
+      color: #151515;
+      border-color: #d5ff5f;
+    }
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #7fdfff;
+      outline-offset: 2px;
+    }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #181a20;
+      padding: 20px;
+    }
+    code {
+      overflow-wrap: anywhere;
+    }
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      border-top: 1px solid #3a3d49;
+      padding-top: 24px;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .field input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    fieldset {
+      border: 0;
+      border-top: 1px solid #353946;
+      padding: 18px 0;
+      margin: 12px 0;
+    }
+    legend {
+      font-weight: 650;
+      padding-right: 15px;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .status {
+      color: #c4ec91;
+    }
+    .error {
+      color: #ffaca3;
+      min-height: 24px;
+    }
+    small {
+      color: #aaaebc;
+    }
+    a {
+      color: #8edfff;
+    }
+    #pause {
+      float: right;
+    }
+    #content[aria-busy="true"] {
+      opacity: 0.6;
+    }
+    @media (max-width: 760px) {
+      .columns {
+        grid-template-columns: 1fr;
+      }
+      .field {
+        grid-template-columns: 1fr;
+      }
+      body {
+        margin: 22px auto;
+      }
+    }
+  </style>
+  <body>
+    <button id="pause" hidden>Pause timer</button>
+    <h1>Supplier quotation comparison</h1>
+    <p id="intro">
+      A local developer walkthrough. Setup tasks use a pre-provisioned
+      disposable database and a local alpha candidate. Review tasks use
+      fictional quotations and predeclared injected errors, not live model
+      outputs. Measurements stay on this machine.
+    </p>
+    <p class="status" id="status"></p>
+    <p class="error" id="error" role="alert"></p>
+    <main id="content"></main>
+    <script type="module">
+      const $ = (id) => document.getElementById(id),
+        text = (tag, value) => {
+          const e = document.createElement(tag);
+          e.textContent = value;
+          return e;
+        };
+      let state,
+        output,
+        busy = false;
+      async function api(path, input) {
+        const r = await fetch(path, {
+          method: input ? "POST" : "GET",
+          headers: {
+            "content-type": "application/json",
+            "x-quotation-study": "1",
+          },
+          body: input ? JSON.stringify(input) : undefined,
+        });
+        const data = await r.json();
+        if (!r.ok) throw Error(data.error ?? "Request failed");
+        return data;
+      }
+      async function action(path, input = {}) {
+        if (busy) return;
+        busy = true;
+        $("content").setAttribute("aria-busy", "true");
+        $("error").textContent = "";
+        try {
+          state = await api(path, {
+            requestKey: crypto.randomUUID(),
+            ...input,
+          });
+          await render();
+        } catch (e) {
+          $("error").textContent = e.message;
+        } finally {
+          busy = false;
+          $("content").setAttribute("aria-busy", "false");
+        }
+      }
+      function button(label, handler, primary = false) {
+        const b = text("button", label);
+        if (primary) b.className = "primary";
+        b.onclick = handler;
+        return b;
+      }
+      async function render() {
+        const root = $("content");
+        root.replaceChildren();
+        $("pause").hidden = !state.started || state.finished;
+        $("pause").textContent = state.paused ? "Resume timer" : "Pause timer";
+        if (!state.started) {
+          root.append(
+            text(
+              "p",
+              "This is one maintainer session, not an independent usability study. Only click Start when ready. Setup order and review labels A/B are assigned for this session. Read the source, correct any wrong fields, and accept only the claims it supports. Acceptance does not verify the underlying business event.",
+            ),
+            button("Start walkthrough", () => action("/api/start"), true),
+          );
+          return;
+        }
+        if (state.finished) {
+          $("status").textContent =
+            "Walkthrough complete. Your results were saved locally.";
+          root.append(text("pre", JSON.stringify(state.report, null, 2)));
+          const a = text("a", "Download session results");
+          a.href = "/api/report";
+          a.download = "quotation-walkthrough.json";
+          root.append(a);
+          return;
+        }
+        if (state.phase === "setup") {
+          $("status").textContent =
+            "Guided setup " +
+            state.setupLabel +
+            " · database, schema and workspace are already provisioned";
+          root.append(
+            text(
+              "p",
+              "This task measures guided installation to a first successful SDK/database operation. It excludes database provisioning, manual implementation and production deployment. Each arm gets a fresh consumer and npm cache. Commands contain no provider keys or database passwords.",
+            ),
+          );
+          if (!state.setupStarted) {
+            root.append(
+              button(
+                "Begin setup " + state.setupLabel,
+                () => action("/api/setup/start"),
+                true,
+              ),
+            );
+            return;
+          }
+          root.append(
+            text(
+              "p",
+              "In your Terminal, run these commands. Keep this page open; it will advance when the operation succeeds.",
+            ),
+            text("pre", state.setupCommand),
+            text(
+              "p",
+              "If anything is unclear, pause and record it in your feedback at the end. Setup timing includes npm download/install time.",
+            ),
+          );
+          return;
+        }
+        $("status").textContent =
+          "Review " +
+          (state.index + 1) +
+          " / " +
+          state.total +
+          " · implementation " +
+          state.armLabel +
+          (state.paused ? " · timer paused" : "");
+        if (state.paused) {
+          root.append(text("p", "Timer paused. Resume when ready."));
+          return;
+        }
+        if (!state.taskStarted) {
+          root.append(
+            text(
+              "p",
+              "The next quotation has not been shown yet. Start when ready to review it.",
+            ),
+            button(
+              "Start quotation review",
+              () => action("/api/task/start"),
+              true,
+            ),
+          );
+          return;
+        }
+        output = structuredClone(state.view.bundle.output);
+        const columns = text("div", "");
+        columns.className = "columns";
+        const source = text("section", ""),
+          proposal = text("section", "");
+        source.append(
+          text("h2", "Supplier source"),
+          text("pre", state.view.evidence.text),
+        );
+        proposal.append(text("h2", "Proposed claims"));
+        output.records.forEach((record) => {
+          const fs = document.createElement("fieldset");
+          fs.append(text("legend", record.type));
+          Object.entries(record.fields).forEach(([id, claim]) => {
+            const label = document.createElement("label");
+            label.className = "field";
+            label.append(text("span", id));
+            const input = document.createElement("input");
+            input.value =
+              typeof claim.value === "object"
+                ? claim.value.amount
+                : String(claim.value);
+            input.setAttribute("aria-label", record.type + " " + id);
+            input.onchange = () => {
+              if (typeof claim.value === "object")
+                claim.value.amount = input.value;
+              else if (typeof claim.value === "number")
+                claim.value = Number(input.value);
+              else claim.value = input.value;
+            };
+            label.append(input);
+            fs.append(label);
+          });
+          proposal.append(fs);
+        });
+        if (output.observations.length)
+          proposal.append(
+            text("pre", JSON.stringify(output.observations, null, 2)),
+          );
+        columns.append(source, proposal);
+        root.append(columns);
+        root.append(
+          text(
+            "small",
+            "Supplier claims remain reported. Verify the price, quantity and source yourself. Edits are applied only after Save corrections.",
+          ),
+        );
+        const buttons = document.createElement("nav");
+        buttons.append(
+          button("Save corrections", () =>
+            action("/api/task/amend", {
+              output,
+              bundleId: state.view.bundle.id,
+              digest: state.view.bundle.digest,
+            }),
+          ),
+          button(
+            "Accept claims",
+            () =>
+              action("/api/task/decide", {
+                decision: "accept",
+                bundleId: state.view.bundle.id,
+                digest: state.view.bundle.digest,
+              }),
+            true,
+          ),
+          button("Reject", () =>
+            action("/api/task/decide", {
+              decision: "reject",
+              bundleId: state.view.bundle.id,
+              digest: state.view.bundle.digest,
+            }),
+          ),
+          button("Keep pending", () =>
+            action("/api/task/decide", {
+              decision: "hold",
+              bundleId: state.view.bundle.id,
+              digest: state.view.bundle.digest,
+            }),
+          ),
+        );
+        root.append(buttons);
+      }
+      $("pause").onclick = () =>
+        action("/api/pause", { paused: !state.paused });
+      document.addEventListener("visibilitychange", () => {
+        if (
+          document.hidden &&
+          state?.phase === "review" &&
+          state.started &&
+          !state.finished &&
+          !state.paused
+        )
+          action("/api/pause", { paused: true });
+      });
+      state = await api("/api/state");
+      await render();
+      setInterval(async () => {
+        if (state?.phase === "setup" && state.setupStarted && !busy) {
+          try {
+            state = await api("/api/state");
+            await render();
+          } catch {}
+        }
+      }, 1500);
+    </script>
+  </body>
+</html>

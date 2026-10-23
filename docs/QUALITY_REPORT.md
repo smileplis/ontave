@@ -1,5 +1,7 @@
 # Ontave MVP qualification
 
+The [supplier quotation benchmark](SUPPLIER_QUOTATION_BENCHMARK.md) reports a separate 24-document, three-trial development comparison and the completed exploratory maintainer walkthrough. It includes shared-model results for both arms, original provider failures, accepted-data coverage, bounded uncertainty and recognized external reference methods. DocILE access/evaluation and independent first-time/label review remain pending. None of the historical results below are replaced by this newer example.
+
 **Developer preview `0.1.0-alpha.4`; full MVP qualification remains blocked.** Alpha distribution preserves the open gates in [the packaged release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json). This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
 
 ## Deterministic behavior

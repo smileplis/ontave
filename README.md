@@ -93,6 +93,8 @@ npm run dev --prefix website
 
 ## Measured benefits and release qualification
 
+The unpublished **alpha.5 candidate** adds a [runnable supplier-quotation comparison](examples/supplier-quotes/README.md) against standalone LLM + PostgreSQL. The [benchmark report](docs/SUPPLIER_QUOTATION_BENCHMARK.md) includes shared live predictions, failure history, accepted-data coverage and an exploratory timed review. It makes no framework extraction-uplift or human time-saving claim. Optional models on non-inference services and `reviews.forJob` are candidate additions; `npm install ontave` still selects the published alpha.4.
+
 The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/USER_BENEFITS.md) and the [quality report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUALITY_REPORT.md).
 
 Run `npm run verify:release` for full MVP qualification. It requires every quality gate, including independent semantic review. The separately selected `npm run verify:preview-release` permits only an alpha with passing implementation, recovery, consumer, security and exact-revision CI checks, plus a packaged disclosure of every open qualification gate. `npm run publish:preview` uploads the exact tested archive; `-- --dry-run` prepares the same command without publication. Both profiles reject stale source or changed evidence.
