@@ -41,7 +41,7 @@ Both arms had identical accepted-data results. Initial accepted recall was 61.58
 
 ## Human setup and review
 
-One project maintainer completed two guided installs and six source-review tasks. Storage, schemas and workspaces were pre-provisioned; the candidate archive and baseline files were frozen before the session. Both installs used a fresh consumer/cache and needed no model key. This measures a guided local install, not the time to implement an application or provision production infrastructure. Ontave was first, so learning/order effects are unresolved.
+One project maintainer completed two guided installs and six source-review tasks. Storage, schemas and workspaces were pre-provisioned; the candidate archive and baseline files were frozen before the session. Their hashes are in the result record. The final candidate includes additional example/documentation files, so these timings describe the session's frozen payload rather than every alpha.5 archive. Both installs used a fresh consumer/cache and needed no model key. This measures a guided local install, not the time to implement an application or provision production infrastructure. Ontave was first, so learning/order effects are unresolved.
 
 | Observed measure                        | Plain LLM + PostgreSQL |   Ontave |
 | --------------------------------------- | ---------------------: | -------: |
