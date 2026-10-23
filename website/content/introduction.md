@@ -2,7 +2,7 @@ Ontave is a server-side TypeScript framework for operational information that do
 
 It preserves text or JSON as evidence, asks a model for an interpretation, and stages the result for review. New concepts can arrive as proposed additions to your logical model. Your application controls both model activation and fact acceptance.
 
-> Ontave Zero is an alpha. The implemented flow works, but the complete MVP acceptance and semantic-quality gates remain open. Read [release status](/docs/status/) before adoption.
+> Ontave is a developer preview, currently `0.1.0-alpha.4` on npm. The implemented flow works, but the complete MVP acceptance and semantic-quality gates remain open. Read [release status](/docs/status/) before adoption.
 
 ## The basic flow
 

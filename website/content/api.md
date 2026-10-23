@@ -1,3 +1,5 @@
+The public npm version is `0.1.0-alpha.4`. The [versioned package reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/API_REFERENCE.md) is the authoritative release-specific API.
+
 The package exposes a server runtime through `createOntave`. Every operation receives an opaque host context. The host's `authorize` callback resolves actor, workspace, capabilities and optional source policy; message text and browser JSON cannot supply grants.
 
 ## Runtime configuration
@@ -55,11 +57,11 @@ Model factories request at most 4,096 output tokens and reject refusals/truncati
 
 Failed evaluations persist a non-passing artifact with available traces and usage. The thrown `OntaveError.details.evaluationId` identifies it for `evaluations.get`; the CLI exposes `evaluation get --id`.
 
-## Alpha.2 evaluation and operations
+## Evaluation and operations
 
 `jobs.attempts(context, jobId)` requires read capability and returns append-only `started`, `completed`, `failed` and `lease_expired` events with fences and available usage. A killed process can leave an unfinished attempt with unknown usage. Late fenced responses retain accounting without replacing a current bundle.
 
-`metrics.summary(context)` returns workspace-scoped aggregate counts and machine latency. See [measured user benefits](USER_BENEFITS.md); it is not an accuracy estimator or a human time-saving claim. The CLI exposes `ontave metrics --config …`.
+`metrics.summary(context)` returns workspace-scoped aggregate counts and machine latency. See [measured user benefits](/docs/benchmarks/); it is not an accuracy estimator or a human time-saving claim. The CLI exposes `ontave metrics --config …`.
 
 Evaluation now supports three closed task kinds:
 

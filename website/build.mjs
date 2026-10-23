@@ -16,12 +16,11 @@ import { Scanner } from "@tailwindcss/oxide";
 import { marked } from "marked";
 import { document, escape } from "./src/layout.mjs";
 import { home } from "./src/home.mjs";
+import { releaseVersion as version, referenceVersion, playgroundCommand, siteOrigin } from "./src/release.mjs";
+import { entries, indexPage, entryPage } from "./src/content-index.mjs";
 import { benchmarkData } from "./src/benchmarks.mjs";
 import { playgroundMarkup } from "../examples/playground/markup.mjs";
 const root = import.meta.dirname;
-const version = JSON.parse(
-  await readFile(resolve(root, "../package.json"), "utf8"),
-).version;
 const dist = resolve(root, "dist");
 await mkdir(resolve(root, ".cache"), { recursive: true });
 await build({
@@ -116,12 +115,80 @@ for (let position = 0; position < pages.length; position++) {
     text: md.replace(/[#*`|>]/g, "").slice(0, 35000),
   });
 }
+const feedItems = [];
+const contextParts = [];
+await mkdir(resolve(dist, "index"), { recursive: true });
+await writeFile(resolve(dist, "index/index.html"), document({
+  title: "The Ontave index · Evidence, agents and typed records",
+  description: "Practical guides to Ontave in agent workflows, retrieval architectures and reviewed schema evolution.",
+  path: "/index/", body: indexPage,
+}));
+for (const entry of entries) {
+  const md = await readFile(resolve(root, `content/index/${entry.slug}.md`), "utf8");
+  const html = marked.parse(md, { gfm: true })
+    .replace(/<pre><code(?: class="language-[^"]*")?>([\s\S]*?)<\/code><\/pre>/g, (_, text) => `<div class="code-window"><div class="code-toolbar"><span>TypeScript</span><button class="copy-code" aria-label="Copy code">Copy</button></div><pre><code>${text}</code></pre></div>`)
+    .replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
+  const path = resolve(dist, "." + entry.path);
+  await mkdir(path, { recursive: true });
+  await writeFile(resolve(path, "index.html"), document({
+    title: `${entry.title} · Ontave`, description: entry.description,
+    path: entry.path, body: entryPage(entry, html),
+  }));
+  const markdown = `# ${entry.title}\n\n${md}`;
+  await writeFile(resolve(path, "index.md"), markdown);
+  contextParts.push(markdown);
+  const absoluteHtml = marked.parse(md, { gfm: true }).replace(/(href|src)="\/(?!\/)/g, `$1="${siteOrigin}/`);
+  feedItems.push({ id: siteOrigin + entry.path, url: siteOrigin + entry.path,
+    title: entry.title, summary: entry.description, content_html: absoluteHtml,
+    date_published: entry.date + "T00:00:00+05:30", authors: [{ name: "Ontave contributors" }],
+  });
+}
+await writeFile(resolve(dist, "feed.json"), JSON.stringify({
+  version: "https://jsonfeed.org/version/1.1", title: "The Ontave index",
+  home_page_url: siteOrigin + "/index/", feed_url: siteOrigin + "/feed.json",
+  description: "Practical notes on evidence, agents and typed operational records.",
+  language: "en", items: feedItems,
+}, null, 2) + "\n");
+await writeFile(resolve(dist, "feed.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
+<title>The Ontave index</title><link>${siteOrigin}/index/</link>
+<description>Practical notes on evidence, agents and typed operational records.</description><language>en</language>
+<atom:link href="${siteOrigin}/feed.xml" rel="self" type="application/rss+xml"/>
+${feedItems.map(item => `<item><title>${escape(item.title)}</title><link>${item.url}</link><guid isPermaLink="true">${item.id}</guid><pubDate>${new Date(item.date_published).toUTCString()}</pubDate><description>${escape(item.content_html)}</description></item>`).join("\n")}
+</channel></rss>\n`);
+await writeFile(resolve(dist, "llms.txt"), `# Ontave
+
+> Open-source TypeScript framework for source-linked evidence, reviewed assertions, additive ontology evolution and typed accepted-data queries.
+
+Current public npm release: ${version}. Developer preview. Node.js 24, ESM and PostgreSQL 18 on a trusted server. The host supplies authentication, authorization, worker supervision, model configuration and review policy.
+
+Ingestion preserves evidence and a durable job. Interpretation produces proposals. Model activation and fact acceptance are separate explicit decisions. Accepted records can be queried through a pinned contract without an LLM call at read time. Acceptance does not establish independent verification of a reported event.
+
+Ontave does not supply an agent orchestrator, hosted database, browser/edge runtime, MCP server, automatic app generation or autonomous fact acceptance. Independent labels, live identity/discovery qualification and other MVP quality gates remain open.
+
+## Start here
+- [Documentation](${siteOrigin}/docs/): Concepts and integration guides.
+- [Install from npm](https://www.npmjs.com/package/ontave): npm install ontave.
+- [Quickstart](${siteOrigin}/docs/quickstart/): Fictional local playground using the real SDK and PostgreSQL.
+- [API reference](${siteOrigin}/docs/api/): Configuration, operations and constraints.
+- [Release status](${siteOrigin}/docs/status/): Supported surface and open quality gates.
+
+## Architecture and use cases
+${entries.map(entry => `- [${entry.title}](${siteOrigin}${entry.path}index.md): ${entry.description}`).join("\n")}
+
+## Other formats
+- [Full index text](${siteOrigin}/llms-full.txt)
+- [RSS feed](${siteOrigin}/feed.xml)
+- [JSON feed](${siteOrigin}/feed.json)
+- [Source and license](https://github.com/smileplis/ontave): Apache 2.0.
+`);
+await writeFile(resolve(dist, "llms-full.txt"), `# The Ontave index\n\nDeveloper preview ${version}. See ${siteOrigin}/docs/status/ for current limits.\n\n${contextParts.join("\n\n")}\n`);
 await writeFile(
   resolve(dist, "index.html"),
   document({
     title: "Ontave · A data layer that adapts as your business changes.",
     description:
-      "Turn unexpected messages into useful records. An open-source TypeScript framework for preserved evidence, reviewed model changes, and typed application contracts.",
+      "An open-source TypeScript data layer for source-linked records, reviewed schema changes and typed queries. Preserve evidence, validate proposals and query accepted data.",
     body: home(storyMarkup),
   }),
 );
@@ -137,7 +204,7 @@ await writeFile(
     description:
       "Explore a fictional message-to-record flow, then run the real SDK and PostgreSQL locally.",
     path: "/playground/",
-    body: playgroundMarkup(version),
+    body: playgroundMarkup(referenceVersion, { installCommand: playgroundCommand }),
     playground: true,
   }),
 );
@@ -186,8 +253,8 @@ await writeFile(
 );
 await writeFile(
   resolve(dist, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", ...pages.map((p) => p.path)].map((path) => `<url><loc>https://ontave.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", "/index/", ...entries.map((p) => p.path), ...pages.map((p) => p.path)].map((path) => `<url><loc>https://ontave.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
 );
 console.log(
-  JSON.stringify({ pages: pages.length + 3, output: "dist", status: "built" }),
+  JSON.stringify({ pages: pages.length + entries.length + 4, output: "dist", status: "built" }),
 );

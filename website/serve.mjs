@@ -12,7 +12,9 @@ const mime = {
   ".jpg": "image/jpeg",
   ".ttf": "font/ttf",
   ".xml": "application/xml",
-  ".txt": "text/plain",
+  ".txt": "text/plain; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".png": "image/png",
   ".tgz": "application/gzip",
 };
 createServer(async (req, res) => {
