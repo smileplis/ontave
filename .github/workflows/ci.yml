@@ -37,3 +37,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run check
+      - run: npm ci --prefix examples/read-only-agent --ignore-scripts
+      - run: npm run check --prefix examples/read-only-agent
+      - run: npm test --prefix examples/read-only-agent

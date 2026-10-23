@@ -1,6 +1,23 @@
+<p align="center">
+  <a href="https://ontave.daltn.tech/"><img src="website/public/readme-cover.png" alt="Ontave. A data layer that adapts as your business changes. Noon, Rest from Work by Vincent van Gogh." width="1025"></a>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/ontave"><img src="https://img.shields.io/npm/v/ontave?color=596f42&amp;label=npm" alt="npm version"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-7c8d6a" alt="Apache 2.0 license"></a>
+  <a href="https://nodejs.org/en/download"><img src="https://img.shields.io/badge/Node.js-24_LTS-596f42" alt="Node.js 24 LTS"></a>
+</p>
+
+<p align="center">
+  <a href="https://ontave.daltn.tech/">Website</a> ·
+  <a href="https://ontave.daltn.tech/docs/">Documentation</a> ·
+  <a href="https://ontave.daltn.tech/playground/">Playground</a> ·
+  <a href="https://ontave.daltn.tech/index/">The Ontave index</a>
+</p>
+
 # Ontave
 
-Your schema didn’t see this coming.
+A data layer that adapts as your business changes.
 
 Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed assertions and additive ontology evolution. Keep the source, review proposed changes and read accepted data through a typed application contract.
 
@@ -8,7 +25,7 @@ Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed as
 
 ## Try Ontave
 
-[Browser sandbox](https://app.daltn.tech/playground/) · [Quickstart](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUICKSTART.md) · [API reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/API_REFERENCE.md)
+[Browser sandbox](https://ontave.daltn.tech/playground/) · [Quickstart](https://ontave.daltn.tech/docs/quickstart/) · [API reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/API_REFERENCE.md)
 
 With **Node.js 24** on macOS or Linux:
 
@@ -97,13 +114,21 @@ The unpublished **alpha.5 candidate** adds a [runnable supplier-quotation compar
 
 The local deterministic benefit harness avoided 400 repeated extraction calls across 500 deliveries of 100 distinct inputs. Another 1,000 structured reads used no model calls. These are operation counts, not human time-saving or live accuracy claims. See [user benefits](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/USER_BENEFITS.md) and the [quality report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/QUALITY_REPORT.md).
 
-Run `npm run verify:release` for full MVP qualification. It requires every quality gate, including independent semantic review. The separately selected `npm run verify:preview-release` permits only an alpha with passing implementation, recovery, consumer, security and exact-revision CI checks, plus a packaged disclosure of every open qualification gate. `npm run publish:preview` uploads the exact tested archive; `-- --dry-run` prepares the same command without publication. Both profiles reject stale source or changed evidence.
+The published alpha.4 uses a developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks, plus a disclosure of every open quality gate. This is separate from full MVP qualification, which requires independent semantic review. See the [versioned release workflow](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/README.md#measured-benefits-and-release-qualification) for the commands and evidence policy belonging to that release.
+
+## Ideas to build on
+
+- [A review boundary for agent workflows](https://ontave.daltn.tech/index/agent-workflows/)
+- [Where Ontave fits alongside retrieval](https://ontave.daltn.tech/index/ontave-and-retrieval/)
+- [Schema evolution and stable contracts](https://ontave.daltn.tech/index/schema-evolution/)
+
+Follow the [RSS feed](https://ontave.daltn.tech/feed.xml), use the [JSON feed](https://ontave.daltn.tech/feed.json), or read the [plain-text context](https://ontave.daltn.tech/llms.txt).
 
 ## References
 
 [Operator runbook](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/OPERATOR_RUNBOOK.md) · [Build report](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/BUILD_REPORT.md) · [Annotation rubric](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/ANNOTATION_RUBRIC.md) · [Architectural source reference](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/SOURCE_REFERENCE.md)
 
-Copyright 2026 Ontave contributors. See [Apache 2.0](LICENSE) and [NOTICE](NOTICE).
+Copyright 2026 Ontave contributors. See [Apache 2.0](LICENSE) and [NOTICE](NOTICE). Cover artwork: *Noon, Rest from Work* by Vincent van Gogh. The vector wordmark and painting follow the website’s visual identity.
 
 ## Developer-preview feedback
 
