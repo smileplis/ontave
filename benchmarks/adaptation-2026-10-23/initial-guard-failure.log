@@ -1,0 +1,24 @@
+{"trial":1,"id":"learn-01","states":{"ontave":"waiting_ontology","flexible":"pending","strict":"waiting_ontology"}}
+{"trial":1,"id":"reuse-02","states":{"flexible":"pending","ontave":"failed","strict":"waiting_ontology"}}
+{"trial":1,"id":"reuse-03","states":{"ontave":"waiting_ontology","flexible":"pending","strict":"waiting_ontology"}}
+{"trial":1,"id":"reuse-04","states":{"flexible":"pending","ontave":"failed","strict":"waiting_ontology"}}
+{"trial":1,"id":"reuse-05","states":{"ontave":"completed","flexible":"completed","strict":"waiting_ontology"}}
+{"trial":1,"id":"reuse-06","states":{"flexible":"completed","ontave":"completed","strict":"waiting_ontology"}}
+{"trial":1,"id":"abstain-07","states":{"ontave":"waiting_ontology","flexible":"pending","strict":"waiting_ontology"}}
+{"trial":1,"id":"abstain-08","states":{"flexible":"pending","ontave":"waiting_ontology","strict":"waiting_ontology"}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: ontave broke a frozen query on guard-09
+    at file://<checkout>/scripts/compare-adaptation.mjs:29:99
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.0

@@ -52,14 +52,17 @@ run(
 );
 await writeFile(
   resolve(consumer, "check.mjs"),
-  `import { createOntave, sourceSpan, generateContract, starter, hash } from 'ontave';
+  `import { createOntave, sourceSpan, generateContract, starter, hash, additivePolicy, advanceAutomatically } from 'ontave';
 import {randomUUID} from 'node:crypto';
+import { openOntave } from 'ontave/local';
+import { startStudio } from 'ontave/studio';
 import { postgres } from 'ontave/postgres';
 import { fixtureAdapter } from 'ontave/testing';
 import { mistral } from 'ontave/models/mistral';
 import { openrouter } from 'ontave/models/openrouter';
 import { gemini } from 'ontave/models/gemini';
 import { groq } from 'ontave/models/groq';
+if(typeof openOntave!=='function'||typeof startStudio!=='function'||typeof advanceAutomatically!=='function'||additivePolicy({sources:['supplier']}).namespace!=='ext_')throw Error('Missing local/automation exports');
 if(typeof createOntave!=='function'||typeof postgres!=='function'||typeof fixtureAdapter!=='function')throw Error('Bad exports');
 if(typeof mistral!=='function'||typeof openrouter!=='function')throw Error('Missing experimental adapter exports');
 for(const factory of [gemini,groq,mistral,openrouter]){let rejected=false;try{factory({apiKey:'',model:''});}catch(e){rejected=e.code==='MODEL_UNAVAILABLE';}if(!rejected)throw Error('Missing provider configuration was not rejected');}
@@ -76,7 +79,10 @@ const help = run(node, ["node_modules/ontave/dist/cli.js", "help"], consumer);
 if (!help.includes("Ontave")) throw Error("CLI missing");
 await writeFile(
   resolve(consumer, "check.ts"),
-  `import { createOntave, type FieldResult, type ModelAdapter } from 'ontave';
+  `import { createOntave, additivePolicy, advanceAutomatically, type FieldResult, type ModelAdapter } from 'ontave';
+import {openOntave}from'ontave/local';import{startStudio}from'ontave/studio';
+const localFactory=()=>openOntave({automation:additivePolicy({sources:['supplier'],relationshipTargets:['quotation']})});
+void [localFactory,startStudio,advanceAutomatically];
 import { postgres } from 'ontave/postgres';
 import {type OntaveEntities,validate} from './generated/index.mjs';
 const value: FieldResult<string> = {state:'unknown',reason:'test',assertionIds:[]};
@@ -139,6 +145,14 @@ const publishedResults = JSON.parse(
 );
 if (publishedResults.productionQualified !== false)
   throw Error("Benchmark must preserve open qualification gates");
+for (const path of [
+  "docs/LOCAL_AND_HOSTED.md",
+  "docs/ADAPTATION_MILESTONE.md",
+  "examples/local/demo.mjs",
+  "benchmarks/adaptation-2026-10-23/results.json",
+]) {
+  await readFile(resolve(consumer, "node_modules/ontave", path));
+}
 const report = {
   archive,
   consumer,

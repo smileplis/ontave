@@ -28,6 +28,10 @@ Try the roof-inspection and payment-claim examples. Inspect the source, evaluate
 
 This playground uses fictional fixture responses. Its setup and governance flow do not establish arbitrary-message extraction accuracy.
 
+## Simplified local setup in the alpha.5 candidate
+
+The unpublished candidate adds `ontave dev --install`, persistent local PostgreSQL, `openOntave` and a ready review Studio. These exports are not in the current alpha.4 npm release. See [local setup](LOCAL_AND_HOSTED.md) for the few-line example, private provider configuration and bring-your-own-database option. The setup below remains available for shared authenticated applications.
+
 ## Connect an application
 
 Use a dedicated PostgreSQL 18 database with separate migration and restricted runtime roles. Follow the [operator setup](OPERATOR_RUNBOOK.md). Generate a trusted local CLI configuration with:
@@ -42,4 +46,4 @@ Run migration planning before applying internal migrations. Provision the worksp
 
 ## Evaluate the preview
 
-Check output against your own reviewed source examples, including conflicting information and ambiguous identities. Proposals require explicit review. Accepting an interpretation does not verify the underlying business event. Keep provider/model settings, expected answers and trial results so errors can be reproduced. Review [quality results and limits](QUALITY_REPORT.md) before choosing a workload.
+Check output against your own reviewed source examples, including conflicting information and ambiguous identities. Strict mode requires explicit review. The alpha.5 candidate can adopt eligible additions and reported facts under an explicit host policy; exceptions remain pending. Accepting an interpretation does not verify the underlying business event. Keep provider/model settings, expected answers and trial results so errors can be reproduced. Review [quality results and limits](QUALITY_REPORT.md) before choosing a workload.

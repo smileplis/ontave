@@ -2,7 +2,7 @@
 
 Your schema didn’t see this coming.
 
-Ontave is an Apache 2.0 TypeScript framework for preserved evidence, reviewed assertions and additive ontology evolution. Keep the source, review proposed changes and read accepted data through a typed application contract.
+Ontave is an Apache 2.0 TypeScript framework for applications that need to adopt unfamiliar information while preserving evidence and existing query contracts. Strict review is the default; the alpha.5 candidate adds bounded automatic adoption selected by the host application.
 
 **Developer preview `0.1.0-alpha.4`.** This alpha is intended for developer evaluation. Full MVP qualification remains open, including independent label review, live identity/discovery/publication checks and experimental-provider resource profiling. See the [packaged release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json) and [implementation status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/IMPLEMENTATION_STATUS.md).
 
@@ -38,6 +38,19 @@ npm ci
 npm run playground
 ```
 
+## New in the unpublished alpha.5 candidate
+
+Persistent local setup and a ready review Studio:
+
+```sh
+# After installing this candidate archive (not the current alpha.4 npm release):
+npx ontave dev --install
+```
+
+Or use `openOntave` from `ontave/local` to ingest, process and open Studio in a few lines. Database provisioning, restricted roles and private local workspace identity are handled for you. [Local setup and optional hosting](docs/LOCAL_AND_HOSTED.md).
+
+The [frozen quotation milestone](docs/ADAPTATION_MILESTONE.md) learns delivery commitments without manual adaptation review under a trusted additive policy. Its normalized development replay stored 37/39 commitments and preserved 99 old-query checks per arm. A flexible LLM + PostgreSQL baseline achieved the same quality with lower local overhead. Earlier failures are retained; independent holdouts, developer effort savings and production qualification remain open.
+
 ## What it does
 
 - Preserves text/JSON evidence with exact source references and idempotent durable jobs.
@@ -63,7 +76,7 @@ The host resolves authenticated actor, workspace, capabilities and trusted sourc
 
 Gemini is an explicit replaceable adapter, with full-request token preflight. Experimental Mistral and OpenRouter adapters are explicit alternatives; Groq supports extraction only. Model output is validated and cannot approve changes. Accepting “I paid” as a correctly extracted claim does not independently verify payment.
 
-The alpha does not perform physical business-table migrations, destructive ontology changes, automatic established-entity merging or autonomous fact acceptance. It does not supply a hosted database, browser/edge SDK or React data hooks.
+The published alpha.4 does not perform autonomous acceptance. The alpha.5 candidate adds explicit bounded additive adoption and reported-fact acceptance; exceptions stay pending. Neither version performs destructive model changes, physical business-table migrations or automatic established-entity merging. There is no hosted database service, browser/edge SDK or React data hooks.
 
 ## Verify locally
 

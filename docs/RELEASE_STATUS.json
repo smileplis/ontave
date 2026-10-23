@@ -2,7 +2,7 @@
   "version": "0.1.0-alpha.5",
   "channel": "developer-preview",
   "fullMvpQualified": false,
-  "intendedUse": "Developer evaluation of the governed evidence-to-reviewed-record workflow",
+  "intendedUse": "Developer evaluation of evidence-backed records, local setup and bounded policy-authorized additive adaptation",
   "playground": "Fictional fixture adapter with real SDK and disposable PostgreSQL operations; no arbitrary-message accuracy claim",
   "openGates": [
     {
@@ -26,5 +26,11 @@
     "status": "development comparison completed; independent and external qualification pending",
     "humanEffort": "One project-maintainer exploratory walkthrough completed; no population productivity claim",
     "officialDocileScore": null
+  },
+  "adaptationMilestone": {
+    "status": "synthetic development comparison; post-acquisition normalization; independent holdout pending",
+    "manualAdaptationReviews": 0,
+    "hostedServiceLaunched": false,
+    "productionQualified": false
   }
 }

@@ -95,3 +95,18 @@ The corresponding browser sandbox replays generated SDK reference runs. It is la
 Required generated contract fields exclude the `missing` state; optional fields retain it. Runtime validators reject malformed or additional envelope properties with typed errors. Definition IDs reject reserved object-property names. All provider adapters bound response buffering at 2 MiB and redact interrupted-stream exceptions. Truncated or malformed responses retain available usage; interrupted responses record unknown usage and follow bounded retry policy. No partial output is salvaged.
 
 Amendments revalidated after compatible ontology activation create a new digest bound to the current ontology ID/hash and original evidence, preserving the earlier bundle. Incompatible definitions return `STALE_ONTOLOGY` and require reprocessing and renewed review. Workers, evaluation and generated proposals enforce the 25-concept limit for custom adapters too. Workers/evaluation bound complete encoded source, definitions, authorized candidates and host policy context at 60,000 bytes before inference; adapters additionally apply their declared tokenizer/request limits. Nothing is silently sliced. `ontave ontology rollback` returns `UNSUPPORTED_EVOLUTION` and directs the operator to a reviewed forward correction.
+
+
+## Alpha.5 candidate: local setup, Studio and bounded automation
+
+These additions are unpublished. `openOntave` is exported from `ontave/local`, and `startStudio` from `ontave/studio`. `openOntave({directory?, install?, model?, automation?, seed?})` provisions persistent local PostgreSQL and a private local workspace. It returns `ingest({id,text,source?})`, `process()`, `find(query)`, `catalog()`, `studio({port?})`, `close()`, and the lower-level `runtime`/trusted `context`. External connections may use `connectionString`; internal migrations additionally require explicit `migrationConnectionString` and `runtimeRole`. Use the lower-level authenticated runtime for shared services.
+
+`additivePolicy({sources,relationshipTargets?,allowNewExistingEntities?,id?})` creates a bounded extension policy. Configure it as `createOntave({..., automation})` or `openOntave({..., automation})`. `automationPolicy` accepts explicit bounded namespace, concept/field/relation budgets and field types. Source text cannot change this authority.
+
+`ontology.publishByPolicy(context,{candidateId,candidateHash,requestKey,reason})` requires a configured policy and review capability. It checks source scope, new namespaced concepts, allowed existing parent targets, unchanged existing meanings, current parent and contract compatibility. It records policy authorization with `semanticAccuracyQualified:false`; it does not replace semantic qualification with a fabricated evaluation.
+
+`reviews.acceptByPolicy(context,{bundleId,digest,requestKey})` accepts eligible reported claims under that policy and the exact current digest. It rejects retractions, verified assertions, unknown base identities by default and unlinked required extension parents.
+
+`advanceAutomatically(runtime,context,jobId)` performs up to four worker/proposal/publication/acceptance transitions and leaves unsupported cases pending with a reason. Local `process()` uses it only when automation is configured. Strict defaults are unchanged.
+
+`startStudio({runtime,context,port?,process?})` starts a loopback-only local owner UI. Prefer `app.studio()` for integrated lifecycle handling. It is not a hosted multi-user authentication layer. See [local boundaries](LOCAL_AND_HOSTED.md) and [the adaptation milestone](ADAPTATION_MILESTONE.md).

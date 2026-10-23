@@ -29,7 +29,12 @@
     "docs/QUICKSTART.md",
     "examples/supplier-quotes",
     "docs/SUPPLIER_QUOTATION_BENCHMARK.md",
-    "benchmarks/quotation-2026-10-23"
+    "benchmarks/quotation-2026-10-23",
+    "examples/adaptive-quotes",
+    "examples/local",
+    "docs/LOCAL_AND_HOSTED.md",
+    "docs/ADAPTATION_MILESTONE.md",
+    "benchmarks/adaptation-2026-10-23"
   ],
   "exports": {
     ".": {
@@ -43,6 +48,14 @@
     "./testing": {
       "types": "./dist/testing.d.ts",
       "import": "./dist/testing.js"
+    },
+    "./local": {
+      "types": "./dist/local.d.ts",
+      "import": "./dist/local.js"
+    },
+    "./studio": {
+      "types": "./dist/studio.d.ts",
+      "import": "./dist/studio.js"
     },
     "./models/gemini": {
       "types": "./dist/models/gemini.d.ts",
@@ -86,7 +99,10 @@
     "publish:preview": "node scripts/publish-preview.mjs",
     "example:quotes": "npm run build && node scripts/quotation-study.mjs",
     "compare:quotes": "npm run build && node scripts/compare-quotations.mjs",
-    "collect:quotes": "node scripts/collect-quotation-trials.mjs"
+    "collect:quotes": "node scripts/collect-quotation-trials.mjs",
+    "compare:adaptation": "npm run build && node scripts/compare-adaptation.mjs",
+    "collect:adaptation": "node scripts/collect-adaptation.mjs",
+    "verify:local": "node scripts/verify-local.mjs"
   },
   "dependencies": {
     "canonicalize": "5.1.0",

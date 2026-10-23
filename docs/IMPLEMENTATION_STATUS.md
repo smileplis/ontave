@@ -42,3 +42,8 @@ Provider factories now constrain short text quotes to an immutable source anchor
 5. Perform a fresh-developer walkthrough before full MVP qualification. Alpha distribution is separately labelled and validated; it does not complete this requirement.
 
 [Acceptance coverage](acceptance-coverage.json) preserves each original acceptance ID. [User benefits](USER_BENEFITS.md) separates operation counts and machine latency from unmeasured human productivity. Private research and credentials remain excluded from source control and package contents.
+
+
+## Alpha.5 candidate additions
+
+Persistent local database provisioning, loopback Studio, bounded automatic additive publication/acceptance and a frozen quotation adaptation comparator are implemented. The [milestone report](ADAPTATION_MILESTONE.md) separates the successful development ablation from earlier failed acquisitions. Independent semantic qualification, external developer effort measurements and hosted operations remain open. These candidate additions do not change the published alpha.4 archive.

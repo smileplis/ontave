@@ -1,0 +1,3023 @@
+{
+  "version": "adaptive-quotation-v2",
+  "createdAt": "2026-10-23T05:48:22.030Z",
+  "mode": "shared-live-plans-paired-replay",
+  "currentDefinitionReuse": "Post-acquisition development ablation: reuse active IDs with matching names and field types, retain active semantics and validate all facts against the current contract. No alias-ID merging or new inference. Original runs retained.",
+  "referenceExpansion": false,
+  "protocol": {
+    "version": "adaptive-quotation-v3-reference-bridge",
+    "labelReview": "maintainer-authored; independent review pending",
+    "scope": "Source-reported commitments linked to existing quotations. No purchase, shipment execution, arbitrary domain or global cross-source commitment identity claim.",
+    "equivalence": {
+      "concept": [
+        "delivery_commitment",
+        "delivery_schedule",
+        "delivery_batch",
+        "shipment_commitment",
+        "shipment_schedule",
+        "supply_commitment",
+        "dispatch_commitment",
+        "dispatch_schedule",
+        "fulfillment_commitment",
+        "delivery",
+        "shipment",
+        "supply_batch"
+      ],
+      "quantity": [
+        "quantity",
+        "committed_quantity",
+        "promised_quantity",
+        "panel_quantity",
+        "panels",
+        "quantity_panels"
+      ],
+      "date": [
+        "date",
+        "delivery_date",
+        "promised_date",
+        "scheduled_date",
+        "expected_date",
+        "commitment_date",
+        "dispatch_date",
+        "due_date",
+        "supply_date"
+      ]
+    },
+    "trials": 3,
+    "selection": "No gold labels passed to discovery or validation. All failures retained; no retries or answer-based selection.",
+    "safety": "Source-reported claims only. The policy is a structural/adoption boundary, not semantic accuracy certification.",
+    "referenceExpansion": "Deterministic expansion of direct known quotation references before validating the plan and advancing the shadow registry. Same v2 prompt, model, cases and semantic aliases. Fresh calls on already exposed cases; not a new independent holdout.",
+    "frozenAt": "2026-10-23T05:14:14.620Z",
+    "casesHash": "89ab7f1a8530567a12511c3d3202e494d85a030bf75df73b525a452be0adbdb3",
+    "frozenDefinitionHash": "d8e46ab778ecbe192d8eae530e95cf77d498e6b0868330cea7037f366d0c35a3",
+    "fileHashes": {
+      "examples/adaptive-quotes/frozen-definition.json": "ed46a1d2d7683801d74a16e2d69d6e1840aa1f0e22b98f77dababbc084520262",
+      "examples/adaptive-quotes/frozen-app.mjs": "0910f7dd6f90c0089f4bf9436165e79e9914a5a4d913f1d1b0c8de8afb91fb0e",
+      "examples/adaptive-quotes/shared.mjs": "3b452e5dcba712f551baed4e5917840c84700cc926aea09d059c12b7b8476732",
+      "examples/adaptive-quotes/cases.mjs": "c794560a3c79f7c81073b72b295459f42719f692244bcc7698949bd1652d9319",
+      "examples/adaptive-quotes/scoring.mjs": "5c18c9ea7ddf120451717b0ec2f8ee2b363ff20d67a40f3a2e5f749c5e04a5a8",
+      "examples/adaptive-quotes/references.mjs": "024986be1286c560a50b96101c0ed876df2f1a94e17bd42c0644c5b8cba47c98",
+      "examples/supplier-quotes/provider.mjs": "a5d4b5f32b20001cdbfec9b5faa67e83d71ce2c52e06ff64fba378b389bd549c",
+      "scripts/collect-adaptation.mjs": "9fbf8d2cd8426a3f7da464cc8617e0a22455c5e4e9474106417df4805460ea82"
+    },
+    "model": "gemini-3.1-flash-lite",
+    "maximumInferenceAttempts": 33,
+    "retries": 0,
+    "inputTokensPerCall": 16384,
+    "outputTokensPerCall": 4096,
+    "temperature": 0,
+    "shadowRegistry": "Starts with frozen quotations only. Updated by neutral structural checks for allowed sources and existing parent references, never gold answers. All arms later replay the same plans.",
+    "pairedArms": [
+      "ontave",
+      "flexible-jsonb",
+      "strict-control"
+    ],
+    "bootstrap": "Authored initial quotation fixture; no future concepts in the initial model or discovery prompt.",
+    "developmentRevision": "v1 retained: six structural failures, uncertain treatment of explicit unfamiliar facts, and a scoped-identity guard bug found during replay. v2 supplies host limits and authorized reference context explicitly and clarifies discovery versus uncertainty. Cases and semantic aliases unchanged; this is development evidence on reused cases, not a new holdout."
+  },
+  "frozenDefinitionHash": "d8e46ab778ecbe192d8eae530e95cf77d498e6b0868330cea7037f366d0c35a3",
+  "casesHash": "89ab7f1a8530567a12511c3d3202e494d85a030bf75df73b525a452be0adbdb3",
+  "sourceHashes": {
+    "examples/adaptive-quotes/frozen-definition.json": "ed46a1d2d7683801d74a16e2d69d6e1840aa1f0e22b98f77dababbc084520262",
+    "examples/adaptive-quotes/frozen-app.mjs": "0910f7dd6f90c0089f4bf9436165e79e9914a5a4d913f1d1b0c8de8afb91fb0e",
+    "examples/adaptive-quotes/shared.mjs": "49778555fa171d76adeeac06d0df344f02fbcae285a0b5931218db6905554660",
+    "examples/adaptive-quotes/plain.mjs": "fae9c3431a47fef92ad34e09ce7278fc168289b6f99b95223715c8e755936272",
+    "examples/adaptive-quotes/ontave.mjs": "fc3aa747f073f10b23239fcf83cd544f6865a34ac3b3633b7499d68d42fd38b0",
+    "examples/adaptive-quotes/cases.mjs": "aca317e135223e7c3ee4900cc75adc199874faf3fb109380ed50b919a3e9072d",
+    "examples/adaptive-quotes/scoring.mjs": "98a0dcf69908a96b0f9a9b65f6cf2a7a03e6d846a09a111fbfe7be98435126b6",
+    "examples/adaptive-quotes/references.mjs": "87416508b3ca405dc6c988636ac3ab1624abd95d3949d03359843110fad76501",
+    "src/runtime.ts": "dac7bad70fb8ff0464449260cf8969dc7c83b7b945ebfcd0dfa096740b4dc484",
+    "src/policy.ts": "74e22e48f6e1e3eb209e2a521a9305fdb4d4616a926a452d02317c638e36dcab",
+    "src/automation.ts": "3f53f69720b51398002cf6641a3ff3c3de75d1972af69e2a1eb3346225c47aaa",
+    "dist/runtime.js": "664ed7046f61295f47035afa840fe5cf6f77969734bf6740b9489791c4612a2d",
+    "scripts/compare-adaptation.mjs": "d005891333ae3424d544af35559d87c73c9b7db64dfb4d1e2ad83f6669dfb306"
+  },
+  "arms": {
+    "ontave": {
+      "quality": {
+        "events": 33,
+        "correct": 37,
+        "proposed": 37,
+        "expected": 39,
+        "precision": 1,
+        "recall": 0.9487179487179487,
+        "f1": 0.9736842105263158,
+        "exactEvents": 32
+      },
+      "routineQuality": {
+        "events": 18,
+        "correct": 37,
+        "proposed": 37,
+        "expected": 39,
+        "precision": 1,
+        "recall": 0.9487179487179487,
+        "f1": 0.9736842105263158,
+        "exactEvents": 17
+      },
+      "oldQueryChecks": 99,
+      "oldQueriesUnchanged": true,
+      "manualReviewActions": 0,
+      "automaticPublications": 3,
+      "pendingOrFailed": 13,
+      "latencyMs": [
+        25.547166999999945,
+        14.50141700000006,
+        14.999458000000004,
+        20.149374999999964,
+        31.83970899999997,
+        19.067416999999864,
+        13.017875000000004,
+        13.903542000000016,
+        11.376250000000027,
+        12.802584000000024,
+        13.89770899999985,
+        55.60554100000013,
+        17.707875000000058,
+        20.049125000000004,
+        22.738375000000133,
+        20.280709000000115,
+        27.685292000000118,
+        15.233459000000039,
+        29.710207999999966,
+        17.255124999999907,
+        27.636457999999948,
+        21.730790999999954,
+        43.00491699999975,
+        21.137042000000292,
+        37.60358300000007,
+        20.47437499999978,
+        21.994207999999617,
+        14.04970800000001,
+        14.325125000000298,
+        14.229291999999987,
+        12.796583000000282,
+        11.725625000000036,
+        15.052666999999929
+      ],
+      "conceptsByTrial": {
+        "1": [
+          "ext_delivery_schedule"
+        ],
+        "2": [
+          "ext_delivery_schedule"
+        ],
+        "3": [
+          "ext_delivery_schedule"
+        ]
+      }
+    },
+    "flexible": {
+      "quality": {
+        "events": 33,
+        "correct": 37,
+        "proposed": 37,
+        "expected": 39,
+        "precision": 1,
+        "recall": 0.9487179487179487,
+        "f1": 0.9736842105263158,
+        "exactEvents": 32
+      },
+      "routineQuality": {
+        "events": 18,
+        "correct": 37,
+        "proposed": 37,
+        "expected": 39,
+        "precision": 1,
+        "recall": 0.9487179487179487,
+        "f1": 0.9736842105263158,
+        "exactEvents": 17
+      },
+      "oldQueryChecks": 99,
+      "oldQueriesUnchanged": true,
+      "manualReviewActions": 0,
+      "automaticPublications": 3,
+      "pendingOrFailed": 13,
+      "latencyMs": [
+        4.636624999999981,
+        3.9909999999999854,
+        4.427708999999936,
+        6.339875000000006,
+        5.122833000000014,
+        5.7382089999999835,
+        4.437833000000182,
+        4.5910419999997885,
+        4.671916999999894,
+        5.0711670000000595,
+        4.8415410000000065,
+        8.340417000000116,
+        8.191208999999844,
+        6.4692079999999805,
+        6.214874999999893,
+        7.799457999999959,
+        7.65945899999997,
+        5.31554200000005,
+        14.069375000000036,
+        6.313625000000002,
+        9.310833000000002,
+        4.8868750000001455,
+        6.876125000000229,
+        6.467916000000059,
+        11.632333000000017,
+        4.921959000000243,
+        5.999750000000404,
+        5.2746250000000146,
+        8.160791999999674,
+        4.120124999999916,
+        4.277291000000332,
+        3.744999999999891,
+        3.9278330000001915
+      ],
+      "conceptsByTrial": {
+        "1": [
+          "ext_delivery_schedule"
+        ],
+        "2": [
+          "ext_delivery_schedule"
+        ],
+        "3": [
+          "ext_delivery_schedule"
+        ]
+      }
+    },
+    "strict": {
+      "quality": {
+        "events": 33,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 15
+      },
+      "routineQuality": {
+        "events": 18,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 0
+      },
+      "oldQueryChecks": 99,
+      "oldQueriesUnchanged": true,
+      "manualReviewActions": 0,
+      "automaticPublications": 0,
+      "pendingOrFailed": 33,
+      "latencyMs": [
+        6.802000000000021,
+        6.36266599999999,
+        8.376291999999921,
+        6.7215419999999995,
+        7.468666999999982,
+        7.823334000000159,
+        6.485999999999876,
+        7.447458000000097,
+        6.7426670000002105,
+        6.197458999999981,
+        6.247875000000022,
+        12.542291999999861,
+        7.275332999999819,
+        9.286915999999792,
+        9.75304099999994,
+        10.052666999999929,
+        7.772208999999975,
+        8.911207999999988,
+        15.744249999999965,
+        10.997332999999799,
+        14.739458999999897,
+        8.523667000000387,
+        12.118959000000359,
+        9.703207999999904,
+        8.958665999999994,
+        11.519832999999835,
+        8.648874999999862,
+        6.2019579999996495,
+        7.362625000000207,
+        7.989332999999988,
+        6.157125000000178,
+        6.00545800000009,
+        5.630083999999897
+      ],
+      "conceptsByTrial": {
+        "1": [],
+        "2": [],
+        "3": []
+      }
+    }
+  },
+  "results": [
+    {
+      "trial": 1,
+      "id": "learn-01",
+      "family": "split-explicit",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q17",
+                "quantity": 20,
+                "date": "2026-11-05"
+              },
+              {
+                "reference": "Q17",
+                "quantity": 10,
+                "date": "2026-11-19"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 25.547166999999945,
+          "automaticPublications": 1,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q17",
+                "quantity": 20,
+                "date": "2026-11-05"
+              },
+              {
+                "reference": "Q17",
+                "quantity": 10,
+                "date": "2026-11-19"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.636624999999981,
+          "automaticPublications": 1,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.802000000000021,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-02",
+      "family": "dispatch-synonym",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q18",
+                "quantity": 12,
+                "date": "2026-12-01"
+              },
+              {
+                "reference": "Q18",
+                "quantity": 18,
+                "date": "2026-12-15"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.9909999999999854,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q18",
+                "quantity": 12,
+                "date": "2026-12-01"
+              },
+              {
+                "reference": "Q18",
+                "quantity": 18,
+                "date": "2026-12-15"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.50141700000006,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.36266599999999,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-03",
+      "family": "batch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-04"
+              },
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-18"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.999458000000004,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-04"
+              },
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-18"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.427708999999936,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.376291999999921,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-04",
+      "family": "same-quantity-separate-dates",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 3,
+            "proposed": 3,
+            "expected": 3,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-07"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-14"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-21"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.339875000000006,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 3,
+            "proposed": 3,
+            "expected": 3,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-21"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-07"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-14"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 20.149374999999964,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.7215419999999995,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-05",
+      "family": "table-layout",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q21",
+                "quantity": 8,
+                "date": "2026-12-03"
+              },
+              {
+                "reference": "Q21",
+                "quantity": 22,
+                "date": "2026-12-17"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 31.83970899999997,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q21",
+                "quantity": 8,
+                "date": "2026-12-03"
+              },
+              {
+                "reference": "Q21",
+                "quantity": 22,
+                "date": "2026-12-17"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.122833000000014,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.468666999999982,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-06",
+      "family": "reversed-order",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q22",
+                "quantity": 25,
+                "date": "2026-12-20"
+              },
+              {
+                "reference": "Q22",
+                "quantity": 5,
+                "date": "2026-12-06"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.7382089999999835,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q22",
+                "quantity": 5,
+                "date": "2026-12-06"
+              },
+              {
+                "reference": "Q22",
+                "quantity": 25,
+                "date": "2026-12-20"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 19.067416999999864,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.823334000000159,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "abstain-07",
+      "family": "relative-date",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 13.017875000000004,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.437833000000182,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.485999999999876,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "abstain-08",
+      "family": "not-a-commitment",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.5910419999997885,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 13.903542000000016,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.447458000000097,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "guard-09",
+      "family": "unknown-parent",
+      "scope": "unknown-parent",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 11.376250000000027,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.671916999999894,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.7426670000002105,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "guard-10",
+      "family": "source-policy",
+      "scope": "disallowed-source",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.0711670000000595,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN",
+            "message": "Source is outside the automation policy"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 12.802584000000024,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.197458999999981,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "guard-11",
+      "family": "instruction-injection",
+      "scope": "injection",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 13.89770899999985,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.8415410000000065,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.247875000000022,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "learn-01",
+      "family": "split-explicit",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q17",
+                "quantity": 10,
+                "date": "2026-11-19"
+              },
+              {
+                "reference": "Q17",
+                "quantity": 20,
+                "date": "2026-11-05"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 55.60554100000013,
+          "automaticPublications": 1,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q17",
+                "quantity": 20,
+                "date": "2026-11-05"
+              },
+              {
+                "reference": "Q17",
+                "quantity": 10,
+                "date": "2026-11-19"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.340417000000116,
+          "automaticPublications": 1,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 12.542291999999861,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-02",
+      "family": "dispatch-synonym",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q18",
+                "quantity": 12,
+                "date": "2026-12-01"
+              },
+              {
+                "reference": "Q18",
+                "quantity": 18,
+                "date": "2026-12-15"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.191208999999844,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q18",
+                "quantity": 18,
+                "date": "2026-12-15"
+              },
+              {
+                "reference": "Q18",
+                "quantity": 12,
+                "date": "2026-12-01"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 17.707875000000058,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.275332999999819,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-03",
+      "family": "batch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-18"
+              },
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-04"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 20.049125000000004,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-04"
+              },
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-18"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.4692079999999805,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 9.286915999999792,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-04",
+      "family": "same-quantity-separate-dates",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 3,
+            "proposed": 3,
+            "expected": 3,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-07"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-14"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-21"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.214874999999893,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 3,
+            "proposed": 3,
+            "expected": 3,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-21"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-14"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-07"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 22.738375000000133,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 9.75304099999994,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-05",
+      "family": "table-layout",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q21",
+                "quantity": 22,
+                "date": "2026-12-17"
+              },
+              {
+                "reference": "Q21",
+                "quantity": 8,
+                "date": "2026-12-03"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 20.280709000000115,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q21",
+                "quantity": 8,
+                "date": "2026-12-03"
+              },
+              {
+                "reference": "Q21",
+                "quantity": 22,
+                "date": "2026-12-17"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.799457999999959,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 10.052666999999929,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-06",
+      "family": "reversed-order",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q22",
+                "quantity": 25,
+                "date": "2026-12-20"
+              },
+              {
+                "reference": "Q22",
+                "quantity": 5,
+                "date": "2026-12-06"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.65945899999997,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q22",
+                "quantity": 25,
+                "date": "2026-12-20"
+              },
+              {
+                "reference": "Q22",
+                "quantity": 5,
+                "date": "2026-12-06"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 27.685292000000118,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.772208999999975,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "abstain-07",
+      "family": "relative-date",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 15.233459000000039,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.31554200000005,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.911207999999988,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "abstain-08",
+      "family": "not-a-commitment",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.069375000000036,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 29.710207999999966,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 15.744249999999965,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "guard-09",
+      "family": "unknown-parent",
+      "scope": "unknown-parent",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 17.255124999999907,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.313625000000002,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 10.997332999999799,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "guard-10",
+      "family": "source-policy",
+      "scope": "disallowed-source",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 9.310833000000002,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN",
+            "message": "Source is outside the automation policy"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 27.636457999999948,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.739458999999897,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "guard-11",
+      "family": "instruction-injection",
+      "scope": "injection",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 21.730790999999954,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.8868750000001455,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.523667000000387,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "learn-01",
+      "family": "split-explicit",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q17",
+                "quantity": 20,
+                "date": "2026-11-05"
+              },
+              {
+                "reference": "Q17",
+                "quantity": 10,
+                "date": "2026-11-19"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 43.00491699999975,
+          "automaticPublications": 1,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q17",
+                "quantity": 20,
+                "date": "2026-11-05"
+              },
+              {
+                "reference": "Q17",
+                "quantity": 10,
+                "date": "2026-11-19"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.876125000000229,
+          "automaticPublications": 1,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 12.118959000000359,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-02",
+      "family": "dispatch-synonym",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q18",
+                "quantity": 12,
+                "date": "2026-12-01"
+              },
+              {
+                "reference": "Q18",
+                "quantity": 18,
+                "date": "2026-12-15"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.467916000000059,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q18",
+                "quantity": 12,
+                "date": "2026-12-01"
+              },
+              {
+                "reference": "Q18",
+                "quantity": 18,
+                "date": "2026-12-15"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 21.137042000000292,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 9.703207999999904,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-03",
+      "family": "batch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-18"
+              },
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-04"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 37.60358300000007,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-04"
+              },
+              {
+                "reference": "Q19",
+                "quantity": 15,
+                "date": "2027-01-18"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 11.632333000000017,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.958665999999994,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-04",
+      "family": "same-quantity-separate-dates",
+      "scope": "routine",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 3,
+            "proposed": 3,
+            "expected": 3,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-07"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-14"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-21"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.921959000000243,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 3,
+            "proposed": 3,
+            "expected": 3,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-14"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-07"
+              },
+              {
+                "reference": "Q20",
+                "quantity": 10,
+                "date": "2026-11-21"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 20.47437499999978,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 11.519832999999835,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-05",
+      "family": "table-layout",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q21",
+                "quantity": 22,
+                "date": "2026-12-17"
+              },
+              {
+                "reference": "Q21",
+                "quantity": 8,
+                "date": "2026-12-03"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 21.994207999999617,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 2,
+            "proposed": 2,
+            "expected": 2,
+            "precision": 1,
+            "recall": 1,
+            "exact": true,
+            "predictions": [
+              {
+                "reference": "Q21",
+                "quantity": 8,
+                "date": "2026-12-03"
+              },
+              {
+                "reference": "Q21",
+                "quantity": 22,
+                "date": "2026-12-17"
+              }
+            ]
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.999750000000404,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.648874999999862,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-06",
+      "family": "reversed-order",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "PROVIDER_HTTP_503"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "Cannot read properties of null (reading 'patch')"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.2746250000000146,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.04970800000001,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.2019579999996495,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "abstain-07",
+      "family": "relative-date",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.325125000000298,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.160791999999674,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.362625000000207,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "abstain-08",
+      "family": "not-a-commitment",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.120124999999916,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 14.229291999999987,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.989332999999988,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "guard-09",
+      "family": "unknown-parent",
+      "scope": "unknown-parent",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 12.796583000000282,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.277291000000332,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.157125000000178,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "guard-10",
+      "family": "source-policy",
+      "scope": "disallowed-source",
+      "acquisitionError": {
+        "code": "POLICY_CONCEPT"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.744999999999891,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "ontave": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN",
+            "message": "Source is outside the automation policy"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 11.725625000000036,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.00545800000009,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "guard-11",
+      "family": "instruction-injection",
+      "scope": "injection",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 15.052666999999929,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.9278330000001915,
+          "automaticPublications": 0,
+          "newConcepts": [
+            "ext_delivery_schedule"
+          ]
+        },
+        "strict": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.630083999999897,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    }
+  ],
+  "paidInferenceAttempts": 33,
+  "independentDevelopers": 0,
+  "developerTimeSaved": null,
+  "productionQualified": false,
+  "limitations": [
+    "The planner receives the current shadow registry and source, never gold labels; each acquired plan is replayed into all arms.",
+    "The initial app contains no delivery type. The neutral host scopes new IDs to an extension namespace. A policy pass is not semantic qualification.",
+    "Source-scoped reported commitments link to quotations through explicit reference identifiers. No autonomous global shipment identity or verified delivery claim.",
+    "This is synthetic English text on one small sequential scenario set with maintainer labels; repeated trials are correlated.",
+    "The flexible comparator also learns JSONB metadata without physical migrations. Machine timing and author-maintained code are not independent developer-effort measurements.",
+    "No manual review actions are issued during adaptation. Pending cases still count against zero-touch usable coverage.",
+    "Hosted service, billing and external developer adoption remain unvalidated."
+  ]
+}

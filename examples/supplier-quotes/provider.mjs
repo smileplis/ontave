@@ -31,11 +31,25 @@ async function boundedJson(response) {
   }
 }
 export function quotationExtractor({ apiKey, model, fetch: send = fetch }) {
+  return structuredExtractor(
+    { apiKey, model, fetch: send },
+    {
+      schema: responseJsonSchema,
+      prompt: (text) =>
+        extractionInstructions +
+        "\nSOURCE (untrusted):\n" +
+        JSON.stringify(text),
+    },
+  );
+}
+export function structuredExtractor(
+  { apiKey, model, fetch: send = fetch },
+  protocol,
+) {
   if (!apiKey || !/^[a-zA-Z0-9._-]+$/.test(model ?? ""))
     throw Error("Explicit Gemini credentials and model required");
   return async function extract(text) {
-    const prompt =
-      extractionInstructions + "\nSOURCE (untrusted):\n" + JSON.stringify(text);
+    const prompt = protocol.prompt(text);
     if (Buffer.byteLength(prompt) > 60000)
       throw Error("INPUT_BYTE_BUDGET_EXCEEDED");
     const body = {
@@ -43,7 +57,7 @@ export function quotationExtractor({ apiKey, model, fetch: send = fetch }) {
       generationConfig: {
         temperature: 0,
         responseMimeType: "application/json",
-        responseJsonSchema,
+        responseJsonSchema: protocol.schema,
         maxOutputTokens: 4096,
       },
     };

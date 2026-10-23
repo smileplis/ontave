@@ -14,19 +14,50 @@ import { scenarios } from "./preview/scenarios.js";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url));
 const databaseVersion = "18.4.0-beta.17";
-async function embedded(directory: string, install: boolean) {
+export async function embedded(
+  directory: string,
+  install: boolean,
+  kind: "playground" | "local" = "playground",
+) {
   try {
     return await import(
       `@embedded-postgres/${process.platform}-${process.arch}`
     );
   } catch {}
+  const cachedRoot = resolve(
+    directory,
+    "tooling",
+    "node_modules/@embedded-postgres",
+    `${process.platform}-${process.arch}`,
+  );
+  try {
+    const cached = JSON.parse(
+      await readFile(resolve(cachedRoot, "package.json"), "utf8"),
+    );
+    check(
+      cached.version === databaseVersion,
+      "STORAGE_UNAVAILABLE",
+      "Unexpected cached PostgreSQL tooling version",
+    );
+    const binaries = await import(
+      pathToFileURL(resolve(cachedRoot, "dist/index.js")).href
+    );
+    const { access } = await import("node:fs/promises");
+    await access(binaries.initdb);
+    await access(binaries.postgres);
+    return binaries;
+  } catch (error) {
+    if (error instanceof OntaveError) throw error;
+  }
   check(
     install,
     "MODEL_UNAVAILABLE",
-    "The playground needs optional local PostgreSQL tooling. Run ontave playground --install to download it into an isolated temporary directory.",
+    kind === "local"
+      ? "Local setup needs optional PostgreSQL tooling. Use openOntave({ install: true }) or ontave dev --install for the first download."
+      : "The playground needs optional local PostgreSQL tooling. Run ontave playground --install to download it into an isolated temporary directory.",
   );
   const deps = resolve(directory, "tooling");
-  await mkdir(deps, { mode: 0o700 });
+  await mkdir(deps, { mode: 0o700, recursive: true });
   await writeFile(
     resolve(deps, "package.json"),
     JSON.stringify({
@@ -39,7 +70,7 @@ async function embedded(directory: string, install: boolean) {
       },
     }),
   );
-  process.stdout.write("Preparing isolated PostgreSQL playground tooling…\n");
+  process.stdout.write("Preparing isolated PostgreSQL tooling…\n");
   const code = await new Promise<number | null>((res, rej) => {
     const child = spawn(
       process.platform === "win32" ? "npm.cmd" : "npm",

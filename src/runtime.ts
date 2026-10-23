@@ -1,3 +1,4 @@
+import { automationPolicy, checkAutomaticPatch } from "./policy.js";
 import { operationalMetrics } from "./metrics.js";
 import {
   evaluationSuiteSchema,
@@ -54,6 +55,8 @@ export interface OntaveConfig {
   storage: Storage;
   /** Required only by workers, generated proposals and extraction evaluations. */
   model?: ModelAdapter;
+  /** Explicit opt-in for source-scoped automatic fact acceptance and additive evolution. */
+  automation?: import("./policy.js").AutomationPolicy;
   authorize(context: unknown): Promise<Access> | Access;
   identifierRules?: { authority: string; kind: string; lowercase?: boolean }[];
   sourcePolicies?: Record<string, { verifiedFields: string[] }>;
@@ -114,7 +117,13 @@ const accessSchema = z
 export class Ontave {
   readonly limits: Limits;
   private readonly cursorSecret: string;
+  private readonly automationPolicy?: Readonly<
+    import("./policy.js").AutomationPolicy
+  >;
   constructor(private config: OntaveConfig) {
+    this.automationPolicy = config.automation
+      ? automationPolicy(config.automation)
+      : undefined;
     check(
       config.model === undefined || typeof config.model?.extract === "function",
       "INVALID_INPUT",
@@ -1069,6 +1078,86 @@ export class Ontave {
     return r.rows[0];
   }
   readonly reviews = {
+    /** Automated acceptance remains a reported claim; policy grants no verification. */
+    acceptByPolicy: async (
+      context: unknown,
+      input: { bundleId: string; digest: string; requestKey: string },
+    ) => {
+      const a = await this.access(context, "review"),
+        policy = this.automationPolicy;
+      check(
+        policy,
+        "FORBIDDEN",
+        "Automatic acceptance requires an explicit host policy",
+      );
+      await this.config.storage.transaction(a.workspaceId, async (c) => {
+        const b = await this.bundle(c, input.bundleId);
+        check(
+          b.hash === input.digest && b.current_bundle === b.id,
+          "STALE_BUNDLE",
+          "Proposal changed",
+        );
+        const evidence = (
+          await c.query("SELECT source FROM ontave.evidence WHERE id=$1", [
+            b.evidence_id,
+          ])
+        ).rows[0];
+        check(
+          evidence && policy.sources.includes(evidence.source),
+          "FORBIDDEN",
+          "Source is outside the automation policy",
+        );
+        const body = b.body as Body;
+        if (!policy.allowNewExistingEntities)
+          for (const entity of body.extraction.entities)
+            if (!entity.conceptId.startsWith(policy.namespace))
+              check(
+                body.resolutions[entity.mentionId]?.mode === "link",
+                "FORBIDDEN",
+                "This policy extends existing identities; new base-model entities need explicit handling",
+              );
+        if (policy.relationshipTargets.length)
+          for (const entity of body.extraction.entities)
+            if (entity.conceptId.startsWith(policy.namespace))
+              check(
+                body.extraction.relationships.some(
+                  (r) => r.source === entity.mentionId,
+                ),
+                "FORBIDDEN",
+                "Automatic extension records need an explicit parent link",
+              );
+        check(
+          body.retractions.length === 0 &&
+            body.extraction.entities.every((e) =>
+              Object.values(e.fields).every(
+                (f) => !f.verification || f.verification === "reported",
+              ),
+            ),
+          "FORBIDDEN",
+          "Automatic acceptance cannot retract or verify assertions",
+        );
+        for (const rel of body.extraction.relationships) {
+          const source = body.extraction.entities.find(
+            (e) => e.mentionId === rel.source,
+          )!;
+          if (source.conceptId.startsWith(policy.namespace)) {
+            const target = body.extraction.entities.find(
+              (e) => e.mentionId === rel.target,
+            )!;
+            check(
+              body.resolutions[rel.target]?.mode === "link" &&
+                policy.relationshipTargets.includes(target.conceptId),
+              "FORBIDDEN",
+              "An automatic extension must link to an allowed existing parent identity",
+            );
+          }
+        }
+      });
+      return this.reviews.accept(context, {
+        ...input,
+        reason: `Automatic reported-claim acceptance under host policy ${policy.id} (${hash(policy)})`,
+      });
+    },
     /** One transaction for the current proposal and bounded original source. */
     forJob: async (context: unknown, jobId: string) => {
       const a = await this.access(context, "review");
@@ -2110,6 +2199,7 @@ export class Ontave {
         this.requireModel().propose!({
           observations: reserved.observations,
           ontology: reserved.parent.definition,
+          ...(this.automationPolicy ? { policy: this.automationPolicy } : {}),
           signal: controller.signal,
         }),
       );
@@ -2266,7 +2356,7 @@ export class Ontave {
         };
       });
     },
-    publish: async (
+    publish: (
       context: unknown,
       input: {
         candidateId: string;
@@ -2276,100 +2366,16 @@ export class Ontave {
         requestKey: string;
         reason: string;
       },
-    ) => {
-      const a = await this.access(context, "review");
-      const digest = hash(input);
-      return this.config.storage.transaction(a.workspaceId, async (c) => {
-        const old = await this.decision(
-          c,
-          a,
-          "publish",
-          input.requestKey,
-          digest,
-        );
-        if (old) return old;
-        await c.query("SELECT workspace_id FROM ontave.workspaces FOR UPDATE");
-        const parent = await this.active(c);
-        const r = await c.query(
-          "SELECT * FROM ontave.candidates WHERE id=$1 FOR UPDATE",
-          [parseUUID(input.candidateId)],
-        );
-        const candidate = r.rows[0];
-        check(
-          candidate &&
-            candidate.state === "proposed" &&
-            candidate.hash === input.candidateHash,
-          "STALE_BASE",
-          "Candidate is unavailable or changed",
-        );
-        check(
-          parent.id === candidate.parent_id &&
-            parent.hash === candidate.parent_hash,
-          "STALE_BASE",
-          "Generate and evaluate a new candidate against the current head",
-        );
-        const ev = await c.query(
-          "SELECT * FROM ontave.evaluations WHERE id=$1 AND candidate_id=$2",
-          [parseUUID(input.evaluationId), candidate.id],
-        );
-        const evaluation = ev.rows[0];
-        check(
-          evaluation?.passed &&
-            evaluation.hash === input.evaluationHash &&
-            evaluation.candidate_hash === candidate.hash,
-          "EVALUATION_INCOMPLETE",
-          "A matching passing evaluation is required",
-        );
-        const contracts = await c.query(
-          "SELECT definition FROM ontave.contracts",
-        );
-        check(
-          contracts.rows.every((x) =>
-            compatible(x.definition, candidate.definition),
-          ),
-          "VALIDATION_FAILED",
-          "Contract compatibility failed",
-        );
-        const id = randomUUID();
-        await c.query(
-          "INSERT INTO ontave.versions(workspace_id,id,ordinal,parent_id,hash,definition) VALUES($1,$2,$3,$4,$5,$6)",
-          [
-            a.workspaceId,
-            id,
-            parent.ordinal + 1,
-            parent.id,
-            hash(candidate.definition),
-            json(candidate.definition),
-          ],
-        );
-        await c.query(
-          "UPDATE ontave.workspaces SET active_id=$1,revision=revision+1",
-          [id],
-        );
-        await c.query(
-          "UPDATE ontave.candidates SET state='published',published_id=$2 WHERE id=$1",
-          [candidate.id, id],
-        );
-        const replay = await c.query(
-          "UPDATE ontave.jobs SET state='queued',bundle_id=NULL,attempts=0,calls=0,error=NULL,next_at=now() WHERE state='waiting_ontology' AND evidence_id=ANY($1::uuid[]) RETURNING id",
-          [candidate.observations],
-        );
-        const result = {
-          ontologyId: id,
-          reprocessingJobs: replay.rows.map((x) => x.id),
-        };
-        await this.record(
-          c,
-          a,
-          "publish",
-          input.requestKey,
-          digest,
-          result,
-          input.reason,
-        );
-        return result;
-      });
-    },
+    ) => this.publishCandidate(context, input, false),
+    publishByPolicy: (
+      context: unknown,
+      input: {
+        candidateId: string;
+        candidateHash: string;
+        requestKey: string;
+        reason: string;
+      },
+    ) => this.publishCandidate(context, input, true),
     reject: async (
       context: unknown,
       input: {
@@ -2409,6 +2415,142 @@ export class Ontave {
       });
     },
   };
+  private async publishCandidate(
+    context: unknown,
+    input: {
+      candidateId: string;
+      candidateHash: string;
+      evaluationId?: string;
+      evaluationHash?: string;
+      requestKey: string;
+      reason: string;
+    },
+    byPolicy: boolean,
+  ) {
+    const a = await this.access(context, "review");
+    check(
+      !byPolicy || this.automationPolicy,
+      "FORBIDDEN",
+      "Automatic evolution requires an explicit host policy",
+    );
+    const operation = byPolicy ? "publishByPolicy" : "publish";
+    const digest = hash(
+      byPolicy ? { ...input, policyHash: hash(this.automationPolicy) } : input,
+    );
+    return this.config.storage.transaction(a.workspaceId, async (c) => {
+      const old = await this.decision(
+        c,
+        a,
+        operation,
+        input.requestKey,
+        digest,
+      );
+      if (old) return old;
+      await c.query("SELECT workspace_id FROM ontave.workspaces FOR UPDATE");
+      const parent = await this.active(c);
+      const r = await c.query(
+        "SELECT * FROM ontave.candidates WHERE id=$1 FOR UPDATE",
+        [parseUUID(input.candidateId)],
+      );
+      const candidate = r.rows[0];
+      check(
+        candidate &&
+          candidate.state === "proposed" &&
+          candidate.hash === input.candidateHash,
+        "STALE_BASE",
+        "Candidate is unavailable or changed",
+      );
+      check(
+        parent.id === candidate.parent_id &&
+          parent.hash === candidate.parent_hash,
+        "STALE_BASE",
+        "Generate and evaluate a new candidate against the current head",
+      );
+      let authorization: Json = null;
+      if (byPolicy) {
+        authorization = checkAutomaticPatch(
+          parent.definition,
+          candidate.patch,
+          this.automationPolicy!,
+        );
+        for (const evidenceId of candidate.observations) {
+          const evidence = (
+            await c.query("SELECT source FROM ontave.evidence WHERE id=$1", [
+              evidenceId,
+            ])
+          ).rows[0];
+          check(
+            evidence &&
+              this.automationPolicy!.sources.includes(evidence.source),
+            "FORBIDDEN",
+            "Source is outside the automation policy",
+          );
+        }
+      } else {
+        const ev = await c.query(
+          "SELECT * FROM ontave.evaluations WHERE id=$1 AND candidate_id=$2",
+          [parseUUID(input.evaluationId), candidate.id],
+        );
+        const evaluation = ev.rows[0];
+        check(
+          evaluation?.passed &&
+            evaluation.hash === input.evaluationHash &&
+            evaluation.candidate_hash === candidate.hash,
+          "EVALUATION_INCOMPLETE",
+          "A matching passing evaluation is required",
+        );
+      }
+      const contracts = await c.query(
+        "SELECT definition FROM ontave.contracts",
+      );
+      check(
+        contracts.rows.every((x) =>
+          compatible(x.definition, candidate.definition),
+        ),
+        "VALIDATION_FAILED",
+        "Contract compatibility failed",
+      );
+      const id = randomUUID();
+      await c.query(
+        "INSERT INTO ontave.versions(workspace_id,id,ordinal,parent_id,hash,definition) VALUES($1,$2,$3,$4,$5,$6)",
+        [
+          a.workspaceId,
+          id,
+          parent.ordinal + 1,
+          parent.id,
+          hash(candidate.definition),
+          json(candidate.definition),
+        ],
+      );
+      await c.query(
+        "UPDATE ontave.workspaces SET active_id=$1,revision=revision+1",
+        [id],
+      );
+      await c.query(
+        "UPDATE ontave.candidates SET state='published',published_id=$2 WHERE id=$1",
+        [candidate.id, id],
+      );
+      const replay = await c.query(
+        "UPDATE ontave.jobs SET state='queued',bundle_id=NULL,attempts=0,calls=0,error=NULL,next_at=now() WHERE state='waiting_ontology' AND evidence_id=ANY($1::uuid[]) RETURNING id",
+        [candidate.observations],
+      );
+      const result = {
+        ontologyId: id,
+        reprocessingJobs: replay.rows.map((x) => x.id),
+        ...(byPolicy ? { authorization } : {}),
+      };
+      await this.record(
+        c,
+        a,
+        operation,
+        input.requestKey,
+        digest,
+        result,
+        input.reason,
+      );
+      return result;
+    });
+  }
   readonly metrics = {
     summary: async (context: unknown) => {
       const a = await this.access(context, "read");

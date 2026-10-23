@@ -1,0 +1,96 @@
+{
+  "concepts": [
+    {
+      "id": "quotation",
+      "name": "Supplier quotation",
+      "description": "A supplier statement, never a purchase approval or verified payment",
+      "fields": [
+        {
+          "id": "currency",
+          "name": "currency",
+          "description": "Explicit ISO currency code; INR for ₹, USD for $, EUR for €",
+          "type": "text",
+          "optional": true
+        },
+        {
+          "id": "reference",
+          "name": "reference",
+          "description": "Explicit quotation reference",
+          "type": "text",
+          "optional": false
+        },
+        {
+          "id": "supplier",
+          "name": "supplier",
+          "description": "Supplier named in the source",
+          "type": "text",
+          "optional": true
+        },
+        {
+          "id": "valid_until",
+          "name": "valid until",
+          "description": "Unambiguous explicit ISO expiry date; abstain on ambiguous dates",
+          "type": "date",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "quote_line",
+      "name": "Quotation line",
+      "description": "One quoted SKU; distinct source assertions may conflict",
+      "fields": [
+        {
+          "id": "lead_days",
+          "name": "lead days",
+          "description": "Explicit exact lead time in days; abstain on ranges or weeks",
+          "type": "integer",
+          "optional": true
+        },
+        {
+          "id": "quantity",
+          "name": "quantity",
+          "description": "Quantity explicitly requested or offered; do not invent missing quantities",
+          "type": "integer",
+          "optional": true
+        },
+        {
+          "id": "quote_reference",
+          "name": "quote reference",
+          "description": "Quotation reference for this line",
+          "type": "text",
+          "optional": false
+        },
+        {
+          "id": "sku",
+          "name": "sku",
+          "description": "Explicit product/SKU code",
+          "type": "text",
+          "optional": false
+        },
+        {
+          "id": "tax_rate",
+          "name": "tax rate",
+          "description": "Explicit tax percentage as a decimal string, e.g. 18 for 18%; no inferred tax",
+          "type": "decimal",
+          "optional": true
+        },
+        {
+          "id": "unit_price",
+          "name": "unit price",
+          "description": "Quoted NET UNIT price, not a line total; no arithmetic inference",
+          "type": "money",
+          "optional": true
+        },
+        {
+          "id": "warranty_months",
+          "name": "warranty months",
+          "description": "Explicit warranty in months; do not convert years",
+          "type": "integer",
+          "optional": true
+        }
+      ]
+    }
+  ],
+  "relations": []
+}
