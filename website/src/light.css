@@ -547,3 +547,48 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 @media (max-width: 700px) {
   .index-page.frame, .index-article.frame { width: calc(100% - 40px); padding-top: 55px; }
 }
+
+/* A growing library, with a distinct cover and useful navigation for each guide. */
+.index-heading > p { max-width: 700px; }
+.index-topics { display: flex; flex-wrap: wrap; gap: 14px 32px; border-block: 1px solid #dce3d3; padding-block: 20px; margin-bottom: 65px; font-size: 15px; color: #43563b; }
+.index-topics a { display: flex; align-items: center; gap: 13px; }
+.index-topics a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.index-topics span { font: 11px var(--mono); color: #738268; }
+.index-group { margin-bottom: 85px; scroll-margin-top: 110px; }
+.index-group-heading { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 35px; }
+.index-group-heading h2 { font-size: clamp(30px,3.5vw,44px); line-height: 1.1; letter-spacing: -.05em; color: #344230; font-weight: 500; }
+.index-group-heading p { font-size: 15px; line-height: 1.7; max-width: 360px; color: #65705e; }
+.index-group .index-grid { row-gap: 45px; }
+.index-group .index-card h3 { font-size: clamp(22px,2vw,28px); }
+.index-article-heading { max-width: 950px; }
+.index-article-heading h1 { max-width: 900px; font-size: clamp(39px,4.6vw,62px); }
+.article-layout { display: grid; grid-template-columns: minmax(0,720px) minmax(150px,1fr); gap: 60px; align-items: start; }
+.article-layout .docs-prose { min-width: 0; width: 100%; margin: 0; }
+.index-toc { position: sticky; top: 110px; border-left: 1px solid #dce3d3; padding-left: 24px; color: #63705a; font-size: 12px; line-height: 1.6; }
+.index-toc strong { font-size: 12px; display: block; font-weight: 500; color: #3e5036; margin-bottom: 17px; }
+.index-toc a { display: block; margin-block: 12px; }
+.index-toc a:hover { color: #354c2b; text-decoration: underline; text-underline-offset: 3px; }
+.index-article .docs-prose h2 { scroll-margin-top: 105px; }
+.index-article .docs-prose strong { color: #344a34; font-weight: 600; }
+.index-article .docs-prose :not(pre) > code { color: #42573b; background: #edf1e7; padding: .12em .3em; border-radius: 3px; font-size: .86em; }
+.index-article .docs-prose pre code { background: transparent; }
+.index-article .docs-prose .code-window { margin: 28px 0; max-width: 100%; }
+.index-article .docs-prose pre { padding: 22px; }
+.index-article .docs-prose li { margin-block: 10px; }
+.index-article .article-next, .index-article > .feed-links { max-width: 720px; margin-left: 0; }
+@media (max-width: 900px) {
+  .article-layout { grid-template-columns: minmax(0,1fr); gap: 0; }
+  .index-toc { display: none; }
+  .article-layout .docs-prose { margin-inline: auto; }
+  .index-article .article-next, .index-article > .feed-links { margin-inline: auto; }
+}
+@media (max-width: 700px) {
+  .index-topics { gap: 17px; margin-bottom: 45px; font-size: 14px; }
+  .index-group { margin-bottom: 65px; }
+  .index-group-heading { display: block; margin-bottom: 28px; }
+  .index-group-heading p { margin-top: 14px; }
+  .index-group .index-card h3 { font-size: 26px; }
+  .index-article-heading h1 { font-size: 39px; }
+}
+.index-card h3 .card-ending { display: inline-block; font-size: inherit; white-space: nowrap; }
+.index-card .card-ending > span { font-size: .7em; }
