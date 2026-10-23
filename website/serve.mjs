@@ -8,8 +8,13 @@ const mime = {
   ".css": "text/css; charset=utf-8",
   ".json": "application/json",
   ".svg": "image/svg+xml",
+  ".webp": "image/webp",
+  ".jpg": "image/jpeg",
+  ".ttf": "font/ttf",
   ".xml": "application/xml",
-  ".txt": "text/plain",
+  ".txt": "text/plain; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".png": "image/png",
   ".tgz": "application/gzip",
 };
 createServer(async (req, res) => {

@@ -1,4 +1,6 @@
 import { searchDocuments } from "./src/search.ts";
+import { releaseVersion, referenceVersion, playgroundCommand, siteOrigin } from "./src/release.mjs";
+import { entries } from "./src/content-index.mjs";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import assert from "node:assert/strict";
@@ -52,21 +54,22 @@ assert.equal(search.length, 29);
 assert.ok(search.some((x) => x.title === "Your first accepted record"));
 const home = await readFile(resolve(root, "index.html"), "utf8");
 assert.ok(!home.includes('class="eyebrow"'));
-assert.ok(home.includes('data-slot="button"'));
-assert.ok(home.includes("The evaluation"));
+assert.ok(home.includes('aria-label="How Ontave works"'));
+assert.ok(home.includes("Walkthrough chapters"));
 assert.ok(!files.some((f) => f.includes("/research/")));
 const playground = await readFile(
   resolve(root, "playground/index.html"),
   "utf8",
 );
 assert.ok(playground.includes('data-mode="reference"'));
-assert.ok(playground.includes("0.1.0-alpha.2"));
+assert.ok(playground.includes(referenceVersion));
+assert.ok(playground.includes(playgroundCommand));
 assert.ok(playground.includes("playground --install"));
 assert.ok(playground.includes("Guided sandbox"));
 const reference = JSON.parse(
   await readFile(resolve(root, "preview-reference.json"), "utf8"),
 );
-assert.equal(reference.version, "0.1.0-alpha.2");
+assert.equal(reference.version, referenceVersion);
 assert.equal(reference.kind, "recorded-sdk-fixtures");
 assert.equal(reference.scenarios.roof.states.at(-1).records.length, 1);
 assert.equal(
@@ -93,7 +96,9 @@ for (const id of ["deliveries", "reads", "provenance"]) {
   assert.ok(home.includes(`aria-controls="chart-${id}"`));
   assert.ok(home.includes(`id="chart-${id}"`));
 }
-assert.ok(home.includes("It does not establish semantic accuracy."));
+assert.ok(/synthetic workload/i.test(home));
+assert.ok(home.includes("/docs/benchmarks/"));
+assert.ok(benchmark.limitations.includes("model accuracy"));
 assert.ok(
   !(await readFile(resolve(root, "favicon.svg"), "utf8")).includes(
     "paint0_linear_95_806",
@@ -105,10 +110,50 @@ console.log(
     htmlPages: files.filter((f) => f.endsWith(".html")).length,
     internalLinksChecked: links,
     searchDocuments: search.length,
-    shadcnStoryRendered: true,
+    scrollStoryRendered: true,
     privateContentExcluded: true,
   }),
 );
+
+// Published discovery artifacts must agree on URLs, content and release.
+assert.ok(home.includes(playgroundCommand));
+assert.ok(home.includes('name="google-site-verification"'));
+assert.ok(!home.includes("--package=https://github.com"));
+assert.ok(!home.includes("isn’t on the npm registry yet"));
+const sitemap = await readFile(resolve(root, "sitemap.xml"), "utf8");
+const feed = JSON.parse(await readFile(resolve(root, "feed.json"), "utf8"));
+const rss = await readFile(resolve(root, "feed.xml"), "utf8");
+assert.equal(feed.version, "https://jsonfeed.org/version/1.1");
+assert.equal(feed.items.length, entries.length);
+assert.equal((rss.match(/<item>/g) || []).length, entries.length);
+const context = await readFile(resolve(root, "llms.txt"), "utf8");
+assert.ok(context.includes(releaseVersion));
+for (const entry of entries) {
+  const url = siteOrigin + entry.path;
+  assert.ok(sitemap.includes(`<loc>${url}</loc>`));
+  assert.ok(rss.includes(`<link>${url}</link>`));
+  const item = feed.items.find(item => item.url === url);
+  assert.ok(item?.content_html.includes("<h2>"));
+  const article = await readFile(resolve(root, "." + entry.path, "index.html"), "utf8");
+  assert.ok(article.includes('itemtype="https://schema.org/Article"'));
+  assert.ok(article.includes('property="og:type" content="article"'));
+  assert.ok(article.includes(`property="og:image" content="${siteOrigin}/art/${entry.art}.webp"`));
+  assert.ok(article.includes('aria-label="In this guide"'));
+  assert.ok(!article.includes("<!-- include:"));
+  assert.ok(!/href="\/(?!\/)/.test(item.content_html));
+  assert.ok(context.includes(url + "index.md"));
+  assert.ok((await readFile(resolve(root, "." + entry.path, "index.md"), "utf8")).startsWith("# "));
+}
+assert.equal(new Set(entries.map(entry => entry.art)).size, entries.length, "Repeated guide cover");
+const guide = await readFile(resolve(root, "index/build-ai-agent-typescript/index.md"), "utf8");
+const testedExample = await readFile(resolve(import.meta.dirname, "examples/read-only-agent/agent.ts"), "utf8");
+assert.ok(guide.includes(testedExample), "Published tutorial diverges from the tested example");
+assert.ok(!files.some(file => file.includes("node_modules")));
+for (const file of files.filter(file => file.endsWith(".html"))) {
+  const html = await readFile(file, "utf8");
+  assert.ok(!html.includes("—"), `Em dash in ${file}`);
+  assert.ok(html.includes('href="' + siteOrigin), `Canonical host missing in ${file}`);
+}
 
 const documents = [
   {
