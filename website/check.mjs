@@ -134,10 +134,21 @@ for (const entry of entries) {
   assert.ok(rss.includes(`<link>${url}</link>`));
   const item = feed.items.find(item => item.url === url);
   assert.ok(item?.content_html.includes("<h2>"));
+  const article = await readFile(resolve(root, "." + entry.path, "index.html"), "utf8");
+  assert.ok(article.includes('itemtype="https://schema.org/Article"'));
+  assert.ok(article.includes('property="og:type" content="article"'));
+  assert.ok(article.includes(`property="og:image" content="${siteOrigin}/art/${entry.art}.webp"`));
+  assert.ok(article.includes('aria-label="In this guide"'));
+  assert.ok(!article.includes("<!-- include:"));
   assert.ok(!/href="\/(?!\/)/.test(item.content_html));
   assert.ok(context.includes(url + "index.md"));
   assert.ok((await readFile(resolve(root, "." + entry.path, "index.md"), "utf8")).startsWith("# "));
 }
+assert.equal(new Set(entries.map(entry => entry.art)).size, entries.length, "Repeated guide cover");
+const guide = await readFile(resolve(root, "index/build-ai-agent-typescript/index.md"), "utf8");
+const testedExample = await readFile(resolve(import.meta.dirname, "examples/read-only-agent/agent.ts"), "utf8");
+assert.ok(guide.includes(testedExample), "Published tutorial diverges from the tested example");
+assert.ok(!files.some(file => file.includes("node_modules")));
 for (const file of files.filter(file => file.endsWith(".html"))) {
   const html = await readFile(file, "utf8");
   assert.ok(!html.includes("—"), `Em dash in ${file}`);

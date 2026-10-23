@@ -117,24 +117,43 @@ for (let position = 0; position < pages.length; position++) {
 }
 const feedItems = [];
 const contextParts = [];
+await mkdir(resolve(dist, "examples/read-only-agent"), { recursive: true });
+for (const file of ["agent.ts", "package.json", "package-lock.json", "README.md", "smoke.test.mjs", "tsconfig.json"]) {
+  await copyFile(resolve(root, "examples/read-only-agent", file), resolve(dist, "examples/read-only-agent", file));
+}
 await mkdir(resolve(dist, "index"), { recursive: true });
 await writeFile(resolve(dist, "index/index.html"), document({
   title: "The Ontave index · Evidence, agents and typed records",
-  description: "Practical guides to Ontave in agent workflows, retrieval architectures and reviewed schema evolution.",
+  description: "Learn to build AI agents in TypeScript, compare agent frameworks, design memory and document pipelines, and validate operational records with evidence.",
   path: "/index/", body: indexPage,
 }));
 for (const entry of entries) {
-  const md = await readFile(resolve(root, `content/index/${entry.slug}.md`), "utf8");
+  let md = await readFile(resolve(root, `content/index/${entry.slug}.md`), "utf8");
+  if (md.includes("<!-- include:read-only-agent -->")) {
+    const example = await readFile(resolve(root, "examples/read-only-agent/agent.ts"), "utf8");
+    md = md.replace("<!-- include:read-only-agent -->", "```ts\n" + example + "```\n");
+  }
+  const headings = [];
+  const used = new Map();
   const html = marked.parse(md, { gfm: true })
-    .replace(/<pre><code(?: class="language-[^"]*")?>([\s\S]*?)<\/code><\/pre>/g, (_, text) => `<div class="code-window"><div class="code-toolbar"><span>TypeScript</span><button class="copy-code" aria-label="Copy code">Copy</button></div><pre><code>${text}</code></pre></div>`)
+    .replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (_, depth, label) => {
+      const base = slugify(label), n = used.get(base) || 0;
+      used.set(base, n + 1);
+      const id = n ? `${base}-${n}` : base;
+      headings.push({ id, label: label.replace(/<[^>]*>/g, "") });
+      return `<h${depth} id="${id}">${label}</h${depth}>`;
+    })
+    .replace(/<pre><code(?: class="language-([^"]*)")?>([\s\S]*?)<\/code><\/pre>/g, (_, language, text) => `<div class="code-window"><div class="code-toolbar"><span>${escape({ts:"TypeScript",typescript:"TypeScript",sh:"terminal",json:"JSON"}[language] || language || "example")}</span><button class="copy-code" aria-label="Copy code">Copy</button></div><pre><code>${text}</code></pre></div>`)
     .replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
+  const minutes = Math.max(1, Math.ceil(md.replace(/```[\s\S]*?```/g, "").split(/\s+/).length / 200));
   const path = resolve(dist, "." + entry.path);
   await mkdir(path, { recursive: true });
   await writeFile(resolve(path, "index.html"), document({
     title: `${entry.title} · Ontave`, description: entry.description,
-    path: entry.path, body: entryPage(entry, html),
+    path: entry.path, body: entryPage(entry, html, headings, minutes),
+    image: `/art/${entry.art}.webp`, article: { published: entry.date },
   }));
-  const markdown = `# ${entry.title}\n\n${md}`;
+  const markdown = `# ${entry.title}\n\n${md}`.replace(/\]\(\/(?!\/)/g, `](${siteOrigin}/`);
   await writeFile(resolve(path, "index.md"), markdown);
   contextParts.push(markdown);
   const absoluteHtml = marked.parse(md, { gfm: true }).replace(/(href|src)="\/(?!\/)/g, `$1="${siteOrigin}/`);
@@ -146,7 +165,7 @@ for (const entry of entries) {
 await writeFile(resolve(dist, "feed.json"), JSON.stringify({
   version: "https://jsonfeed.org/version/1.1", title: "The Ontave index",
   home_page_url: siteOrigin + "/index/", feed_url: siteOrigin + "/feed.json",
-  description: "Practical notes on evidence, agents and typed operational records.",
+  description: "Guides to building agents, choosing frameworks and governing operational records.",
   language: "en", items: feedItems,
 }, null, 2) + "\n");
 await writeFile(resolve(dist, "feed.xml"), `<?xml version="1.0" encoding="UTF-8"?>
@@ -253,7 +272,7 @@ await writeFile(
 );
 await writeFile(
   resolve(dist, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", "/index/", ...entries.map((p) => p.path), ...pages.map((p) => p.path)].map((path) => `<url><loc>https://ontave.daltn.tech${path}</loc></url>`).join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/playground/", "/index/", ...entries.map((p) => p.path), ...pages.map((p) => p.path)].map((path) => `<url><loc>https://ontave.daltn.tech${path}</loc>${entries.some(entry => entry.path === path) ? `<lastmod>${entries.find(entry => entry.path === path).date}</lastmod>` : ""}</url>`).join("")}</urlset>`,
 );
 console.log(
   JSON.stringify({ pages: pages.length + entries.length + 4, output: "dist", status: "built" }),
