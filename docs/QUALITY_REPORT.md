@@ -1,10 +1,10 @@
 # Ontave MVP qualification
 
-**Developer preview `0.1.0-alpha.2`; npm registry publication blocked.** This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
+**Qualification candidate `0.1.0-alpha.3`; public preview `0.1.0-alpha.2`; npm registry publication blocked.** This report records measured successes and failures. Neither passing database tests nor a successful provider smoke check establishes the complete MVP's semantic accuracy.
 
 ## Deterministic behavior
 
-The expanded tests cover preserved evidence, hostile and untyped input, workspace isolation, identity authority collisions and partial-name review, stale workers/approvals, staged corrections, typed reads, cursor scope, pure inspection, isolated evaluation and actual CLI workflows. Process tests kill a real worker and restart it; shutdown tests cover cooperative and hung provider calls. Activation fault injection proves that a failure during replay scheduling rolls back the new head and candidate state.
+The expanded tests cover preserved evidence, hostile and untyped input, workspace isolation, identity authority collisions and partial-name review, stale workers/approvals, staged corrections, typed reads, cursor scope, pure inspection, isolated evaluation and actual CLI workflows. Process tests kill a real worker and restart it; shutdown tests cover cooperative and hung provider calls. Activation fault injection proves that a failure during replay scheduling rolls back the new head and candidate state. Actual SIGKILL tests also cover committed worker results and committed activation before acknowledgement. In-flight workers keep their original ontology binding when the head advances. Expanded API scope checks, trusted-source contradictions, email-only non-merging, deterministic contract generation and generated TypeScript uncertainty checks exercise the alpha.3 hardening changes.
 
 The backup/restore exercise compares all 18 table hashes across two disposable PostgreSQL 18 instances, preserves accepted and waiting state, and recovers an abandoned processing lease without publishing its pending facts. Clean tarball consumers exercise Node.js 24 and Next.js server routes, including browser-boundary and fictional credential canary checks.
 
@@ -57,6 +57,6 @@ The guarded local load profile processed all 11,100 fictional records without a 
 
 ## Remaining qualification
 
-Labels and semantic equivalences need independent review; human review time and manual-entry productivity remain unmeasured. Live established-identity linking and autonomous discovery are not demonstrated by the direct extraction trials. Acceptance coverage still distinguishes tested, partial and pending cases. The release guard remains closed until those requirements, the remaining partial acceptance cases, a fresh-developer walkthrough and source/archive/CI bindings pass. Current acceptance mapping is 81 tested, 40 partial and two measured cases; a passing test suite does not convert the partial cases to passed requirements.
+Labels and semantic equivalences need independent review; human review time and manual-entry productivity remain unmeasured. Live established-identity linking and autonomous discovery are not demonstrated by the direct extraction trials. Acceptance coverage still distinguishes tested, partial and pending cases. The release guard remains closed until those requirements, the remaining partial acceptance cases, a fresh-developer walkthrough and source/archive/CI bindings pass. Current acceptance mapping is 116 tested, 5 partial and two measured cases; a passing test suite does not convert the partial cases to passed requirements.
 
 Reproduction commands and bounded provider limits are in the README and API reference. Raw responses, per-input scores, protocols, hashes, available usage and failure history stay in ignored local artifacts; public documentation contains aggregate fictional results. No credentials, customer data or private research are included in the package.

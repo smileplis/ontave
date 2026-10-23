@@ -58,9 +58,11 @@ import { postgres } from 'ontave/postgres';
 import { fixtureAdapter } from 'ontave/testing';
 import { mistral } from 'ontave/models/mistral';
 import { openrouter } from 'ontave/models/openrouter';
+import { gemini } from 'ontave/models/gemini';
+import { groq } from 'ontave/models/groq';
 if(typeof createOntave!=='function'||typeof postgres!=='function'||typeof fixtureAdapter!=='function')throw Error('Bad exports');
 if(typeof mistral!=='function'||typeof openrouter!=='function')throw Error('Missing experimental adapter exports');
-for(const factory of [mistral,openrouter]){let rejected=false;try{factory({apiKey:'',model:''});}catch(e){rejected=e.code==='MODEL_UNAVAILABLE';}if(!rejected)throw Error('Missing provider configuration was not rejected');}
+for(const factory of [gemini,groq,mistral,openrouter]){let rejected=false;try{factory({apiKey:'',model:''});}catch(e){rejected=e.code==='MODEL_UNAVAILABLE';}if(!rejected)throw Error('Missing provider configuration was not rejected');}
 const span=sourceSpan('₹50','₹50');if(span.endByte!==5)throw Error('Bad bytes');
 await generateContract({id:randomUUID(),hash:hash(starter),definition:starter,sourceOntologyId:randomUUID(),sourceOntologyHash:hash(starter)},'./generated');
 const generated=await import('./generated/index.mjs');

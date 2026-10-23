@@ -1,6 +1,6 @@
 # Ontave implementation status
 
-**Developer preview `0.1.0-alpha.2`** is distributed through a versioned GitHub archive. The earlier `alpha.1` archive is preserved. npm registry publication remains blocked by full-MVP qualification gates; the developer preview is not a declaration that those gates have passed.
+**Qualification candidate `0.1.0-alpha.3`** is under local validation. The public **developer preview `0.1.0-alpha.2`** is distributed through a versioned GitHub archive. The earlier `alpha.1` archive is preserved. npm registry publication remains blocked by full-MVP qualification gates; the developer preview is not a declaration that those gates have passed.
 
 ## Developer-preview entry points
 
@@ -14,7 +14,7 @@
 - Immutable text/JSON evidence, request-envelope idempotency, explicit provisioning and host authorization with restricted PostgreSQL roles and forced row security.
 - Durable fenced workers, bounded attempts, independent model deadlines, append-only attempt accounting, real process-kill/restart, cooperative shutdown and ten-second hung-call drain.
 - Whole-bundle review, exact digest/revision checks, partial-name candidate review, authority-scoped identifiers, amendments, rejection, corrections, conflict resolution and replay respecting retractions.
-- Additive ontology proposals, structural reuse/rejection hints, parent/candidate evaluation, exact publication artifacts and atomic activation/replay scheduling with fault injection.
+- Additive ontology proposals, name/alias/description/structural reuse and rejection hints, parent/candidate evaluation, exact publication artifacts and atomic activation/replay scheduling with fault injection.
 - Closed extraction, identity, relationship, observation, contract and isolated structured-read evaluation. Immutable JSON fixtures use the same SQL read implementation without canonical writes.
 - Pinned current-data contracts, generated TypeScript/runtime validators, typed scalar predicates, state/verification filters, ordered signed cursors and bounded one-hop links.
 - Actual CLI workflow and clean packed Node/Next.js consumers. Server/client import and fictional secret-canary checks are exercised.
@@ -35,7 +35,7 @@ Provider factories now constrain short text quotes to an immutable source anchor
 
 1. Independently review labels, source meaning, identity expectations and held-out task boundaries. Candidate-generation prompts must not receive answer keys.
 2. Qualify live established-identity linking, observation/discovery behavior and end-to-end reviewed publication independently of the passing raw field trials. Keep all unresolved cases, errors and usage in the record.
-3. Finish the remaining 40 partial acceptance cases. Current development mapping has 81 tested and two measured cases; partial coverage is not a pass.
+3. Finish the remaining 5 partial acceptance cases. Current development mapping has 116 tested and two measured cases; partial coverage is not a pass.
 4. Bind successful deterministic, consumer, recovery and CI evidence to the final source revision and package archive. `npm run verify:release` refuses missing, stale or non-passing evidence.
 5. Perform a fresh-developer walkthrough and an explicit npm release only after qualification. No npm publication has occurred.
 

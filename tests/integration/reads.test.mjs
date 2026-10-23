@@ -309,8 +309,27 @@ test("all scalar reads, hostile input, cursor scope and pure inspection preserve
         }),
         (e) => e.code === "INVALID_INPUT",
       );
-      const alternate=await app.contracts.register(null,{concepts:[{...patch.concepts[0],fields:patch.concepts[0].fields.filter(f=>["name","count"].includes(f.id))}],relations:[]});
-      await assert.rejects(app.entities.find(null,{...q,contractId:alternate.id,contractHash:alternate.hash,order:{field:"count",direction:"asc"},cursor:first.nextCursor}),e=>e.code==="INVALID_INPUT");
+      const alternate = await app.contracts.register(null, {
+        concepts: [
+          {
+            ...patch.concepts[0],
+            fields: patch.concepts[0].fields.filter((f) =>
+              ["name", "count"].includes(f.id),
+            ),
+          },
+        ],
+        relations: [],
+      });
+      await assert.rejects(
+        app.entities.find(null, {
+          ...q,
+          contractId: alternate.id,
+          contractHash: alternate.hash,
+          order: { field: "count", direction: "asc" },
+          cursor: first.nextCursor,
+        }),
+        (e) => e.code === "INVALID_INPUT",
+      );
       await assert.rejects(
         app.entities.find("other", { ...q, cursor: first.nextCursor }),
         (e) => e.code === "CONTRACT_NOT_AVAILABLE",
@@ -358,27 +377,83 @@ test("all scalar reads, hostile input, cursor scope and pure inspection preserve
       }
       assert.equal(calls, modelBefore);
       assert.equal(await snapshot(), before);
-      await assert.rejects(
-        app.ingest("reader", {}),
-        (e) => e.code === "FORBIDDEN",
-      );
-      await assert.rejects(
-        app.reviews.reject("reader", {}),
-        (e) => e.code === "FORBIDDEN",
-      );
-      await assert.rejects(
-        app.jobs.reprocess("reader", {}),
-        (e) => e.code === "FORBIDDEN",
-      );
-      await assert.rejects(
-        app.ontology.propose("reader", {}),
-        (e) => e.code === "FORBIDDEN",
-      );
-      await assert.rejects(
-        app.contracts.register("reader", patch),
-        (e) => e.code === "FORBIDDEN",
-      );
+      for (const [name, invoke] of [
+        ["ingest", () => app.ingest("reader", {})],
+        ["provision", () => app.workspaces.create("reader", {})],
+        ["worker", () => app.worker.runOnce("reader")],
+        ["reprocess", () => app.jobs.reprocess("reader", {})],
+        ...[
+          "accept",
+          "reject",
+          "amend",
+          "resolveIdentity",
+          "resolveConflict",
+        ].map((method) => [method, () => app.reviews[method]("reader", {})]),
+        ...["attest", "correct", "retract"].map((method) => [
+          method,
+          () => app.assertions[method]("reader", {}),
+        ]),
+        ...["propose", "publish", "reject"].map((method) => [
+          "ontology." + method,
+          () => app.ontology[method]("reader", {}),
+        ]),
+        ["registerSuite", () => app.evaluations.registerSuite("reader", {})],
+        ["evaluate", () => app.evaluations.evaluate("reader", {})],
+        [
+          "evaluation.get",
+          () => app.evaluations.get("reader", evaluated.evaluationId),
+        ],
+        ["reviews.get", () => app.reviews.get("reader", b.id)],
+        ["contract.register", () => app.contracts.register("reader", patch)],
+      ])
+        await assert.rejects(invoke(), (e) => e.code === "FORBIDDEN", name);
       assert.equal(await snapshot(), before);
+    },
+  );
+  await t.test(
+    "each cursor page uses current committed data with a stable ID tie break across concurrent insertion",
+    async () => {
+      const order = { field: "date", direction: "asc" };
+      const first = await app.entities.find(null, { ...q, order, limit: 2 });
+      const original = structuredClone(first.records);
+      await app.ingest(null, {
+        source: "types",
+        idempotencyKey: "concurrent-page",
+        payload: {
+          kind: "json",
+          value: { ...base, name: "Concurrent", count: 99 },
+        },
+      });
+      const staged = await app.worker.runOnce(null),
+        bundle = await app.reviews.get(null, staged.bundleId);
+      await app.reviews.accept(null, {
+        bundleId: bundle.id,
+        digest: bundle.hash,
+        requestKey: "accept-concurrent-page",
+        reason: "Concurrent approved record",
+      });
+      const current = await app.entities.find(null, {
+        ...q,
+        order,
+        limit: 100,
+      });
+      const next = await app.entities.find(null, {
+        ...q,
+        order,
+        cursor: first.nextCursor,
+        limit: 100,
+      });
+      const last = first.records.at(-1).id;
+      assert.deepEqual(
+        next.records.map((r) => r.id),
+        current.records.filter((r) => r.id > last).map((r) => r.id),
+      );
+      assert.deepEqual(first.records, original);
+      assert.equal(current.records.length, 5);
+      assert.deepEqual(
+        current.records.map((r) => r.id),
+        current.records.map((r) => r.id).sort(),
+      );
     },
   );
 });

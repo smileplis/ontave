@@ -110,11 +110,57 @@ test("real process death, restart and CLI shutdown preserve work and usage uncer
       assert.equal((await app.jobs.get(null, receipt.job_id)).calls, 2);
     },
   );
+  await t.test(
+    "SIGKILL after the worker result commits leaves one durable review bundle and no duplicate inference",
+    async () => {
+      const r = await app.ingest(null, {
+        source: "fault",
+        idempotencyKey: "result-ack-lost",
+        payload: { kind: "text", text: "Committed" },
+      });
+      const c = child("kill-after-result");
+      const [, signal] = await once(c, "exit");
+      assert.equal(signal, "SIGKILL");
+      assert.equal(
+        (await app.jobs.get(null, r.job_id)).state,
+        "waiting_review",
+      );
+      await delay(400);
+      assert.equal(await app.worker.runOnce(null), null);
+      const rows = (
+        await db.admin.query(
+          "SELECT id,hash FROM ontave.bundles WHERE job_id=$1",
+          [r.job_id],
+        )
+      ).rows;
+      assert.equal(rows.length, 1);
+      assert.equal((await app.jobs.get(null, r.job_id)).calls, 1);
+      assert.equal((await app.entities.find(null, query)).records.length, 1);
+      const request = {
+        bundleId: rows[0].id,
+        digest: rows[0].hash,
+        requestKey: "accept-committed",
+        reason: "Review durable committed result",
+      };
+      await app.reviews.accept(null, request);
+      await app.reviews.accept(null, request);
+      assert.equal((await app.entities.find(null, query)).records.length, 2);
+      assert.equal(
+        (
+          await db.admin.query(
+            "SELECT count(*) FROM ontave.assertions WHERE evidence_id=$1",
+            [r.evidence_id],
+          )
+        ).rows[0].count,
+        "1",
+      );
+    },
+  );
   const dir = await mkdtemp(resolve("artifacts/worker-cli-"));
   const config = resolve(dir, "config.mjs");
   await writeFile(
     config,
-    `import {createOntave} from ${JSON.stringify(pathToFileURL(resolve("dist/index.js")).href)};import {postgres} from ${JSON.stringify(pathToFileURL(resolve("dist/postgres.js")).href)};import {personFixture} from ${JSON.stringify(pathToFileURL(resolve("dist/testing.js")).href)};export default()=>({context:"test",runtime:createOntave({storage:postgres({connectionString:process.env.ONTAVE_TEST_DATABASE}),authorize:()=>({actorId:"cli",workspaceId:process.env.ONTAVE_TEST_WORKSPACE,capabilities:["worker"]}),limits:{leaseMs:300},model:{async extract(task){process.send?.({event:"inference-started"});if(process.env.ONTAVE_TEST_MODE==="hang")await new Promise(()=>{});else await new Promise(r=>setTimeout(r,200));return {output:personFixture(task.text),model:"cli-fixture",usage:{totalTokens:0}};}}})});`,
+    `import {createOntave} from ${JSON.stringify(pathToFileURL(resolve("dist/index.js")).href)};import {postgres} from ${JSON.stringify(pathToFileURL(resolve("dist/postgres.js")).href)};import {personFixture} from ${JSON.stringify(pathToFileURL(resolve("dist/testing.js")).href)};export default()=>({context:"test",runtime:createOntave({storage:postgres({connectionString:process.env.ONTAVE_TEST_DATABASE}),authorize:()=>({actorId:"cli",workspaceId:process.env.ONTAVE_TEST_WORKSPACE,capabilities:["worker"]}),limits:{leaseMs:30000},model:{async extract(task){process.send?.({event:"inference-started"});if(process.env.ONTAVE_TEST_MODE==="hang")await new Promise(()=>{});else await new Promise(r=>setTimeout(r,200));return {output:personFixture(task.text),model:"cli-fixture",usage:{totalTokens:0}};}}})});`,
   );
   const cli = (mode) => {
     const c = fork(resolve("dist/cli.js"), ["worker", "--config", config], {
@@ -170,8 +216,19 @@ test("real process death, restart and CLI shutdown preserve work and usage uncer
         exit = once(c, "exit");
       c.kill("SIGTERM");
       assert.equal((await exit)[0], 0);
-      assert.ok(Date.now() - at >= 9500 && Date.now() - at < 13000);
-      await delay(400);
+      const elapsed = Date.now() - at;
+      assert.ok(
+        elapsed >= 9500 && elapsed < 13000,
+        `Hung drain took ${elapsed} ms`,
+      );
+      assert.equal((await app.jobs.get(null, r.job_id)).state, "processing");
+      // The drain test uses a long lease so scheduler jitter cannot turn it into
+      // a lease-loss test. Advance expiry only after the original process exits.
+      // Real elapsed-lease recovery is exercised by the SIGKILL tests above.
+      await db.admin.query(
+        "UPDATE ontave.jobs SET lease_until=now()-interval '1 second' WHERE id=$1",
+        [r.job_id],
+      );
       assert.equal((await app.worker.runOnce(null)).state, "waiting_review");
       assert.equal(
         (await app.jobs.attempts(null, r.job_id)).filter(

@@ -1,6 +1,6 @@
 {
   "name": "ontave",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "private": false,
   "description": "Evidence-backed operational data and governed ontology evolution for TypeScript applications",
   "license": "Apache-2.0",

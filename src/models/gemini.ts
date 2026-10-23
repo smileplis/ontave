@@ -1,3 +1,4 @@
+import { providerJson } from "./response.js";
 import { extractionPrompt } from "./prompt.js";
 import { z } from "zod";
 import { check, definitionSchema, json, OntaveError } from "../core.js";
@@ -89,20 +90,7 @@ export function gemini(config: {
           `Gemini request failed with HTTP ${r.status}`,
           r.status === 429 || r.status >= 500,
         );
-      const raw = await r.text();
-      check(
-        Buffer.byteLength(raw) <= 2097152,
-        "INVALID_MODEL_OUTPUT",
-        "Provider response exceeds limit",
-      );
-      try {
-        return JSON.parse(raw);
-      } catch {
-        throw new OntaveError(
-          "INVALID_MODEL_OUTPUT",
-          "Gemini returned malformed JSON",
-        );
-      }
+      return providerJson(r, config.model);
     };
     // The same complete request is tokenized and then sent, including the schema.
     // This is a tokenizer request, not an additional inference attempt.
@@ -148,6 +136,8 @@ export function gemini(config: {
       throw new OntaveError(
         "INVALID_MODEL_OUTPUT",
         "Gemini output is not valid JSON",
+        false,
+        { model: config.model, usage, outcome: "malformed" },
       );
     }
     return { output, model: config.model, usage };

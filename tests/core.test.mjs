@@ -113,6 +113,73 @@ test("new relationship can connect existing concepts without redefining them", (
   assert.equal(next.relations.length, 1);
   assert.throws(() => definition({ concepts: [], relations: next.relations }));
 });
+
+test("concept aliases are bounded, canonical, immutable and preserved by additive extension", () => {
+  const person = starter.concepts.find((c) => c.id === "person");
+  const input = {
+    concepts: [{ ...person, aliases: ["Client", "Buyer"] }],
+    relations: [],
+  };
+  const d = definition(input);
+  assert.deepEqual(d.concepts[0].aliases, ["Buyer", "Client"]);
+  assert.deepEqual(input.concepts[0].aliases, ["Client", "Buyer"]);
+  assert.equal(
+    hash(d),
+    hash(
+      definition({
+        ...input,
+        concepts: [{ ...person, aliases: ["Buyer", "Client"] }],
+      }),
+    ),
+  );
+  assert.throws(
+    () =>
+      definition({
+        ...input,
+        concepts: [{ ...person, aliases: ["Ｂｕｙｅｒ", "buyer"] }],
+      }),
+    (e) => e.code === "VALIDATION_FAILED",
+  );
+  assert.throws(
+    () =>
+      definition({
+        ...input,
+        concepts: [{ ...person, aliases: Array(21).fill("Buyer") }],
+      }),
+    (e) => e.code === "VALIDATION_FAILED",
+  );
+  const next = extend(d, {
+    concepts: [
+      {
+        ...person,
+        fields: [
+          {
+            id: "city",
+            name: "City",
+            description: "Reported city",
+            type: "text",
+            optional: true,
+          },
+        ],
+      },
+    ],
+    relations: [],
+  });
+  assert.deepEqual(next.concepts[0].aliases, ["Buyer", "Client"]);
+  assert.ok(compatible(d, next));
+  assert.throws(
+    () =>
+      extend(d, {
+        concepts: [{ ...person, aliases: ["Customer"], fields: [] }],
+        relations: [],
+      }),
+    (e) => e.code === "UNSUPPORTED_EVOLUTION",
+  );
+  assert.equal(
+    compatible(d, definition({ concepts: [person], relations: [] })),
+    false,
+  );
+});
 test("value schemas distinguish money strings, null, dates, booleans and numbers", () => {
   const f = (type) => ({ id: "x", name: "X", description: "X", type });
   validateValue(f("money"), { amount: "450000", currency: "INR" });

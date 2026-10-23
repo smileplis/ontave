@@ -152,7 +152,13 @@ export function json(value: unknown): string {
 export function hash(value: unknown): string {
   return createHash("sha256").update(json(value)).digest("hex");
 }
-export const idSchema = z.string().regex(/^[a-z][a-z0-9_]{0,63}$/);
+export const idSchema = z
+  .string()
+  .regex(/^[a-z][a-z0-9_]{0,63}$/)
+  .refine(
+    (id) => id !== "constructor" && id !== "prototype",
+    "Reserved object property name",
+  );
 export const uuid = z.uuid();
 export function parseUUID(value: unknown): string {
   const r = uuid.safeParse(value);
@@ -257,6 +263,10 @@ export const definitionSchema = z
           .object({
             id: idSchema,
             name: z.string().min(1).max(200),
+            aliases: z
+              .array(z.string().trim().min(1).max(200))
+              .max(20)
+              .optional(),
             description: z.string().min(1).max(2000),
             fields: z.array(fieldSchema).max(100),
           })
@@ -290,6 +300,17 @@ export function definition(value: unknown): Definition {
   for (const c of d.concepts) {
     check(!seen.has(c.id), "VALIDATION_FAILED", "Duplicate concept ID");
     seen.add(c.id);
+    if (c.aliases) {
+      const names = c.aliases.map((x) =>
+        x.normalize("NFKC").toLocaleLowerCase("en-US"),
+      );
+      check(
+        new Set(names).size === names.length,
+        "VALIDATION_FAILED",
+        "Duplicate concept alias",
+      );
+      c.aliases.sort((a, b) => a.localeCompare(b, "en"));
+    }
     const fields = new Set<string>();
     for (const f of c.fields) {
       check(!fields.has(f.id), "VALIDATION_FAILED", "Duplicate field ID");
@@ -335,7 +356,11 @@ export function extend(parent: Definition, raw: unknown): Definition {
       continue;
     }
     check(
-      old.name === c.name && old.description === c.description,
+      old.name === c.name &&
+        old.description === c.description &&
+        (c.aliases === undefined ||
+          hash([...(old.aliases ?? [])].sort()) ===
+            hash([...c.aliases].sort())),
       "UNSUPPORTED_EVOLUTION",
       "Concept meaning/name changes are unsupported",
     );
@@ -376,6 +401,7 @@ export function compatible(contract: Definition, current: Definition): boolean {
       return (
         now?.name === c.name &&
         now.description === c.description &&
+        (c.aliases ?? []).every((alias) => now.aliases?.includes(alias)) &&
         c.fields.every((f) => now.fields.some((n) => hash(n) === hash(f)))
       );
     }) &&

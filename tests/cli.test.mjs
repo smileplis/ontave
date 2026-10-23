@@ -54,4 +54,9 @@ test("CLI rejects invalid worker actions and malformed input before effects", as
     assert.equal(JSON.parse(r.stderr).code, "INVALID_INPUT");
     assert.ok(!r.stderr.includes("MUST NOT EXECUTE"));
   }
+  const rollback = run(["ontology", "rollback", "--config", file]);
+  assert.equal(rollback.status, 1);
+  assert.equal(JSON.parse(rollback.stderr).code, "UNSUPPORTED_EVOLUTION");
+  assert.ok(JSON.parse(rollback.stderr).message.includes("forward correction"));
+  assert.ok(!rollback.stderr.includes("MUST NOT EXECUTE"));
 });

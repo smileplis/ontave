@@ -119,6 +119,11 @@ async function main(): Promise<unknown> {
     await generateContract(lock, args.values.output);
     return { generated: resolve(args.values.output), contractHash: lock.hash };
   }
+  if (command === "ontology" && action === "rollback")
+    throw new OntaveError(
+      "UNSUPPORTED_EVOLUTION",
+      "Operational ontology rollback is unsupported; propose and review a forward correction",
+    );
   check(
     args.values.config,
     "INVALID_INPUT",

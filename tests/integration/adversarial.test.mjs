@@ -163,6 +163,27 @@ test("untrusted extraction, forged identities, unknown fields and oversized adap
       const r = await app.ingest(null, input("uncertain", "Riya Friday")),
         result = await app.worker.runOnce(null);
       assert.equal(result.state, "waiting_ontology");
+      const before = await app.entities.find(null, query);
+      const waiting = await app.reviews.get(null, result.bundleId);
+      await assert.rejects(
+        app.reviews.accept(null, {
+          bundleId: waiting.id,
+          digest: waiting.hash,
+          requestKey: "no-partial-known-facts",
+          reason: "Unknown concept keeps the entire bundle waiting",
+        }),
+        (e) => e.code === "STALE_BUNDLE",
+      );
+      assert.deepEqual(await app.entities.find(null, query), before);
+      assert.equal(
+        (
+          await db.admin.query(
+            "SELECT count(*) FROM ontave.assertions WHERE evidence_id=$1",
+            [r.evidence_id],
+          )
+        ).rows[0].count,
+        "0",
+      );
       const b = await app.reviews.get(null, result.bundleId),
         revised = await app.reviews.amend(null, {
           bundleId: b.id,
