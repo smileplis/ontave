@@ -1,0 +1,2519 @@
+{
+  "version": "adaptive-quotation-v2",
+  "createdAt": "2026-10-23T05:48:16.394Z",
+  "mode": "shared-live-plans-paired-replay",
+  "currentDefinitionReuse": false,
+  "referenceExpansion": false,
+  "protocol": {
+    "version": "adaptive-quotation-v2",
+    "labelReview": "maintainer-authored; independent review pending",
+    "scope": "Source-reported commitments linked to existing quotations. No purchase, shipment execution, arbitrary domain or global cross-source commitment identity claim.",
+    "equivalence": {
+      "concept": [
+        "delivery_commitment",
+        "delivery_schedule",
+        "delivery_batch",
+        "shipment_commitment",
+        "shipment_schedule",
+        "supply_commitment",
+        "dispatch_commitment",
+        "dispatch_schedule",
+        "fulfillment_commitment",
+        "delivery",
+        "shipment",
+        "supply_batch"
+      ],
+      "quantity": [
+        "quantity",
+        "committed_quantity",
+        "promised_quantity",
+        "panel_quantity",
+        "panels",
+        "quantity_panels"
+      ],
+      "date": [
+        "date",
+        "delivery_date",
+        "promised_date",
+        "scheduled_date",
+        "expected_date",
+        "commitment_date",
+        "dispatch_date",
+        "due_date",
+        "supply_date"
+      ]
+    },
+    "trials": 3,
+    "selection": "No gold labels passed to discovery or validation. All failures retained; no retries or answer-based selection.",
+    "safety": "Source-reported claims only. The policy is a structural/adoption boundary, not semantic accuracy certification.",
+    "frozenAt": "2026-10-23T05:10:11.537Z",
+    "casesHash": "89ab7f1a8530567a12511c3d3202e494d85a030bf75df73b525a452be0adbdb3",
+    "frozenDefinitionHash": "d8e46ab778ecbe192d8eae530e95cf77d498e6b0868330cea7037f366d0c35a3",
+    "fileHashes": {
+      "examples/adaptive-quotes/frozen-definition.json": "ed46a1d2d7683801d74a16e2d69d6e1840aa1f0e22b98f77dababbc084520262",
+      "examples/adaptive-quotes/frozen-app.mjs": "0910f7dd6f90c0089f4bf9436165e79e9914a5a4d913f1d1b0c8de8afb91fb0e",
+      "examples/adaptive-quotes/shared.mjs": "3b452e5dcba712f551baed4e5917840c84700cc926aea09d059c12b7b8476732",
+      "examples/adaptive-quotes/cases.mjs": "c794560a3c79f7c81073b72b295459f42719f692244bcc7698949bd1652d9319",
+      "examples/adaptive-quotes/scoring.mjs": "5c18c9ea7ddf120451717b0ec2f8ee2b363ff20d67a40f3a2e5f749c5e04a5a8",
+      "examples/supplier-quotes/provider.mjs": "a5d4b5f32b20001cdbfec9b5faa67e83d71ce2c52e06ff64fba378b389bd549c",
+      "scripts/collect-adaptation.mjs": "7f0da9ac576abacb3b451d1e93242024530d104932e13e3c68705d151c29dc54"
+    },
+    "model": "gemini-3.1-flash-lite",
+    "maximumInferenceAttempts": 33,
+    "retries": 0,
+    "inputTokensPerCall": 16384,
+    "outputTokensPerCall": 4096,
+    "temperature": 0,
+    "shadowRegistry": "Starts with frozen quotations only. Updated by neutral structural checks for allowed sources and existing parent references, never gold answers. All arms later replay the same plans.",
+    "pairedArms": [
+      "ontave",
+      "flexible-jsonb",
+      "strict-control"
+    ],
+    "bootstrap": "Authored initial quotation fixture; no future concepts in the initial model or discovery prompt.",
+    "developmentRevision": "v1 retained: six structural failures, uncertain treatment of explicit unfamiliar facts, and a scoped-identity guard bug found during replay. v2 supplies host limits and authorized reference context explicitly and clarifies discovery versus uncertainty. Cases and semantic aliases unchanged; this is development evidence on reused cases, not a new holdout."
+  },
+  "frozenDefinitionHash": "d8e46ab778ecbe192d8eae530e95cf77d498e6b0868330cea7037f366d0c35a3",
+  "casesHash": "89ab7f1a8530567a12511c3d3202e494d85a030bf75df73b525a452be0adbdb3",
+  "sourceHashes": {
+    "examples/adaptive-quotes/frozen-definition.json": "ed46a1d2d7683801d74a16e2d69d6e1840aa1f0e22b98f77dababbc084520262",
+    "examples/adaptive-quotes/frozen-app.mjs": "0910f7dd6f90c0089f4bf9436165e79e9914a5a4d913f1d1b0c8de8afb91fb0e",
+    "examples/adaptive-quotes/shared.mjs": "49778555fa171d76adeeac06d0df344f02fbcae285a0b5931218db6905554660",
+    "examples/adaptive-quotes/plain.mjs": "fae9c3431a47fef92ad34e09ce7278fc168289b6f99b95223715c8e755936272",
+    "examples/adaptive-quotes/ontave.mjs": "fc3aa747f073f10b23239fcf83cd544f6865a34ac3b3633b7499d68d42fd38b0",
+    "examples/adaptive-quotes/cases.mjs": "aca317e135223e7c3ee4900cc75adc199874faf3fb109380ed50b919a3e9072d",
+    "examples/adaptive-quotes/scoring.mjs": "98a0dcf69908a96b0f9a9b65f6cf2a7a03e6d846a09a111fbfe7be98435126b6",
+    "examples/adaptive-quotes/references.mjs": "87416508b3ca405dc6c988636ac3ab1624abd95d3949d03359843110fad76501",
+    "src/runtime.ts": "dac7bad70fb8ff0464449260cf8969dc7c83b7b945ebfcd0dfa096740b4dc484",
+    "src/policy.ts": "74e22e48f6e1e3eb209e2a521a9305fdb4d4616a926a452d02317c638e36dcab",
+    "src/automation.ts": "3f53f69720b51398002cf6641a3ff3c3de75d1972af69e2a1eb3346225c47aaa",
+    "dist/runtime.js": "664ed7046f61295f47035afa840fe5cf6f77969734bf6740b9489791c4612a2d",
+    "scripts/compare-adaptation.mjs": "d005891333ae3424d544af35559d87c73c9b7db64dfb4d1e2ad83f6669dfb306"
+  },
+  "arms": {
+    "ontave": {
+      "quality": {
+        "events": 33,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 15
+      },
+      "routineQuality": {
+        "events": 18,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 0
+      },
+      "oldQueryChecks": 99,
+      "oldQueriesUnchanged": true,
+      "manualReviewActions": 0,
+      "automaticPublications": 0,
+      "pendingOrFailed": 30,
+      "latencyMs": [
+        6.838375000000042,
+        8.126999999999953,
+        5.970624999999927,
+        5.37033299999996,
+        6.109458000000018,
+        5.379916999999978,
+        7.001958000000059,
+        7.1875,
+        6.106750000000034,
+        5.825249999999983,
+        9.089500000000044,
+        5.493208999999979,
+        4.9364590000000135,
+        6.347750000000133,
+        4.805250000000115,
+        5.242250000000013,
+        5.16516700000011,
+        6.11649999999986,
+        6.5691249999999854,
+        6.0717500000000655,
+        4.758833000000095,
+        6.505959000000075,
+        5.420041000000083,
+        4.79300000000012,
+        4.629500000000007,
+        4.736292000000049,
+        4.846332999999959,
+        5.180041000000074,
+        5.864375000000109,
+        6.411458000000039,
+        5.906958999999915,
+        4.830666000000065,
+        6.134124999999813
+      ],
+      "conceptsByTrial": {
+        "1": [],
+        "2": [],
+        "3": []
+      }
+    },
+    "flexible": {
+      "quality": {
+        "events": 33,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 15
+      },
+      "routineQuality": {
+        "events": 18,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 0
+      },
+      "oldQueryChecks": 99,
+      "oldQueriesUnchanged": true,
+      "manualReviewActions": 0,
+      "automaticPublications": 0,
+      "pendingOrFailed": 30,
+      "latencyMs": [
+        3.579291000000012,
+        3.0839999999999463,
+        3.5246660000000247,
+        3.108416000000034,
+        3.0587920000000395,
+        2.9451250000000755,
+        2.878750000000082,
+        2.9764579999999796,
+        2.953292000000033,
+        2.900666000000001,
+        3.0693330000000287,
+        3.1223750000001473,
+        2.765500000000202,
+        4.5835420000000795,
+        2.7304169999999885,
+        3.0709580000000187,
+        2.8327909999998155,
+        2.703083000000106,
+        3.05600000000004,
+        2.8372089999998025,
+        2.778374999999869,
+        2.5752090000000862,
+        2.9305000000001655,
+        2.6867079999999532,
+        2.5620830000000296,
+        2.6811669999999594,
+        2.988166999999976,
+        3.160417000000052,
+        2.806250000000091,
+        2.6835829999999987,
+        2.6864170000001195,
+        2.5365410000001702,
+        2.6098339999998643
+      ],
+      "conceptsByTrial": {
+        "1": [],
+        "2": [],
+        "3": []
+      }
+    },
+    "strict": {
+      "quality": {
+        "events": 33,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 15
+      },
+      "routineQuality": {
+        "events": 18,
+        "correct": 0,
+        "proposed": 0,
+        "expected": 39,
+        "precision": null,
+        "recall": 0,
+        "f1": 0,
+        "exactEvents": 0
+      },
+      "oldQueryChecks": 99,
+      "oldQueriesUnchanged": true,
+      "manualReviewActions": 0,
+      "automaticPublications": 0,
+      "pendingOrFailed": 33,
+      "latencyMs": [
+        6.1600839999999835,
+        6.0919999999999845,
+        6.5424580000000105,
+        5.787916999999993,
+        5.233333000000016,
+        6.089875000000006,
+        5.658084000000031,
+        5.2221250000000055,
+        6.188041999999996,
+        7.239832999999976,
+        5.428625000000011,
+        5.695917000000009,
+        4.992584000000079,
+        5.335458000000017,
+        5.129042000000027,
+        5.523666999999932,
+        5.962332999999944,
+        5.474249999999984,
+        5.244374999999991,
+        5.238791999999876,
+        5.015083000000004,
+        5.1412910000001375,
+        4.898416999999881,
+        4.647417000000132,
+        5.806040999999823,
+        4.771958000000041,
+        5.532375000000002,
+        5.847332999999935,
+        4.939000000000078,
+        4.793667000000141,
+        5.682542000000012,
+        4.989791999999852,
+        4.926208999999972
+      ],
+      "conceptsByTrial": {
+        "1": [],
+        "2": [],
+        "3": []
+      }
+    }
+  },
+  "results": [
+    {
+      "trial": 1,
+      "id": "learn-01",
+      "family": "split-explicit",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.838375000000042,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.579291000000012,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.1600839999999835,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-02",
+      "family": "dispatch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.0839999999999463,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 8.126999999999953,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.0919999999999845,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-03",
+      "family": "batch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.970624999999927,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.5246660000000247,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.5424580000000105,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-04",
+      "family": "same-quantity-separate-dates",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.108416000000034,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.37033299999996,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.787916999999993,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-05",
+      "family": "table-layout",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.109458000000018,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.0587920000000395,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.233333000000016,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "reuse-06",
+      "family": "reversed-order",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.9451250000000755,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.379916999999978,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.089875000000006,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "abstain-07",
+      "family": "relative-date",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.001958000000059,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.878750000000082,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.658084000000031,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "abstain-08",
+      "family": "not-a-commitment",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.9764579999999796,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.1875,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.2221250000000055,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "guard-09",
+      "family": "unknown-parent",
+      "scope": "unknown-parent",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.106750000000034,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.953292000000033,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.188041999999996,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "guard-10",
+      "family": "source-policy",
+      "scope": "disallowed-source",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.900666000000001,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.825249999999983,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 7.239832999999976,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "id": "guard-11",
+      "family": "instruction-injection",
+      "scope": "injection",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 9.089500000000044,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.0693330000000287,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.428625000000011,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "learn-01",
+      "family": "split-explicit",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.493208999999979,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.1223750000001473,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.695917000000009,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-02",
+      "family": "dispatch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.765500000000202,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.9364590000000135,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.992584000000079,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-03",
+      "family": "batch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.347750000000133,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.5835420000000795,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.335458000000017,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-04",
+      "family": "same-quantity-separate-dates",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.7304169999999885,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.805250000000115,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.129042000000027,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-05",
+      "family": "table-layout",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.242250000000013,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.0709580000000187,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.523666999999932,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "reuse-06",
+      "family": "reversed-order",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.8327909999998155,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.16516700000011,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.962332999999944,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "abstain-07",
+      "family": "relative-date",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.11649999999986,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.703083000000106,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.474249999999984,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "abstain-08",
+      "family": "not-a-commitment",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.05600000000004,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.5691249999999854,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.244374999999991,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "guard-09",
+      "family": "unknown-parent",
+      "scope": "unknown-parent",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.0717500000000655,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.8372089999998025,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.238791999999876,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "guard-10",
+      "family": "source-policy",
+      "scope": "disallowed-source",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.778374999999869,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.758833000000095,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.015083000000004,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "id": "guard-11",
+      "family": "instruction-injection",
+      "scope": "injection",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.505959000000075,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.5752090000000862,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.1412910000001375,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "learn-01",
+      "family": "split-explicit",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.420041000000083,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.9305000000001655,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.898416999999881,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-02",
+      "family": "dispatch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.6867079999999532,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.79300000000012,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.647417000000132,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-03",
+      "family": "batch-synonym",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.629500000000007,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.5620830000000296,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.806040999999823,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-04",
+      "family": "same-quantity-separate-dates",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.6811669999999594,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.736292000000049,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 3,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.771958000000041,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-05",
+      "family": "table-layout",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.846332999999959,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.988166999999976,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.532375000000002,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "reuse-06",
+      "family": "reversed-order",
+      "scope": "routine",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "INVALID_RELATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 3.160417000000052,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.180041000000074,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 2,
+            "precision": null,
+            "recall": 0,
+            "exact": false,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.847332999999935,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "abstain-07",
+      "family": "relative-date",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.864375000000109,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.806250000000091,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.939000000000078,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "abstain-08",
+      "family": "not-a-commitment",
+      "scope": "uncertain",
+      "acquisitionError": null,
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.6835829999999987,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.411458000000039,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.793667000000141,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "guard-09",
+      "family": "unknown-parent",
+      "scope": "unknown-parent",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": {
+            "code": "INVALID_MODEL_OUTPUT",
+            "message": "Ontology proposal could not be validated"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.906958999999915,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "UNRESOLVED_OBSERVATION"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.6864170000001195,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 5.682542000000012,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "guard-10",
+      "family": "source-policy",
+      "scope": "disallowed-source",
+      "acquisitionError": {
+        "code": "INVALID_RELATION"
+      },
+      "arms": {
+        "flexible": {
+          "state": "pending",
+          "error": null,
+          "exception": {
+            "code": "FORBIDDEN"
+          },
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.5365410000001702,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "ontave": {
+          "state": "failed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.830666000000065,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_ontology",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.989791999999852,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    },
+    {
+      "trial": 3,
+      "id": "guard-11",
+      "family": "instruction-injection",
+      "scope": "injection",
+      "acquisitionError": null,
+      "arms": {
+        "ontave": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 6.134124999999813,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "flexible": {
+          "state": "completed",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 2.6098339999998643,
+          "automaticPublications": 0,
+          "newConcepts": []
+        },
+        "strict": {
+          "state": "waiting_review",
+          "error": null,
+          "exception": null,
+          "score": {
+            "correct": 0,
+            "proposed": 0,
+            "expected": 0,
+            "precision": null,
+            "recall": null,
+            "exact": true,
+            "predictions": []
+          },
+          "oldQueriesUnchanged": true,
+          "durationMs": 4.926208999999972,
+          "automaticPublications": 0,
+          "newConcepts": []
+        }
+      }
+    }
+  ],
+  "paidInferenceAttempts": 33,
+  "independentDevelopers": 0,
+  "developerTimeSaved": null,
+  "productionQualified": false,
+  "limitations": [
+    "The planner receives the current shadow registry and source, never gold labels; each acquired plan is replayed into all arms.",
+    "The initial app contains no delivery type. The neutral host scopes new IDs to an extension namespace. A policy pass is not semantic qualification.",
+    "Source-scoped reported commitments link to quotations through explicit reference identifiers. No autonomous global shipment identity or verified delivery claim.",
+    "This is synthetic English text on one small sequential scenario set with maintainer labels; repeated trials are correlated.",
+    "The flexible comparator also learns JSONB metadata without physical migrations. Machine timing and author-maintained code are not independent developer-effort measurements.",
+    "No manual review actions are issued during adaptation. Pending cases still count against zero-touch usable coverage.",
+    "Hosted service, billing and external developer adoption remain unvalidated."
+  ]
+}

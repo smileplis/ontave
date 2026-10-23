@@ -1,11 +1,11 @@
 ## Run the local playground
 
-The public npm release is **`0.1.0-alpha.4`**, a developer preview. See [release status](/docs/status/) for the quality gates still open.
+The public npm release is **`0.1.0-alpha.5`**, a developer preview. See [release status](/docs/status/) for the quality gates still open.
 
 Use **Node.js 24** on macOS or Linux. Open a terminal and run:
 
 ```sh
-npx --yes ontave@0.1.0-alpha.4 playground --install
+npx --yes ontave@0.1.0-alpha.5 playground --install
 ```
 
 The explicit `--install` flag permits downloading the optional PostgreSQL playground tooling into an isolated temporary directory when it is not already installed. Open the localhost URL printed in the terminal. No Docker, database account or model key is required.
@@ -31,7 +31,7 @@ Reset starts a fresh fictional workspace. This playground is a local learning to
 The server binds only to `127.0.0.1`. To choose another port:
 
 ```sh
-npx --yes ontave@0.1.0-alpha.4 playground --install --port 4321
+npx --yes ontave@0.1.0-alpha.5 playground --install --port 4321
 ```
 
 The tested development environments are macOS arm64 and Linux x64. Other architectures and Windows are not yet qualified for this playground. A free localhost port, writable temporary directory and npm access for the first installation are required. The installation uses the platform-specific PostgreSQL binary.
@@ -42,6 +42,6 @@ The tested development environments are macOS arm64 and Linux x64. Other archite
 
 ## Use your own messages
 
-For arbitrary input, install the [server package](/docs/installation/) and follow the [Node.js integration guide](/docs/node/). Configure your own dedicated PostgreSQL database, authentication and explicit model adapter. Your application remains responsible for review policy and user interfaces.
+For arbitrary input, install the [server package](/docs/installation/) and run `npx ontave dev --install` for persistent local PostgreSQL and Studio. Configure a private Gemini key and explicit model in the server environment, then restart to enable processing. Your model provider bills inference. For a shared authenticated application, follow the [Node.js integration guide](/docs/node/). Your application selects strict review or a bounded automatic policy; Studio is a local owner tool.
 
 [Give developer-preview feedback](https://github.com/smileplis/ontave/issues/new?template=developer-preview.yml). Tell us where setup or review takes too much effort, which workflow you tried, and whether you would use Ontave again. Include fictional or redacted reproductions only.

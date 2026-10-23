@@ -2,6 +2,7 @@ node_modules/
 dist/
 .cache/
 .local/
+.ontave/
 .env
 .env.*
 !.env.example

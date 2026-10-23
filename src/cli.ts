@@ -13,6 +13,7 @@ const help = `Ontave development alpha
 Usage: ontave <command> [action] --config ./ontave.config.mjs --input request.json
 
 playground [--install]       Run the key-free local PostgreSQL playground
+dev [--install]              Persistent local database and ready-to-use review Studio
 init                         Create a local config template without overwriting
 doctor                       Check runtime configuration and workspace access
 migrate plan|apply           Explicit internal migrations (apply requires --yes)
@@ -39,6 +40,7 @@ const options = {
     config: { type: "string" },
     port: { type: "string" },
     install: { type: "boolean" },
+    directory: { type: "string" },
     input: { type: "string" },
     id: { type: "string" },
     output: { type: "string" },
@@ -96,6 +98,44 @@ async function main(): Promise<unknown> {
         args.values.port === undefined ? undefined : Number(args.values.port),
       install: args.values.install,
     });
+  }
+  if (command === "dev") {
+    check(!action, "INVALID_INPUT", "Use dev without an action");
+    const { openOntave } = await import("./local.js");
+    const { gemini } = await import("./models/gemini.js");
+    const model =
+      process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL
+        ? gemini({
+            apiKey: process.env.GEMINI_API_KEY,
+            model: process.env.GEMINI_MODEL,
+          })
+        : undefined;
+    const app = await openOntave({
+      directory: args.values.directory,
+      install: args.values.install,
+      model,
+    });
+    try {
+      const studio = await app.studio({
+        port:
+          args.values.port === undefined ? undefined : Number(args.values.port),
+      });
+      process.stdout.write(
+        `Ontave Studio: ${studio.url}\nPersistent workspace: ${app.directory}\n${model ? "Gemini configured; processing is explicit." : "Set GEMINI_API_KEY and an explicit GEMINI_MODEL, then restart to enable processing. Ingest and review need no model key."}\nCtrl+C stops the server; your local data is retained.\n`,
+      );
+      await new Promise<void>((ok) => {
+        const stop = () => {
+          process.removeListener("SIGINT", stop);
+          process.removeListener("SIGTERM", stop);
+          ok();
+        };
+        process.once("SIGINT", stop);
+        process.once("SIGTERM", stop);
+      });
+    } finally {
+      await app.close();
+    }
+    return;
   }
   if (command === "init") {
     const path = resolve(args.values.output ?? "ontave.config.mjs");

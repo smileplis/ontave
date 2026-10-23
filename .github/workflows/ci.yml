@@ -15,10 +15,12 @@ jobs:
       - run: npm test
       - run: npm run test:integration
       - run: npm run compare:quotes
+      - run: npm run compare:adaptation
       - run: npm run verify:domains
       - run: npm run measure:benefits
       - run: node scripts/verify-public.mjs
       - run: npm run verify:package
+      - run: npm run verify:local
       - run: npm run verify:playground
       - run: npm run verify:node
       - run: node scripts/verify-next.mjs

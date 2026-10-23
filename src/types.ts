@@ -109,6 +109,7 @@ export interface ModelAdapter {
   propose?(task: {
     observations: Json[];
     ontology: Definition;
+    policy?: import("./policy.js").AutomationPolicy;
     signal: AbortSignal;
   }): Promise<{ patch: Definition; model: string; usage?: Json }>;
 }
