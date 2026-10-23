@@ -84,6 +84,7 @@ const dbAt = performance.now(),
 const connections = {},
   schemaSetupMs = {},
   results = [];
+let stopping = false;
 try {
   for (const arm of ["plain", "ontave"]) {
     const name = "quotation_" + arm + "_" + randomUUID().replaceAll("-", ""),
@@ -94,6 +95,11 @@ try {
     adminUrl.pathname = "/" + name;
     runtimeUrl.pathname = "/" + name;
     const admin = new Pool({ connectionString: adminUrl.href });
+    // Only the owned database shutdown may terminate an idle migration connection.
+    // Operational connection errors must still fail the comparison.
+    admin.on("error", (error) => {
+      if (!stopping) throw error;
+    });
     pools.push(admin);
     if (arm === "plain") await migratePlain(admin, "ontave_runtime");
     else await migrate(admin, "ontave_runtime");
@@ -453,6 +459,7 @@ try {
     }),
   );
 } finally {
+  stopping = true;
   for (const pool of pools) await pool.end();
   await db.stop();
 }
