@@ -1,8 +1,8 @@
 ## Ontave developer preview
 
-The working developer preview is `0.1.0-alpha.2`, distributed as a versioned GitHub archive. Earlier archives are preserved. There is no npm registry publication. No general production-readiness or arbitrary-data accuracy claim has been established.
+The public npm developer preview is **`0.1.0-alpha.4`**. Install it with `npm install ontave`, or run the [local playground](/docs/quickstart/) without an application setup. Earlier versioned GitHub archives remain available. No general production-readiness or arbitrary-data accuracy claim has been established.
 
-## Available in alpha.2
+## Available in the developer preview
 
 - Immutable evidence, scoped authorization and fenced durable workers with append-only attempt accounting.
 - Real process-kill/restart, bounded shutdown, lost-acknowledgement retries and repeated-crash budget checks.
@@ -12,6 +12,8 @@ The working developer preview is `0.1.0-alpha.2`, distributed as a versioned Git
 - Operator restore checks across all 18 tables, clean Node/Next.js package consumers and workspace-scoped metrics.
 
 The complete solar/rental lifecycle demonstrations use a deterministic fictional adapter. They establish database behavior, rather than autonomous discovery accuracy.
+
+The hosted browser sandbox and published benchmark figures retain their disclosed alpha.2 reference fixtures. The local npm command installs alpha.4. Those versions describe different artifacts.
 
 ## Try the preview
 
@@ -23,10 +25,12 @@ The 60-input maintainer dataset has 179 expected field assertions and 107 relati
 
 Live Gemini and Mistral experiments now have recorded precision/recall and failure results. Earlier configurations failed the 95% precision / 90% recall targets. Every experiment is retained, including incomplete runs. New schema or scoring policies produce separately frozen trials. A new three-trial `ministral-14b-2512` profile met the aggregate field targets: 97.7–97.8% precision and 96.1–97.2% recall. It used an explicit revised description-equivalence rule, frozen before fresh collection. It is a development result on the same maintainer dataset, not independent complete-MVP certification. Each trial still rejected one invented year-zero date. See [measurements and benefits](/docs/benchmarks/).
 
-Independent label review, live identity/discovery qualification, the remaining per-case acceptance audit and a fresh-developer walkthrough remain open. The npm publication guard requires successful source- and archive-bound evidence. There is no registry publication yet.
+Independent source-label review, independently authored holdout cases, live established-identity linking, discovery and reviewed publication qualification remain open. Five acceptance cases are still partial, including complete experimental-provider input token profiling. An independent first-time setup walkthrough remains pending; automated clean installs are tested separately.
+
+Public npm distribution uses a separate developer-preview release profile with implementation, recovery, consumer, security and exact-revision CI checks. It does not claim that the full MVP quality gates passed. The [packaged alpha.4 release status](https://github.com/smileplis/ontave/blob/v0.1.0-alpha.4/docs/RELEASE_STATUS.json) records those open gates.
 
 ## Deliberate boundaries
 
 The alpha does not implement physical business DDL, destructive model changes, automatic established-entity merges, a hosted database, Studio, browser/edge runtime, React hooks, MCP integration or autonomous acceptance of facts.
 
-Source uses Apache License 2.0. Follow the [installation instructions](/docs/installation/) for the alpha.2 preview archive or a locally built source package.
+Source uses Apache License 2.0. Follow the [installation instructions](/docs/installation/) for the npm preview or a locally built source package.

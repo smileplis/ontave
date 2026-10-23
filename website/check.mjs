@@ -1,4 +1,6 @@
 import { searchDocuments } from "./src/search.ts";
+import { releaseVersion, referenceVersion, playgroundCommand, siteOrigin } from "./src/release.mjs";
+import { entries } from "./src/content-index.mjs";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import assert from "node:assert/strict";
@@ -60,13 +62,14 @@ const playground = await readFile(
   "utf8",
 );
 assert.ok(playground.includes('data-mode="reference"'));
-assert.ok(playground.includes("0.1.0-alpha.2"));
+assert.ok(playground.includes(referenceVersion));
+assert.ok(playground.includes(playgroundCommand));
 assert.ok(playground.includes("playground --install"));
 assert.ok(playground.includes("Guided sandbox"));
 const reference = JSON.parse(
   await readFile(resolve(root, "preview-reference.json"), "utf8"),
 );
-assert.equal(reference.version, "0.1.0-alpha.2");
+assert.equal(reference.version, referenceVersion);
 assert.equal(reference.kind, "recorded-sdk-fixtures");
 assert.equal(reference.scenarios.roof.states.at(-1).records.length, 1);
 assert.equal(
@@ -111,6 +114,35 @@ console.log(
     privateContentExcluded: true,
   }),
 );
+
+// Published discovery artifacts must agree on URLs, content and release.
+assert.ok(home.includes(playgroundCommand));
+assert.ok(home.includes('name="google-site-verification"'));
+assert.ok(!home.includes("--package=https://github.com"));
+assert.ok(!home.includes("isn’t on the npm registry yet"));
+const sitemap = await readFile(resolve(root, "sitemap.xml"), "utf8");
+const feed = JSON.parse(await readFile(resolve(root, "feed.json"), "utf8"));
+const rss = await readFile(resolve(root, "feed.xml"), "utf8");
+assert.equal(feed.version, "https://jsonfeed.org/version/1.1");
+assert.equal(feed.items.length, entries.length);
+assert.equal((rss.match(/<item>/g) || []).length, entries.length);
+const context = await readFile(resolve(root, "llms.txt"), "utf8");
+assert.ok(context.includes(releaseVersion));
+for (const entry of entries) {
+  const url = siteOrigin + entry.path;
+  assert.ok(sitemap.includes(`<loc>${url}</loc>`));
+  assert.ok(rss.includes(`<link>${url}</link>`));
+  const item = feed.items.find(item => item.url === url);
+  assert.ok(item?.content_html.includes("<h2>"));
+  assert.ok(!/href="\/(?!\/)/.test(item.content_html));
+  assert.ok(context.includes(url + "index.md"));
+  assert.ok((await readFile(resolve(root, "." + entry.path, "index.md"), "utf8")).startsWith("# "));
+}
+for (const file of files.filter(file => file.endsWith(".html"))) {
+  const html = await readFile(file, "utf8");
+  assert.ok(!html.includes("—"), `Em dash in ${file}`);
+  assert.ok(html.includes('href="' + siteOrigin), `Canonical host missing in ${file}`);
+}
 
 const documents = [
   {

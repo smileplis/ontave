@@ -14,30 +14,34 @@ The [browser sandbox](/playground/) needs no setup. The [local playground](/docs
 
 Other Node, database, edge and browser combinations are not yet part of the verified support matrix.
 
-## Install the developer preview
+## Install from npm
+
+In your application directory:
 
 ```sh
-npm install https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz
+npm install ontave
+npx ontave version
+npx ontave help
 ```
 
-The versioned GitHub developer-preview release includes the tested npm-format archive. It can be installed by npm without a registry publication.
+The current public npm release is **`0.1.0-alpha.4`**. It is a developer preview. To select that exact version, use `npm install ontave@0.1.0-alpha.4`.
 
-## Build from source
+The package includes ESM runtime code, TypeScript declarations, CLI entry points and internal PostgreSQL migrations. Installing it does not provision a database or contact a model. Keep all database and model credentials on the server.
 
-The registry package name is reserved here as a working name. There is no public npm registry release to install yet. Build a tarball from the repository:
+## Build the published release from source
 
 ```sh
-git clone https://github.com/smileplis/ontave.git
+git clone --branch v0.1.0-alpha.4 https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
 npm run build
 npm pack --pack-destination artifacts
 ```
 
-Install the resulting tarball in your application:
+Install the resulting archive in your application:
 
 ```sh
-npm install ../ontave/artifacts/ontave-0.1.0-alpha.2.tgz
+npm install ../ontave/artifacts/ontave-0.1.0-alpha.4.tgz
 npx ontave help
 ```
 
