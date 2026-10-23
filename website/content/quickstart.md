@@ -1,9 +1,11 @@
 ## Run the local playground
 
+The public npm release is **`0.1.0-alpha.4`**, a developer preview. See [release status](/docs/status/) for the quality gates still open.
+
 Use **Node.js 24** on macOS or Linux. Open a terminal and run:
 
 ```sh
-npx --yes --package=https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz ontave playground --install
+npx --yes ontave@0.1.0-alpha.4 playground --install
 ```
 
 The explicit `--install` flag permits downloading the optional PostgreSQL playground tooling into an isolated temporary directory when it is not already installed. Open the localhost URL printed in the terminal. No Docker, database account or model key is required.
@@ -29,7 +31,7 @@ Reset starts a fresh fictional workspace. This playground is a local learning to
 The server binds only to `127.0.0.1`. To choose another port:
 
 ```sh
-npx --yes --package=https://github.com/smileplis/ontave/releases/download/v0.1.0-alpha.2/ontave-0.1.0-alpha.2.tgz ontave playground --install --port 4321
+npx --yes ontave@0.1.0-alpha.4 playground --install --port 4321
 ```
 
 The tested development environments are macOS arm64 and Linux x64. Other architectures and Windows are not yet qualified for this playground. A free localhost port, writable temporary directory and npm access for the first installation are required. The installation uses the platform-specific PostgreSQL binary.
