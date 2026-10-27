@@ -12,7 +12,7 @@ The new package uses the version `0.2.0-alpha.1` to distinguish the API. No rele
 
 ## Framework demo deployment
 
-The previous `website/` documentation and playground are replaced by the new `examples/react/` demo. Root `vercel.json` builds it with `npm run build:example` and serves `examples/react/dist` with restrictive response headers. A hosting project still configured with `website` as its root must be changed to the repository root before deploying this branch. The source change does not modify an existing hosting project or deploy a site. Previous-framework deep links are not redirected into unrelated new APIs; use the archived release documentation linked above.
+The previous documentation and playground are replaced by the new `examples/react/` demo. Root `vercel.json` builds it with `npm run build:example` and serves `examples/react/dist` with restrictive response headers. The `website/` directory is now a small deployment wrapper for existing hosting projects rooted there. Its install command installs the repository lockfile, and its build copies the same demo into `website/dist`; no shared project setting needs to change. `npm run build:website` checks that path locally and in CI. Pushing a branch may trigger the existing hosting service’s automatic preview; this source branch does not change a production domain or project configuration. Previous-framework deep links are not redirected into unrelated new APIs; use the archived release documentation linked above.
 
 ## Original Daltn Interactive Chat consumers
 

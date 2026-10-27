@@ -3,3 +3,4 @@
 /*.tgz
 *.tsbuildinfo
 /examples/react/dist/
+/website/dist/

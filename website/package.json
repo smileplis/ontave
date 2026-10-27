@@ -1,0 +1,7 @@
+{
+  "name": "ontave-demo-deployment",
+  "version": "0.2.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "scripts": {"build": "npm run build:example --prefix .. && node build.mjs"}
+}

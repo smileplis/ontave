@@ -38,7 +38,8 @@
     "dev": "npm run build && vite examples/react --host 127.0.0.1",
     "build:example": "npm run build && vite build examples/react",
     "verify:package": "npm run build && node scripts/verify-package.mjs",
-    "example:providers": "npm run build && node examples/providers.mjs"
+    "example:providers": "npm run build && node examples/providers.mjs",
+    "build:website": "npm run build --prefix website"
   },
   "dependencies": {
     "zod": "^4.6.5"

@@ -111,7 +111,7 @@ The host owns authenticated access, canonical-turn lookup, staleness, idempotenc
 ```sh
 npm test
 npm run typecheck
-npm run build:example
+npm run build:website
 npm run example:providers
 npm run verify:package
 ```
