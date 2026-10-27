@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "rootDir": "src",
     "outDir": "dist",
-    "verbatimModuleSyntax": true,
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

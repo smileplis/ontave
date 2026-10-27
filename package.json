@@ -1,129 +1,76 @@
 {
   "name": "ontave",
-  "version": "0.1.0-alpha.6",
-  "private": false,
-  "description": "Evidence-backed operational data and governed ontology evolution for TypeScript applications",
-  "license": "Apache-2.0",
+  "version": "0.2.0-alpha.1",
+  "description": "Provider-neutral interactive conversations for AI agents: bounded controls, validation, portable replies and React.",
+  "license": "MIT",
   "type": "module",
-  "engines": {
-    "node": ">=24 <25"
-  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
-    "migrations",
+    "src/interactive.css",
     "README.md",
+    "SECURITY.md",
     "LICENSE",
-    "NOTICE",
-    "docs/API_REFERENCE.md",
-    "docs/OPERATOR_RUNBOOK.md",
-    "docs/IMPLEMENTATION_STATUS.md",
-    "docs/ANNOTATION_RUBRIC.md",
-    "examples/node",
-    "examples/next-server",
-    "docs/QUALITY_REPORT.md",
-    "docs/USER_BENEFITS.md",
-    "scripts/release-gate.mjs",
-    "examples/playground",
-    "docs/RELEASE_STATUS.json",
-    "scripts/publish-preview.mjs",
-    "docs/QUICKSTART.md",
-    "examples/supplier-quotes",
-    "docs/SUPPLIER_QUOTATION_BENCHMARK.md",
-    "benchmarks/quotation-2026-10-23",
-    "examples/adaptive-quotes",
-    "examples/local",
-    "docs/LOCAL_AND_HOSTED.md",
-    "docs/ADAPTATION_MILESTONE.md",
-    "benchmarks/adaptation-2026-10-23",
-    "docs/POLICY_SAFETY.md"
+    "docs"
   ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     },
-    "./postgres": {
-      "types": "./dist/postgres.d.ts",
-      "import": "./dist/postgres.js"
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
     },
-    "./testing": {
-      "types": "./dist/testing.d.ts",
-      "import": "./dist/testing.js"
-    },
-    "./local": {
-      "types": "./dist/local.d.ts",
-      "import": "./dist/local.js"
-    },
-    "./studio": {
-      "types": "./dist/studio.d.ts",
-      "import": "./dist/studio.js"
-    },
-    "./models/gemini": {
-      "types": "./dist/models/gemini.d.ts",
-      "import": "./dist/models/gemini.js"
-    },
-    "./models/groq": {
-      "types": "./dist/models/groq.d.ts",
-      "import": "./dist/models/groq.js"
-    },
-    "./models/mistral": {
-      "types": "./dist/models/mistral.d.ts",
-      "import": "./dist/models/mistral.js"
-    },
-    "./models/openrouter": {
-      "types": "./dist/models/openrouter.d.ts",
-      "import": "./dist/models/openrouter.js"
+    "./styles.css": "./src/interactive.css",
+    "./adapters": {
+      "types": "./dist/adapters.d.ts",
+      "default": "./dist/adapters.js"
     }
   },
-  "bin": {
-    "ontave": "./dist/cli.js"
-  },
   "scripts": {
+    "test": "vitest run --config vitest.config.ts",
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "npm run build && node --test tests/*.test.mjs",
-    "test:integration": "npm run build && node --test tests/integration/*.test.mjs",
+    "typecheck": "tsc -p tsconfig.check.json",
+    "prepack": "npm run build",
+    "dev": "npm run build && vite examples/react --host 127.0.0.1",
+    "build:example": "npm run build && vite build examples/react",
     "verify:package": "npm run build && node scripts/verify-package.mjs",
-    "verify:next": "npm run build && node scripts/verify-next.mjs --offline",
-    "verify:node": "npm run build && node scripts/verify-node-flow.mjs",
-    "measure:load": "npm run build && node scripts/measure-load.mjs",
-    "verify:restore": "npm run build && node scripts/verify-restore.mjs",
-    "verify:domains": "npm run build && node scripts/verify-domain-flows.mjs",
-    "measure:benefits": "npm run build && node scripts/measure-benefits.mjs",
-    "evaluate:live": "npm run build && node scripts/run-semantic-trials.mjs --live",
-    "verify:release": "node scripts/release-gate.mjs",
-    "prepublishOnly": "node scripts/release-gate.mjs",
-    "playground": "npm run build && node dist/cli.js playground",
-    "preview:fixtures": "npm run build && node scripts/prepare-preview.mjs",
-    "verify:playground": "node scripts/verify-playground.mjs",
-    "verify:preview-release": "node scripts/release-gate.mjs --channel=developer-preview",
-    "publish:preview": "node scripts/publish-preview.mjs",
-    "example:quotes": "npm run build && node scripts/quotation-study.mjs",
-    "compare:quotes": "npm run build && node scripts/compare-quotations.mjs",
-    "collect:quotes": "node scripts/collect-quotation-trials.mjs",
-    "compare:adaptation": "npm run build && node scripts/compare-adaptation.mjs",
-    "collect:adaptation": "node scripts/collect-adaptation.mjs",
-    "verify:local": "node scripts/verify-local.mjs"
+    "example:providers": "npm run build && node examples/providers.mjs"
   },
   "dependencies": {
-    "canonicalize": "5.1.0",
-    "decimal.js": "10.6.0",
-    "pg": "8.23.1",
-    "zod": "4.6.7"
+    "zod": "^4.6.5"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22.13.0 <27"
   },
   "devDependencies": {
-    "@types/node": "26.6.5",
-    "@types/pg": "8.23.1",
-    "embedded-postgres": "18.4.0-beta.17",
-    "node": "24.22.0",
-    "prettier": "3.9.10",
-    "typescript": "7.0.2"
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "jsdom": "30.1.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.9.3",
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smileplis/ontave.git"
   },
-  "homepage": "https://ontave.daltn.tech/",
+  "homepage": "https://github.com/smileplis/ontave#readme",
   "bugs": {
     "url": "https://github.com/smileplis/ontave/issues"
   }
