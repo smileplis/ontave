@@ -1,11 +1,9 @@
-# Website dependencies
+# Website attribution
 
-The website uses shadcn/ui Button, Card and Badge source from the official shadcn registry, adapted to local utility imports. The upstream MIT license is retained in SHADCN-LICENSE.md.
+The landing page preserves the project's supplied visual identity and artwork. Vincent van Gogh's *Noon, Rest from Work* and *Green Wheat Fields, Auvers* are credited beside the images. These WebP delivery copies came from the previous framework website, where the original artwork was supplied by the project owner.
 
-React, Radix Slot, class-variance-authority, clsx, tailwind-merge, marked, esbuild and Tailwind retain their respective package licenses. Exact versions are locked in package-lock.json.
+DM Sans by Colophon Foundry is distributed under the SIL Open Font License 1.1. Its license is retained at `public/fonts/OFL.txt` and included in the deployed static assets.
 
-GSAP and its ScrollTrigger/ScrollTo plugins are used under the GSAP Standard License supplied in the locked gsap package. Bundled legal notices are retained. This website does not redistribute a competing animation tool or claim ownership of those libraries.
+The existing Ontave vector wordmark is retained for the interactive conversation framework. Framework code remains MIT licensed, with its original copyright notices. Earlier framework releases retain their historical license.
 
-DM Sans by Colophon Foundry is distributed under the SIL Open Font License 1.1; the license is retained in `public/fonts/OFL.txt`.
-
-The artwork was supplied by the project owner: Vincent van Gogh’s *Noon, Rest from Work*, *Almond Blossom*, *Green Wheat Fields, Auvers*, and *Farmhouse in Provence*. The farmhouse and wheat-field filenames identify the National Gallery of Art images; the almond-blossom filename identifies the Van Gogh Museum image. Artist and work titles are credited in the page. WebP files are resized delivery copies of the supplied originals.
+React, React DOM, Vite and Zod retain their respective upstream licenses. The website uses the framework's repository lockfile and does not include the previous website's GSAP, shadcn, Radix or Tailwind dependencies.

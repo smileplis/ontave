@@ -1,175 +1,70 @@
-import { spawnSync } from "node:child_process";
-import {
-  mkdtemp,
-  readFile,
-  writeFile,
-  mkdir,
-  realpath,
-} from "node:fs/promises";
-import { tmpdir } from "node:os";
-import { resolve } from "node:path";
-const root = resolve(import.meta.dirname, ".."),
-  cache = resolve(root, ".cache/npm");
-function run(bin, args, cwd = root) {
-  const r = spawnSync(bin, args, {
-    cwd,
-    encoding: "utf8",
-    env: { ...process.env, npm_config_cache: cache },
-  });
-  if (r.status !== 0)
-    throw new Error(
-      `${bin} ${args.join(" ")} failed:\n${r.stdout}\n${r.stderr}`,
-    );
-  return r.stdout;
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join, dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+
+const root = dirname(dirname(fileURLToPath(import.meta.url)));
+const temporary = mkdtempSync(join(tmpdir(), 'ontave-consumer-'));
+function run(command, args, cwd = temporary) {
+  return execFileSync(command, args, {cwd, encoding: 'utf8', timeout: 120000, stdio: ['pipe', 'pipe', 'pipe']});
 }
-await mkdir(resolve(root, "artifacts"), { recursive: true });
-const packed = JSON.parse(
-  run("npm", ["pack", "--json", "--pack-destination", "artifacts"]),
-)[0];
-const archive = resolve(root, "artifacts", packed.filename),
-  consumer = await mkdtemp(
-    resolve(await realpath(tmpdir()), "ontave-consumer-"),
-  );
-await writeFile(
-  resolve(consumer, "package.json"),
-  JSON.stringify({
-    name: "ontave-clean-consumer",
-    private: true,
-    type: "module",
-    dependencies: { ontave: `file:${archive}` },
-  }),
-);
-run(
-  "npm",
-  [
-    "install",
-    ...(process.argv.includes("--offline") ? ["--offline"] : []),
-    "--ignore-scripts",
-    "--no-audit",
-    "--no-fund",
-  ],
-  consumer,
-);
-await writeFile(
-  resolve(consumer, "check.mjs"),
-  `import { createOntave, sourceSpan, generateContract, starter, hash, additivePolicy, advanceAutomatically } from 'ontave';
-import {randomUUID} from 'node:crypto';
-import { openOntave } from 'ontave/local';
-import { startStudio } from 'ontave/studio';
-import { postgres } from 'ontave/postgres';
-import { fixtureAdapter } from 'ontave/testing';
-import { mistral } from 'ontave/models/mistral';
-import { openrouter } from 'ontave/models/openrouter';
-import { gemini } from 'ontave/models/gemini';
-import { groq } from 'ontave/models/groq';
-if(typeof openOntave!=='function'||typeof startStudio!=='function'||typeof advanceAutomatically!=='function'||additivePolicy({sources:['supplier']}).namespace!=='ext_')throw Error('Missing local/automation exports');
-if(typeof createOntave!=='function'||typeof postgres!=='function'||typeof fixtureAdapter!=='function')throw Error('Bad exports');
-if(typeof mistral!=='function'||typeof openrouter!=='function')throw Error('Missing experimental adapter exports');
-for(const factory of [gemini,groq,mistral,openrouter]){let rejected=false;try{factory({apiKey:'',model:''});}catch(e){rejected=e.code==='MODEL_UNAVAILABLE';}if(!rejected)throw Error('Missing provider configuration was not rejected');}
-const span=sourceSpan('₹50','₹50');if(span.endByte!==5)throw Error('Bad bytes');
-await generateContract({id:randomUUID(),hash:hash(starter),definition:starter,sourceOntologyId:randomUUID(),sourceOntologyHash:hash(starter)},'./generated');
-const generated=await import('./generated/index.mjs');
-const record={id:randomUUID(),conceptId:'person',name:'Asha',revision:1,fields:{name:{state:'value',value:'Asha',verification:'reported',assertionIds:[randomUUID()]},email:{state:'missing'}}};
-if(generated.validate([record])[0].fields.name.value!=='Asha')throw Error('Generated validator failed');
-console.log('clean consumer imports and generated validators passed without a database or provider credential');`,
-);
-const node = process.execPath;
-run(node, ["check.mjs"], consumer);
-const help = run(node, ["node_modules/ontave/dist/cli.js", "help"], consumer);
-if (!help.includes("Ontave")) throw Error("CLI missing");
-await writeFile(
-  resolve(consumer, "check.ts"),
-  `import { createOntave, additivePolicy, advanceAutomatically, type FieldResult, type ModelAdapter } from 'ontave';
-import {openOntave}from'ontave/local';import{startStudio}from'ontave/studio';
-const localFactory=()=>openOntave({automation:additivePolicy({sources:['supplier'],relationshipTargets:['quotation']})});
-void [localFactory,startStudio,advanceAutomatically];
-import { postgres } from 'ontave/postgres';
-import {type OntaveEntities,validate} from './generated/index.mjs';
-const value: FieldResult<string> = {state:'unknown',reason:'test',assertionIds:[]};
-const model:ModelAdapter={async extract(){return {model:'test',output:{entities:[],relationships:[],observations:[]}}}};
-const name:OntaveEntities['person']['fields']['name']={state:'value',value:'Asha',verification:'reported',assertionIds:[]};
-const reviewOnly=createOntave({storage:postgres({connectionString:'postgresql://unused.invalid/db'}),authorize:async()=>({actorId:'reader',workspaceId:'00000000-0000-4000-8000-000000000001',capabilities:['read','review']})});
-const reviewSnapshot=()=>reviewOnly.reviews.forJob('trusted context','00000000-0000-4000-8000-000000000002');
-// @ts-expect-error declared person name cannot contain a number
-const wrongName:OntaveEntities['person']['fields']['name']={state:'value',value:123,verification:'reported',assertionIds:[]};
-void [value,model,createOntave,postgres,name,wrongName,validate,reviewSnapshot];`,
-);
-run(
-  node,
-  [
-    resolve(root, "node_modules/typescript/bin/tsc"),
-    "--noEmit",
-    "--strict",
-    "--skipLibCheck",
-    "--module",
-    "NodeNext",
-    "--target",
-    "ES2023",
-    "check.ts",
-  ],
-  consumer,
-);
-const configPath = resolve(consumer, "ontave.config.mjs");
-run(
-  node,
-  ["node_modules/ontave/dist/cli.js", "init", "--output", configPath],
-  consumer,
-);
-const scaffold = await readFile(configPath, "utf8");
-const again = spawnSync(
-  node,
-  ["node_modules/ontave/dist/cli.js", "init", "--output", configPath],
-  { cwd: consumer, encoding: "utf8" },
-);
-if (again.status === 0 || (await readFile(configPath, "utf8")) !== scaffold)
-  throw Error("Initialization overwrote existing configuration");
-const installed = JSON.parse(
-  await readFile(resolve(consumer, "node_modules/ontave/package.json"), "utf8"),
-);
-if (installed.scripts?.postinstall || installed.scripts?.install)
-  throw Error("Package has an installation side effect");
-await readFile(
-  resolve(consumer, "node_modules/ontave/examples/supplier-quotes/run.mjs"),
-);
-await readFile(
-  resolve(consumer, "node_modules/ontave/docs/SUPPLIER_QUOTATION_BENCHMARK.md"),
-);
-const publishedResults = JSON.parse(
-  await readFile(
-    resolve(
-      consumer,
-      "node_modules/ontave/benchmarks/quotation-2026-10-23/results.json",
-    ),
-    "utf8",
-  ),
-);
-if (publishedResults.productionQualified !== false)
-  throw Error("Benchmark must preserve open qualification gates");
-for (const path of [
-  "docs/LOCAL_AND_HOSTED.md",
-  "docs/ADAPTATION_MILESTONE.md",
-  "examples/local/demo.mjs",
-  "benchmarks/adaptation-2026-10-23/results.json",
-]) {
-  await readFile(resolve(consumer, "node_modules/ontave", path));
+function node(source) { return execFileSync(process.execPath, ['--input-type=module'], {cwd: temporary, input: source, encoding: 'utf8', timeout: 15000}); }
+function typecheck(source) {
+  writeFileSync(join(temporary, 'consumer.ts'), source);
+  run(process.execPath, [join(root, 'node_modules/typescript/bin/tsc'), '--noEmit', '--strict', '--target', 'ES2022', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', join(temporary, 'consumer.ts')]);
 }
-const report = {
-  archive,
-  consumer,
-  version: packed.version,
-  integrity: packed.integrity,
-  files: packed.files.length,
-  node: process.version,
-  imports: true,
-  types: true,
-  cli: true,
-  networkDuringChecks: false,
-  generatedTypes: true,
-  generatedValidator: true,
-  safeInitialization: true,
-};
-await writeFile(
-  resolve(root, "artifacts/package-verification.json"),
-  JSON.stringify(report, null, 2) + "\n",
-);
-console.log(JSON.stringify(report, null, 2));
+try {
+  const [packed] = JSON.parse(run('npm', ['pack', '--json', '--pack-destination', temporary], root));
+  assert.equal(packed.name, 'ontave');
+  for (const {path} of packed.files) {
+    assert.match(path, /^(?:dist\/[\w.-]+\.(?:js|d\.ts)|src\/interactive\.css|docs\/[A-Z_]+\.md|package\.json|README\.md|SECURITY\.md|LICENSE)$/u, `Unexpected packed file: ${path}`);
+  }
+  assert(packed.files.some(file => file.path === 'dist/adapters.js'));
+  assert(packed.files.some(file => file.path === 'dist/react.d.ts'));
+  assert.match(readFileSync(join(root, 'dist/react.js'), 'utf8'), /^['"]use client['"]/u);
+  writeFileSync(join(temporary, 'package.json'), JSON.stringify({name: 'ontave-package-consumer', private: true, type: 'module'}));
+  run('npm', ['install', '--ignore-scripts', '--omit=optional', '--no-audit', '--no-fund', '--prefer-offline', join(temporary, packed.filename)]);
+  const consumer = JSON.parse(readFileSync(join(temporary, 'package-lock.json'), 'utf8'));
+  assert(!consumer.packages['node_modules/react'], 'Core consumer unexpectedly installed React.');
+  assert(!consumer.packages['node_modules/react-dom'], 'Core consumer unexpectedly installed React DOM.');
+  node(`
+    import assert from 'node:assert/strict';
+    import {createRequire} from 'node:module';
+    import {Interaction, validateResponse, encodeInteractiveReply, decodeInteractiveReply} from 'ontave';
+    import {openAIInteractionTool, parseOpenAIInteraction, INTERACTION_TOOL_NAME} from 'ontave/adapters';
+    const spec = Interaction.parse({version:1,question:'Helpful?',description:null,controls:[{key:'score',label:'Score',kind:'rating',required:true,options:[],min:null,max:null}],submitLabel:'Continue'});
+    assert.deepEqual({...validateResponse(spec,{score:4})},{score:4});
+    assert.deepEqual(decodeInteractiveReply(encodeInteractiveReply('Choose a score.', spec)).interaction,spec);
+    assert.equal(openAIInteractionTool().name,INTERACTION_TOOL_NAME);
+    assert.deepEqual(parseOpenAIInteraction({type:'function_call',name:INTERACTION_TOOL_NAME,arguments:JSON.stringify(spec)}),spec);
+    assert.throws(() => createRequire(import.meta.url).resolve('react'));
+  `);
+  typecheck(`import {Interaction, validateResponse, type InteractionValues} from 'ontave';
+    import {openAIInteractionTool} from 'ontave/adapters';
+    const spec: Interaction = Interaction.parse({});
+    const values: InteractionValues = validateResponse(spec, {});
+    openAIInteractionTool(['text', 'rating']); void values;`);
+
+  // The DOM suite uses React 19; the packed renderer must also support the oldest peer major.
+  run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--prefer-offline', '--save-exact', 'react@18', 'react-dom@18', '@types/react@18', '@types/react-dom@18']);
+  node(`
+    import assert from 'node:assert/strict';
+    import {createElement} from 'react';
+    import {renderToStaticMarkup} from 'react-dom/server';
+    import {InteractionForm} from 'ontave/react';
+    const html = renderToStaticMarkup(createElement(InteractionForm,{interaction:{version:99},onSubmit(){throw new Error('Unexpected submit');}}));
+    assert(html.includes('Reply in chat'));
+  `);
+  typecheck(`import {createElement} from 'react';
+    import {Interaction} from 'ontave';
+    import {InteractionForm, type InteractionFormProps} from 'ontave/react';
+    const props: InteractionFormProps = {interaction: Interaction.parse({}), interactionId:'turn-1', onSubmit(values){ void values; }};
+    createElement(InteractionForm, props);`);
+  console.log(`Verified ${packed.filename}: release boundary, core without React, public ESM and declarations, React 18 renderer.`);
+} catch (error) {
+  if (error?.stderr) process.stderr.write(error.stderr);
+  if (error?.stdout) process.stderr.write(error.stdout);
+  throw error;
+} finally { rmSync(temporary, {recursive: true, force: true}); }

@@ -1,44 +1,27 @@
-name: Verify Ontave alpha
-on: [push, pull_request]
+name: Ontave framework CI
+
+on:
+  push:
+  pull_request:
+
 permissions:
   contents: read
+
 jobs:
-  runtime:
-    runs-on: ubuntu-24.04
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [24, 26]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: ${{ matrix.node }}
           cache: npm
-      - run: npm ci --cache .cache/npm
-      - run: npm test
-      - run: npm run test:integration
-      - run: npm run compare:quotes
-      - run: npm run compare:adaptation
-      - run: npm run verify:domains
-      - run: npm run measure:benefits
-      - run: node scripts/verify-public.mjs
-      - run: npm run verify:package
-      - run: npm run verify:local
-      - run: npm run verify:playground
-      - run: npm run verify:node
-      - run: node scripts/verify-next.mjs
-  website:
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: website
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: website/package-lock.json
       - run: npm ci
-      - run: npm run build
-      - run: npm run check
-      - run: npm ci --prefix examples/read-only-agent --ignore-scripts
-      - run: npm run check --prefix examples/read-only-agent
-      - run: npm test --prefix examples/read-only-agent
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build:website
+      - run: npm run example:providers
+      - run: npm run verify:package
