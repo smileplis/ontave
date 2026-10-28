@@ -146,6 +146,7 @@ The host owns authenticated access, canonical-turn lookup, staleness, idempotenc
 npm test
 npm run typecheck
 npm run build:website
+npm run verify:website-react
 npm run example:providers
 npm run verify:package
 npm run verify:application

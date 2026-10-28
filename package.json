@@ -67,7 +67,8 @@
     "example:providers": "npm run build && node examples/providers.mjs",
     "build:website": "npm run build && vite build website && node scripts/prepare-application-download.mjs && node scripts/verify-website.mjs",
     "dev:example": "npm run build && vite examples/react --host 127.0.0.1",
-    "verify:application": "npm run build && node scripts/verify-application.mjs"
+    "verify:application": "npm run build && node scripts/verify-application.mjs",
+    "verify:website-react": "npm run build && node scripts/verify-website-react.mjs"
   },
   "dependencies": {
     "zod": "^4.6.5"

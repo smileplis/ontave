@@ -23,6 +23,7 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run build:website
+      - run: npm run verify:website-react
       - run: npm run example:providers
       - run: npm run verify:package
       - run: npm run verify:application

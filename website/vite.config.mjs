@@ -2,7 +2,10 @@ import {fileURLToPath} from 'node:url';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
-  resolve: {alias: [
+  resolve: {dedupe: ['react', 'react-dom'], alias: [
+    // Cached website dependencies and the framework must share the root's pinned React runtime.
+    {find: 'react', replacement: fileURLToPath(new URL('../node_modules/react', import.meta.url))},
+    {find: 'react-dom', replacement: fileURLToPath(new URL('../node_modules/react-dom', import.meta.url))},
     {find: 'ontave/application/react', replacement: fileURLToPath(new URL('../dist/application-react.js', import.meta.url))},
     {find: 'ontave/application/export', replacement: fileURLToPath(new URL('../dist/application-export.js', import.meta.url))},
     {find: 'ontave/application/http', replacement: fileURLToPath(new URL('../dist/application-http.js', import.meta.url))},
