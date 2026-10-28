@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ontave · Better questions. Better conversations.</title>
-  <meta name="description" content="An open-source TypeScript framework for interactive agent conversations. Ask through familiar controls, validate each response, and continue with useful context."/>
-  <meta property="og:title" content="Ontave · Better questions. Better conversations."/>
-  <meta property="og:description" content="Give your agent a familiar way to ask. Typed controls, validated answers, and a conversation that keeps moving."/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Ontave · From intent to application.</title>
+  <meta name="description" content="An open-source, modular foundation for AI applications. Run a validated definition or export editable code. Bring your model, views, data, and workflows."/>
+  <meta property="og:title" content="Ontave · From intent to application."/>
+  <meta property="og:description" content="One definition. Two ways to build. Explore a working CRM, editable code export, and independent interactive conversations."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://ontave.daltn.tech/"/>
   <meta name="theme-color" content="#f5f5ed"/>
@@ -20,92 +20,91 @@
   <header class="site-header">
     <a class="brand" href="/" aria-label="Ontave home"><img src="/ontave-wordmark.svg" alt="Ontave" width="132" height="34"/></a>
     <nav aria-label="Main navigation"><a href="#framework">Framework</a><a href="#how-it-works">How it works</a><a href="https://github.com/smileplis/ontave/tree/main/docs">Docs ↗</a></nav>
-    <a class="nav-cta" href="/playground/">Try Ontave <span aria-hidden="true">↗</span></a>
+    <a class="nav-cta" href="/applications/">Build with Ontave <span aria-hidden="true">↗</span></a>
   </header>
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <img class="hero-art" src="/art/noon.webp" alt="Noon, Rest from Work by Vincent van Gogh: two field workers resting beside golden haystacks." width="1280" height="1007" fetchpriority="high"/>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-content frame">
-        <p class="eyebrow">The interactive conversation framework</p>
-        <h1 id="hero-title">Better answers start<br/>with a <em>better question.</em></h1>
-        <p class="hero-copy">Give your agent a familiar way to ask.<br/>Let people choose, add context, and keep the conversation moving.</p>
-        <div class="hero-actions"><a class="button primary" href="/playground/">Explore the playground <span aria-hidden="true">↗</span></a><a class="text-link" href="#start-building">Start building <span aria-hidden="true">↓</span></a></div>
+        <p class="eyebrow">The modular foundation for AI applications</p>
+        <h1 id="hero-title">From a useful idea<br/>to a <em>working application.</em></h1>
+        <p class="hero-copy">Bring your model. Compose the capabilities.<br/>Run a definition, or make the code your own.</p>
+        <div class="hero-actions"><a class="button primary" href="/applications/">Explore the application preview <span aria-hidden="true">↗</span></a><a class="text-link" href="#start-building">Start building <span aria-hidden="true">↓</span></a></div>
       </div>
       <span class="art-credit">Noon, Rest from Work · Vincent van Gogh</span>
     </section>
-    <div class="foundation-strip frame" aria-label="Framework basics"><span>Open source · MIT</span><span>TypeScript</span><span>React + native clients</span><span>Your choice of model</span></div>
+    <div class="foundation-strip frame" aria-label="Framework basics"><span>Open source · MIT</span><span>TypeScript</span><span>Runtime + editable source</span><span>Your choice of model</span></div>
 
-    <section class="conversation-section frame section" id="framework" aria-labelledby="conversation-title">
-      <div class="section-intro"><p class="eyebrow">A small change to the conversation</p><h2 id="conversation-title">A useful question.<br/>A familiar way to answer.</h2><p>Some answers are easier to choose than to explain. Ontave turns an agent’s next question into a trusted control, then brings the answer back into the same conversation.</p><a class="text-link" href="/playground/">Explore all ten controls <span aria-hidden="true">↗</span></a></div>
-      <div class="conversation-demo"><div class="demo-topline"><span><i aria-hidden="true"></i> An example conversation</span><span>Try it here</span></div><div id="landing-demo"><p>What would help you get started? See an example, understand the approach, or try the controls.</p></div><noscript><p>The interactive example needs JavaScript. You can still read the framework and integration guides below.</p></noscript><p class="demo-note">A local example. No model request or account needed.</p></div>
-    </section>
-
-    <section class="controls-section frame section" aria-labelledby="controls-title">
-      <div class="section-heading"><div><p class="eyebrow">The right shape for the answer</p><h2 id="controls-title">More than a text box.<br/><em>Still a conversation.</em></h2></div><p>Ten bounded controls cover everyday questions. Keep your normal composer available so people can always answer in their own words.</p></div>
+    <section class="controls-section frame section" id="framework" aria-labelledby="framework-title">
+      <div class="section-heading"><div><p class="eyebrow">One definition. Two ways to build.</p><h2 id="framework-title">An application you can run.<br/><em>Code you can shape.</em></h2></div><p>Ontave is growing from interactive conversations into a modular application framework. The first working foundation connects entities, views, and workflows in a complete local CRM.</p></div>
       <div class="control-columns">
-        <article><span class="chapter-number">01 / Choose</span><h3>Make the options clear.</h3><p>One choice, a few choices, a dropdown, or a simple yes or no. Show useful options when the path ahead is already known.</p><div class="control-sample" aria-label="Illustrative choices"><span class="sample-chip chosen">✓ See an example</span><span class="sample-chip">Explore the details</span></div><ul class="kind-list"><li>Single choice</li><li>Multiple choice</li><li>Dropdown</li><li>Yes / no</li></ul></article>
-        <article><span class="chapter-number">02 / Add context</span><h3>Leave room for the details.</h3><p>A short answer, a longer explanation, or a number with clear bounds. Keep the context that makes the next reply useful.</p><div class="control-sample sample-note" aria-label="Illustrative text answer">I’m exploring the idea.<span>A little more context goes a long way.</span></div><ul class="kind-list"><li>Short text</li><li>Long text</li><li>Number</li></ul></article>
-        <article><span class="chapter-number">03 / Be specific</span><h3>Get to a clearer answer.</h3><p>Ask for a date, a local time, or a rating from one to five. Validate the response before your agent continues.</p><div class="control-sample sample-rating" aria-label="Illustrative rating: four out of five"><span>1</span><span>2</span><span>3</span><span class="chosen">4</span><span>5</span></div><ul class="kind-list"><li>Date</li><li>Time</li><li>Rating</li></ul></article>
+        <article><span class="chapter-number">01 / Define</span><h3>Describe the application.</h3><p>Entities, fields, linked records, pages, and workflows share a validated contract. Pair your model through a host callback, or author the definition yourself.</p><a class="text-link" href="https://github.com/smileplis/ontave/blob/main/examples/application/definition.json">Read the CRM definition ↗</a></article>
+        <article><span class="chapter-number">02 / Run</span><h3>Put the pieces to work.</h3><p>Registered views render forms, tables, and dashboards. The runtime validates records, checks host permissions, and commits changes and retry receipts together.</p><a class="text-link" href="/applications/">Run the application preview ↗</a></article>
+        <article><span class="chapter-number">03 / Own</span><h3>Keep building in code.</h3><p>Export editable React pages with a local Node backend and persistent records. Replace a page, add a module, or connect your host services without surrendering your source.</p><a class="text-link" href="/applications/">Try the source export ↗</a></article>
       </div>
+      <p class="release-note">Experimental source preview. The browser demo uses fictional data and makes no model requests. The exported backend runs locally; public authentication, database deployment, and migrations remain host responsibilities.</p>
     </section>
 
     <section class="flow-section section" id="how-it-works" aria-labelledby="flow-title"><div class="frame">
-      <div class="section-heading"><div><p class="eyebrow">One conversation, end to end</p><h2 id="flow-title">Ask. Answer.<br/><em>Keep going.</em></h2></div><p>No second model call to draw a control. Your agent supplies a bounded question; Ontave validates the structure and renders the choices.</p></div>
-      <ol class="flow-steps"><li><span>01</span><h3>Your agent asks.</h3><p>A typed specification defines the question, labels, controls, and options. Your application saves it with the conversation.</p></li><li><span>02</span><h3>Your user answers.</h3><p>Familiar controls collect the response. Selection stays local until the person presses Continue.</p></li><li><span>03</span><h3>The conversation continues.</h3><p>Validate against the saved question, normalize the values, and pass useful context to the same agent.</p></li></ol>
+      <div class="section-heading"><div><p class="eyebrow">A framework made of replaceable parts</p><h2 id="flow-title">Your model. Your data.<br/><em>Your way forward.</em></h2></div><p>Use an interaction inside an existing application, or compose a new application from a definition. Models, views, storage, workflows, and source exporters have separate interfaces.</p></div>
+      <ol class="flow-steps"><li><span>01</span><h3>Connect your model.</h3><p>The host supplies its own SDK and budget. Ontave advertises installed capabilities and validates the returned definition before it runs.</p></li><li><span>02</span><h3>Install your capabilities.</h3><p>Start with collection views, dashboards, field updates, and queued events. Register trusted views and workflow modules as your application grows.</p></li><li><span>03</span><h3>Choose your foundation.</h3><p>Run through the shared runtime or export source. Keep authentication, production storage, integrations, and deployment under your host’s control.</p></li></ol>
     </div></section>
 
+    <section class="conversation-section frame section" id="interactions" aria-labelledby="conversation-title">
+      <div class="section-intro"><p class="eyebrow">Interactive conversations, independently useful</p><h2 id="conversation-title">A useful question.<br/>A familiar way to answer.</h2><p>Chat is one module in the framework. Ten bounded controls turn an agent’s next question into a familiar interaction, then bring the validated answer back into the same conversation.</p><a class="text-link" href="/playground/">Explore the interaction playground <span aria-hidden="true">↗</span></a></div>
+      <div class="conversation-demo"><div class="demo-topline"><span><i aria-hidden="true"></i> An example conversation</span><span>Try it here</span></div><div id="landing-demo"><p>What would help you get started? See an application, understand the approach, or try the controls.</p></div><noscript><p>The interactive example needs JavaScript. You can still read the framework and integration guides below.</p></noscript><p class="demo-note">A local example. No model request or account needed.</p></div>
+    </section>
+
     <section class="integration-section frame section" id="start-building" aria-labelledby="integration-title">
-      <div class="section-intro"><p class="eyebrow">A framework that fits</p><h2 id="integration-title">Your agent.<br/>Your application.<br/><em>A better next step.</em></h2><p>Use the core on your server, the optional React renderer in your interface, or register a trusted native adapter. Keep your existing SDK, storage, and conversation executor.</p><a class="text-link" href="https://github.com/smileplis/ontave/blob/main/docs/INTEGRATION.md">Read the integration guide <span aria-hidden="true">↗</span></a></div>
-      <div class="code-example"><div class="code-tabs" role="tablist" aria-label="Integration examples"><button type="button" id="tab-react" role="tab" aria-selected="true" aria-controls="panel-react" tabindex="0" data-code-tab="react">React</button><button type="button" id="tab-core" role="tab" aria-selected="false" aria-controls="panel-core" tabindex="-1" data-code-tab="core">Core</button><button type="button" id="tab-provider" role="tab" aria-selected="false" aria-controls="panel-provider" tabindex="-1" data-code-tab="provider">Providers</button></div>
-        <div id="panel-react" role="tabpanel" aria-labelledby="tab-react" tabindex="0"><pre><code>import {InteractionForm} from 'ontave/react';
-import 'ontave/styles.css';
+      <div class="section-intro"><p class="eyebrow">Start small. Keep the seams open.</p><h2 id="integration-title">A definition today.<br/><em>Your application next.</em></h2><p>Connect a host model callback, run the validated definition through your API, and render it with optional React views. Export source when you want to take the interface further.</p><a class="text-link" href="https://github.com/smileplis/ontave/blob/main/docs/APPLICATIONS.md">Read the application guide <span aria-hidden="true">↗</span></a></div>
+      <div class="code-example"><div class="code-tabs" role="tablist" aria-label="Integration examples"><button type="button" id="tab-react" role="tab" aria-selected="true" aria-controls="panel-react" tabindex="0" data-code-tab="react">Render</button><button type="button" id="tab-core" role="tab" aria-selected="false" aria-controls="panel-core" tabindex="-1" data-code-tab="core">Generate</button><button type="button" id="tab-provider" role="tab" aria-selected="false" aria-controls="panel-provider" tabindex="-1" data-code-tab="provider">Export</button></div>
+        <div id="panel-react" role="tabpanel" aria-labelledby="tab-react" tabindex="0"><pre><code>import {ApplicationView}
+  from 'ontave/application/react';
+import {createHttpApplicationClient}
+  from 'ontave/application/http';
+import 'ontave/application/styles.css';
 
-&lt;InteractionForm
-  interactionId={turn.id}
-  interaction={turn.interaction}
-  readOnly={turn.superseded}
-  onSubmit={values =&gt;
-    replyToTurn(turn.id, values)
-  }
-/&gt;</code></pre></div>
-        <div id="panel-core" role="tabpanel" aria-labelledby="tab-core" tabindex="0" hidden><pre><code>import {
-  validateResponse,
-  formatResponse,
-} from 'ontave';
+// Connect to your authenticated host API.
+const client = createHttpApplicationClient(definition);
 
-// Load the authorized saved question first.
-const values = validateResponse(savedSpec, input);
-const context = formatResponse(savedSpec, values);
+&lt;ApplicationView client={client}/&gt;</code></pre></div>
+        <div id="panel-core" role="tabpanel" aria-labelledby="tab-core" tabindex="0" hidden><pre><code>import {generateApplication}
+  from 'ontave/application/model';
 
-// Continue your existing conversation.
-await continueConversation(context);</code></pre></div>
-        <div id="panel-provider" role="tabpanel" aria-labelledby="tab-provider" tabindex="0" hidden><pre><code>import {
-  openAIInteractionTool,
-  parseOpenAIInteraction,
-} from 'ontave/adapters';
+const definition = await generateApplication({
+  // Your SDK, provider, and model budget.
+  generate: request =&gt; hostModel.generateJSON(request),
+}, 'Build a CRM with linked follow-up tasks.');
 
-// Add to your existing Responses request.
-const tools = [openAIInteractionTool()];
+// Validate before accepting or running it.
+// No hidden model retry or provider SDK.</code></pre></div>
+        <div id="panel-provider" role="tabpanel" aria-labelledby="tab-provider" tabindex="0" hidden><pre><code>import {exportApplication}
+  from 'ontave/application/export';
+import {writeApplicationExport}
+  from 'ontave/application/node';
 
-// Parse one completed, matching tool call.
-const interaction = parseOpenAIInteraction(call);
-// Save it with the canonical turn.</code></pre></div>
-        <p class="code-caption">Small, typed building blocks. Your application owns the rest.</p>
+const bundle = exportApplication(definition, {
+  frameworkDependency: 'file:./vendor/ontave.tgz',
+});
+await writeApplicationExport('./my-app', bundle);
+// Supply your exact framework tarball.
+// Generated pages are editable source.</code></pre></div>
+        <p class="code-caption">Experimental APIs. The guide covers host integration, edit preservation, and current limits.</p>
       </div>
     </section>
 
-    <section class="providers frame" aria-labelledby="provider-title"><div><p class="eyebrow">Provider neutral by design</p><h2 id="provider-title">Keep the model you already use.</h2><p>Tool definitions and completed-call parsers, without another SDK or an extra model request.</p></div><ul aria-label="Provider adapter formats"><li>OpenAI <span>Responses + Chat</span></li><li>Anthropic <span>Messages</span></li><li>Gemini <span>Google GenAI</span></li></ul><a class="text-link" href="https://github.com/smileplis/ontave/blob/main/docs/PROVIDERS.md">Explore the adapters <span aria-hidden="true">↗</span></a></section>
+    <section class="providers frame" aria-labelledby="provider-title"><div><p class="eyebrow">Provider neutral by design</p><h2 id="provider-title">Keep the model you already use.</h2><p>Application generation uses your host callback. The independent interaction module also includes tool definitions and completed-call parsers for these formats.</p></div><ul aria-label="Interaction provider adapter formats"><li>OpenAI <span>Responses + Chat</span></li><li>Anthropic <span>Messages</span></li><li>Gemini <span>Google GenAI</span></li></ul><a class="text-link" href="https://github.com/smileplis/ontave/blob/main/docs/PROVIDERS.md">Explore interaction adapters <span aria-hidden="true">↗</span></a></section>
 
-    <section class="getting-started frame section" aria-labelledby="getting-started-title"><div><p class="eyebrow">Ontave 0.2 · source preview</p><h2 id="getting-started-title">Start with one<br/><em>useful question.</em></h2><p>Clone the framework, install its dependencies, and try the controls locally. No model key or database is needed for the example.</p><a class="text-link" href="https://github.com/smileplis/ontave">Get the source <span aria-hidden="true">↗</span></a></div><div><pre class="install-command"><code>git clone https://github.com/smileplis/ontave.git
+    <section class="getting-started frame section" aria-labelledby="getting-started-title"><div><p class="eyebrow">Ontave 0.2 · source preview</p><h2 id="getting-started-title">Start with one<br/><em>working application.</em></h2><p>Clone the framework and try the CRM or interaction playground locally. No model key is needed for the fictional examples.</p><a class="text-link" href="https://github.com/smileplis/ontave">Get the source <span aria-hidden="true">↗</span></a></div><div><pre class="install-command"><code>git clone https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
-npm run dev</code></pre><p class="release-note">Version 0.2 is available from source. The earlier 0.1 npm package has a different API. <a href="https://github.com/smileplis/ontave/blob/main/docs/MIGRATION.md">Read the migration guide ↗</a></p></div></section>
+npm run dev</code></pre><p class="release-note">For ZIP downloads, build the website and run Vite preview. Version 0.2 is available from source; the earlier 0.1 npm package has a different API. <a href="https://github.com/smileplis/ontave/blob/main/docs/APPLICATIONS.md">Follow the application guide ↗</a></p></div></section>
 
-    <section class="faq frame section" aria-labelledby="faq-title"><div><p class="eyebrow">A few things, made clear</p><h2 id="faq-title">A little context<br/><em>before you build.</em></h2></div><div class="faq-list"><details><summary>What does Ontave do?</summary><p>Ontave gives AI agents a bounded way to ask interactive questions. It provides TypeScript contracts, response validation, portable saved replies, provider adapters, and an optional React renderer. Your application continues to own the conversation and its data.</p></details><details><summary>Does Ontave make another model call?</summary><p>Rendering a question and selecting an option make no model request. Pressing Continue invokes your application’s callback. Any subsequent model call follows your existing conversation executor and budget.</p></details><details><summary>Can a choice approve or execute an action?</summary><p>A response provides conversational context. Your application must keep its existing permissions and approval flow for consequential actions. A “Yes” answer does not authorize a booking, payment, publication, or record change.</p></details><details><summary>Do I have to use React?</summary><p>No. The core and provider adapters work without React. Native clients can use the same contracts and register their own trusted control adapters. React is an optional peer dependency.</p></details><details><summary>What happened to the earlier data framework?</summary><p>The Ontave name now belongs to this interactive conversation framework. The earlier ontology framework is a legacy archive, with its historical releases and license preserved. It is a different API; the migration guide explains the change. No data is automatically migrated.</p></details><details><summary>What has been verified?</summary><p>The framework has deterministic coverage for validation, provider-call fixtures, keyboard interaction, retries, and saved readback. The playground uses local fictional examples. It does not demonstrate live model accuracy or paid-provider acceptance.</p></details></div></section>
+    <section class="faq frame section" aria-labelledby="faq-title"><div><p class="eyebrow">A few things, made clear</p><h2 id="faq-title">Room to grow.<br/><em>A concrete place to start.</em></h2></div><div class="faq-list"><details><summary>What can I build today?</summary><p>The experimental application layer supports bounded entity-based applications with linked records, CRUD forms and tables, count dashboards, and transactional workflows. The CRM demonstrates a complete local vertical slice. Arbitrary production application generation, cloud provisioning, migrations, and production database adapters are future work.</p></details><details><summary>Does it produce a definition or code?</summary><p>Both. Run the validated definition through registered views, or export editable React pages with a local Node API and persistent file storage. User-owned extension files survive regeneration; edited generated files cause a conflict for you to review. Code edits are not automatically converted back into definitions.</p></details><details><summary>Can I use any LLM?</summary><p>The model interface is a provider-neutral host callback. Your integration supplies structured JSON or a JSON string; Ontave validates it against the contract and installed capabilities. The framework bundles no model client and performs no hidden retries. The current demo uses fixtures, so it does not establish live model reliability.</p></details><details><summary>Is interactive chat still available?</summary><p>Yes. Questions, controls, validated replies, provider adapters and the optional React form remain independent exports. Use them in an existing application without adopting the application runtime.</p></details><details><summary>Can a model install code or execute integrations?</summary><p>A model can describe only installed capabilities. The host registers executable modules, controls permissions, and dispatches queued external effects. The reference app does not send emails, update an external CRM, or deploy itself.</p></details><details><summary>What happened to the earlier Ontave?</summary><p>The Ontave name now belongs to this modular framework. The previous ontology framework remains a legacy archive with its historical releases and license. It has a different API and no automatic data migration. See the <a href="https://github.com/smileplis/ontave/blob/main/docs/MIGRATION.md">migration guide</a>.</p></details></div></section>
 
-    <section class="closing frame" aria-labelledby="closing-title"><img src="/art/wheat-fields.webp" alt="Green Wheat Fields, Auvers by Vincent van Gogh." width="1600" height="1280" loading="lazy"/><div class="closing-shade" aria-hidden="true"></div><div class="closing-content"><p class="eyebrow">There’s a better question to ask.</p><h2 id="closing-title">Make the next exchange<br/><em>a little more useful.</em></h2><a class="button primary" href="/playground/">Try Ontave <span aria-hidden="true">↗</span></a></div><span class="art-credit">Green Wheat Fields, Auvers · Vincent van Gogh</span></section>
+    <section class="closing frame" aria-labelledby="closing-title"><img src="/art/wheat-fields.webp" alt="Green Wheat Fields, Auvers by Vincent van Gogh." width="1600" height="1280" loading="lazy"/><div class="closing-shade" aria-hidden="true"></div><div class="closing-content"><p class="eyebrow">Build something useful.</p><h2 id="closing-title">From the first exchange<br/><em>to the application around it.</em></h2><a class="button primary" href="/applications/">Explore Ontave <span aria-hidden="true">↗</span></a></div><span class="art-credit">Green Wheat Fields, Auvers · Vincent van Gogh</span></section>
   </main>
-  <footer class="site-footer frame"><a class="brand" href="/" aria-label="Ontave home"><img src="/ontave-wordmark.svg" alt="Ontave" width="132" height="34" loading="lazy"/></a><p>Interactive conversations for AI agents.</p><nav aria-label="Footer navigation"><a href="https://github.com/smileplis/ontave">GitHub ↗</a><a href="https://github.com/smileplis/ontave/tree/main/docs">Documentation ↗</a><a href="https://github.com/smileplis/ontave/blob/main/LICENSE">MIT license ↗</a></nav><small>© 2026 Ontave contributors</small></footer>
+  <footer class="site-footer frame"><a class="brand" href="/" aria-label="Ontave home"><img src="/ontave-wordmark.svg" alt="Ontave" width="132" height="34" loading="lazy"/></a><p>Modular foundations for AI applications.</p><nav aria-label="Footer navigation"><a href="https://github.com/smileplis/ontave">GitHub ↗</a><a href="https://github.com/smileplis/ontave/tree/main/docs">Documentation ↗</a><a href="https://github.com/smileplis/ontave/blob/main/LICENSE">MIT license ↗</a></nav><small>© 2026 Ontave contributors</small></footer>
 </body>
 </html>

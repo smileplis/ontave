@@ -25,3 +25,4 @@ jobs:
       - run: npm run build:website
       - run: npm run example:providers
       - run: npm run verify:package
+      - run: npm run verify:application

@@ -12,8 +12,8 @@ const question = Interaction.parse({
   submitLabel: 'Continue',
 });
 const replies: Record<string, {text: string; href: string; label: string}> = {
-  example: {text: 'Start with a small question. The playground shows how each kind of answer stays in the conversation.', href: '/playground/', label: 'Open the playground'},
-  approach: {text: 'Your agent asks through a typed specification. Your application saves the question, validates the response, and continues the same conversation.', href: '#how-it-works', label: 'See how it works'},
+  example: {text: 'Start with the CRM. Run a definition, add linked records, and export editable application source.', href: '/applications/', label: 'Open the application preview'},
+  approach: {text: 'Your model describes installed capabilities. Ontave validates the definition, then runs it or exports editable source.', href: '#how-it-works', label: 'See how it works'},
   controls: {text: 'Explore choices, text, numbers, dates, times, and ratings. All ten controls are ready to try in the playground.', href: '/playground/', label: 'Try all ten controls'},
 };
 function LandingQuestion() {

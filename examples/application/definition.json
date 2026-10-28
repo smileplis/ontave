@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "id": "starter_crm",
+  "revision": 1,
+  "name": "Fieldwork CRM",
+  "description": "A fictional lead and follow-up tracker built from one application definition.",
+  "entities": [
+    {
+      "key": "leads",
+      "label": "Leads",
+      "fields": [
+        {
+          "key": "name",
+          "label": "Name",
+          "kind": "text",
+          "required": true,
+          "default": null,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "company",
+          "label": "Company",
+          "kind": "text",
+          "required": false,
+          "default": null,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "value",
+          "label": "Potential value",
+          "kind": "number",
+          "required": false,
+          "default": null,
+          "options": [],
+          "reference": null,
+          "min": 0,
+          "max": 1000000
+        },
+        {
+          "key": "status",
+          "label": "Status",
+          "kind": "select",
+          "required": true,
+          "default": "new",
+          "options": [
+            {
+              "value": "new",
+              "label": "New"
+            },
+            {
+              "value": "qualified",
+              "label": "Qualified"
+            },
+            {
+              "value": "won",
+              "label": "Won"
+            }
+          ],
+          "reference": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "active",
+          "label": "Active",
+          "kind": "boolean",
+          "required": false,
+          "default": true,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "next_contact",
+          "label": "Next contact",
+          "kind": "date",
+          "required": false,
+          "default": null,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "notes",
+          "label": "Notes",
+          "kind": "textarea",
+          "required": false,
+          "default": null,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        }
+      ]
+    },
+    {
+      "key": "tasks",
+      "label": "Follow-ups",
+      "fields": [
+        {
+          "key": "title",
+          "label": "Task",
+          "kind": "text",
+          "required": true,
+          "default": null,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "lead",
+          "label": "Lead",
+          "kind": "reference",
+          "required": true,
+          "default": null,
+          "options": [],
+          "reference": "leads",
+          "min": null,
+          "max": null
+        },
+        {
+          "key": "done",
+          "label": "Done",
+          "kind": "boolean",
+          "required": true,
+          "default": false,
+          "options": [],
+          "reference": null,
+          "min": null,
+          "max": null
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "key": "overview",
+      "title": "Overview",
+      "kind": "dashboard",
+      "version": 1,
+      "entity": null,
+      "fields": []
+    },
+    {
+      "key": "leads",
+      "title": "Leads",
+      "kind": "collection",
+      "version": 1,
+      "entity": "leads",
+      "fields": [
+        "name",
+        "company",
+        "status",
+        "value"
+      ]
+    },
+    {
+      "key": "tasks",
+      "title": "Follow-ups",
+      "kind": "collection",
+      "version": 1,
+      "entity": "tasks",
+      "fields": [
+        "title",
+        "lead",
+        "done"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "key": "lead_created",
+      "entity": "leads",
+      "on": "create",
+      "steps": [
+        {
+          "use": "event.emit",
+          "version": 1,
+          "config": {
+            "topic": "lead.created"
+          }
+        }
+      ]
+    }
+  ]
+}
