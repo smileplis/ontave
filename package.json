@@ -1,7 +1,7 @@
 {
   "name": "ontave",
-  "version": "0.2.0-alpha.1",
-  "description": "Provider-neutral interactive conversations for AI agents: bounded controls, validation, portable replies and React.",
+  "version": "0.2.0-alpha.2",
+  "description": "Modular application foundations for LLMs: validated definitions, transactional runtimes, React views and editable source export.",
   "license": "MIT",
   "type": "module",
   "sideEffects": [
@@ -13,7 +13,8 @@
     "README.md",
     "SECURITY.md",
     "LICENSE",
-    "docs"
+    "docs",
+    "src/application.css"
   ],
   "exports": {
     ".": {
@@ -28,7 +29,32 @@
     "./adapters": {
       "types": "./dist/adapters.d.ts",
       "default": "./dist/adapters.js"
-    }
+    },
+    "./application": {
+      "types": "./dist/application.d.ts",
+      "default": "./dist/application.js"
+    },
+    "./application/react": {
+      "types": "./dist/application-react.d.ts",
+      "default": "./dist/application-react.js"
+    },
+    "./application/http": {
+      "types": "./dist/application-http.d.ts",
+      "default": "./dist/application-http.js"
+    },
+    "./application/node": {
+      "types": "./dist/application-node.d.ts",
+      "default": "./dist/application-node.js"
+    },
+    "./application/model": {
+      "types": "./dist/application-model.d.ts",
+      "default": "./dist/application-model.js"
+    },
+    "./application/export": {
+      "types": "./dist/application-export.d.ts",
+      "default": "./dist/application-export.js"
+    },
+    "./application/styles.css": "./src/application.css"
   },
   "scripts": {
     "test": "vitest run --config vitest.config.ts",
@@ -39,8 +65,10 @@
     "build:example": "npm run build && vite build examples/react",
     "verify:package": "npm run build && node scripts/verify-package.mjs",
     "example:providers": "npm run build && node examples/providers.mjs",
-    "build:website": "npm run build && vite build website && node scripts/verify-website.mjs",
-    "dev:example": "npm run build && vite examples/react --host 127.0.0.1"
+    "build:website": "npm run build && vite build website && node scripts/prepare-application-download.mjs && node scripts/verify-website.mjs",
+    "dev:example": "npm run build && vite examples/react --host 127.0.0.1",
+    "verify:application": "npm run build && node scripts/verify-application.mjs",
+    "verify:website-react": "npm run build && node scripts/verify-website-react.mjs"
   },
   "dependencies": {
     "zod": "^4.6.5"
@@ -59,6 +87,7 @@
   "devDependencies": {
     "@testing-library/react": "16.3.3",
     "@testing-library/user-event": "14.6.8",
+    "@types/node": "26.6.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "jsdom": "30.1.3",

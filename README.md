@@ -1,10 +1,10 @@
 # Ontave
 
-Interactive conversations for AI agents. Ask a focused question, render a trusted control, validate the answer, and continue the same conversation.
+Modular foundations for applications built with LLMs. Run a validated application definition or export editable source code. Use interactive conversations as one independent module.
 
-Ontave is a small TypeScript framework with strict contracts, portable saved replies, provider adapters, and an optional React renderer. The core needs only Zod. Models choose bounded data; the host owns the conversation, storage, permissions, and actions.
+Ontave is a TypeScript framework with separate contracts for models, views, transactional storage, workflows, transport, and code export. The core needs only Zod; React is optional. Models describe installed capabilities as bounded data. The host owns executable code, identity, permissions, deployment, and external actions. Product code stays outside the framework.
 
-**0.2.0-alpha.1 — source preview.** The Ontave name now belongs to this interactive conversation framework, replacing the earlier ontology framework. It is a different API and has not been published to npm. Existing `ontave@0.1.x` installations still contain the previous framework. Read the [migration guide](docs/MIGRATION.md) before changing dependencies. Earlier releases and Git history remain available.
+**0.2.0-alpha.2 — experimental source preview.** The application foundation now demonstrates a complete local CRM: leads, linked follow-ups, editable forms/tables, dashboards, persistent records, and queued workflows. It does not yet build arbitrary production applications. The Ontave name belongs to this framework, replacing the earlier ontology framework. This API has not been published to npm; existing `ontave@0.1.x` installations contain the previous framework. Read the [migration guide](docs/MIGRATION.md) before changing dependencies. Historical releases and licenses remain available.
 
 ## Try it locally
 
@@ -17,9 +17,43 @@ npm ci
 npm run dev
 ```
 
-Open the localhost URL printed by Vite for the landing page and `/playground/` for all ten controls, saved readback, validation, and a simulated failed send. It uses fictional fixtures in your browser, with no model key, database, or network request to a provider. Demo answers stay in session storage for that browser tab.
+Open the localhost URL printed by Vite for the landing page, `/applications/` for a runnable CRM definition, and `/playground/` for all ten interaction controls. Both use fictional fixtures, with no model key or provider request. CRM preview records stay in memory; interaction answers stay in session storage for that browser tab.
 
-To use this source preview in another project, run `npm pack` in the clone, then install the resulting `ontave-0.2.0-alpha.1.tgz`. The tarball includes compiled modules, declarations, styles, and integration documentation.
+To try the complete ZIP export, run `npm run build:website` and `npx vite preview website --host 127.0.0.1 --port 4173`, then open `/applications/`. The ZIP includes the exact framework package: unzip, `npm install`, `npm run dev`. Its Node backend persists local records between restarts.
+
+To use this source preview in another project, run `npm pack` in the clone, then install `ontave-0.2.0-alpha.2.tgz`. The tarball includes compiled modules, declarations, styles, and integration documentation.
+
+## Application quick start
+
+```tsx
+import {ApplicationDefinition} from 'ontave/application';
+import {createHttpApplicationClient} from 'ontave/application/http';
+import {ApplicationView} from 'ontave/application/react';
+import 'ontave/application/styles.css';
+
+const client = createHttpApplicationClient(
+  ApplicationDefinition.parse(serverDefinition),
+);
+export function App() {
+  return <ApplicationView client={client}/>;
+}
+```
+
+The host API uses `createApplicationRuntime` with a mandatory authorization policy and a transactional store, then `createApplicationHandler` with authenticated workspace resolution. The generated starter supplies a local-only reference server. Production authentication, database adapters, migrations, and external dispatch belong to the host; those are not implemented by the browser demo.
+
+`generateApplication` accepts one provider-neutral host callback and validates its output against the schema and installed capabilities. `exportApplication` produces actual React page source and a Node backend. Custom modules, views, and source exporters are registered by the host; a model cannot install code. See the [application guide](docs/APPLICATIONS.md) and [complete CRM definition](examples/application/definition.json).
+
+| Public entry point | Purpose |
+| --- | --- |
+| `ontave/application` | Definition, records, commands, runtime, workflow and store interfaces |
+| `ontave/application/model` | Host model callback and strict output validation |
+| `ontave/application/react` | Optional views, native field inputs and collection/retry hooks |
+| `ontave/application/http` | Fetch client and authenticated Web Request handler |
+| `ontave/application/node` | Local persistent store and export writer that preserves edits |
+| `ontave/application/export` | Trusted source generators, ownership manifest and ZIP output |
+| `ontave/application/styles.css` | Scoped application styles |
+
+The interaction exports below remain independently usable.
 
 ## Core quick start
 
@@ -112,14 +146,16 @@ The host owns authenticated access, canonical-turn lookup, staleness, idempotenc
 npm test
 npm run typecheck
 npm run build:website
+npm run verify:website-react
 npm run example:providers
 npm run verify:package
+npm run verify:application
 ```
 
-CI runs the suite and consumer-package checks on Node.js 24 and 26. Tests cover all ten controls, provider envelope fixtures, malformed output, keyboard use, pending/retry behavior, read-only history, and original chat receipts. These are deterministic checks; live paid-provider acceptance is not claimed.
+CI runs the suite and consumer-package checks on Node.js 24 and 26. Tests cover interactions, application validation, isolated/authorized CRUD, atomic rollback, references, optimistic revisions, persistent retries, source ownership, and React navigation/error behavior. These are deterministic checks; live model quality and paid-provider acceptance are not claimed.
 
-The website build checks the landing page and playground, page metadata, local links/assets, and production script/CSP boundaries. The public landing page is [ontave.daltn.tech](https://ontave.daltn.tech/).
+The website build checks the landing page, interaction playground, application workbench, downloadable package, metadata, local links/assets, and production script/CSP boundaries. The public landing page is [ontave.daltn.tech](https://ontave.daltn.tech/).
 
-The package verifier installs the actual tarball in a temporary consumer, exercises its public exports and TypeScript declarations, and checks that core installation works without React. Runtime dependencies exclude model clients, databases, product code, and credentials.
+The package verifier installs the actual tarball in a temporary consumer, exercises all public ESM exports and declarations, checks installation without React, and renders both modules with React 18. The application verifier extracts a real ZIP, installs and builds its editable code, and checks the backend across a process restart. Runtime dependencies exclude model clients, databases, product code, and credentials.
 
 MIT licensed. Derived from [Daltn Interactive Chat](https://github.com/smileplis/daltn-interactive-chat). The earlier Ontave releases retain their Apache 2.0 license. See [migration and provenance](docs/MIGRATION.md).

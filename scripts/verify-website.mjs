@@ -5,7 +5,7 @@ import {join, resolve} from 'node:path';
 import {JSDOM} from 'jsdom';
 
 const output = fileURLToPath(new URL('../website/dist/', import.meta.url));
-const pages = ['index.html', 'playground/index.html'];
+const pages = ['index.html', 'playground/index.html', 'applications/index.html'];
 for (const page of pages) {
   const path = join(output, page), html = readFileSync(path, 'utf8');
   const document = new JSDOM(html).window.document;
@@ -37,15 +37,19 @@ for (const page of pages) {
   }
   if (page === 'index.html') {
     assert.equal(document.querySelectorAll('h1').length, 1);
-    assert.match(document.querySelector('h1').textContent, /better question/);
+    assert.match(document.querySelector('h1').textContent, /working application/);
     assert(!html.includes('A data layer that adapts'));
     assert(document.querySelector('#landing-demo'));
     assert(document.querySelector('a[href="/playground/"]'));
+    assert(document.querySelector('a[href="/applications/"]'));
     const tabs = [...document.querySelectorAll('[role="tab"]')];
     assert.equal(tabs.length, 3);
     for (const tab of tabs) assert(document.getElementById(tab.getAttribute('aria-controls')));
   }
 }
+assert(existsSync(join(output, 'downloads/manifest.json')), 'Missing exact framework package metadata');
+const download = JSON.parse(readFileSync(join(output, 'downloads/manifest.json'), 'utf8'));
+assert(existsSync(join(output, 'downloads', download.filename)), 'Missing bundled framework package');
 for (const config of ['vercel.json', 'website/vercel.json']) {
   const value = JSON.parse(readFileSync(new URL(`../${config}`, import.meta.url), 'utf8'));
   assert(value.headers.some(rule => rule.headers.some(header => header.key === 'Content-Security-Policy' && !header.value.includes('unsafe-inline'))));

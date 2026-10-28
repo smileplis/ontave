@@ -1,0 +1,11 @@
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {mkdirSync, readFileSync, writeFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {join} from 'node:path';
+const root=fileURLToPath(new URL('../',import.meta.url)),directory=join(root,'website/dist/downloads');
+mkdirSync(directory,{recursive:true});
+const [packed]=JSON.parse(execFileSync('npm',['pack','--ignore-scripts','--json','--pack-destination',directory],{cwd:root,encoding:'utf8'}));
+const bytes=readFileSync(join(directory,packed.filename));
+writeFileSync(join(directory,'manifest.json'),JSON.stringify({filename:packed.filename,version:packed.version,sha256:createHash('sha256').update(bytes).digest('hex')})+'\n');
+console.log(`Prepared exact framework package ${packed.filename} for self-contained application exports.`);

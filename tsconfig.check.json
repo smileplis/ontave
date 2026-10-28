@@ -9,8 +9,27 @@
       ],
       "ontave/react": [
         "./src/react.tsx"
+      ],
+      "ontave/application": [
+        "./src/application.ts"
+      ],
+      "ontave/application/react": [
+        "./src/application-react.tsx"
+      ],
+      "ontave/application/http": [
+        "./src/application-http.ts"
+      ],
+      "ontave/application/node": [
+        "./src/application-node.ts"
+      ],
+      "ontave/application/model": [
+        "./src/application-model.ts"
+      ],
+      "ontave/application/export": [
+        "./src/application-export.ts"
       ]
-    }
+    },
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
@@ -18,6 +37,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "examples/react/**/*.tsx",
-    "website/src/**/*.tsx"
+    "website/src/**/*.tsx",
+    "examples/application/**/*.ts"
   ]
 }
