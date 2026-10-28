@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build:example",
-  "outputDirectory": "examples/react/dist",
+  "buildCommand": "npm run build:website",
+  "outputDirectory": "website/dist",
   "framework": null,
   "headers": [
     {

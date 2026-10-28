@@ -35,11 +35,12 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.check.json",
     "prepack": "npm run build",
-    "dev": "npm run build && vite examples/react --host 127.0.0.1",
+    "dev": "npm run build && vite website --host 127.0.0.1",
     "build:example": "npm run build && vite build examples/react",
     "verify:package": "npm run build && node scripts/verify-package.mjs",
     "example:providers": "npm run build && node examples/providers.mjs",
-    "build:website": "npm run build --prefix website"
+    "build:website": "npm run build && vite build website && node scripts/verify-website.mjs",
+    "dev:example": "npm run build && vite examples/react --host 127.0.0.1"
   },
   "dependencies": {
     "zod": "^4.6.5"
@@ -71,7 +72,7 @@
     "type": "git",
     "url": "git+https://github.com/smileplis/ontave.git"
   },
-  "homepage": "https://github.com/smileplis/ontave#readme",
+  "homepage": "https://ontave.daltn.tech/",
   "bugs": {
     "url": "https://github.com/smileplis/ontave/issues"
   }

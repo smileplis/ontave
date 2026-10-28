@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {createRoot} from 'react-dom/client';
 import {Interaction, formatResponse, validateResponse, type Control, type InteractionValues} from 'ontave';
 import {InteractionForm} from 'ontave/react';
 import 'ontave/styles.css';
@@ -31,7 +30,7 @@ function loadSaved(): Record<string, InteractionValues> {
   } catch { return {}; }
 }
 
-function App() {
+export function App() {
   const [exampleId, setExampleId] = useState(examples[0].id), [revision, setRevision] = useState(0);
   const [saved, setSaved] = useState(loadSaved), [failNext, setFailNext] = useState(false), [pending, setPending] = useState(false);
   const example = examples.find(item => item.id === exampleId)!;
@@ -50,14 +49,12 @@ function App() {
     } finally { setPending(false); }
   }
   return <main>
-    <header className="masthead"><a href="https://github.com/smileplis/ontave" className="wordmark">ontave<span>↗</span></a><span className="eyebrow">Framework preview</span></header>
+    <header className="masthead"><a href="/" className="wordmark">ontave<span>↗</span></a><span className="eyebrow">Framework preview</span></header>
     <section className="intro"><p className="eyebrow">A conversation can ask more.</p><h1>Less back and forth.<br/><em>A better next question.</em></h1><p>Let your agent ask through a familiar control. Keep the answer in the conversation.</p></section>
     <div className="workbench">
       <aside><h2>Explore the controls</h2><label htmlFor="example">Example</label><select id="example" value={exampleId} disabled={pending} onChange={event => setExampleId(event.target.value)}>{examples.map(item => <option value={item.id} key={item.id}>{item.title}</option>)}</select><p>Ten bounded controls. Your agent picks the question; your application owns what happens next.</p><label className="simulation"><input type="checkbox" checked={failNext} disabled={pending || !!values} onChange={event => setFailNext(event.target.checked)}/>Reject the next send</label><button className="reset" disabled={pending} onClick={() => { const next = {...saved}; delete next[example.id]; persist(next); setRevision(value => value + 1); }}>Start this example again</button></aside>
       <section className="conversation" aria-label="Demo conversation"><p className="speaker">Assistant <span>Just one useful question.</span></p><InteractionForm interactionId={`${example.id}:${revision}`} interaction={example.spec} initialValues={values} readOnly={!!values} pending={pending} onSubmit={submit}/>{values && <div className="saved" role="status"><p className="speaker">You <span>Saved in this tab</span></p><p>{formatResponse(example.spec, values)}</p><p className="next">Thanks. Your application can now continue the same conversation with this context.</p></div>}</section>
     </div>
-    <footer className="page-footer"><span>Local demo · fictional fixtures · no model requests</span><a href="https://github.com/smileplis/ontave">Read the source ↗</a></footer>
+    <footer className="page-footer"><span>Local demo · fictional fixtures · no model requests</span><a href="/">← Back to Ontave</a><a href="https://github.com/smileplis/ontave">Read the source ↗</a></footer>
   </main>;
 }
-
-createRoot(document.getElementById('root')!).render(<App/>);

@@ -8,11 +8,15 @@ The previous framework's latest GitHub release at the replacement checkpoint is 
 
 The 0.2 package does not provide the old PostgreSQL runtime, ingestion, ontology review, migrations, CLI, model extraction adapters, local studio, or playground. The old subpaths (`ontave/postgres`, `ontave/local`, `ontave/studio`, `ontave/testing`, and `ontave/models/*`) have no replacements here. There is no database-format conversion. Existing deployments must retain their exact prior version until intentionally migrated or retired by their owners.
 
-The new package uses the version `0.2.0-alpha.1` to distinguish the API. No release tag, npm dist-tag, website deployment, or existing product dependency is changed by this source branch. `npm install ontave` continues to resolve whichever earlier version the registry currently serves; install the locally packed tarball to evaluate this preview. Publishing is a separate release operation.
+The new package uses the version `0.2.0-alpha.1` to distinguish the API. Version 0.2 replaces the repository default and public landing page. This change does not publish an npm package or change an existing product dependency. `npm install ontave` continues to resolve whichever earlier version the registry currently serves; install the locally packed tarball to evaluate this preview. Publishing is a separate release operation.
 
-## Framework demo deployment
+## Framework website deployment
 
-The previous documentation and playground are replaced by the new `examples/react/` demo. Root `vercel.json` builds it with `npm run build:example` and serves `examples/react/dist` with restrictive response headers. The `website/` directory is now a small deployment wrapper for existing hosting projects rooted there. Its install command installs the repository lockfile, and its build copies the same demo into `website/dist`; no shared project setting needs to change. `npm run build:website` checks that path locally and in CI. Pushing a branch may trigger the existing hosting service’s automatic preview; this source branch does not change a production domain or project configuration. Previous-framework deep links are not redirected into unrelated new APIs; use the archived release documentation linked above.
+The public landing page now introduces the interactive conversation framework. The new `/playground/` covers all ten controls with local fictional examples. The website preserves the existing artwork and visual identity while replacing the earlier ontology-focused copy, claims, navigation, and examples.
+
+`npm run build:website` builds both pages and checks metadata, local links/assets, integration panels, and production script/CSP boundaries. Root `vercel.json` and `website/vercel.json` support the existing hosting roots; both serve `website/dist`. The child package invokes the canonical repository build and lockfile. No shared project setting needs to change. Earlier-framework deep links are not redirected into unrelated new APIs; use the archived release documentation linked above.
+
+The earlier local framework and website checkouts have generic legacy archive names. The unqualified Ontave name and repository default are reserved for the interactive framework. Historical package versions, tags, and their licenses remain unchanged.
 
 ## Original Daltn Interactive Chat consumers
 

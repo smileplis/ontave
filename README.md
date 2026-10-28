@@ -4,20 +4,20 @@ Interactive conversations for AI agents. Ask a focused question, render a truste
 
 Ontave is a small TypeScript framework with strict contracts, portable saved replies, provider adapters, and an optional React renderer. The core needs only Zod. Models choose bounded data; the host owns the conversation, storage, permissions, and actions.
 
-**0.2.0-alpha.1 — source preview.** This replaces the earlier Ontave ontology framework. It is a different API and has not been published to npm. Existing `ontave@0.1.x` installations still contain the previous framework. Read the [migration guide](docs/MIGRATION.md) before changing dependencies. Earlier releases and Git history remain available.
+**0.2.0-alpha.1 — source preview.** The Ontave name now belongs to this interactive conversation framework, replacing the earlier ontology framework. It is a different API and has not been published to npm. Existing `ontave@0.1.x` installations still contain the previous framework. Read the [migration guide](docs/MIGRATION.md) before changing dependencies. Earlier releases and Git history remain available.
 
 ## Try it locally
 
 Use Node.js 24:
 
 ```sh
-git clone --branch codex/ontave-interactive-framework https://github.com/smileplis/ontave.git
+git clone https://github.com/smileplis/ontave.git
 cd ontave
 npm ci
 npm run dev
 ```
 
-Open the localhost URL printed by Vite. The demo covers all ten controls, saved readback, validation, and a simulated failed send. It uses fictional fixtures in your browser, with no model key, database, or network request to a provider. Demo answers stay in session storage for that browser tab.
+Open the localhost URL printed by Vite for the landing page and `/playground/` for all ten controls, saved readback, validation, and a simulated failed send. It uses fictional fixtures in your browser, with no model key, database, or network request to a provider. Demo answers stay in session storage for that browser tab.
 
 To use this source preview in another project, run `npm pack` in the clone, then install the resulting `ontave-0.2.0-alpha.1.tgz`. The tarball includes compiled modules, declarations, styles, and integration documentation.
 
@@ -117,6 +117,8 @@ npm run verify:package
 ```
 
 CI runs the suite and consumer-package checks on Node.js 24 and 26. Tests cover all ten controls, provider envelope fixtures, malformed output, keyboard use, pending/retry behavior, read-only history, and original chat receipts. These are deterministic checks; live paid-provider acceptance is not claimed.
+
+The website build checks the landing page and playground, page metadata, local links/assets, and production script/CSP boundaries. The public landing page is [ontave.daltn.tech](https://ontave.daltn.tech/).
 
 The package verifier installs the actual tarball in a temporary consumer, exercises its public exports and TypeScript declarations, and checks that core installation works without React. Runtime dependencies exclude model clients, databases, product code, and credentials.
 

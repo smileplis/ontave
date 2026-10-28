@@ -17,6 +17,7 @@
     "src/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "examples/react/**/*.tsx"
+    "examples/react/**/*.tsx",
+    "website/src/**/*.tsx"
   ]
 }
